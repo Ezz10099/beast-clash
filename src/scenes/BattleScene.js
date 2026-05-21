@@ -64,26 +64,14 @@ export class BattleScene extends Phaser.Scene {
 
   createFighterVisual(fighter, x, y, flip) {
     const scale = this.getAnimalScale(fighter.id);
-    const body = this.add.ellipse(0, 0, 76 * scale, 48 * scale, fighter.color)
-      .setStrokeStyle(3, 0x09070d);
-
-    const headX = flip ? -42 * scale : 42 * scale;
-    const head = this.add.circle(headX, -10 * scale, 24 * scale, fighter.color)
-      .setStrokeStyle(3, 0x09070d);
-
-    const eyeX = flip ? headX - 7 * scale : headX + 7 * scale;
-    const eye = this.add.circle(eyeX, -17 * scale, 4 * scale, 0xffffff);
-
-    const shadow = this.add.ellipse(0, 36 * scale, 84 * scale, 14 * scale, 0x000000, 0.28);
-    const parts = [shadow, body, head, eye];
-    this.addAnimalFeature(parts, fighter, flip, scale);
+    const parts = this.buildAnimalSilhouette(fighter, flip, scale);
 
     const container = this.add.container(x, y, parts);
     container.setData('baseX', x);
     container.setData('baseY', y);
     fighter.sprite = container;
 
-    fighter.nameText = this.add.text(x, y - 62, fighter.name, {
+    fighter.nameText = this.add.text(x, y - 66, fighter.name, {
       fontFamily: 'Arial',
       fontSize: '15px',
       color: '#ffffff',
@@ -91,16 +79,17 @@ export class BattleScene extends Phaser.Scene {
       strokeThickness: 4,
     }).setOrigin(0.5);
 
-    this.add.rectangle(x, y - 43, 96, 11, 0x32070b).setOrigin(0.5);
-    fighter.hpBar = this.add.rectangle(x - 48, y - 43, 96, 11, 0x35d04f).setOrigin(0, 0.5);
+    this.add.rectangle(x, y - 47, 100, 12, 0x32070b).setOrigin(0.5);
+    fighter.hpBar = this.add.rectangle(x - 50, y - 47, 100, 12, 0x35d04f).setOrigin(0, 0.5);
 
-    fighter.statusText = this.add.text(x, y + 58, '', {
+    fighter.statusText = this.add.text(x, y + 62, '', {
       fontFamily: 'Arial',
       fontSize: '12px',
       color: '#d9c7ff',
       stroke: '#000000',
       strokeThickness: 3,
       align: 'center',
+      wordWrap: { width: 115 },
     }).setOrigin(0.5);
 
     this.tweens.add({
@@ -115,42 +104,77 @@ export class BattleScene extends Phaser.Scene {
 
   getAnimalScale(id) {
     const scales = {
-      gorilla: 1.13,
-      tiger: 1.02,
-      snake: 0.82,
-      rhino: 1.18,
-      crocodile: 1.02,
-      eagle: 0.86,
+      gorilla: 1.08,
+      tiger: 1.00,
+      snake: 0.95,
+      rhino: 1.08,
+      crocodile: 1.00,
+      eagle: 0.95,
     };
     return scales[id] || 1;
   }
 
-  addAnimalFeature(parts, fighter, flip, scale) {
-    if (fighter.id === 'rhino') {
-      const hornX = flip ? -72 * scale : 72 * scale;
-      parts.push(this.add.triangle(hornX, -11 * scale, 0, 8, 0, -8, flip ? -28 : 28, 0, 0xd8d0b2));
-    }
+  buildAnimalSilhouette(fighter, flip, scale) {
+    const dir = flip ? -1 : 1;
+    const c = fighter.color;
+    const dark = 0x09070d;
+    const parts = [];
 
-    if (fighter.id === 'eagle') {
-      parts.push(this.add.triangle(0, -5 * scale, -48 * scale, 18 * scale, 0, -18 * scale, 48 * scale, 18 * scale, 0xb8b89f));
-    }
-
-    if (fighter.id === 'snake') {
-      parts.push(this.add.ellipse(flip ? -22 * scale : 22 * scale, 7 * scale, 92 * scale, 26 * scale, fighter.color));
-    }
-
-    if (fighter.id === 'tiger') {
-      parts.push(this.add.rectangle(0, -2 * scale, 10 * scale, 48 * scale, 0x2b1609));
-      parts.push(this.add.rectangle(22 * scale, -2 * scale, 8 * scale, 38 * scale, 0x2b1609));
-    }
+    parts.push(this.add.ellipse(0, 42 * scale, 105 * scale, 18 * scale, 0x000000, 0.30));
 
     if (fighter.id === 'gorilla') {
-      parts.push(this.add.circle(flip ? 35 * scale : -35 * scale, 12 * scale, 18 * scale, 0x5a514d));
+      parts.push(this.add.ellipse(-10 * dir * scale, 0, 70 * scale, 60 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.circle(30 * dir * scale, -12 * scale, 27 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.ellipse(-45 * dir * scale, 11 * scale, 32 * scale, 46 * scale, 0x514a46).setStrokeStyle(3, dark));
+      parts.push(this.add.ellipse(10 * dir * scale, 18 * scale, 34 * scale, 32 * scale, 0x514a46).setStrokeStyle(3, dark));
+      parts.push(this.add.circle(38 * dir * scale, -17 * scale, 4 * scale, 0xffffff));
+      parts.push(this.add.ellipse(37 * dir * scale, 1 * scale, 25 * scale, 13 * scale, 0x3b3634));
+    } else if (fighter.id === 'tiger') {
+      parts.push(this.add.ellipse(-4 * dir * scale, 5 * scale, 88 * scale, 42 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.circle(45 * dir * scale, -9 * scale, 23 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.triangle(40 * dir * scale, -32 * scale, -8 * dir, 10, 0, -12, 12 * dir, 10, c).setStrokeStyle(2, dark));
+      parts.push(this.add.triangle(55 * dir * scale, -28 * scale, -8 * dir, 10, 0, -12, 12 * dir, 10, c).setStrokeStyle(2, dark));
+      parts.push(this.add.ellipse(-58 * dir * scale, -3 * scale, 45 * scale, 10 * scale, c).setRotation(-0.35 * dir).setStrokeStyle(3, dark));
+      parts.push(this.add.rectangle(-20 * dir * scale, 1 * scale, 8 * scale, 38 * scale, 0x2b1609));
+      parts.push(this.add.rectangle(5 * dir * scale, 1 * scale, 8 * scale, 36 * scale, 0x2b1609));
+      parts.push(this.add.rectangle(28 * dir * scale, 0, 7 * scale, 28 * scale, 0x2b1609));
+      parts.push(this.add.circle(53 * dir * scale, -15 * scale, 4 * scale, 0xffffff));
+    } else if (fighter.id === 'snake') {
+      parts.push(this.add.ellipse(-32 * dir * scale, 12 * scale, 58 * scale, 28 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.ellipse(5 * dir * scale, 11 * scale, 64 * scale, 28 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.ellipse(37 * dir * scale, 0, 34 * scale, 30 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.triangle(56 * dir * scale, 4 * scale, 0, 0, 22 * dir, -6, 22 * dir, 6, 0xa6e06e));
+      parts.push(this.add.circle(45 * dir * scale, -8 * scale, 4 * scale, 0xffffff));
+    } else if (fighter.id === 'rhino') {
+      parts.push(this.add.ellipse(-5 * dir * scale, 5 * scale, 92 * scale, 58 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.ellipse(42 * dir * scale, -10 * scale, 48 * scale, 40 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.triangle(72 * dir * scale, -16 * scale, 0, 7, 0, -7, 35 * dir, -1, 0xd8d0b2).setStrokeStyle(2, dark));
+      parts.push(this.add.rectangle(-25 * dir * scale, 34 * scale, 15 * scale, 28 * scale, 0x777777).setStrokeStyle(2, dark));
+      parts.push(this.add.rectangle(18 * dir * scale, 34 * scale, 15 * scale, 28 * scale, 0x777777).setStrokeStyle(2, dark));
+      parts.push(this.add.circle(50 * dir * scale, -18 * scale, 4 * scale, 0xffffff));
+    } else if (fighter.id === 'crocodile') {
+      parts.push(this.add.ellipse(-12 * dir * scale, 6 * scale, 95 * scale, 34 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.rectangle(46 * dir * scale, 1 * scale, 52 * scale, 20 * scale, 0x31552f).setStrokeStyle(3, dark));
+      parts.push(this.add.triangle(-68 * dir * scale, 5 * scale, 0, 0, -40 * dir, -12, -40 * dir, 12, 0x31552f).setStrokeStyle(2, dark));
+      parts.push(this.add.circle(56 * dir * scale, -8 * scale, 4 * scale, 0xffffff));
+      parts.push(this.add.rectangle(46 * dir * scale, 12 * scale, 46 * scale, 4 * scale, 0xd8d0b2));
+      for (let i = 0; i < 4; i += 1) {
+        parts.push(this.add.triangle((-35 + i * 18) * dir * scale, -15 * scale, -5, 8, 0, -8, 5, 8, 0x77a06b));
+      }
+    } else if (fighter.id === 'eagle') {
+      parts.push(this.add.ellipse(0, 5 * scale, 52 * scale, 34 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.circle(36 * dir * scale, -12 * scale, 20 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.triangle(-20 * dir * scale, -5 * scale, -72 * dir, 26, 0, -16, 35 * dir, 18, 0xb8b89f).setStrokeStyle(2, dark));
+      parts.push(this.add.triangle(4 * dir * scale, -4 * scale, -35 * dir, 20, 0, -14, 74 * dir, 26, 0x8f8f83).setStrokeStyle(2, dark));
+      parts.push(this.add.triangle(56 * dir * scale, -12 * scale, 0, 7, 0, -7, 22 * dir, 0, 0xf1d27a).setStrokeStyle(1, dark));
+      parts.push(this.add.circle(43 * dir * scale, -18 * scale, 4 * scale, 0xffffff));
+    } else {
+      parts.push(this.add.ellipse(0, 0, 76 * scale, 48 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.circle(42 * dir * scale, -10 * scale, 24 * scale, c).setStrokeStyle(3, dark));
+      parts.push(this.add.circle(49 * dir * scale, -17 * scale, 4 * scale, 0xffffff));
     }
 
-    if (fighter.id === 'crocodile') {
-      parts.push(this.add.rectangle(flip ? -58 * scale : 58 * scale, 0, 42 * scale, 18 * scale, 0x31552f));
-    }
+    return parts;
   }
 
   createHud() {
@@ -307,7 +331,7 @@ export class BattleScene extends Phaser.Scene {
   refreshAllVisuals() {
     for (const fighter of this.fighters) {
       const ratio = Phaser.Math.Clamp(fighter.hp / fighter.maxHp, 0, 1);
-      fighter.hpBar.width = 96 * ratio;
+      fighter.hpBar.width = 100 * ratio;
 
       if (!fighter.alive) {
         fighter.sprite.setAlpha(0.35);
