@@ -9,6 +9,8 @@ export class BattleScene extends Phaser.Scene {
   }
 
   create() {
+    this.fighters = [];
+    this.turnQueue = [];
     this.createBackground();
     this.createTeams();
     this.createHud();
@@ -16,69 +18,94 @@ export class BattleScene extends Phaser.Scene {
   }
 
   createBackground() {
-    this.add.rectangle(480, 270, 960, 540, 0x17111f);
-    this.add.rectangle(480, 410, 900, 170, 0x241b2e).setStrokeStyle(3, 0x6d4b9a);
+    this.add.rectangle(195, 422, 390, 844, 0x0c0911);
 
-    this.add.text(480, 35, 'Ancient Jungle Arena', {
+    this.add.rectangle(195, 92, 350, 96, 0x17111f)
+      .setStrokeStyle(2, 0x5a3f83);
+
+    this.add.text(195, 58, 'BEAST CLASH', {
       fontFamily: 'Arial',
-      fontSize: '26px',
+      fontSize: '30px',
       color: '#f1d27a',
       stroke: '#000000',
-      strokeThickness: 5,
+      strokeThickness: 6,
     }).setOrigin(0.5);
+
+    this.add.text(195, 98, 'Ancient Jungle Arena', {
+      fontFamily: 'Arial',
+      fontSize: '17px',
+      color: '#d9c7ff',
+    }).setOrigin(0.5);
+
+    this.add.rectangle(195, 445, 358, 560, 0x17111f)
+      .setStrokeStyle(3, 0x6d4b9a);
+
+    this.add.rectangle(195, 710, 358, 82, 0x100b17)
+      .setStrokeStyle(2, 0x3d2b5c);
   }
 
   createTeams() {
     const leftTeam = ['gorilla', 'tiger', 'snake'];
     const rightTeam = ['rhino', 'crocodile', 'eagle'];
+    const ySlots = [245, 410, 575];
 
     leftTeam.forEach((id, index) => {
       const fighter = BattleLogic.createFighter(ANIMALS[id], 'player', index);
-      this.createFighterVisual(fighter, 170, 220 + index * 85, false);
+      this.createFighterVisual(fighter, 95, ySlots[index], false);
       this.fighters.push(fighter);
     });
 
     rightTeam.forEach((id, index) => {
       const fighter = BattleLogic.createFighter(ANIMALS[id], 'enemy', index);
-      this.createFighterVisual(fighter, 790, 220 + index * 85, true);
+      this.createFighterVisual(fighter, 295, ySlots[index], true);
       this.fighters.push(fighter);
     });
   }
 
   createFighterVisual(fighter, x, y, flip) {
-    const body = this.add.ellipse(x, y, 82, 54, fighter.color).setStrokeStyle(3, 0x111111);
-    const headX = flip ? x - 48 : x + 48;
-    const head = this.add.circle(headX, y - 10, 26, fighter.color).setStrokeStyle(3, 0x111111);
-    const eyeX = flip ? headX - 8 : headX + 8;
-    const eye = this.add.circle(eyeX, y - 18, 4, 0xffffff);
+    const scale = this.getAnimalScale(fighter.id);
+    const body = this.add.ellipse(0, 0, 76 * scale, 48 * scale, fighter.color)
+      .setStrokeStyle(3, 0x09070d);
 
-    const container = this.add.container(x, y, [body, head, eye]);
+    const headX = flip ? -42 * scale : 42 * scale;
+    const head = this.add.circle(headX, -10 * scale, 24 * scale, fighter.color)
+      .setStrokeStyle(3, 0x09070d);
+
+    const eyeX = flip ? headX - 7 * scale : headX + 7 * scale;
+    const eye = this.add.circle(eyeX, -17 * scale, 4 * scale, 0xffffff);
+
+    const shadow = this.add.ellipse(0, 36 * scale, 84 * scale, 14 * scale, 0x000000, 0.28);
+    const parts = [shadow, body, head, eye];
+    this.addAnimalFeature(parts, fighter, flip, scale);
+
+    const container = this.add.container(x, y, parts);
     container.setData('baseX', x);
     container.setData('baseY', y);
     fighter.sprite = container;
 
-    fighter.nameText = this.add.text(x, y - 68, fighter.name, {
+    fighter.nameText = this.add.text(x, y - 62, fighter.name, {
       fontFamily: 'Arial',
-      fontSize: '16px',
+      fontSize: '15px',
       color: '#ffffff',
       stroke: '#000000',
       strokeThickness: 4,
     }).setOrigin(0.5);
 
-    this.add.rectangle(x, y - 47, 88, 9, 0x330000).setOrigin(0.5);
-    fighter.hpBar = this.add.rectangle(x - 44, y - 47, 88, 9, 0x35d04f).setOrigin(0, 0.5);
+    this.add.rectangle(x, y - 43, 96, 11, 0x32070b).setOrigin(0.5);
+    fighter.hpBar = this.add.rectangle(x - 48, y - 43, 96, 11, 0x35d04f).setOrigin(0, 0.5);
 
-    fighter.statusText = this.add.text(x, y + 43, '', {
+    fighter.statusText = this.add.text(x, y + 58, '', {
       fontFamily: 'Arial',
-      fontSize: '13px',
+      fontSize: '12px',
       color: '#d9c7ff',
       stroke: '#000000',
       strokeThickness: 3,
+      align: 'center',
     }).setOrigin(0.5);
 
     this.tweens.add({
       targets: container,
-      y: y - 6,
+      y: y - 5,
       duration: 850 + Math.random() * 250,
       yoyo: true,
       repeat: -1,
@@ -86,13 +113,63 @@ export class BattleScene extends Phaser.Scene {
     });
   }
 
+  getAnimalScale(id) {
+    const scales = {
+      gorilla: 1.13,
+      tiger: 1.02,
+      snake: 0.82,
+      rhino: 1.18,
+      crocodile: 1.02,
+      eagle: 0.86,
+    };
+    return scales[id] || 1;
+  }
+
+  addAnimalFeature(parts, fighter, flip, scale) {
+    if (fighter.id === 'rhino') {
+      const hornX = flip ? -72 * scale : 72 * scale;
+      parts.push(this.add.triangle(hornX, -11 * scale, 0, 8, 0, -8, flip ? -28 : 28, 0, 0xd8d0b2));
+    }
+
+    if (fighter.id === 'eagle') {
+      parts.push(this.add.triangle(0, -5 * scale, -48 * scale, 18 * scale, 0, -18 * scale, 48 * scale, 18 * scale, 0xb8b89f));
+    }
+
+    if (fighter.id === 'snake') {
+      parts.push(this.add.ellipse(flip ? -22 * scale : 22 * scale, 7 * scale, 92 * scale, 26 * scale, fighter.color));
+    }
+
+    if (fighter.id === 'tiger') {
+      parts.push(this.add.rectangle(0, -2 * scale, 10 * scale, 48 * scale, 0x2b1609));
+      parts.push(this.add.rectangle(22 * scale, -2 * scale, 8 * scale, 38 * scale, 0x2b1609));
+    }
+
+    if (fighter.id === 'gorilla') {
+      parts.push(this.add.circle(flip ? 35 * scale : -35 * scale, 12 * scale, 18 * scale, 0x5a514d));
+    }
+
+    if (fighter.id === 'crocodile') {
+      parts.push(this.add.rectangle(flip ? -58 * scale : 58 * scale, 0, 42 * scale, 18 * scale, 0x31552f));
+    }
+  }
+
   createHud() {
-    this.logText = this.add.text(480, 500, 'Battle starting...', {
+    this.roundText = this.add.text(195, 145, 'AUTO BATTLE', {
       fontFamily: 'Arial',
-      fontSize: '20px',
+      fontSize: '16px',
+      color: '#f1d27a',
+      stroke: '#000000',
+      strokeThickness: 4,
+    }).setOrigin(0.5);
+
+    this.logText = this.add.text(195, 710, 'Battle starting...', {
+      fontFamily: 'Arial',
+      fontSize: '18px',
       color: '#ffffff',
       stroke: '#000000',
       strokeThickness: 5,
+      align: 'center',
+      wordWrap: { width: 330 },
     }).setOrigin(0.5);
   }
 
@@ -143,7 +220,7 @@ export class BattleScene extends Phaser.Scene {
   performAttack(attacker, target) {
     const baseX = attacker.sprite.getData('baseX');
     const targetX = target.sprite.getData('baseX');
-    const attackX = baseX + (targetX > baseX ? 115 : -115);
+    const attackX = baseX + (targetX > baseX ? 72 : -72);
 
     this.showLog(`${attacker.name}: ${attacker.basicMove}`);
 
@@ -172,7 +249,7 @@ export class BattleScene extends Phaser.Scene {
   }
 
   playHitEffect(target, damage, appliedStatus) {
-    this.cameras.main.shake(90, 0.004);
+    this.cameras.main.shake(90, 0.006);
     this.showFloatingText(target, `-${damage}`, '#ffeb8a');
 
     const x = target.sprite.getData('baseX');
@@ -180,7 +257,7 @@ export class BattleScene extends Phaser.Scene {
 
     const slash = this.add.text(x, y - 5, '✦', {
       fontFamily: 'Arial',
-      fontSize: '48px',
+      fontSize: '54px',
       color: '#ffffff',
       stroke: '#5b1b1b',
       strokeThickness: 5,
@@ -207,7 +284,7 @@ export class BattleScene extends Phaser.Scene {
 
   showFloatingText(fighter, text, color = '#ffffff', yOffset = 0) {
     const x = fighter.sprite.getData('baseX');
-    const y = fighter.sprite.getData('baseY') - 65 + yOffset;
+    const y = fighter.sprite.getData('baseY') - 72 + yOffset;
 
     const floating = this.add.text(x, y, text, {
       fontFamily: 'Arial',
@@ -230,7 +307,7 @@ export class BattleScene extends Phaser.Scene {
   refreshAllVisuals() {
     for (const fighter of this.fighters) {
       const ratio = Phaser.Math.Clamp(fighter.hp / fighter.maxHp, 0, 1);
-      fighter.hpBar.width = 88 * ratio;
+      fighter.hpBar.width = 96 * ratio;
 
       if (!fighter.alive) {
         fighter.sprite.setAlpha(0.35);
@@ -247,20 +324,24 @@ export class BattleScene extends Phaser.Scene {
 
   endBattle(message) {
     this.showLog(message);
-    this.add.text(480, 110, message.toUpperCase(), {
+
+    this.add.rectangle(195, 340, 310, 125, 0x100b17, 0.92)
+      .setStrokeStyle(3, 0x6d4b9a);
+
+    this.add.text(195, 315, message.toUpperCase(), {
       fontFamily: 'Arial',
-      fontSize: '44px',
+      fontSize: '34px',
       color: '#f1d27a',
       stroke: '#000000',
       strokeThickness: 7,
     }).setOrigin(0.5);
 
-    const restart = this.add.text(480, 165, 'Tap to restart', {
+    const restart = this.add.text(195, 372, 'Tap to restart', {
       fontFamily: 'Arial',
-      fontSize: '22px',
+      fontSize: '20px',
       color: '#ffffff',
-      backgroundColor: '#4b247a',
-      padding: { x: 18, y: 10 },
+      backgroundColor: '#5a2b8f',
+      padding: { x: 18, y: 12 },
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     restart.on('pointerdown', () => this.scene.restart());
