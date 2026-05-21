@@ -4,36 +4,53 @@ export class BootScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(480, 120, 'BEAST CLASH', {
+    const cx = 195;
+
+    this.add.rectangle(cx, 422, 390, 844, 0x0c0911);
+    this.add.rectangle(cx, 422, 340, 690, 0x15101d).setStrokeStyle(2, 0x5a3f83);
+
+    this.add.text(cx, 135, 'BEAST\nCLASH', {
       fontFamily: 'Arial',
-      fontSize: '56px',
+      fontSize: '54px',
+      align: 'center',
       color: '#f1d27a',
       stroke: '#000000',
       strokeThickness: 8,
+      lineSpacing: -6,
     }).setOrigin(0.5);
 
-    this.add.text(480, 185, 'Animal auto-battle prototype', {
+    this.add.text(cx, 235, 'Animal auto-battle prototype', {
       fontFamily: 'Arial',
-      fontSize: '22px',
+      fontSize: '18px',
       color: '#d9c7ff',
     }).setOrigin(0.5);
 
-    const start = this.add.text(480, 310, 'Start Test Battle', {
+    this.add.text(cx, 330, '3v3 test battle', {
       fontFamily: 'Arial',
-      fontSize: '30px',
+      fontSize: '24px',
       color: '#ffffff',
-      backgroundColor: '#4b247a',
-      padding: { x: 28, y: 16 },
+      stroke: '#000000',
+      strokeThickness: 5,
+    }).setOrigin(0.5);
+
+    const start = this.add.text(cx, 430, 'START BATTLE', {
+      fontFamily: 'Arial',
+      fontSize: '24px',
+      color: '#ffffff',
+      backgroundColor: '#5a2b8f',
+      padding: { x: 28, y: 18 },
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     start.on('pointerdown', () => {
       this.scene.start('BattleScene');
     });
 
-    this.add.text(480, 470, 'MVP: 3v3 side-view battle • code-driven animations • placeholder sprites', {
+    this.add.text(cx, 660, 'MVP build\nCode-driven animation\nPlaceholder animals', {
       fontFamily: 'Arial',
-      fontSize: '18px',
+      fontSize: '16px',
+      align: 'center',
       color: '#8f86a8',
+      lineSpacing: 8,
     }).setOrigin(0.5);
   }
 }
