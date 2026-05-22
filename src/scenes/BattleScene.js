@@ -1,6 +1,7 @@
 import { ANIMALS } from '../data/animals.js';
 import { BattleLogic } from '../systems/BattleLogic.js';
 import { GameState, VICTORY_REWARDS } from '../state/GameState.js';
+import { AnimalShapeRenderer } from '../renderers/AnimalShapeRenderer.js';
 
 export class BattleScene extends Phaser.Scene {
   constructor() {
@@ -88,7 +89,7 @@ export class BattleScene extends Phaser.Scene {
 
   createFighterVisual(fighter, x, y, flip) {
     const scale = this.getAnimalScale(fighter.id);
-    const parts = this.buildAnimalSilhouette(fighter, flip, scale);
+    const parts = AnimalShapeRenderer.create(this, fighter, flip, scale);
 
     const container = this.add.container(x, y, parts);
     container.setData('baseX', x);
@@ -139,72 +140,6 @@ export class BattleScene extends Phaser.Scene {
     return scales[id] || 1;
   }
 
-  buildAnimalSilhouette(fighter, flip, scale) {
-    const dir = flip ? -1 : 1;
-    const c = fighter.color;
-    const dark = 0x09070d;
-    const parts = [];
-
-    parts.push(this.add.ellipse(0, 42 * scale, 105 * scale, 18 * scale, 0x000000, 0.30));
-
-    if (fighter.id === 'gorilla') {
-      parts.push(this.add.ellipse(-8 * dir * scale, 0, 78 * scale, 68 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.circle(34 * dir * scale, -12 * scale, 24 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.ellipse(-50 * dir * scale, 16 * scale, 28 * scale, 56 * scale, 0x514a46).setStrokeStyle(3, dark));
-      parts.push(this.add.ellipse(8 * dir * scale, 24 * scale, 30 * scale, 52 * scale, 0x514a46).setStrokeStyle(3, dark));
-      parts.push(this.add.circle(38 * dir * scale, -17 * scale, 4 * scale, 0xffffff));
-      parts.push(this.add.ellipse(37 * dir * scale, 1 * scale, 25 * scale, 13 * scale, 0x3b3634));
-    } else if (fighter.id === 'tiger') {
-      parts.push(this.add.ellipse(-10 * dir * scale, 5 * scale, 102 * scale, 40 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.circle(45 * dir * scale, -9 * scale, 23 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.triangle(40 * dir * scale, -32 * scale, -8 * dir, 10, 0, -12, 12 * dir, 10, c).setStrokeStyle(2, dark));
-      parts.push(this.add.triangle(55 * dir * scale, -28 * scale, -8 * dir, 10, 0, -12, 12 * dir, 10, c).setStrokeStyle(2, dark));
-      parts.push(this.add.ellipse(-72 * dir * scale, -4 * scale, 60 * scale, 9 * scale, c).setRotation(-0.4 * dir).setStrokeStyle(3, dark));
-      parts.push(this.add.rectangle(-20 * dir * scale, 1 * scale, 8 * scale, 38 * scale, 0x2b1609));
-      parts.push(this.add.rectangle(5 * dir * scale, 1 * scale, 8 * scale, 36 * scale, 0x2b1609));
-      parts.push(this.add.rectangle(28 * dir * scale, 0, 7 * scale, 28 * scale, 0x2b1609));
-      parts.push(this.add.circle(53 * dir * scale, -15 * scale, 4 * scale, 0xffffff));
-    } else if (fighter.id === 'snake') {
-      parts.push(this.add.ellipse(-32 * dir * scale, 12 * scale, 58 * scale, 28 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.ellipse(5 * dir * scale, 11 * scale, 64 * scale, 28 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.ellipse(37 * dir * scale, 0, 34 * scale, 30 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.triangle(56 * dir * scale, 4 * scale, 0, 0, 22 * dir, -6, 22 * dir, 6, 0xa6e06e));
-      parts.push(this.add.circle(45 * dir * scale, -8 * scale, 4 * scale, 0xffffff));
-    } else if (fighter.id === 'rhino') {
-      parts.push(this.add.ellipse(-5 * dir * scale, 5 * scale, 92 * scale, 58 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.ellipse(42 * dir * scale, -10 * scale, 48 * scale, 40 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.triangle(72 * dir * scale, -16 * scale, 0, 7, 0, -7, 35 * dir, -1, 0xd8d0b2).setStrokeStyle(2, dark));
-      parts.push(this.add.rectangle(-25 * dir * scale, 34 * scale, 15 * scale, 28 * scale, 0x777777).setStrokeStyle(2, dark));
-      parts.push(this.add.rectangle(18 * dir * scale, 34 * scale, 15 * scale, 28 * scale, 0x777777).setStrokeStyle(2, dark));
-      parts.push(this.add.circle(50 * dir * scale, -18 * scale, 4 * scale, 0xffffff));
-    } else if (fighter.id === 'crocodile') {
-      parts.push(this.add.ellipse(-12 * dir * scale, 6 * scale, 95 * scale, 34 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.rectangle(46 * dir * scale, 1 * scale, 52 * scale, 20 * scale, 0x31552f).setStrokeStyle(3, dark));
-      parts.push(this.add.triangle(-68 * dir * scale, 5 * scale, 0, 0, -40 * dir, -12, -40 * dir, 12, 0x31552f).setStrokeStyle(2, dark));
-      parts.push(this.add.circle(56 * dir * scale, -8 * scale, 4 * scale, 0xffffff));
-      parts.push(this.add.rectangle(46 * dir * scale, 12 * scale, 46 * scale, 4 * scale, 0xd8d0b2));
-      for (let i = 0; i < 5; i += 1) {
-        parts.push(this.add.rectangle((-30 + i * 16) * dir * scale, 2 * scale, 4 * scale, 30 * scale, 0x23411f).setRotation(0.15 * dir));
-      }
-      parts.push(this.add.rectangle(46 * dir * scale, 10 * scale, 44 * scale, 3 * scale, 0xf0e4c6));
-      for (let i = 0; i < 5; i += 1) {
-        parts.push(this.add.triangle((24 + i * 8) * dir * scale, 11 * scale, -3, 0, 0, 5, 3, 0, 0xf0e4c6));
-      }
-    } else if (fighter.id === 'eagle') {
-      parts.push(this.add.ellipse(0, 6 * scale, 46 * scale, 30 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.circle(34 * dir * scale, -12 * scale, 18 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.triangle(-18 * dir * scale, -8 * scale, -84 * dir, 28, 0, -18, 40 * dir, 16, 0xb8b89f).setStrokeStyle(2, dark));
-      parts.push(this.add.triangle(6 * dir * scale, -8 * scale, -42 * dir, 18, 0, -16, 84 * dir, 30, 0x8f8f83).setStrokeStyle(2, dark));
-      parts.push(this.add.triangle(56 * dir * scale, -12 * scale, 0, 7, 0, -7, 22 * dir, 0, 0xf1d27a).setStrokeStyle(1, dark));
-      parts.push(this.add.circle(43 * dir * scale, -18 * scale, 4 * scale, 0xffffff));
-    } else {
-      parts.push(this.add.ellipse(0, 0, 76 * scale, 48 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.circle(42 * dir * scale, -10 * scale, 24 * scale, c).setStrokeStyle(3, dark));
-      parts.push(this.add.circle(49 * dir * scale, -17 * scale, 4 * scale, 0xffffff));
-    }
-
-    return parts;
-  }
 
   createHud() {
     this.roundText = this.add.text(195, 145, 'AUTO BATTLE', {
