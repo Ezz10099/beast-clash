@@ -31,7 +31,9 @@ export class BattleScene extends Phaser.Scene {
   }
 
   createBackground() {
-    this.add.rectangle(195, 422, 390, 844, 0x0c0911);
+    this.add.rectangle(195, 422, 390, 844, 0x08060d);
+    this.add.ellipse(195, 170, 430, 290, 0x24143d, 0.33);
+    this.add.ellipse(195, 560, 480, 640, 0x1a1030, 0.25);
 
     this.add.rectangle(195, 92, 350, 96, 0x17111f)
       .setStrokeStyle(2, 0x5a3f83);
@@ -50,8 +52,12 @@ export class BattleScene extends Phaser.Scene {
       color: '#d9c7ff',
     }).setOrigin(0.5);
 
-    this.add.rectangle(195, 430, 358, 530, 0x17111f)
+    this.add.rectangle(195, 430, 358, 530, 0x141021)
       .setStrokeStyle(3, 0x6d4b9a);
+
+    this.add.ellipse(195, 524, 324, 150, 0x0b0812).setStrokeStyle(2, 0x8f6f3d, 0.7);
+    const arenaLine = this.add.rectangle(195, 520, 306, 2, 0xc9a766, 0.65);
+    this.tweens.add({ targets: arenaLine, alpha: 0.2, yoyo: true, repeat: -1, duration: 1500 });
 
     this.add.rectangle(195, 665, 358, 88, 0x100b17)
       .setStrokeStyle(2, 0x3d2b5c);
@@ -97,8 +103,9 @@ export class BattleScene extends Phaser.Scene {
       strokeThickness: 4,
     }).setOrigin(0.5);
 
-    this.add.rectangle(x, y - 47, 100, 12, 0x32070b).setOrigin(0.5);
-    fighter.hpBar = this.add.rectangle(x - 50, y - 47, 100, 12, 0x35d04f).setOrigin(0, 0.5);
+    this.add.rectangle(x, y - 47, 108, 16, 0x0a0910).setStrokeStyle(1, 0x8f6f3c).setOrigin(0.5);
+    this.add.rectangle(x, y - 47, 100, 8, 0x32070b).setOrigin(0.5);
+    fighter.hpBar = this.add.rectangle(x - 50, y - 47, 100, 8, 0x35d04f).setOrigin(0, 0.5);
 
     fighter.statusText = this.add.text(x, y + 62, '', {
       fontFamily: 'Arial',
@@ -204,6 +211,7 @@ export class BattleScene extends Phaser.Scene {
       strokeThickness: 4,
     }).setOrigin(0.5);
 
+    this.add.rectangle(195, 665, 346, 82, 0x120d1b).setStrokeStyle(2, 0x6d4b9a);
     this.logText = this.add.text(195, 665, 'Battle starting...', {
       fontFamily: 'Arial',
       fontSize: '16px',
@@ -222,6 +230,7 @@ export class BattleScene extends Phaser.Scene {
     playerFighters.forEach((fighter, index) => {
       const x = xPositions[index] || (70 + (index * 125));
       const y = 785;
+      const glow = this.add.rectangle(x, y, 118, 94, 0xc9a766, 0.14);
       const bg = this.add.rectangle(x, y, 110, 86, 0x2b1a3f).setStrokeStyle(2, 0x6d4b9a);
       const label = this.add.text(x, y - 20, this.getUltimateName(fighter.id), {
         fontFamily: 'Arial', fontSize: '11px', color: '#ffffff', align: 'center', wordWrap: { width: 100 },
@@ -230,10 +239,10 @@ export class BattleScene extends Phaser.Scene {
         fontFamily: 'Arial', fontSize: '20px', color: '#9aa3ff', stroke: '#000000', strokeThickness: 4,
       }).setOrigin(0.5);
 
-      const button = this.add.container(x, y, [bg, label, energyText]).setSize(110, 86).setInteractive({ useHandCursor: true });
+      const button = this.add.container(x, y, [glow, bg, label, energyText]).setSize(118, 94).setInteractive({ useHandCursor: true });
       button.on('pointerdown', () => this.useUltimate(fighter.id));
 
-      this.ultimateButtons.push({ fighterId: fighter.id, container: button, bg, energyText, label });
+      this.ultimateButtons.push({ fighterId: fighter.id, container: button, bg, glow, energyText, label });
     });
 
     this.updateUltimateButtons();
@@ -249,16 +258,19 @@ export class BattleScene extends Phaser.Scene {
       const canUse = ready && fighter.alive && !this.isBattleOver;
 
       if (!fighter.alive) {
+        button.glow.setAlpha(0.05);
         button.bg.setFillStyle(0x1b1b1b);
         button.bg.setStrokeStyle(2, 0x444444);
         button.energyText.setText('KO');
         button.energyText.setColor('#777777');
       } else if (canUse) {
+        button.glow.setAlpha(0.42);
         button.bg.setFillStyle(0x365f20);
         button.bg.setStrokeStyle(3, 0xa8ef6f);
         button.energyText.setText('READY');
         button.energyText.setColor('#d8ffad');
       } else {
+        button.glow.setAlpha(0.12);
         button.bg.setFillStyle(0x2b1a3f);
         button.bg.setStrokeStyle(2, 0x6d4b9a);
         button.energyText.setText(`${energy}%`);
