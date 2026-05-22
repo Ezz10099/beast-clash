@@ -3,6 +3,16 @@ import { BattleLogic } from '../systems/BattleLogic.js';
 import { GameState, VICTORY_REWARDS } from '../state/GameState.js';
 import { AnimalShapeRenderer } from '../renderers/AnimalShapeRenderer.js';
 
+
+const ANIMAL_DISPLAY_SETTINGS = {
+  gorilla: { scale: 0.20, xOffset: 0, yOffset: -8, hpBarYOffset: -58, nameYOffset: -77, statusYOffset: 50 },
+  tiger: { scale: 0.16, xOffset: 8, yOffset: -4, hpBarYOffset: -55, nameYOffset: -74, statusYOffset: 52 },
+  snake: { scale: 0.13, xOffset: -12, yOffset: 12, hpBarYOffset: -50, nameYOffset: -69, statusYOffset: 50 },
+  rhino: { scale: 0.18, xOffset: -8, yOffset: -8, hpBarYOffset: -58, nameYOffset: -77, statusYOffset: 50 },
+  crocodile: { scale: 0.15, xOffset: -10, yOffset: -2, hpBarYOffset: -55, nameYOffset: -74, statusYOffset: 52 },
+  eagle: { scale: 0.12, xOffset: -2, yOffset: -16, hpBarYOffset: -62, nameYOffset: -81, statusYOffset: 48 },
+};
+
 export class BattleScene extends Phaser.Scene {
   constructor() {
     super('BattleScene');
@@ -118,25 +128,26 @@ export class BattleScene extends Phaser.Scene {
   }
 
   createFighterVisual(fighter, x, y, flip) {
-    const scale = this.getAnimalScale(fighter.id);
+    const display = this.getAnimalDisplaySettings(fighter.id);
+    const scale = display.scale;
     const textureKey = this.getAnimalTextureKey(fighter.id);
     const hasAnimalSprite = textureKey && this.textures.exists(textureKey);
 
     let container;
     if (hasAnimalSprite) {
       const sprite = this.add.image(0, 0, textureKey)
-        .setScale(0.4 * scale)
+        .setScale(scale)
         .setFlipX(flip);
-      container = this.add.container(x, y, [sprite]);
+      container = this.add.container(x + display.xOffset, y + display.yOffset, [sprite]);
     } else {
       const parts = AnimalShapeRenderer.create(this, fighter, flip, scale);
-      container = this.add.container(x, y, parts);
+      container = this.add.container(x + display.xOffset, y + display.yOffset, parts);
     }
-    container.setData('baseX', x);
-    container.setData('baseY', y);
+    container.setData('baseX', x + display.xOffset);
+    container.setData('baseY', y + display.yOffset);
     fighter.sprite = container;
 
-    fighter.nameText = this.add.text(x, y - 66, fighter.name, {
+    fighter.nameText = this.add.text(x + display.xOffset, y + display.nameYOffset, fighter.name, {
       fontFamily: 'Arial',
       fontSize: '15px',
       color: '#ffffff',
@@ -144,11 +155,11 @@ export class BattleScene extends Phaser.Scene {
       strokeThickness: 4,
     }).setOrigin(0.5);
 
-    this.add.rectangle(x, y - 47, 108, 16, 0x0a0910).setStrokeStyle(1, 0x8f6f3c).setOrigin(0.5);
-    this.add.rectangle(x, y - 47, 100, 8, 0x32070b).setOrigin(0.5);
-    fighter.hpBar = this.add.rectangle(x - 50, y - 47, 100, 8, 0x35d04f).setOrigin(0, 0.5);
+    this.add.rectangle(x + display.xOffset, y + display.hpBarYOffset, 108, 16, 0x0a0910).setStrokeStyle(1, 0x8f6f3c).setOrigin(0.5);
+    this.add.rectangle(x + display.xOffset, y + display.hpBarYOffset, 100, 8, 0x32070b).setOrigin(0.5);
+    fighter.hpBar = this.add.rectangle(x + display.xOffset - 50, y + display.hpBarYOffset, 100, 8, 0x35d04f).setOrigin(0, 0.5);
 
-    fighter.statusText = this.add.text(x, y + 62, '', {
+    fighter.statusText = this.add.text(x + display.xOffset, y + display.statusYOffset, '', {
       fontFamily: 'Arial',
       fontSize: '12px',
       color: '#d9c7ff',
@@ -160,7 +171,7 @@ export class BattleScene extends Phaser.Scene {
 
     this.tweens.add({
       targets: container,
-      y: y - 5,
+      y: y + display.yOffset - 5,
       duration: 850 + Math.random() * 250,
       yoyo: true,
       repeat: -1,
@@ -168,16 +179,15 @@ export class BattleScene extends Phaser.Scene {
     });
   }
 
-  getAnimalScale(id) {
-    const scales = {
-      gorilla: 1.08,
-      tiger: 1.00,
-      snake: 0.95,
-      rhino: 1.08,
-      crocodile: 1.00,
-      eagle: 0.95,
+  getAnimalDisplaySettings(id) {
+    return ANIMAL_DISPLAY_SETTINGS[id] || {
+      scale: 0.16,
+      xOffset: 0,
+      yOffset: 0,
+      hpBarYOffset: -55,
+      nameYOffset: -74,
+      statusYOffset: 52,
     };
-    return scales[id] || 1;
   }
 
 
