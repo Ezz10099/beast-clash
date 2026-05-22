@@ -42,7 +42,7 @@ export class BootScene extends Phaser.Scene {
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
     start.on('pointerdown', () => {
-      this.scene.start('BattleScene');
+      this.scene.start('TeamPreviewScene');
     });
 
     this.add.text(cx, 660, 'MVP build\nCode-driven animation\nPlaceholder animals', {

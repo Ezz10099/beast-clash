@@ -1,5 +1,7 @@
 import { BootScene } from './scenes/BootScene.js';
 import { BattleScene } from './scenes/BattleScene.js';
+import { TeamPreviewScene } from './scenes/TeamPreviewScene.js';
+import { RewardsScene } from './scenes/RewardsScene.js';
 
 const config = {
   type: Phaser.AUTO,
@@ -11,7 +13,7 @@ const config = {
     width: 390,
     height: 844,
   },
-  scene: [BootScene, BattleScene],
+  scene: [BootScene, TeamPreviewScene, BattleScene, RewardsScene],
 };
 
 new Phaser.Game(config);
