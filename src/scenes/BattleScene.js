@@ -17,6 +17,22 @@ export class BattleScene extends Phaser.Scene {
     this.damageEnergyFactor = 0.3;
   }
 
+
+  preload() {
+    const animalTextures = {
+      gorilla: 'animal_gorilla',
+      tiger: 'animal_tiger',
+      snake: 'animal_snake',
+      rhino: 'animal_rhino',
+      crocodile: 'animal_crocodile',
+      eagle: 'animal_eagle',
+    };
+
+    Object.entries(animalTextures).forEach(([animalId, textureKey]) => {
+      this.load.image(textureKey, `assets/sprites/animals/${animalId}.png`);
+    });
+  }
+
   create() {
     this.fighters = [];
     this.turnQueue = [];
@@ -87,11 +103,35 @@ export class BattleScene extends Phaser.Scene {
     });
   }
 
+
+  getAnimalTextureKey(id) {
+    const textureKeys = {
+      gorilla: 'animal_gorilla',
+      tiger: 'animal_tiger',
+      snake: 'animal_snake',
+      rhino: 'animal_rhino',
+      crocodile: 'animal_crocodile',
+      eagle: 'animal_eagle',
+    };
+
+    return textureKeys[id] || null;
+  }
+
   createFighterVisual(fighter, x, y, flip) {
     const scale = this.getAnimalScale(fighter.id);
-    const parts = AnimalShapeRenderer.create(this, fighter, flip, scale);
+    const textureKey = this.getAnimalTextureKey(fighter.id);
+    const hasAnimalSprite = textureKey && this.textures.exists(textureKey);
 
-    const container = this.add.container(x, y, parts);
+    let container;
+    if (hasAnimalSprite) {
+      const sprite = this.add.image(0, 0, textureKey)
+        .setScale(0.4 * scale)
+        .setFlipX(flip);
+      container = this.add.container(x, y, [sprite]);
+    } else {
+      const parts = AnimalShapeRenderer.create(this, fighter, flip, scale);
+      container = this.add.container(x, y, parts);
+    }
     container.setData('baseX', x);
     container.setData('baseY', y);
     fighter.sprite = container;
