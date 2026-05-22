@@ -6,14 +6,26 @@ export class BattleScene extends Phaser.Scene {
     super('BattleScene');
     this.fighters = [];
     this.turnQueue = [];
+    this.isBattleOver = false;
+    this.ultimateButtons = [];
+
+    this.playerUltimateIds = ['gorilla', 'tiger', 'snake'];
+    this.maxEnergy = 100;
+    this.attackEnergyGain = 28;
+    this.damageEnergyFactor = 0.3;
   }
 
   create() {
     this.fighters = [];
     this.turnQueue = [];
+    this.isBattleOver = false;
+    this.ultimateButtons = [];
+
     this.createBackground();
     this.createTeams();
     this.createHud();
+    this.createUltimateButtons();
+    this.refreshAllVisuals();
     this.time.delayedCall(700, () => this.startBattleLoop());
   }
 
@@ -37,10 +49,13 @@ export class BattleScene extends Phaser.Scene {
       color: '#d9c7ff',
     }).setOrigin(0.5);
 
-    this.add.rectangle(195, 445, 358, 560, 0x17111f)
+    this.add.rectangle(195, 430, 358, 530, 0x17111f)
       .setStrokeStyle(3, 0x6d4b9a);
 
-    this.add.rectangle(195, 710, 358, 82, 0x100b17)
+    this.add.rectangle(195, 665, 358, 88, 0x100b17)
+      .setStrokeStyle(2, 0x3d2b5c);
+
+    this.add.rectangle(195, 785, 358, 106, 0x100b17)
       .setStrokeStyle(2, 0x3d2b5c);
   }
 
@@ -51,12 +66,14 @@ export class BattleScene extends Phaser.Scene {
 
     leftTeam.forEach((id, index) => {
       const fighter = BattleLogic.createFighter(ANIMALS[id], 'player', index);
+      fighter.energy = 0;
       this.createFighterVisual(fighter, 95, ySlots[index], false);
       this.fighters.push(fighter);
     });
 
     rightTeam.forEach((id, index) => {
       const fighter = BattleLogic.createFighter(ANIMALS[id], 'enemy', index);
+      fighter.energy = 0;
       this.createFighterVisual(fighter, 295, ySlots[index], true);
       this.fighters.push(fighter);
     });
@@ -186,9 +203,9 @@ export class BattleScene extends Phaser.Scene {
       strokeThickness: 4,
     }).setOrigin(0.5);
 
-    this.logText = this.add.text(195, 710, 'Battle starting...', {
+    this.logText = this.add.text(195, 665, 'Battle starting...', {
       fontFamily: 'Arial',
-      fontSize: '18px',
+      fontSize: '16px',
       color: '#ffffff',
       stroke: '#000000',
       strokeThickness: 5,
@@ -197,12 +214,128 @@ export class BattleScene extends Phaser.Scene {
     }).setOrigin(0.5);
   }
 
+  createUltimateButtons() {
+    const playerFighters = this.fighters.filter(f => f.team === 'player' && this.playerUltimateIds.includes(f.id));
+    const xPositions = [70, 195, 320];
+
+    playerFighters.forEach((fighter, index) => {
+      const x = xPositions[index] || (70 + (index * 125));
+      const y = 785;
+      const bg = this.add.rectangle(x, y, 110, 86, 0x2b1a3f).setStrokeStyle(2, 0x6d4b9a);
+      const label = this.add.text(x, y - 20, this.getUltimateName(fighter.id), {
+        fontFamily: 'Arial', fontSize: '11px', color: '#ffffff', align: 'center', wordWrap: { width: 100 },
+      }).setOrigin(0.5);
+      const energyText = this.add.text(x, y + 18, '0%', {
+        fontFamily: 'Arial', fontSize: '20px', color: '#9aa3ff', stroke: '#000000', strokeThickness: 4,
+      }).setOrigin(0.5);
+
+      const button = this.add.container(x, y, [bg, label, energyText]).setSize(110, 86).setInteractive({ useHandCursor: true });
+      button.on('pointerdown', () => this.useUltimate(fighter.id));
+
+      this.ultimateButtons.push({ fighterId: fighter.id, container: button, bg, energyText, label });
+    });
+
+    this.updateUltimateButtons();
+  }
+
+  updateUltimateButtons() {
+    for (const button of this.ultimateButtons) {
+      const fighter = this.fighters.find(f => f.id === button.fighterId && f.team === 'player');
+      if (!fighter) continue;
+
+      const energy = Phaser.Math.Clamp(Math.round(fighter.energy || 0), 0, this.maxEnergy);
+      const ready = energy >= this.maxEnergy;
+      const canUse = ready && fighter.alive && !this.isBattleOver;
+
+      if (!fighter.alive) {
+        button.bg.setFillStyle(0x1b1b1b);
+        button.bg.setStrokeStyle(2, 0x444444);
+        button.energyText.setText('KO');
+        button.energyText.setColor('#777777');
+      } else if (canUse) {
+        button.bg.setFillStyle(0x365f20);
+        button.bg.setStrokeStyle(3, 0xa8ef6f);
+        button.energyText.setText('READY');
+        button.energyText.setColor('#d8ffad');
+      } else {
+        button.bg.setFillStyle(0x2b1a3f);
+        button.bg.setStrokeStyle(2, 0x6d4b9a);
+        button.energyText.setText(`${energy}%`);
+        button.energyText.setColor('#9aa3ff');
+      }
+    }
+  }
+
+  addEnergy(fighter, amount) {
+    if (!fighter || fighter.team !== 'player' || !this.playerUltimateIds.includes(fighter.id) || !fighter.alive || this.isBattleOver) {
+      return;
+    }
+
+    fighter.energy = Phaser.Math.Clamp((fighter.energy || 0) + amount, 0, this.maxEnergy);
+    this.updateUltimateButtons();
+  }
+
+  useUltimate(fighterId) {
+    if (this.isBattleOver) return;
+
+    const fighter = this.fighters.find(f => f.id === fighterId && f.team === 'player');
+    if (!fighter || !fighter.alive || (fighter.energy || 0) < this.maxEnergy) return;
+
+    const enemies = this.fighters.filter(f => f.team === 'enemy' && f.alive);
+    if (enemies.length === 0) return;
+
+    this.showLog(`${fighter.name} uses ${this.getUltimateName(fighter.id)}!`);
+
+    if (fighter.id === 'gorilla') {
+      this.cameras.main.shake(260, 0.015);
+      enemies.forEach(enemy => {
+        BattleLogic.applyDamage(enemy, 32);
+        enemy.statuses.push({ type: 'stun', turns: 1, damage: 0 });
+        this.showFloatingText(enemy, 'GROUND SLAM', '#ffcf6c', -26);
+      });
+    } else if (fighter.id === 'tiger') {
+      const target = enemies.sort((a, b) => a.hp - b.hp)[0];
+      if (target) {
+        BattleLogic.applyDamage(target, 50);
+        target.statuses.push({ type: 'bleed', turns: 3, damage: 7 });
+        this.showFloatingText(target, 'SAVAGE POUNCE', '#ffa8a8', -26);
+        this.playHitEffect(target, 50, 'bleed');
+      }
+    } else if (fighter.id === 'snake') {
+      this.cameras.main.flash(200, 120, 255, 120);
+      enemies.forEach(enemy => {
+        BattleLogic.applyDamage(enemy, 18);
+        enemy.statuses.push({ type: 'poison', turns: 3, damage: 7 });
+        this.showFloatingText(enemy, 'TOXIC CLOUD', '#8fff99', -26);
+      });
+    }
+
+    fighter.energy = 0;
+    this.refreshAllVisuals();
+    this.updateUltimateButtons();
+
+    if (!BattleLogic.teamAlive(this.fighters, 'enemy')) {
+      this.endBattle('Player wins');
+    }
+  }
+
+  getUltimateName(fighterId) {
+    const names = {
+      gorilla: 'Ground Slam',
+      tiger: 'Savage Pounce',
+      snake: 'Toxic Cloud',
+    };
+    return names[fighterId] || 'Ultimate';
+  }
+
   startBattleLoop() {
+    if (this.isBattleOver) return;
     this.turnQueue = BattleLogic.getTurnOrder(this.fighters);
     this.runNextTurn();
   }
 
   runNextTurn() {
+    if (this.isBattleOver) return;
     if (!BattleLogic.teamAlive(this.fighters, 'player')) return this.endBattle('Enemy wins');
     if (!BattleLogic.teamAlive(this.fighters, 'enemy')) return this.endBattle('Player wins');
 
@@ -242,6 +375,7 @@ export class BattleScene extends Phaser.Scene {
   }
 
   performAttack(attacker, target) {
+    if (this.isBattleOver) return;
     const baseX = attacker.sprite.getData('baseX');
     const targetX = target.sprite.getData('baseX');
     const attackX = baseX + (targetX > baseX ? 72 : -72);
@@ -256,6 +390,8 @@ export class BattleScene extends Phaser.Scene {
       onComplete: () => {
         const damage = Phaser.Math.Between(attacker.attack - 4, attacker.attack + 5);
         BattleLogic.applyDamage(target, damage);
+        this.addEnergy(attacker, this.attackEnergyGain);
+        this.addEnergy(target, Math.ceil(damage * this.damageEnergyFactor));
         const appliedStatus = BattleLogic.tryApplyStatus(attacker, target);
 
         this.playHitEffect(target, damage, appliedStatus);
@@ -340,6 +476,8 @@ export class BattleScene extends Phaser.Scene {
 
       fighter.statusText.setText(fighter.statuses.map(s => s.type).join(' • '));
     }
+
+    this.updateUltimateButtons();
   }
 
   showLog(message) {
@@ -347,7 +485,11 @@ export class BattleScene extends Phaser.Scene {
   }
 
   endBattle(message) {
+    if (this.isBattleOver) return;
+    this.isBattleOver = true;
+
     this.showLog(message);
+    this.updateUltimateButtons();
 
     this.add.rectangle(195, 340, 310, 125, 0x100b17, 0.92)
       .setStrokeStyle(3, 0x6d4b9a);
