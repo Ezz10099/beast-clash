@@ -1,5 +1,6 @@
 import { ANIMALS } from '../data/animals.js';
 import { BattleLogic } from '../systems/BattleLogic.js';
+import { GameState, VICTORY_REWARDS } from '../state/GameState.js';
 
 export class BattleScene extends Phaser.Scene {
   constructor() {
@@ -502,7 +503,9 @@ export class BattleScene extends Phaser.Scene {
       strokeThickness: 7,
     }).setOrigin(0.5);
 
-    const restart = this.add.text(195, 372, 'Tap to restart', {
+    const isPlayerWin = message === 'Player wins';
+    const restartLabel = isPlayerWin ? 'Continue' : 'Tap to retry';
+    const restart = this.add.text(195, 372, restartLabel, {
       fontFamily: 'Arial',
       fontSize: '20px',
       color: '#ffffff',
@@ -510,6 +513,24 @@ export class BattleScene extends Phaser.Scene {
       padding: { x: 18, y: 12 },
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
+    if (isPlayerWin) {
+      this.time.delayedCall(900, () => this.onPlayerVictory());
+      restart.on('pointerdown', () => this.onPlayerVictory());
+      return;
+    }
+
     restart.on('pointerdown', () => this.scene.restart());
+  }
+
+  onPlayerVictory() {
+    if (!this.isBattleOver || this.scene.isActive('RewardsScene')) return;
+
+    GameState.gold += VICTORY_REWARDS.gold;
+    GameState.meat += VICTORY_REWARDS.meat;
+    GameState.beastXp += VICTORY_REWARDS.beastXp;
+    GameState.battlesWon += 1;
+    GameState.pendingRewards = { ...VICTORY_REWARDS };
+
+    this.scene.start('RewardsScene');
   }
 }
