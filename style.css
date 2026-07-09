@@ -1,0 +1,156 @@
+:root {
+  color-scheme: dark;
+  --bg: #101420;
+  --panel: #1b2233;
+  --panel-light: #27314a;
+  --text: #f3ead7;
+  --muted: #aab1c7;
+  --accent: #ffd166;
+  --danger: #ff6b6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at top, #253252 0, #101420 48%, #080b12 100%);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+}
+
+.shell {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: max(14px, env(safe-area-inset-top)) 14px max(16px, env(safe-area-inset-bottom));
+}
+
+.game-card {
+  width: min(100%, 420px);
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 3px solid #303b5d;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(39, 49, 74, 0.92), rgba(13, 17, 28, 0.96));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+}
+
+.top-bar,
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 2px;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.small-button,
+.controls button {
+  background: #2d3654;
+  border: 2px solid #59658c;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.small-button {
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+}
+
+#game {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  display: block;
+  border: 4px solid #111827;
+  border-radius: 12px;
+  background: #121827;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.hud {
+  min-height: 34px;
+  padding: 0 4px;
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+#healthText {
+  color: var(--danger);
+}
+
+#goalText {
+  color: var(--accent);
+  text-align: right;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dpad {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.dpad div {
+  display: flex;
+  gap: 6px;
+}
+
+.controls button {
+  width: 58px;
+  height: 48px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.controls button:active,
+.small-button:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.fire {
+  width: 94px !important;
+  height: 104px !important;
+  border-color: #d49b43 !important;
+  background: linear-gradient(180deg, #7b4a20, #4b2b18) !important;
+  color: #ffe0a3;
+  text-transform: uppercase;
+}
