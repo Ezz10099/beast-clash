@@ -1,0 +1,10 @@
+{
+  "name": "pixel-mage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A tiny mobile-first five-wave pixel-action game.",
+  "scripts": {
+    "check": "node --check game.js && node scripts/check.mjs",
+    "preview": "python3 -m http.server 4173"
+  }
+}

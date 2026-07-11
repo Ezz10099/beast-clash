@@ -1,11 +1,24 @@
 const canvas = document.querySelector("#game");
 const ctx = canvas.getContext("2d");
 const healthText = document.querySelector("#healthText");
-const goalText = document.querySelector("#goalText");
+const waveText = document.querySelector("#waveText");
+const scoreText = document.querySelector("#scoreText");
 const restartButton = document.querySelector("#restartButton");
+const controls = document.querySelector(".controls");
+const upgradePanel = document.querySelector("#upgradePanel");
+const upgradeChoices = document.querySelector("#upgradeChoices");
 
 const W = canvas.width;
 const H = canvas.height;
+const TOTAL_WAVES = 5;
+const BEST_SCORE_KEY = "pixel_mage_best_score_v1";
+const WAVE_DEFINITIONS = Object.freeze([
+  { count: 3, hp: 2, speed: 0.42 },
+  { count: 4, hp: 2, speed: 0.47 },
+  { count: 5, hp: 3, speed: 0.51 },
+  { count: 6, hp: 3, speed: 0.55 },
+  { count: 2, hp: 4, speed: 0.58, bossHp: 16, bossSpeed: 0.36 },
+]);
 const keys = {
   left: false,
   right: false,
@@ -17,7 +30,9 @@ const keys = {
 const state = {
   mode: "menu",
   time: 0,
-  bossSpawned: false,
+  wave: 0,
+  score: 0,
+  bestScore: loadBestScore(),
   defeated: 0,
   player: null,
   enemies: [],
@@ -25,10 +40,64 @@ const state = {
   sparks: [],
 };
 
+const UPGRADES = Object.freeze([
+  {
+    id: "power",
+    title: "Empowered Bolt",
+    describe: (player) => `Bolt damage ${player.damage} → ${player.damage + 1}`,
+    apply: (player) => { player.damage += 1; },
+  },
+  {
+    id: "rapid",
+    title: "Rapid Casting",
+    describe: (player) => player.cooldownMax <= 8 ? "Casting is already at maximum speed" : "Cast bolts more frequently",
+    apply: (player) => { player.cooldownMax = Math.max(8, player.cooldownMax - 3); },
+  },
+  {
+    id: "vitality",
+    title: "Vital Spark",
+    describe: (player) => `Maximum HP ${player.maxHp} → ${player.maxHp + 1}; fully heal`,
+    apply: (player) => { player.maxHp += 1; player.hp = player.maxHp; },
+  },
+  {
+    id: "speed",
+    title: "Wind Step",
+    describe: () => "Move faster and recover 1 HP",
+    apply: (player) => { player.speed += 0.32; player.hp = Math.min(player.maxHp, player.hp + 1); },
+  },
+  {
+    id: "volley",
+    title: "Twin Cast",
+    describe: (player) => player.boltCount === 1 ? "Fire a three-bolt spread" : "Strengthen every bolt in the spread",
+    apply: (player) => {
+      if (player.boltCount === 1) player.boltCount = 3;
+      else player.damage += 1;
+    },
+  },
+]);
+
+function loadBestScore() {
+  try {
+    return Math.max(0, Number.parseInt(localStorage.getItem(BEST_SCORE_KEY) || "0", 10) || 0);
+  } catch {
+    return 0;
+  }
+}
+
+function saveBestScore() {
+  if (state.score <= state.bestScore) return;
+  state.bestScore = state.score;
+  try {
+    localStorage.setItem(BEST_SCORE_KEY, String(state.bestScore));
+  } catch {
+    // The run remains playable when storage is unavailable.
+  }
+}
+
 function resetGame() {
-  state.mode = "playing";
   state.time = 0;
-  state.bossSpawned = false;
+  state.wave = 0;
+  state.score = 0;
   state.defeated = 0;
   state.player = {
     x: W / 2,
@@ -36,27 +105,69 @@ function resetGame() {
     w: 16,
     h: 20,
     hp: 3,
+    maxHp: 3,
+    speed: 2.05,
+    damage: 1,
+    cooldownMax: 17,
+    boltCount: 1,
     invincible: 0,
     cooldown: 0,
   };
   state.bolts = [];
   state.sparks = [];
-  state.enemies = [
-    makeEnemy(62, 122, false),
-    makeEnemy(160, 92, false),
-    makeEnemy(252, 132, false),
-  ];
+  startWave(1);
 }
 
-function makeEnemy(x, y, boss) {
+function startWave(wave) {
+  const definition = WAVE_DEFINITIONS[wave - 1];
+  state.wave = wave;
+  state.mode = "playing";
+  state.bolts = [];
+  state.enemies = [];
+  setControlsEnabled(true);
+  hideUpgradePanel();
+
+  if (definition.bossHp) {
+    state.enemies.push(makeEnemy(W / 2, 82, {
+      boss: true,
+      hp: definition.bossHp,
+      speed: definition.bossSpeed,
+    }));
+  }
+
+  for (let index = 0; index < definition.count; index += 1) {
+    const position = getSpawnPosition(index, definition.count, Boolean(definition.bossHp));
+    state.enemies.push(makeEnemy(position.x, position.y, {
+      boss: false,
+      hp: definition.hp,
+      speed: definition.speed,
+    }));
+  }
+
+  addSparks(W / 2, 92, definition.bossHp ? 24 : 12, definition.bossHp ? "#ffd166" : "#9bf6ff");
+}
+
+function getSpawnPosition(index, count, hasBoss) {
+  if (hasBoss) {
+    return { x: index === 0 ? 76 : W - 76, y: 132 };
+  }
+  const columns = Math.min(4, count);
+  const column = index % columns;
+  const row = Math.floor(index / columns);
+  const spacing = W / (columns + 1);
+  return { x: spacing * (column + 1), y: 88 + row * 46 };
+}
+
+function makeEnemy(x, y, options) {
+  const { boss, hp, speed } = options;
   return {
     x,
     y,
     w: boss ? 34 : 20,
     h: boss ? 30 : 18,
-    hp: boss ? 12 : 3,
-    maxHp: boss ? 12 : 3,
-    speed: boss ? 0.38 : 0.58,
+    hp,
+    maxHp: hp,
+    speed,
     boss,
     touchCooldown: 0,
   };
@@ -69,32 +180,35 @@ function castSpell() {
     return;
   }
 
-  player.cooldown = 17;
-  state.bolts.push({
-    x: player.x,
-    y: player.y - 16,
-    r: 4,
-    vy: -5.6,
-  });
+  player.cooldown = player.cooldownMax;
+  const velocities = player.boltCount === 3 ? [-1.15, 0, 1.15] : [0];
+  for (const vx of velocities) {
+    state.bolts.push({
+      x: player.x + vx * 3,
+      y: player.y - 16,
+      r: 4,
+      vx,
+      vy: -5.6,
+      damage: player.damage,
+      spent: false,
+    });
+  }
   addSparks(player.x, player.y - 18, 5, "#9bf6ff");
 }
 
 function update() {
-  if (state.mode !== "playing") {
-    return;
-  }
-
   state.time += 1;
-  updatePlayer();
-  updateBolts();
-  updateEnemies();
+  if (state.mode === "playing") {
+    updatePlayer();
+    updateBolts();
+    updateEnemies();
+    updateMode();
+  }
   updateSparks();
-  updateMode();
 }
 
 function updatePlayer() {
   const player = state.player;
-  const speed = 2.05;
   let dx = 0;
   let dy = 0;
 
@@ -105,8 +219,8 @@ function updatePlayer() {
 
   if (dx !== 0 || dy !== 0) {
     const length = Math.hypot(dx, dy);
-    player.x += (dx / length) * speed;
-    player.y += (dy / length) * speed;
+    player.x += (dx / length) * player.speed;
+    player.y += (dy / length) * player.speed;
   }
 
   player.x = clamp(player.x, 20, W - 20);
@@ -119,33 +233,32 @@ function updatePlayer() {
 
 function updateBolts() {
   for (const bolt of state.bolts) {
+    bolt.x += bolt.vx;
     bolt.y += bolt.vy;
   }
 
   for (const enemy of state.enemies) {
     for (const bolt of state.bolts) {
-      if (rectCircle(enemy, bolt)) {
-        enemy.hp -= 1;
-        bolt.y = -100;
-        addSparks(bolt.x, bolt.y + 12, 7, enemy.boss ? "#ffd166" : "#b8f2a2");
+      if (!bolt.spent && enemy.hp > 0 && rectCircle(enemy, bolt)) {
+        enemy.hp -= bolt.damage;
+        bolt.spent = true;
+        addSparks(bolt.x, bolt.y, 7, enemy.boss ? "#ffd166" : "#b8f2a2");
+        if (enemy.hp <= 0) break;
       }
     }
   }
 
-  const before = state.enemies.length;
+  const defeated = state.enemies.filter((enemy) => enemy.hp <= 0);
+  for (const enemy of defeated) {
+    state.score += enemy.boss ? 1000 : state.wave * 100;
+  }
   state.enemies = state.enemies.filter((enemy) => enemy.hp > 0);
-  state.defeated += before - state.enemies.length;
-  state.bolts = state.bolts.filter((bolt) => bolt.y > -20);
+  state.defeated += defeated.length;
+  state.bolts = state.bolts.filter((bolt) => !bolt.spent && bolt.y > -20 && bolt.x > -20 && bolt.x < W + 20);
 }
 
 function updateEnemies() {
   const player = state.player;
-
-  if (!state.bossSpawned && state.defeated >= 3) {
-    state.bossSpawned = true;
-    state.enemies.push(makeEnemy(W / 2, 82, true));
-    addSparks(W / 2, 94, 24, "#ffd166");
-  }
 
   for (const enemy of state.enemies) {
     const dx = player.x - enemy.x;
@@ -180,10 +293,66 @@ function updateMode() {
   const player = state.player;
 
   if (player.hp <= 0) {
-    state.mode = "lose";
-  } else if (state.bossSpawned && state.enemies.length === 0) {
-    state.mode = "win";
+    finishRun("lose");
+  } else if (state.enemies.length === 0) {
+    if (state.wave >= TOTAL_WAVES) finishRun("win");
+    else showUpgradePanel();
   }
+}
+
+function finishRun(mode) {
+  state.mode = mode;
+  clearInput();
+  setControlsEnabled(false);
+  saveBestScore();
+}
+
+function showUpgradePanel() {
+  state.mode = "upgrade";
+  clearInput();
+  setControlsEnabled(false);
+  upgradeChoices.replaceChildren();
+
+  for (const upgrade of pickUpgradeChoices()) {
+    const button = document.createElement("button");
+    const title = document.createElement("strong");
+    const detail = document.createElement("span");
+    button.className = "upgrade-choice";
+    button.type = "button";
+    title.textContent = upgrade.title;
+    detail.textContent = upgrade.describe(state.player);
+    button.append(title, detail);
+    button.addEventListener("click", () => {
+      upgrade.apply(state.player);
+      startWave(state.wave + 1);
+    }, { once: true });
+    upgradeChoices.append(button);
+  }
+
+  upgradePanel.hidden = false;
+}
+
+function hideUpgradePanel() {
+  upgradePanel.hidden = true;
+  upgradeChoices.replaceChildren();
+}
+
+function pickUpgradeChoices() {
+  const shuffled = UPGRADES.filter((upgrade) => upgrade.id !== "rapid" || state.player.cooldownMax > 8);
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const target = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
+  }
+  return shuffled.slice(0, 3);
+}
+
+function clearInput() {
+  for (const key of Object.keys(keys)) keys[key] = false;
+}
+
+function setControlsEnabled(enabled) {
+  controls.classList.toggle("is-disabled", !enabled);
+  for (const button of controls.querySelectorAll("button")) button.disabled = !enabled;
 }
 
 function addSparks(x, y, count, color) {
@@ -246,8 +415,8 @@ function drawBackground() {
 function drawMenu() {
   drawPanel(28, 118, 264, 210);
   drawText("PIXEL MAGE", W / 2, 164, 22, "#ffd166", "center");
-  drawText("Game 0 Prototype", W / 2, 195, 12, "#f3ead7", "center");
-  drawText("Finish a tiny game first.", W / 2, 225, 10, "#aab1c7", "center");
+  drawText("Five waves. One boss.", W / 2, 195, 12, "#f3ead7", "center");
+  drawText("Choose upgrades. Finish the run.", W / 2, 225, 10, "#aab1c7", "center");
   drawText("Tap / Space to start", W / 2, 268, 12, "#9bf6ff", "center");
   drawMage(W / 2, 360, false);
 }
@@ -344,15 +513,17 @@ function drawSparks() {
 
 function drawBanner() {
   if (state.mode === "win") {
-    drawPanel(32, 174, 256, 120);
-    drawText("YOU WIN", W / 2, 218, 22, "#ffd166", "center");
-    drawText("Game 0 has an ending.", W / 2, 250, 11, "#f3ead7", "center");
+    drawPanel(32, 164, 256, 140);
+    drawText("RUN COMPLETE", W / 2, 205, 21, "#ffd166", "center");
+    drawText(`Score ${state.score}`, W / 2, 238, 13, "#f3ead7", "center");
+    drawText("Tap to begin another run", W / 2, 271, 10, "#9bf6ff", "center");
   }
 
   if (state.mode === "lose") {
-    drawPanel(32, 174, 256, 120);
-    drawText("TRY AGAIN", W / 2, 218, 22, "#ff6b6b", "center");
-    drawText("Small game. Real progress.", W / 2, 250, 11, "#f3ead7", "center");
+    drawPanel(32, 164, 256, 140);
+    drawText("THE GROVE FALLS", W / 2, 205, 19, "#ff6b6b", "center");
+    drawText(`Reached Wave ${state.wave}`, W / 2, 238, 13, "#f3ead7", "center");
+    drawText("Tap to try another build", W / 2, 271, 10, "#9bf6ff", "center");
   }
 }
 
@@ -383,18 +554,23 @@ function drawHealthBar(x, y, w, percent) {
 function updateHud() {
   const player = state.player;
 
-  healthText.textContent = player ? `HP ${Math.max(0, player.hp)}` : "HP 3";
+  healthText.textContent = player ? `HP ${Math.max(0, player.hp)}/${player.maxHp}` : "HP 3/3";
 
   if (state.mode === "menu") {
-    goalText.textContent = "Tap to start";
+    waveText.textContent = `${TOTAL_WAVES} Waves`;
+    scoreText.textContent = `Best ${state.bestScore}`;
   } else if (state.mode === "win") {
-    goalText.textContent = "Complete";
+    waveText.textContent = "Complete";
+    scoreText.textContent = `Score ${state.score}`;
   } else if (state.mode === "lose") {
-    goalText.textContent = "Restart";
-  } else if (!state.bossSpawned) {
-    goalText.textContent = `Slimes ${state.defeated}/3`;
+    waveText.textContent = `Wave ${state.wave}/${TOTAL_WAVES}`;
+    scoreText.textContent = `Score ${state.score}`;
+  } else if (state.mode === "upgrade") {
+    waveText.textContent = "Upgrade";
+    scoreText.textContent = `Score ${state.score}`;
   } else {
-    goalText.textContent = "Defeat the boss";
+    waveText.textContent = `Wave ${state.wave}/${TOTAL_WAVES}`;
+    scoreText.textContent = `Score ${state.score}`;
   }
 }
 
@@ -461,6 +637,7 @@ for (const button of document.querySelectorAll("[data-key]")) {
 
   button.addEventListener("pointerdown", (event) => {
     event.preventDefault();
+    handleStartAction();
     keys[key] = true;
     if (key === "fire") castSpell();
   });

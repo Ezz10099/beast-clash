@@ -1,36 +1,38 @@
-# Game 0 — Pixel Mage
+# Pixel Mage
 
-A tiny mobile-first pixel-art prototype made to practice finishing a complete game loop.
+A tiny mobile-first pixel-action game being finished as the owner's first Google Play release candidate.
 
 This repo is intentionally simple for SPCK Editor on Android.
 
 ## Goal
 
-Finish one small playable game before expanding into a bigger project.
+Finish, test, package, and publish one small game before returning to a larger project.
 
 ## Current Scope
 
-Included:
+Locked launch scope:
 
-- One playable screen.
+- One five-wave run lasting roughly five minutes.
 - One player mage.
-- Three small slime enemies.
-- One boss enemy.
+- Reused slime enemies with escalating health and speed.
+- One final slime boss.
+- One upgrade choice between waves.
+- Score and locally saved best score.
 - Touch controls.
 - Keyboard controls.
 - Win state.
 - Lose state.
 - Pixel-art visuals drawn in code.
 
-Not included yet:
+Explicitly excluded:
 
 - Shop.
-- Ads.
 - Gacha.
 - Level map.
 - Multiple characters.
 - Big story.
 - Asset pipeline.
+- Equipment, inventory, quests, or multiple worlds.
 
 ## How to run in SPCK Editor
 
@@ -62,15 +64,19 @@ Laptop:
 
 ## Definition of Done
 
-Game 0 is considered finished when:
+The first release is considered finished when:
 
 - The player can start the game.
 - The player can move and cast spells.
-- Enemies can damage the player.
-- The boss appears after the three slimes are defeated.
+- Five escalating waves and the boss can be completed.
+- Upgrade choices noticeably change the run.
 - The player can win or lose.
-- The visuals feel consistent enough to feel like a real small game.
+- Score and best score work reliably.
+- Sound, haptics, pause, and settings are present.
+- The game is packaged, device-tested, and accepted into Google Play testing.
 
 ## Rule
 
-Do not add a new big feature until the current mini-game feels complete and playable.
+Do not add a new character, mode, world, story, or progression system before this release is published.
+
+See `docs/RELEASE_SCOPE.md` for the locked completion contract.

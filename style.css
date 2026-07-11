@@ -49,6 +49,10 @@ button {
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
 }
 
+.game-stage {
+  position: relative;
+}
+
 .top-bar,
 .hud {
   display: flex;
@@ -96,7 +100,76 @@ h1 {
   image-rendering: crisp-edges;
 }
 
+.upgrade-panel {
+  position: absolute;
+  inset: 4px;
+  z-index: 3;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at top, rgba(92, 73, 151, 0.35), transparent 42%),
+    rgba(8, 11, 18, 0.96);
+  text-align: center;
+}
+
+.upgrade-panel[hidden] {
+  display: none;
+}
+
+.upgrade-panel h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.25rem;
+}
+
+.upgrade-help {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.upgrade-choices {
+  display: grid;
+  gap: 9px;
+}
+
+.upgrade-choice {
+  min-height: 64px;
+  padding: 9px 12px;
+  border: 2px solid #59658c;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #313b5c, #242c45);
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.24);
+  text-align: left;
+}
+
+.upgrade-choice strong,
+.upgrade-choice span {
+  display: block;
+}
+
+.upgrade-choice strong {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.upgrade-choice span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.upgrade-choice:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.24);
+}
+
 .hud {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   min-height: 34px;
   padding: 0 4px;
   color: var(--muted);
@@ -108,8 +181,13 @@ h1 {
   color: var(--danger);
 }
 
-#goalText {
+#waveText {
   color: var(--accent);
+  text-align: center;
+}
+
+#scoreText {
+  color: #9bf6ff;
   text-align: right;
 }
 
@@ -120,6 +198,11 @@ h1 {
   gap: 14px;
   user-select: none;
   -webkit-user-select: none;
+}
+
+.controls.is-disabled {
+  pointer-events: none;
+  opacity: 0.45;
 }
 
 .dpad {
