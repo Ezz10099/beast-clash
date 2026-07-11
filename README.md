@@ -79,4 +79,8 @@ The first release is considered finished when:
 
 Do not add a new character, mode, world, story, or progression system before this release is published.
 
-See `docs/RELEASE_SCOPE.md` for the locked completion contract.
+Project authority:
+
+- `docs/RELEASE_SCOPE.md` — locked completion contract.
+- `docs/ROADMAP.md` — roadmap to the first Capacitor APK.
+- `docs/SESSION_HANDOFF.md` — current status and next-session entry point.

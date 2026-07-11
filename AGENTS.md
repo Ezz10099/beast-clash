@@ -2,7 +2,13 @@
 
 ## Active Product
 
-Pixel Mage is the only active game in this repository. The release contract in `docs/RELEASE_SCOPE.md` is authoritative until the first Google Play test release.
+Pixel Mage is the only active game in this repository. Read these files before making changes:
+
+1. `docs/RELEASE_SCOPE.md` — locked product boundaries.
+2. `docs/ROADMAP.md` — measurable roadmap to the first Capacitor APK.
+3. `docs/SESSION_HANDOFF.md` — current status and exact next step.
+
+The release contract remains authoritative until the first Google Play test release.
 
 ## User Workflow
 
