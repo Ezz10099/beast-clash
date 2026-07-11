@@ -15,6 +15,17 @@ Google Play publishing uses an Android App Bundle (AAB), not the APK. The first 
 - Maintain stable phone performance, safe-area fit, offline play, and reliable local progress.
 - Reach the APK gate without engine changes or scope expansion.
 
+## Time Boundary and Batch Rule
+
+From the validated five-wave foundation, complete the APK in no more than four major development batches:
+
+1. Gameplay completion: phone validation, enemy variety, boss behavior, feedback, upgrades, and balance.
+2. Release experience: tutorial, pause, settings, audio, haptics, and visual polish.
+3. Web release candidate: automated checks, device QA, performance, and blocker fixes.
+4. Android delivery: Capacitor setup, APK build, installation, and acceptance fixes.
+
+Related small changes must be grouped into these batches. Each batch receives one consolidated phone test. Perfection work that does not materially improve release readiness is excluded.
+
 ## Milestone 0 — Foundation
 
 **Status:** Complete.
@@ -47,7 +58,7 @@ Exit criteria:
 
 ## Milestone 2 — Gameplay Feel and Balance
 
-**Status:** In progress.
+**Status:** Gameplay batch implemented; awaiting one consolidated phone test.
 
 **Goal:** make the five-wave run satisfying enough to replay.
 
@@ -158,14 +169,11 @@ Only after APK acceptance:
 - Build a signed AAB.
 - Prepare the store listing and closed Google Play test.
 
-## Estimated Development Sessions
+## Remaining Major Batches
 
-1. Foundation and roadmap — complete.
-2. Phone validation and control fixes.
-3. Boss behavior, upgrade tuning, and balance.
-4. Tutorial, pause, settings, sound, and haptics.
-5. Visual polish and web release-candidate QA.
-6. Capacitor setup and first APK build using a laptop.
-7. Installed APK testing and fixes.
+1. Gameplay completion — implemented, awaiting phone acceptance.
+2. Release experience and polish.
+3. Web release-candidate QA.
+4. Capacitor build and APK acceptance.
 
-One additional correction session is reserved if necessary. Scope expansion is not a valid use of that session.
+One correction batch may be used only for a release blocker. Scope expansion is never a valid use of that reserve.

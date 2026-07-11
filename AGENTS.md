@@ -32,6 +32,13 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Prefer code-drawn visuals and small, testable changes that do not require a desktop editor.
 - New ideas belong after the Google Play testing gate.
 
+## Delivery Pace
+
+- Work in substantial milestone batches, not one micro-feature per pull/test cycle.
+- Group related minor improvements, run automated checks, then request one phone test for the complete batch.
+- The target is no more than four major batches from the validated foundation to the first APK.
+- Prefer a good, stable, time-bounded release over prolonged perfection work.
+
 ## Verification
 
 Run before every stable commit:

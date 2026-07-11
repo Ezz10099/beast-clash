@@ -12,12 +12,39 @@ const W = canvas.width;
 const H = canvas.height;
 const TOTAL_WAVES = 5;
 const BEST_SCORE_KEY = "pixel_mage_best_score_v1";
+const WAVE_BANNER_DURATION = 60;
+const SLIME_VARIANTS = Object.freeze({
+  moss: {
+    hpBonus: 0,
+    speedBonus: 0,
+    width: 20,
+    height: 18,
+    body: "#3fa66b",
+    highlight: "#73d685",
+  },
+  swift: {
+    hpBonus: -1,
+    speedBonus: 0.16,
+    width: 17,
+    height: 15,
+    body: "#3576a8",
+    highlight: "#70c1e8",
+  },
+  iron: {
+    hpBonus: 2,
+    speedBonus: -0.12,
+    width: 26,
+    height: 23,
+    body: "#68548f",
+    highlight: "#a58ad1",
+  },
+});
 const WAVE_DEFINITIONS = Object.freeze([
-  { count: 3, hp: 2, speed: 0.42 },
-  { count: 4, hp: 2, speed: 0.47 },
-  { count: 5, hp: 3, speed: 0.51 },
-  { count: 6, hp: 3, speed: 0.55 },
-  { count: 2, hp: 4, speed: 0.58, bossHp: 16, bossSpeed: 0.36 },
+  { slimes: ["moss", "moss", "moss"], hp: 2, speed: 0.42 },
+  { slimes: ["moss", "moss", "moss", "swift"], hp: 2, speed: 0.45 },
+  { slimes: ["moss", "moss", "moss", "swift", "swift"], hp: 3, speed: 0.48 },
+  { slimes: ["moss", "moss", "moss", "swift", "swift", "iron"], hp: 3, speed: 0.52 },
+  { slimes: ["swift", "iron"], hp: 4, speed: 0.54, bossHp: 16, bossSpeed: 0.36 },
 ]);
 const keys = {
   left: false,
@@ -38,6 +65,10 @@ const state = {
   enemies: [],
   bolts: [],
   sparks: [],
+  waveBannerTimer: 0,
+  waveBannerText: "",
+  screenShake: 0,
+  damageFlash: 0,
 };
 
 const UPGRADES = Object.freeze([
@@ -115,6 +146,10 @@ function resetGame() {
   };
   state.bolts = [];
   state.sparks = [];
+  state.waveBannerTimer = 0;
+  state.waveBannerText = "";
+  state.screenShake = 0;
+  state.damageFlash = 0;
   startWave(1);
 }
 
@@ -124,6 +159,8 @@ function startWave(wave) {
   state.mode = "playing";
   state.bolts = [];
   state.enemies = [];
+  state.waveBannerText = definition.bossHp ? "FINAL WAVE" : `WAVE ${wave}`;
+  state.waveBannerTimer = WAVE_BANNER_DURATION;
   setControlsEnabled(true);
   hideUpgradePanel();
 
@@ -132,15 +169,19 @@ function startWave(wave) {
       boss: true,
       hp: definition.bossHp,
       speed: definition.bossSpeed,
+      variant: "boss",
     }));
   }
 
-  for (let index = 0; index < definition.count; index += 1) {
-    const position = getSpawnPosition(index, definition.count, Boolean(definition.bossHp));
+  for (let index = 0; index < definition.slimes.length; index += 1) {
+    const variant = definition.slimes[index];
+    const variantConfig = SLIME_VARIANTS[variant];
+    const position = getSpawnPosition(index, definition.slimes.length, Boolean(definition.bossHp));
     state.enemies.push(makeEnemy(position.x, position.y, {
       boss: false,
-      hp: definition.hp,
-      speed: definition.speed,
+      hp: Math.max(1, definition.hp + variantConfig.hpBonus),
+      speed: Math.max(0.2, definition.speed + variantConfig.speedBonus),
+      variant,
     }));
   }
 
@@ -159,16 +200,20 @@ function getSpawnPosition(index, count, hasBoss) {
 }
 
 function makeEnemy(x, y, options) {
-  const { boss, hp, speed } = options;
+  const { boss, hp, speed, variant } = options;
+  const variantConfig = SLIME_VARIANTS[variant];
   return {
     x,
     y,
-    w: boss ? 34 : 20,
-    h: boss ? 30 : 18,
+    w: boss ? 34 : variantConfig.width,
+    h: boss ? 30 : variantConfig.height,
     hp,
     maxHp: hp,
     speed,
     boss,
+    variant,
+    bodyColor: boss ? "#7b2d43" : variantConfig.body,
+    highlightColor: boss ? "#c44569" : variantConfig.highlight,
     touchCooldown: 0,
     attackState: boss ? "chase" : null,
     attackTimer: boss ? 120 : 0,
@@ -204,6 +249,9 @@ function castSpell() {
 
 function update() {
   state.time += 1;
+  state.waveBannerTimer = Math.max(0, state.waveBannerTimer - 1);
+  state.screenShake = Math.max(0, state.screenShake - 1);
+  state.damageFlash = Math.max(0, state.damageFlash - 1);
   if (state.mode === "playing") {
     updatePlayer();
     updateBolts();
@@ -257,6 +305,8 @@ function updateBolts() {
   const defeated = state.enemies.filter((enemy) => enemy.hp <= 0);
   for (const enemy of defeated) {
     state.score += enemy.boss ? 1000 : state.wave * 100;
+    addSparks(enemy.x, enemy.y, enemy.boss ? 34 : 12, enemy.boss ? "#ffd166" : enemy.highlightColor);
+    state.screenShake = Math.max(state.screenShake, enemy.boss ? 16 : 3);
   }
   state.enemies = state.enemies.filter((enemy) => enemy.hp > 0);
   state.defeated += defeated.length;
@@ -276,6 +326,8 @@ function updateEnemies() {
       player.invincible = 70;
       enemy.touchCooldown = 58;
       addSparks(player.x, player.y, 16, "#ff6b6b");
+      state.screenShake = Math.max(state.screenShake, 10);
+      state.damageFlash = 8;
     }
   }
 }
@@ -428,6 +480,13 @@ function addSparks(x, y, count, color) {
 
 function draw() {
   ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = "#080b12";
+  ctx.fillRect(0, 0, W, H);
+  ctx.save();
+  if (state.screenShake > 0) {
+    const strength = Math.min(4, state.screenShake * 0.35);
+    ctx.translate((Math.random() - 0.5) * strength * 2, (Math.random() - 0.5) * strength * 2);
+  }
   drawBackground();
 
   if (state.mode === "menu") {
@@ -438,6 +497,13 @@ function draw() {
     drawPlayer();
     drawSparks();
     drawBanner();
+    drawWaveAnnouncement();
+  }
+  ctx.restore();
+
+  if (state.damageFlash > 0) {
+    ctx.fillStyle = `rgba(255, 62, 62, ${0.04 + state.damageFlash * 0.018})`;
+    ctx.fillRect(0, 0, W, H);
   }
 
   updateHud();
@@ -520,17 +586,24 @@ function drawSlime(enemy) {
   const x = Math.round(enemy.x);
   const y = Math.round(enemy.y);
   const pulse = Math.sin(state.time / 8 + x) * 1.5;
+  const scaleX = enemy.w / 20;
+  const scaleY = enemy.h / 18;
 
+  ctx.save();
+  ctx.translate(x, y + pulse);
+  ctx.scale(scaleX, scaleY);
   ctx.fillStyle = "#0a0d15";
-  ctx.fillRect(x - 11, y + 9, 22, 5);
-  ctx.fillStyle = "#3fa66b";
-  ctx.fillRect(x - 10, y - 5 + pulse, 20, 16);
-  ctx.fillStyle = "#73d685";
-  ctx.fillRect(x - 5, y - 10 + pulse, 10, 6);
+  ctx.fillRect(-11, 9, 22, 5);
+  ctx.fillStyle = enemy.bodyColor;
+  ctx.fillRect(-10, -5, 20, 16);
+  ctx.fillStyle = enemy.highlightColor;
+  ctx.fillRect(-5, -10, 10, 6);
   ctx.fillStyle = "#101420";
-  ctx.fillRect(x - 5, y + pulse, 3, 3);
-  ctx.fillRect(x + 3, y + pulse, 3, 3);
-  drawHealthBar(enemy.x - 12, enemy.y - 18, 24, enemy.hp / enemy.maxHp);
+  ctx.fillRect(-5, 0, 3, 3);
+  ctx.fillRect(3, 0, 3, 3);
+  ctx.restore();
+  const barWidth = Math.max(24, enemy.w + 4);
+  drawHealthBar(enemy.x - barWidth / 2, enemy.y - enemy.h - 4, barWidth, enemy.hp / enemy.maxHp);
 }
 
 function drawBoss(enemy) {
@@ -599,6 +672,17 @@ function drawBanner() {
     drawText(`Reached Wave ${state.wave}`, W / 2, 238, 13, "#f3ead7", "center");
     drawText("Tap to try another build", W / 2, 271, 10, "#9bf6ff", "center");
   }
+}
+
+function drawWaveAnnouncement() {
+  if (state.waveBannerTimer <= 0 || state.mode !== "playing") return;
+  const elapsed = WAVE_BANNER_DURATION - state.waveBannerTimer;
+  const alpha = Math.min(1, elapsed / 10, state.waveBannerTimer / 16);
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  drawPanel(88, 58, 144, 50);
+  drawText(state.waveBannerText, W / 2, 83, 16, state.wave === TOTAL_WAVES ? "#ff9d66" : "#ffd166", "center");
+  ctx.restore();
 }
 
 function drawPanel(x, y, w, h) {

@@ -28,11 +28,19 @@ The user pulled `main`, tested it through SPCK on the target phone, and reported
 
 ## Current Development Objective
 
-Milestone 2 is active. The first task is one readable, telegraphed, code-driven dash behavior for the final boss. After it is pushed, the user should retest the final wave and report whether the warning is understandable and whether the attack feels fair.
+The full gameplay-completion batch is implemented. It includes three code-drawn slime variants, escalating wave composition, stronger damage and defeat feedback, wave announcements, meaningful run upgrades, and a readable telegraphed dash for the final boss.
+
+Request one consolidated phone test after the batch is pushed. Ask only:
+
+1. Was the full run generally too easy, fair, or too hard?
+2. Did the three slime types feel visibly and behaviorally different?
+3. Were damage, wave changes, and upgrade choices clear?
+4. Was the boss dash warning understandable and fair?
+5. Did any bug or control problem interrupt the run?
 
 ## Next Session Entry Point
 
-Continue Milestone 2 in `docs/ROADMAP.md`: gameplay feel and balance. Use the user's final-wave test result to tune the boss before changing general wave balance. Do not add content, characters, worlds, shops, or a new progression system.
+If the consolidated test has no blocker, accept Milestone 2 and begin Batch 2: release UX and polish. Do not keep tuning gameplay for perfection. If a blocker exists, fix all reported gameplay blockers together in one correction, retest once, and then move forward.
 
 ## Verification
 
