@@ -58,7 +58,7 @@ Exit criteria:
 
 ## Milestone 2 — Gameplay Feel and Balance
 
-**Status:** Gameplay batch implemented; awaiting one consolidated phone test.
+**Status:** Gameplay and simplified-control batch implemented; awaiting one consolidated phone test.
 
 **Goal:** make the five-wave run satisfying enough to replay.
 
@@ -152,7 +152,7 @@ Exit criteria:
 Objectives:
 
 - Test first launch and offline relaunch.
-- Test touch controls, upgrades, victory, defeat, pause/resume, app switching, and Android back behavior.
+- Test drag controls, automatic casting, upgrades, victory, defeat, pause/resume, app switching, and Android back behavior.
 - Confirm settings and best score persist after closing and reopening the app.
 - Complete multiple runs without crashes, severe slowdown, clipping, or save loss.
 

@@ -76,8 +76,7 @@ h1 {
   letter-spacing: 0.02em;
 }
 
-.small-button,
-.controls button {
+.small-button {
   background: #2d3654;
   border: 2px solid #59658c;
   box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.25);
@@ -98,6 +97,8 @@ h1 {
   background: #121827;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+  touch-action: none;
+  cursor: crosshair;
 }
 
 .upgrade-panel {
@@ -191,49 +192,18 @@ h1 {
   text-align: right;
 }
 
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
+.control-hint {
+  min-height: 20px;
+  margin: -2px 0 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: center;
   user-select: none;
   -webkit-user-select: none;
 }
 
-.controls.is-disabled {
-  pointer-events: none;
-  opacity: 0.45;
-}
-
-.dpad {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-
-.dpad div {
-  display: flex;
-  gap: 6px;
-}
-
-.controls button {
-  width: 58px;
-  height: 48px;
-  border-radius: 12px;
-  font-weight: 900;
-}
-
-.controls button:active,
 .small-button:active {
   transform: translateY(2px);
   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
-}
-
-.fire {
-  width: 94px !important;
-  height: 104px !important;
-  border-color: #d49b43 !important;
-  background: linear-gradient(180deg, #7b4a20, #4b2b18) !important;
-  color: #ffe0a3;
-  text-transform: uppercase;
 }

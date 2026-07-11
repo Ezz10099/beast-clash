@@ -30,13 +30,15 @@ The user pulled `main`, tested it through SPCK on the target phone, and reported
 
 The full gameplay-completion batch is implemented. It includes three code-drawn slime variants, escalating wave composition, stronger damage and defeat feedback, wave announcements, meaningful run upgrades, and a readable telegraphed dash for the final boss.
 
+The control correction is also implemented: the D-pad and Fire button are removed, dragging anywhere in the arena moves the mage, and spells cast automatically. Keyboard movement remains for laptop testing.
+
 Request one consolidated phone test after the batch is pushed. Ask only:
 
-1. Was the full run generally too easy, fair, or too hard?
-2. Did the three slime types feel visibly and behaviorally different?
-3. Were damage, wave changes, and upgrade choices clear?
+1. Did drag movement feel natural, too slow, or too fast, and did automatic casting make play easier?
+2. Was the full run generally too easy, fair, or too hard?
+3. Did the three slime types, damage, wave changes, and upgrades read clearly?
 4. Was the boss dash warning understandable and fair?
-5. Did any bug or control problem interrupt the run?
+5. Did any bug interrupt the run?
 
 ## Next Session Entry Point
 

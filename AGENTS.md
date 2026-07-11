@@ -15,7 +15,7 @@ The release contract remains authoritative until the first Google Play test rele
 - ChatGPT/Codex edits the GitHub repository.
 - The user pulls changes with SPCK Editor on Android and tests through SPCK preview.
 - The primary target is a 20:9 portrait POCO X2-class phone.
-- Preserve top and bottom safe areas and obvious touch controls.
+- Preserve top and bottom safe areas and the one-thumb control model: drag inside the arena to move while spells cast automatically.
 
 ## Active Runtime Files
 
@@ -38,6 +38,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Group related minor improvements, run automated checks, then request one phone test for the complete batch.
 - The target is no more than four major batches from the validated foundation to the first APK.
 - Prefer a good, stable, time-bounded release over prolonged perfection work.
+- Do not restore a D-pad or separate fire button before the APK gate unless phone testing proves the drag-and-auto-cast model unusable.
 
 ## Verification
 
@@ -49,4 +50,4 @@ For browser preview:
 
 `npm run preview`
 
-Then test movement, firing, upgrade selection, victory, defeat, restart, and phone fit in SPCK.
+Then test drag movement, automatic casting, upgrade selection, victory, defeat, restart, and phone fit in SPCK.

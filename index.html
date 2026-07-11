@@ -20,7 +20,13 @@
         </header>
 
         <div class="game-stage">
-          <canvas id="game" width="320" height="480" aria-label="Pixel Mage game canvas"></canvas>
+          <canvas
+            id="game"
+            width="320"
+            height="480"
+            aria-label="Pixel Mage game canvas"
+            aria-describedby="controlHint"
+          ></canvas>
           <section id="upgradePanel" class="upgrade-panel" aria-labelledby="upgradeTitle" hidden>
             <p class="eyebrow">Wave Cleared</p>
             <h2 id="upgradeTitle">Choose one spell upgrade</h2>
@@ -35,17 +41,7 @@
           <span id="scoreText">Best 0</span>
         </section>
 
-        <section class="controls" aria-label="Touch controls">
-          <div class="dpad">
-            <button data-key="up" type="button">▲</button>
-            <div>
-              <button data-key="left" type="button">◀</button>
-              <button data-key="down" type="button">▼</button>
-              <button data-key="right" type="button">▶</button>
-            </div>
-          </div>
-          <button class="fire" data-key="fire" type="button">Fire</button>
-        </section>
+        <p id="controlHint" class="control-hint">Drag in the arena to move · Spells cast automatically</p>
       </section>
     </main>
 

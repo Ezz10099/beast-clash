@@ -11,6 +11,8 @@ const [html, gameCode] = await Promise.all([
 for (const id of ['game', 'healthText', 'waveText', 'scoreText', 'restartButton', 'upgradePanel', 'upgradeChoices']) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `index.html is missing #${id}`);
 }
+assert.match(html, /Drag in the arena to move/);
+assert.doesNotMatch(html, /data-key=/, 'legacy touch buttons should not return');
 
 function makeElement(id = '') {
   return {
@@ -46,6 +48,10 @@ const canvas = makeElement('game');
 canvas.width = 320;
 canvas.height = 480;
 canvas.getContext = () => drawingContext;
+canvas.getBoundingClientRect = () => ({ left: 0, top: 0, width: 320, height: 480 });
+canvas.setPointerCapture = () => {};
+canvas.hasPointerCapture = () => false;
+canvas.releasePointerCapture = () => {};
 
 const elements = new Map([
   ['#game', canvas],
@@ -55,7 +61,6 @@ const elements = new Map([
   ['#restartButton', makeElement('restartButton')],
   ['#upgradePanel', makeElement('upgradePanel')],
   ['#upgradeChoices', makeElement('upgradeChoices')],
-  ['.controls', makeElement('controls')],
 ]);
 
 const storage = new Map();
@@ -83,6 +88,14 @@ evaluate('resetGame()');
 assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 1);
 assert.equal(evaluate('state.enemies.length'), 3);
+
+const startingX = evaluate('state.player.x');
+canvas.handlers.pointerdown({ clientX: 40, clientY: 240, pointerId: 1, preventDefault() {} });
+evaluate('update()');
+assert.ok(evaluate('state.player.x') < startingX, 'dragging in the arena should move the mage');
+assert.ok(evaluate('state.bolts.length') > 0, 'the mage should cast automatically');
+canvas.handlers.pointerup({ pointerId: 1 });
+assert.equal(evaluate('pointerControl.active'), false);
 
 for (let wave = 1; wave < 5; wave += 1) {
   evaluate('state.enemies.forEach((enemy) => { enemy.hp = 0; }); update()');

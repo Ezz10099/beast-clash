@@ -4,7 +4,6 @@ const healthText = document.querySelector("#healthText");
 const waveText = document.querySelector("#waveText");
 const scoreText = document.querySelector("#scoreText");
 const restartButton = document.querySelector("#restartButton");
-const controls = document.querySelector(".controls");
 const upgradePanel = document.querySelector("#upgradePanel");
 const upgradeChoices = document.querySelector("#upgradeChoices");
 
@@ -51,7 +50,12 @@ const keys = {
   right: false,
   up: false,
   down: false,
-  fire: false,
+};
+const pointerControl = {
+  active: false,
+  pointerId: null,
+  x: W / 2,
+  y: H - 72,
 };
 
 const state = {
@@ -126,6 +130,7 @@ function saveBestScore() {
 }
 
 function resetGame() {
+  clearInput();
   state.time = 0;
   state.wave = 0;
   state.score = 0;
@@ -150,6 +155,8 @@ function resetGame() {
   state.waveBannerText = "";
   state.screenShake = 0;
   state.damageFlash = 0;
+  pointerControl.x = state.player.x;
+  pointerControl.y = state.player.y;
   startWave(1);
 }
 
@@ -161,7 +168,6 @@ function startWave(wave) {
   state.enemies = [];
   state.waveBannerText = definition.bossHp ? "FINAL WAVE" : `WAVE ${wave}`;
   state.waveBannerTimer = WAVE_BANNER_DURATION;
-  setControlsEnabled(true);
   hideUpgradePanel();
 
   if (definition.bossHp) {
@@ -266,15 +272,22 @@ function updatePlayer() {
   let dx = 0;
   let dy = 0;
 
-  if (keys.left) dx -= 1;
-  if (keys.right) dx += 1;
-  if (keys.up) dy -= 1;
-  if (keys.down) dy += 1;
+  if (pointerControl.active) {
+    dx = pointerControl.x - player.x;
+    dy = pointerControl.y - player.y;
+  } else {
+    if (keys.left) dx -= 1;
+    if (keys.right) dx += 1;
+    if (keys.up) dy -= 1;
+    if (keys.down) dy += 1;
+  }
 
-  if (dx !== 0 || dy !== 0) {
+  const distance = Math.hypot(dx, dy);
+  if (distance > 3) {
+    const step = pointerControl.active ? Math.min(distance, player.speed) : player.speed;
     const length = Math.hypot(dx, dy);
-    player.x += (dx / length) * player.speed;
-    player.y += (dy / length) * player.speed;
+    player.x += (dx / length) * step;
+    player.y += (dy / length) * step;
   }
 
   player.x = clamp(player.x, 20, W - 20);
@@ -282,7 +295,7 @@ function updatePlayer() {
 
   if (player.cooldown > 0) player.cooldown -= 1;
   if (player.invincible > 0) player.invincible -= 1;
-  if (keys.fire) castSpell();
+  castSpell();
 }
 
 function updateBolts() {
@@ -413,14 +426,12 @@ function updateMode() {
 function finishRun(mode) {
   state.mode = mode;
   clearInput();
-  setControlsEnabled(false);
   saveBestScore();
 }
 
 function showUpgradePanel() {
   state.mode = "upgrade";
   clearInput();
-  setControlsEnabled(false);
   upgradeChoices.replaceChildren();
 
   for (const upgrade of pickUpgradeChoices()) {
@@ -458,11 +469,11 @@ function pickUpgradeChoices() {
 
 function clearInput() {
   for (const key of Object.keys(keys)) keys[key] = false;
-}
-
-function setControlsEnabled(enabled) {
-  controls.classList.toggle("is-disabled", !enabled);
-  for (const button of controls.querySelectorAll("button")) button.disabled = !enabled;
+  if (pointerControl.pointerId !== null && canvas.hasPointerCapture?.(pointerControl.pointerId)) {
+    canvas.releasePointerCapture(pointerControl.pointerId);
+  }
+  pointerControl.active = false;
+  pointerControl.pointerId = null;
 }
 
 function addSparks(x, y, count, color) {
@@ -495,6 +506,7 @@ function draw() {
     drawBolts();
     drawEnemies();
     drawPlayer();
+    drawPointerTarget();
     drawSparks();
     drawBanner();
     drawWaveAnnouncement();
@@ -540,14 +552,32 @@ function drawMenu() {
   drawPanel(28, 118, 264, 210);
   drawText("PIXEL MAGE", W / 2, 164, 22, "#ffd166", "center");
   drawText("Five waves. One boss.", W / 2, 195, 12, "#f3ead7", "center");
-  drawText("Choose upgrades. Finish the run.", W / 2, 225, 10, "#aab1c7", "center");
-  drawText("Tap / Space to start", W / 2, 268, 12, "#9bf6ff", "center");
+  drawText("Drag to move. Casting is automatic.", W / 2, 225, 10, "#aab1c7", "center");
+  drawText("Tap arena / Enter to start", W / 2, 268, 12, "#9bf6ff", "center");
   drawMage(W / 2, 360, false);
 }
 
 function drawPlayer() {
   const flicker = state.player.invincible > 0 && Math.floor(state.time / 5) % 2 === 0;
-  if (!flicker) drawMage(state.player.x, state.player.y, keys.left || keys.right || keys.up || keys.down);
+  const moving = pointerControl.active || keys.left || keys.right || keys.up || keys.down;
+  if (!flicker) drawMage(state.player.x, state.player.y, moving);
+}
+
+function drawPointerTarget() {
+  if (!pointerControl.active || state.mode !== "playing") return;
+
+  ctx.save();
+  ctx.globalAlpha = 0.65;
+  ctx.strokeStyle = "#9bf6ff";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(pointerControl.x, pointerControl.y, 10, 0, Math.PI * 2);
+  ctx.moveTo(pointerControl.x - 14, pointerControl.y);
+  ctx.lineTo(pointerControl.x + 14, pointerControl.y);
+  ctx.moveTo(pointerControl.x, pointerControl.y - 14);
+  ctx.lineTo(pointerControl.x, pointerControl.y + 14);
+  ctx.stroke();
+  ctx.restore();
 }
 
 function drawMage(x, y, moving) {
@@ -766,7 +796,6 @@ const keyboardMap = {
   KeyW: "up",
   ArrowDown: "down",
   KeyS: "down",
-  Space: "fire",
 };
 
 window.addEventListener("keydown", (event) => {
@@ -778,6 +807,7 @@ window.addEventListener("keydown", (event) => {
   }
 
   if (event.code === "Space" || event.code === "Enter") {
+    event.preventDefault();
     handleStartAction();
   }
 });
@@ -787,31 +817,42 @@ window.addEventListener("keyup", (event) => {
   if (key) keys[key] = false;
 });
 
-canvas.addEventListener("pointerdown", handleStartAction);
-restartButton.addEventListener("click", resetGame);
-
-for (const button of document.querySelectorAll("[data-key]")) {
-  const key = button.dataset.key;
-
-  button.addEventListener("pointerdown", (event) => {
-    event.preventDefault();
-    handleStartAction();
-    keys[key] = true;
-    if (key === "fire") castSpell();
-  });
-
-  button.addEventListener("pointerup", () => {
-    keys[key] = false;
-  });
-
-  button.addEventListener("pointercancel", () => {
-    keys[key] = false;
-  });
-
-  button.addEventListener("pointerleave", () => {
-    keys[key] = false;
-  });
+function updatePointerTarget(event) {
+  const bounds = canvas.getBoundingClientRect();
+  pointerControl.x = clamp(((event.clientX - bounds.left) / bounds.width) * W, 20, W - 20);
+  pointerControl.y = clamp(((event.clientY - bounds.top) / bounds.height) * H, 76, H - 34);
 }
+
+function startPointerControl(event) {
+  event.preventDefault();
+  handleStartAction();
+  if (state.mode !== "playing") return;
+
+  pointerControl.active = true;
+  pointerControl.pointerId = event.pointerId;
+  updatePointerTarget(event);
+  canvas.setPointerCapture?.(event.pointerId);
+}
+
+function movePointerControl(event) {
+  if (!pointerControl.active || event.pointerId !== pointerControl.pointerId) return;
+  event.preventDefault();
+  updatePointerTarget(event);
+}
+
+function stopPointerControl(event) {
+  if (event.pointerId !== pointerControl.pointerId) return;
+  if (canvas.hasPointerCapture?.(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+  pointerControl.active = false;
+  pointerControl.pointerId = null;
+}
+
+canvas.addEventListener("pointerdown", startPointerControl);
+canvas.addEventListener("pointermove", movePointerControl);
+canvas.addEventListener("pointerup", stopPointerControl);
+canvas.addEventListener("pointercancel", stopPointerControl);
+restartButton.addEventListener("click", resetGame);
+window.addEventListener("blur", clearInput);
 
 function loop() {
   update();

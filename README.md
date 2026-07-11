@@ -52,15 +52,15 @@ No Phaser file is needed anymore.
 
 Mobile:
 
-- D-pad buttons: move.
-- Fire button: cast spell.
+- Drag anywhere in the arena: move toward your finger.
+- Spells cast automatically.
 - Restart button: restart.
 
 Laptop:
 
 - WASD / Arrow keys: move.
-- Space: cast spell / start.
-- Enter: start.
+- Spells cast automatically.
+- Space / Enter: start.
 
 ## Definition of Done
 
