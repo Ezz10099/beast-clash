@@ -97,6 +97,11 @@ for (let wave = 1; wave < 5; wave += 1) {
 
 assert.equal(evaluate('state.enemies.length'), 3, 'final wave should contain two slimes and one boss');
 assert.equal(evaluate('state.enemies.filter((enemy) => enemy.boss).length'), 1);
+assert.equal(evaluate('state.enemies.find((enemy) => enemy.boss).attackState'), 'chase');
+evaluate('state.enemies.find((enemy) => enemy.boss).attackTimer = 1; update()');
+assert.equal(evaluate('state.enemies.find((enemy) => enemy.boss).attackState'), 'telegraph');
+evaluate('for (let frame = 0; frame < 42; frame += 1) update()');
+assert.equal(evaluate('state.enemies.find((enemy) => enemy.boss).attackState'), 'dash');
 evaluate('state.enemies.forEach((enemy) => { enemy.hp = 0; }); update()');
 assert.equal(evaluate('state.mode'), 'win');
 assert.equal(evaluate('state.wave'), 5);

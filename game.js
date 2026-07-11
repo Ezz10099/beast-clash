@@ -170,6 +170,12 @@ function makeEnemy(x, y, options) {
     speed,
     boss,
     touchCooldown: 0,
+    attackState: boss ? "chase" : null,
+    attackTimer: boss ? 120 : 0,
+    targetX: x,
+    targetY: y,
+    dashVx: 0,
+    dashVy: 0,
   };
 }
 
@@ -261,14 +267,9 @@ function updateEnemies() {
   const player = state.player;
 
   for (const enemy of state.enemies) {
-    const dx = player.x - enemy.x;
-    const dy = player.y - enemy.y;
-    const length = Math.max(1, Math.hypot(dx, dy));
-    const wobble = Math.sin((state.time + enemy.x) / 18) * 0.35;
-
-    enemy.x += (dx / length) * enemy.speed + wobble;
-    enemy.y += (dy / length) * enemy.speed;
     enemy.touchCooldown = Math.max(0, enemy.touchCooldown - 1);
+    if (enemy.boss) updateBoss(enemy, player);
+    else moveEnemyToward(enemy, player, 0.35);
 
     if (overlap(player, enemy) && player.invincible <= 0 && enemy.touchCooldown <= 0) {
       player.hp -= 1;
@@ -276,6 +277,63 @@ function updateEnemies() {
       enemy.touchCooldown = 58;
       addSparks(player.x, player.y, 16, "#ff6b6b");
     }
+  }
+}
+
+function moveEnemyToward(enemy, target, wobbleAmount = 0) {
+  const dx = target.x - enemy.x;
+  const dy = target.y - enemy.y;
+  const length = Math.max(1, Math.hypot(dx, dy));
+  const wobble = Math.sin((state.time + enemy.x) / 18) * wobbleAmount;
+  enemy.x += (dx / length) * enemy.speed + wobble;
+  enemy.y += (dy / length) * enemy.speed;
+}
+
+function updateBoss(enemy, player) {
+  enemy.attackTimer -= 1;
+
+  if (enemy.attackState === "chase") {
+    moveEnemyToward(enemy, player, 0.16);
+    if (enemy.attackTimer <= 0) {
+      enemy.attackState = "telegraph";
+      enemy.attackTimer = 42;
+      enemy.targetX = player.x;
+      enemy.targetY = player.y;
+      addSparks(enemy.x, enemy.y, 12, "#ffd166");
+    }
+    return;
+  }
+
+  if (enemy.attackState === "telegraph") {
+    if (enemy.attackTimer <= 0) {
+      const dx = enemy.targetX - enemy.x;
+      const dy = enemy.targetY - enemy.y;
+      const length = Math.max(1, Math.hypot(dx, dy));
+      enemy.dashVx = (dx / length) * 5.4;
+      enemy.dashVy = (dy / length) * 5.4;
+      enemy.attackState = "dash";
+      enemy.attackTimer = 24;
+      addSparks(enemy.x, enemy.y, 18, "#ff8c42");
+    }
+    return;
+  }
+
+  if (enemy.attackState === "dash") {
+    enemy.x += enemy.dashVx;
+    enemy.y += enemy.dashVy;
+    enemy.x = clamp(enemy.x, 20, W - 20);
+    enemy.y = clamp(enemy.y, 66, H - 30);
+    if (state.time % 2 === 0) addSparks(enemy.x, enemy.y, 2, "#ff8c42");
+    if (enemy.attackTimer <= 0) {
+      enemy.attackState = "recover";
+      enemy.attackTimer = 34;
+    }
+    return;
+  }
+
+  if (enemy.attackTimer <= 0) {
+    enemy.attackState = "chase";
+    enemy.attackTimer = 135;
   }
 }
 
@@ -480,9 +538,25 @@ function drawBoss(enemy) {
   const y = Math.round(enemy.y);
   const pulse = Math.sin(state.time / 10) * 2;
 
+  if (enemy.attackState === "telegraph") {
+    const warningPulse = 24 + Math.sin(state.time / 3) * 4;
+    ctx.save();
+    ctx.strokeStyle = "#ffd166";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, warningPulse, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(enemy.targetX, enemy.targetY);
+    ctx.stroke();
+    ctx.restore();
+  }
+
   ctx.fillStyle = "#0a0d15";
   ctx.fillRect(x - 19, y + 16, 38, 7);
-  ctx.fillStyle = "#7b2d43";
+  ctx.fillStyle = enemy.attackState === "dash" ? "#d95d39" : enemy.attackState === "telegraph" ? "#a74643" : "#7b2d43";
   ctx.fillRect(x - 17, y - 10 + pulse, 34, 28);
   ctx.fillStyle = "#c44569";
   ctx.fillRect(x - 10, y - 18 + pulse, 20, 10);

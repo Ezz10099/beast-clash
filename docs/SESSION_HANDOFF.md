@@ -22,23 +22,17 @@ Lock the project, establish the roadmap to the first Capacitor APK, and deliver 
 - Added `npm run check` with an automated five-wave flow test.
 - Added permanent scope and workflow guidance.
 
-## Remaining Current-Session Objective
+## Phone Validation Result
 
-The user must pull `main` in SPCK and test the game on the target phone. Collect only these observations:
+The user pulled `main`, tested it through SPCK on the target phone, and reported that everything was working. Milestone 1 is complete.
 
-1. Does the entire screen fit without clipping or scrolling?
-2. Do held movement buttons and Fire respond reliably?
-3. Are the upgrade choices readable and tappable?
-4. How far did the first genuine run reach, and why did it end?
-5. Did restart and saved best score behave correctly?
+## Current Development Objective
 
-Fix only critical phone-control, layout, or game-flow blockers before closing the session.
+Milestone 2 is active. The first task is one readable, telegraphed, code-driven dash behavior for the final boss. After it is pushed, the user should retest the final wave and report whether the warning is understandable and whether the attack feels fair.
 
 ## Next Session Entry Point
 
-If phone validation is complete, begin Milestone 2 in `docs/ROADMAP.md`: gameplay feel and balance. Start with observed problems, then add one distinct code-driven boss behavior. Do not add content, characters, worlds, shops, or a new progression system.
-
-If phone validation is not complete, do not begin Milestone 2. Ask for the five observations above first.
+Continue Milestone 2 in `docs/ROADMAP.md`: gameplay feel and balance. Use the user's final-wave test result to tune the boss before changing general wave balance. Do not add content, characters, worlds, shops, or a new progression system.
 
 ## Verification
 

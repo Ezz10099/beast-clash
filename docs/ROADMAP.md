@@ -28,6 +28,8 @@ Google Play publishing uses an Android App Bundle (AAB), not the APK. The first 
 
 ## Milestone 1 — Phone Validation
 
+**Status:** Complete on the target SPCK/phone workflow.
+
 **Goal:** prove that the foundation feels usable on the actual target phone.
 
 Objectives:
@@ -44,6 +46,8 @@ Exit criteria:
 - The user can complete or meaningfully attempt a full run.
 
 ## Milestone 2 — Gameplay Feel and Balance
+
+**Status:** In progress.
 
 **Goal:** make the five-wave run satisfying enough to replay.
 
