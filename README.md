@@ -6,7 +6,9 @@ This repo is intentionally simple for SPCK Editor on Android.
 
 ## Goal
 
-Finish, test, package, and publish one small game before returning to a larger project.
+Finish, test, package, and publish one small game on Google Play before returning to a larger project.
+
+For any new ChatGPT or Codex session, begin with `docs/START_HERE.md` and continue from `docs/SESSION_HANDOFF.md`.
 
 ## Current Scope
 
@@ -59,9 +61,11 @@ Run `npm run preview` to serve the exact generated `dist/` bundle intended for C
 
 ## Android build
 
-The Capacitor 8 project uses the permanent package ID `com.ezz10099.pixelmage`. A GitHub Actions workflow builds an installable debug APK in the cloud, so Android Studio is not required for the first device test.
+The Capacitor 8 project uses the locked package ID `com.ezz10099.pixelmage`. A GitHub Actions workflow successfully builds an installable debug APK in the cloud, so Android Studio is not required for routine milestone builds.
 
 See `docs/ANDROID.md` for the build and installation workflow.
+
+The debug APK is a phone-testing artifact, not the Google Play upload. Google Play preparation and the future signed AAB are tracked in `docs/GOOGLE_PLAY.md`.
 
 ## Controls
 
@@ -97,8 +101,11 @@ Do not add a new character, mode, world, story, or progression system before thi
 
 Project authority:
 
+- `docs/START_HERE.md` — permanent cross-session entry point and working protocol.
 - `docs/RELEASE_SCOPE.md` — locked completion contract.
-- `docs/ROADMAP.md` — roadmap to the first Capacitor APK.
+- `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
+- `docs/ROADMAP.md` — roadmap through Google Play testing.
 - `docs/SESSION_HANDOFF.md` — current status and next-session entry point.
+- `docs/GOOGLE_PLAY.md` — publishing path, terminology, and release gates.
 - `docs/BUILD.md` — deterministic offline release-build contract.
 - `docs/ANDROID.md` — Capacitor, cloud APK, and signing-safety contract.

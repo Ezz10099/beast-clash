@@ -1,10 +1,10 @@
-# Pixel Mage — Roadmap to the First Capacitor APK
+# Pixel Mage — Roadmap to Google Play Testing
 
 ## Ultimate Goal
 
-Produce a stable, installable Pixel Mage Android APK from the same HTML/CSS/JavaScript game through Capacitor. The APK must run offline on the target POCO X2-class phone, preserve the best score, fit a 20:9 portrait display, and complete repeated five-wave runs without critical errors.
+Finish Pixel Mage as a small, stable Android game and take it through the complete Google Play publishing pipeline. The production candidate must run reliably on the target POCO X2-class phone, preserve local data, fit a 20:9 portrait display, and complete repeated five-wave runs without critical errors.
 
-Google Play publishing uses an Android App Bundle (AAB), not the APK. The first APK is the device-validation gate before monetization, AAB creation, and Play testing.
+Google Play publishing uses an Android App Bundle (AAB), not the debug APK. The first APK is a device-validation gate, not the project endpoint.
 
 ## Product Objectives
 
@@ -25,6 +25,8 @@ From the validated five-wave foundation, complete the APK in no more than four m
 4. Android delivery: Capacitor setup, APK build, installation, and acceptance fixes.
 
 Related small changes must be grouped into these batches. Each batch receives one consolidated phone test. Perfection work that does not materially improve release readiness is excluded.
+
+After APK acceptance, finish Google Play preparation in no more than three additional major batches: release/business decisions, signed AAB plus store preparation, and closed-test fixes. Any Google-mandated testing period is calendar waiting time, not extra development scope.
 
 ## Milestone 0 — Foundation
 
@@ -136,7 +138,7 @@ Exit criteria:
 
 ## Milestone 6 — Capacitor Android Build
 
-**Status:** Capacitor project and cloud APK workflow implemented; first cloud build starts when this batch reaches `main`.
+**Status:** Complete. The first cloud debug APK build succeeded on July 12, 2026.
 
 **Goal:** generate the first installable Android APK.
 
@@ -150,10 +152,13 @@ Objectives:
 
 Exit criteria:
 
-- Capacitor produces an APK successfully from a clean checkout.
-- The APK installs and launches on the target phone.
+- Capacitor produces an APK successfully from a clean checkout. Complete.
+- The build artifact passes integrity checks. Complete.
+- Installation and launch are verified under Milestone 7.
 
 ## Milestone 7 — APK Acceptance
+
+**Status:** Pending owner installation and native phone testing.
 
 **Goal:** approve the first Android build before Google Play work.
 
@@ -168,20 +173,70 @@ Exit criteria:
 
 - The user accepts the installed APK as stable enough for the next release phase.
 
-## After the APK Gate
+## Milestone 8 — Release and Business Readiness
 
-Only after APK acceptance:
+**Status:** Pending APK acceptance.
 
-- Decide whether retention is sufficient for one optional rewarded revive.
-- Add required privacy and data disclosures.
-- Build a signed AAB.
-- Prepare the store listing and closed Google Play test.
+**Goal:** confirm that the locked small game is genuinely complete and decide only the business details required for launch.
+
+Objectives:
+
+- Audit the installed game against `docs/RELEASE_SCOPE.md` and fix release blockers as one batch.
+- Explicitly accept the game as complete within the locked scope.
+- Confirm the Play Console publisher and account type.
+- Decide the launch monetization model, including whether the optional rewarded revive is justified.
+- Define accurate privacy and data behavior before adding any external SDK.
+
+Exit criteria:
+
+- No unfinished locked-scope feature remains.
+- Publisher, monetization, data, and SDK decisions are recorded in `docs/DECISIONS.md`.
+
+## Milestone 9 — Play-Ready Release
+
+**Status:** Pending.
+
+**Goal:** create the secure production candidate and complete its store materials.
+
+Objectives:
+
+- Prepare the privacy policy and Play Console declarations.
+- Create final store text, icon, feature graphic, and screenshots.
+- Create and secure release/upload signing outside Git.
+- Build and verify a signed release AAB with an incremented version code.
+- Upload the AAB to the appropriate Google Play testing track.
+
+Exit criteria:
+
+- Play Console accepts the AAB and all required app-content sections are complete.
+- The Play-distributed test build installs and passes the native acceptance checklist.
+
+## Milestone 10 — Closed Test and Production Access
+
+**Status:** Pending.
+
+**Goal:** satisfy Google Play testing requirements and submit a stable production release.
+
+Objectives:
+
+- Recruit and retain the required testers if the publisher account is subject to the 12-testers/14-days rule.
+- Collect structured feedback and fix only verified release blockers.
+- Apply for production access when eligible.
+- Submit the reviewed production release and monitor its rollout.
+
+Exit criteria:
+
+- Pixel Mage is available to real users on Google Play.
+- The owner can safely create and publish a future update.
 
 ## Remaining Major Batches
 
 1. Gameplay completion — complete and phone-accepted.
 2. Release experience and polish — complete and phone-accepted.
 3. Web release-candidate QA — complete and frozen.
-4. Capacitor build and APK acceptance — in progress.
+4. Capacitor build — complete; APK acceptance pending.
+5. Release and business readiness — pending.
+6. Play-ready signed AAB and store preparation — pending.
+7. Closed test, blocker fixes, and production access — pending.
 
-One correction batch may be used only for a release blocker. Scope expansion is never a valid use of that reserve.
+One correction batch per gate may be used only for verified release blockers. Scope expansion is never a valid use of that reserve.

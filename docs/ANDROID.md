@@ -19,7 +19,9 @@ The recommended route does not require the owner to have a laptop:
 3. GitHub stores `pixel-mage-debug-apk` as a downloadable artifact for 14 days.
 4. The owner installs and accepts that APK on the target phone.
 
-The workflow has read-only repository permission. The debug APK uses no private signing key and cannot publish to Google Play.
+The workflow can read repository contents and report its status on the triggering commit; it cannot modify game files. The debug APK uses no private release-signing key and cannot publish to Google Play.
+
+The first cloud build succeeded on July 12, 2026. Build run: `29180335240`.
 
 ## Local Commands
 

@@ -5,12 +5,15 @@
 - Active repository: `Ezz10099/beast-clash`
 - Active branch: `main`
 - Active product: Pixel Mage
+- Permanent entry point: `docs/START_HERE.md`
 - Release contract: `docs/RELEASE_SCOPE.md`
+- Durable decisions: `docs/DECISIONS.md`
 - Roadmap: `docs/ROADMAP.md`
+- Publishing path: `docs/GOOGLE_PLAY.md`
 
 ## Current Session Goal
 
-Complete Batch 4: produce the first installable Android APK without requiring a laptop.
+Preserve the complete project state across future sessions and make the full path—not only the APK path—to Google Play explicit.
 
 ## Completed This Session
 
@@ -41,16 +44,23 @@ Complete Batch 4: produce the first installable Android APK without requiring a 
 - Locked portrait orientation, API 24 minimum, API 36 target, and offline-only permissions.
 - Added native app switching and Android Back behavior.
 - Created original vector-based Pixel Mage launcher and splash artwork with deterministic PNG generation.
-- Added a read-only GitHub Actions workflow that builds and uploads a debug APK.
+- Added a GitHub Actions workflow with read-only content access that builds and uploads a debug APK.
 - Added Android identity, artwork, workflow, permission, and version checks.
+- Added narrow commit-status reporting so cloud builds can be monitored safely through the connected GitHub tools.
+- Completed cloud build run `29180335240` successfully and verified its uploaded APK artifact and digest.
+- Added `docs/START_HERE.md` as the permanent cross-session entry point.
+- Added `docs/DECISIONS.md` so locked choices are not repeatedly reopened.
+- Added `docs/GOOGLE_PLAY.md` to preserve the beginner-friendly APK, Capacitor, AAB, testing, and publication path.
+- Extended the roadmap beyond the APK through release readiness, signing, AAB, Play testing, and production.
+- Added a mandatory session-closing protocol to keep the handoff and roadmap current.
 
 ## Phone Validation Result
 
-The user pulled and tested the gameplay/control, release-experience, and web-release-candidate batches through SPCK, then told development to continue. Batches 1–3 are accepted.
+The user pulled and tested the gameplay/control, release-experience, and web-release-candidate batches through SPCK. Those web batches are accepted. The native APK itself has not yet been installed and accepted on the target phone.
 
 ## Current Development Objective
 
-The Android delivery batch is implemented. Pushing it to `main` will start the cloud build. The remaining work is to verify the GitHub Actions result, download the debug APK, install it on the target phone, and run the APK acceptance checklist.
+The Android project and cloud build are complete. The next development gate is native APK acceptance on the target phone. This is a milestone test of the current game, not a substitute for development and not the Google Play upload.
 
 Request one consolidated phone test after the batch is pushed. Ask only:
 
@@ -60,7 +70,9 @@ Request one consolidated phone test after the batch is pushed. Ask only:
 
 ## Next Session Entry Point
 
-If the APK passes, accept Milestones 6 and 7 and proceed to Google Play preparation: privacy disclosures, signing, AAB, store assets, and closed testing. If it fails, fix all APK blockers together and produce one replacement build.
+Start by reading `AGENTS.md` and `docs/START_HERE.md`. Install and test the existing debug APK using the three questions above. If it passes, mark Milestone 7 complete and begin Milestone 8's release-readiness audit. If it fails, fix all verified APK blockers together and produce one replacement build. Do not add unrelated features during either path.
+
+At the end of the next meaningful session, update this file with the new commit, phone-test result, blockers, and one exact continuation step.
 
 ## Verification
 

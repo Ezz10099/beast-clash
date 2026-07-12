@@ -4,11 +4,14 @@
 
 Pixel Mage is the only active game in this repository. Read these files before making changes:
 
-1. `docs/RELEASE_SCOPE.md` — locked product boundaries.
-2. `docs/ROADMAP.md` — measurable roadmap to the first Capacitor APK.
-3. `docs/SESSION_HANDOFF.md` — current status and exact next step.
-4. `docs/BUILD.md` — exact files and verification rules for the Capacitor web bundle.
-5. `docs/ANDROID.md` — permanent Android identity and cloud build workflow.
+1. `docs/START_HERE.md` — permanent project map and mandatory session protocol.
+2. `docs/RELEASE_SCOPE.md` — locked product boundaries.
+3. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
+4. `docs/ROADMAP.md` — measurable roadmap through Google Play testing.
+5. `docs/SESSION_HANDOFF.md` — current status and exact next step.
+6. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+7. `docs/BUILD.md` — exact files and verification rules for the Capacitor web bundle.
+8. `docs/ANDROID.md` — locked Android identity and cloud build workflow.
 
 The release contract remains authoritative until the first Google Play test release.
 
@@ -43,6 +46,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Generate icon and splash PNGs from `assets/android-source/`; do not hand-edit generated density files.
 - Never commit a keystore, signing password, service credential, or generated APK/AAB.
 - The GitHub workflow may build an unsigned-for-Play debug APK; signing begins only after device acceptance.
+- Treat an APK as a direct-install testing artifact and an AAB as the future Google Play upload.
 
 ## Scope Rules
 
@@ -58,6 +62,21 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - The target is no more than four major batches from the validated foundation to the first APK.
 - Prefer a good, stable, time-bounded release over prolonged perfection work.
 - Do not restore a D-pad or separate fire button before the APK gate unless phone testing proves the drag-and-auto-cast model unusable.
+
+## Decision Boundaries
+
+- Lead routine technical, architecture, testing, and workflow decisions.
+- Obtain explicit owner approval before scope expansion, engine changes, monetization choices, data collection, external SDKs, package identity changes, signing-key creation, publisher-account choices, destructive removals, or Google Play submission.
+- Record any new durable decision in `docs/DECISIONS.md`.
+
+## Session Closure
+
+Before ending any meaningful development session:
+
+1. Publish the intended stable changes to `main`.
+2. Update `docs/SESSION_HANDOFF.md` with completed work, phone-test status, blockers, and one exact next step.
+3. Update milestone status in `docs/ROADMAP.md`.
+4. Never mark phone behavior accepted until the owner reports the test result.
 
 ## Verification
 
