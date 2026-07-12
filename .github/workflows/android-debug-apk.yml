@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: read
+  statuses: write
 
 concurrency:
   group: pixel-mage-android-${{ github.ref }}
@@ -32,6 +33,21 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Report build started
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: |
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPOSITORY/statuses/$SHA" \
+            --data "{\"state\":\"pending\",\"target_url\":\"$RUN_URL\",\"description\":\"Android debug APK build started\",\"context\":\"android-debug-apk\"}"
 
       - name: Set up Node 22
         uses: actions/setup-node@v4
@@ -71,3 +87,25 @@ jobs:
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Report final build result
+        if: ${{ always() }}
+        env:
+          BUILD_RESULT: ${{ job.status }}
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: |
+          state="$BUILD_RESULT"
+          if [ "$state" = "cancelled" ]; then
+            state="error"
+          fi
+
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPOSITORY/statuses/$SHA" \
+            --data "{\"state\":\"$state\",\"target_url\":\"$RUN_URL\",\"description\":\"Android debug APK build $BUILD_RESULT\",\"context\":\"android-debug-apk\"}"
