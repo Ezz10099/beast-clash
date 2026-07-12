@@ -78,7 +78,7 @@ Exit criteria:
 
 ## Milestone 3 — Release UX
 
-**Status:** Implemented; awaiting one consolidated target-phone test.
+**Status:** Complete and accepted through the target SPCK/phone workflow.
 
 **Goal:** supply the minimum experience expected from a standalone mobile game.
 
@@ -98,7 +98,7 @@ Exit criteria:
 
 ## Milestone 4 — Visual and Audio Polish
 
-**Status:** Runtime visual polish and the synthesized sound set are implemented. App icon and splash remain for Android delivery.
+**Status:** Runtime visual/audio polish is phone-accepted. App icon and splash remain for Android delivery.
 
 **Goal:** make the small scope cohesive rather than prototype-like.
 
@@ -116,6 +116,8 @@ Exit criteria:
 - No additional character or world assets are required.
 
 ## Milestone 5 — Web Release Candidate
+
+**Status:** Release-candidate build and QA are implemented; awaiting one phone validation before tagging.
 
 **Goal:** freeze a browser build that is ready to wrap.
 
@@ -139,7 +141,7 @@ Exit criteria:
 Objectives:
 
 - Add pinned Capacitor dependencies and configuration.
-- Add a deterministic script that copies only the active game into the mobile web directory.
+- Use the completed deterministic `dist/` build containing only the active game.
 - Create and synchronize the Android project.
 - Configure portrait orientation, app identity, icon, splash, status/navigation-bar behavior, and Android back handling.
 - Build a debug APK from the synchronized web release candidate.
@@ -176,8 +178,8 @@ Only after APK acceptance:
 ## Remaining Major Batches
 
 1. Gameplay completion — complete and phone-accepted.
-2. Release experience and polish — implemented, awaiting phone acceptance.
-3. Web release-candidate QA.
+2. Release experience and polish — complete and phone-accepted.
+3. Web release-candidate QA — implemented, awaiting phone acceptance and tag.
 4. Capacitor build and APK acceptance.
 
 One correction batch may be used only for a release blocker. Scope expansion is never a valid use of that reserve.

@@ -7,6 +7,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 1. `docs/RELEASE_SCOPE.md` — locked product boundaries.
 2. `docs/ROADMAP.md` — measurable roadmap to the first Capacitor APK.
 3. `docs/SESSION_HANDOFF.md` — current status and exact next step.
+4. `docs/BUILD.md` — exact files and verification rules for the Capacitor web bundle.
 
 The release contract remains authoritative until the first Google Play test release.
 
@@ -25,6 +26,13 @@ The release contract remains authoritative until the first Google Play test rele
 - `game.js`
 
 The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast Clash prototype and are not loaded by the active game. Do not reactivate or extend them.
+
+## Release Bundle
+
+- `npm run build` creates `dist/` from the explicit whitelist in `scripts/release-config.mjs`.
+- Never edit or commit `dist/`; it is a verified generated artifact.
+- Never add a legacy Beast Clash file to the release whitelist.
+- Keep the runtime bundle fully local and below the enforced size ceiling.
 
 ## Scope Rules
 
@@ -46,6 +54,8 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 Run before every stable commit:
 
 `npm run check`
+
+The command must complete ten runs and pass the deterministic release-bundle checks.
 
 For browser preview:
 

@@ -51,6 +51,12 @@ Explicitly excluded:
 
 No Phaser file is needed anymore.
 
+## Release build
+
+Run `npm run check` to execute ten complete automated runs, create the offline release bundle, and verify its contents and checksums.
+
+Run `npm run preview` to serve the exact generated `dist/` bundle intended for Capacitor. Legacy Beast Clash files remain available in the repository but are excluded from that bundle.
+
 ## Controls
 
 Mobile:
@@ -88,3 +94,4 @@ Project authority:
 - `docs/RELEASE_SCOPE.md` — locked completion contract.
 - `docs/ROADMAP.md` — roadmap to the first Capacitor APK.
 - `docs/SESSION_HANDOFF.md` — current status and next-session entry point.
+- `docs/BUILD.md` — deterministic offline release-build contract.

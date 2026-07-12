@@ -1,0 +1,30 @@
+# Pixel Mage Release Build
+
+## Purpose
+
+The repository still contains the retired Beast Clash prototype for reference. It is not part of Pixel Mage and must never enter the Android package.
+
+## Exact Runtime
+
+`npm run build` creates a clean `dist/` directory containing only:
+
+- `index.html`
+- `style.css`
+- `game.js`
+- `build-manifest.json`
+
+The manifest records the release version, byte count, and SHA-256 checksum of each runtime file. The build contains no remote URLs, frameworks, animal assets, or legacy Phaser code, so it can load entirely offline inside Capacitor.
+
+## Verification
+
+Run:
+
+`npm run check`
+
+This validates gameplay and settings, completes ten automated five-wave runs, rebuilds `dist/`, verifies every checksum, rejects unexpected bundle files, and enforces a small runtime-size ceiling.
+
+Preview the exact release bundle with:
+
+`npm run preview`
+
+`dist/` is generated and intentionally excluded from Git. Capacitor will consume a freshly verified build rather than a manually maintained copy.

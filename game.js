@@ -21,6 +21,8 @@ const TOTAL_WAVES = 5;
 const BEST_SCORE_KEY = "pixel_mage_best_score_v1";
 const SETTINGS_KEY = "pixel_mage_settings_v1";
 const WAVE_BANNER_DURATION = 60;
+const MAX_BOLTS = 40;
+const MAX_SPARKS = 260;
 const SLIME_VARIANTS = Object.freeze({
   moss: {
     hpBonus: 0,
@@ -421,6 +423,9 @@ function castSpell() {
       spent: false,
     });
   }
+  if (state.bolts.length > MAX_BOLTS) {
+    state.bolts.splice(0, state.bolts.length - MAX_BOLTS);
+  }
   addSparks(player.x, player.y - 18, 5, "#9bf6ff");
   playSound("cast");
 }
@@ -672,6 +677,9 @@ function addSparks(x, y, count, color) {
       life: 14 + Math.random() * 12,
       color,
     });
+  }
+  if (state.sparks.length > MAX_SPARKS) {
+    state.sparks.splice(0, state.sparks.length - MAX_SPARKS);
   }
 }
 

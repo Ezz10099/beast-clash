@@ -215,4 +215,38 @@ assert.equal(evaluate('state.score'), 7000);
 assert.equal(evaluate('state.bestScore'), 7000);
 assert.equal(storage.get('pixel_mage_best_score_v1'), '7000');
 
-process.stdout.write('Pixel Mage checks passed.\n');
+elements.get('#menuButton').handlers.click();
+assert.equal(evaluate('state.menuOpen'), true);
+elements.get('#newRunButton').handlers.click();
+assert.equal(evaluate('state.mode'), 'playing');
+assert.equal(evaluate('state.wave'), 1);
+assert.equal(evaluate('state.score'), 0, 'restart should clear the current score');
+
+for (let run = 2; run <= 10; run += 1) {
+  if (run > 2) evaluate('resetGame()');
+
+  for (let wave = 1; wave < 5; wave += 1) {
+    evaluate('state.enemies.forEach((enemy) => { enemy.hp = 0; }); update(); draw()');
+    assert.equal(evaluate('state.mode'), 'upgrade', `run ${run}, wave ${wave} should open upgrades`);
+    const choices = elements.get('#upgradeChoices').children;
+    assert.equal(choices.length, 3, `run ${run}, wave ${wave} should offer three upgrades`);
+    choices[(run + wave) % choices.length].handlers.click();
+    assert.equal(evaluate('state.mode'), 'playing', `run ${run}, wave ${wave} should continue`);
+  }
+
+  evaluate('state.enemies.forEach((enemy) => { enemy.hp = 0; }); update(); draw()');
+  assert.equal(evaluate('state.mode'), 'win', `run ${run} should finish successfully`);
+  assert.equal(evaluate('state.score'), 7000, `run ${run} should keep deterministic scoring`);
+}
+
+assert.equal(evaluate('state.bestScore'), 7000);
+assert.equal(evaluate('loadBestScore()'), 7000);
+assert.equal(evaluate('JSON.stringify(loadSettings())'), '{"sound":true,"haptics":true}');
+
+evaluate('resetGame(); addSparks(20, 20, MAX_SPARKS + 100, "#ffffff")');
+assert.ok(evaluate('state.sparks.length <= MAX_SPARKS'), 'particle count must remain capped');
+evaluate('state.player.boltCount = 3; for (let cast = 0; cast < 100; cast += 1) { state.player.cooldown = 0; castSpell(); }');
+assert.ok(evaluate('state.bolts.length <= MAX_BOLTS'), 'bolt count must remain capped');
+evaluate('draw()');
+
+process.stdout.write('Pixel Mage checks passed: 10 complete runs.\n');

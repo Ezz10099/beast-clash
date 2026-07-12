@@ -291,3 +291,81 @@ h1 {
   transform: translateY(2px);
   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
 }
+
+@media (max-height: 700px) {
+  .shell {
+    padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom));
+  }
+
+  .game-card {
+    width: min(100%, 330px);
+    gap: 6px;
+    padding: 8px;
+    border-width: 2px;
+    border-radius: 14px;
+  }
+
+  .small-button {
+    min-height: 40px;
+  }
+
+  .hud {
+    min-height: 28px;
+    font-size: 0.78rem;
+  }
+
+  .control-hint {
+    min-height: 18px;
+    font-size: 0.68rem;
+  }
+
+  .menu-panel {
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .option-button,
+  .menu-primary,
+  .menu-secondary {
+    min-height: 44px;
+  }
+
+  .upgrade-panel {
+    gap: 7px;
+    padding: 14px;
+  }
+
+  .upgrade-choice {
+    min-height: 54px;
+  }
+}
+
+@media (max-height: 600px) {
+  .game-card {
+    width: min(100%, 286px);
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .top-bar .eyebrow {
+    display: none;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  .small-button {
+    min-width: 70px;
+    min-height: 36px;
+  }
+
+  .hud {
+    min-height: 24px;
+  }
+
+  .control-hint {
+    min-height: 16px;
+    margin-top: 0;
+  }
+}
