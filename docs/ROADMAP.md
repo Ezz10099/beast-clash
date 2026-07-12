@@ -58,7 +58,7 @@ Exit criteria:
 
 ## Milestone 2 — Gameplay Feel and Balance
 
-**Status:** Gameplay and simplified-control batch implemented; awaiting one consolidated phone test.
+**Status:** Complete and accepted through the target SPCK/phone workflow.
 
 **Goal:** make the five-wave run satisfying enough to replay.
 
@@ -78,6 +78,8 @@ Exit criteria:
 
 ## Milestone 3 — Release UX
 
+**Status:** Implemented; awaiting one consolidated target-phone test.
+
 **Goal:** supply the minimum experience expected from a standalone mobile game.
 
 Objectives:
@@ -95,6 +97,8 @@ Exit criteria:
 - Sound, haptics, pause, resume, and persistence work reliably.
 
 ## Milestone 4 — Visual and Audio Polish
+
+**Status:** Runtime visual polish and the synthesized sound set are implemented. App icon and splash remain for Android delivery.
 
 **Goal:** make the small scope cohesive rather than prototype-like.
 
@@ -171,8 +175,8 @@ Only after APK acceptance:
 
 ## Remaining Major Batches
 
-1. Gameplay completion — implemented, awaiting phone acceptance.
-2. Release experience and polish.
+1. Gameplay completion — complete and phone-accepted.
+2. Release experience and polish — implemented, awaiting phone acceptance.
 3. Web release-candidate QA.
 4. Capacitor build and APK acceptance.
 

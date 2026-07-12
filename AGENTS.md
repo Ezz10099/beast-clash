@@ -16,6 +16,7 @@ The release contract remains authoritative until the first Google Play test rele
 - The user pulls changes with SPCK Editor on Android and tests through SPCK preview.
 - The primary target is a 20:9 portrait POCO X2-class phone.
 - Preserve top and bottom safe areas and the one-thumb control model: drag inside the arena to move while spells cast automatically.
+- Keep pause, restart, sound, and haptic settings inside the single compact Pause/Options overlay.
 
 ## Active Runtime Files
 
@@ -50,4 +51,4 @@ For browser preview:
 
 `npm run preview`
 
-Then test drag movement, automatic casting, upgrade selection, victory, defeat, restart, and phone fit in SPCK.
+Then test drag movement, automatic casting, pause/resume, focus-loss auto-pause, persisted feedback settings, upgrades, victory, defeat, restart, and phone fit in SPCK.

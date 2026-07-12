@@ -10,7 +10,7 @@
 
 ## Current Session Goal
 
-Lock the project, establish the roadmap to the first Capacitor APK, and deliver the replayable five-wave foundation.
+Complete Batch 2: release UX and runtime polish without expanding the locked game scope.
 
 ## Completed This Session
 
@@ -21,28 +21,33 @@ Lock the project, establish the roadmap to the first Capacitor APK, and deliver 
 - Added score and locally persisted best score.
 - Added `npm run check` with an automated five-wave flow test.
 - Added permanent scope and workflow guidance.
+- Replaced the touch buttons with drag movement and automatic casting.
+- Added a compact Pause/Options overlay with resume and restart.
+- Added persistent sound and haptic toggles.
+- Added automatic safe pause on focus loss or app switching.
+- Added an original synthesized feedback sound set and event-based haptics.
+- Polished the arena, mage, spell, slime variants, panels, and first-screen instructions.
+- Extended automated checks across controls, pause freezing, auto-pause, settings persistence, audio initialization, haptics, upgrades, boss behavior, and the complete run.
 
 ## Phone Validation Result
 
-The user pulled `main`, tested it through SPCK on the target phone, and reported that everything was working. Milestone 1 is complete.
+The user pulled the gameplay and simplified-control batch through SPCK, tested it on the target phone, and told development to continue. Milestones 1 and 2 are accepted.
 
 ## Current Development Objective
 
-The full gameplay-completion batch is implemented. It includes three code-drawn slime variants, escalating wave composition, stronger damage and defeat feedback, wave announcements, meaningful run upgrades, and a readable telegraphed dash for the final boss.
-
-The control correction is also implemented: the D-pad and Fire button are removed, dragging anywhere in the arena moves the mage, and spells cast automatically. Keyboard movement remains for laptop testing.
+The complete release-experience batch is implemented. It adds one compact overlay rather than extra permanent buttons, freezes all gameplay while paused, protects the run when focus is lost, persists feedback settings, and adds code-generated audiovisual feedback without introducing an asset pipeline.
 
 Request one consolidated phone test after the batch is pushed. Ask only:
 
-1. Did drag movement feel natural, too slow, or too fast, and did automatic casting make play easier?
-2. Was the full run generally too easy, fair, or too hard?
-3. Did the three slime types, damage, wave changes, and upgrades read clearly?
-4. Was the boss dash warning understandable and fair?
+1. Do Pause, Resume, Restart, Sound, and Haptics all work?
+2. Does switching away and returning show the safe auto-pause screen?
+3. Are the sounds and vibrations useful rather than annoying?
+4. Does the full interface still fit cleanly, and can a full run finish normally?
 5. Did any bug interrupt the run?
 
 ## Next Session Entry Point
 
-If the consolidated test has no blocker, accept Milestone 2 and begin Batch 2: release UX and polish. Do not keep tuning gameplay for perfection. If a blocker exists, fix all reported gameplay blockers together in one correction, retest once, and then move forward.
+If the consolidated test has no blocker, accept Batch 2 and begin Batch 3: web release-candidate QA and bundle cleanup. Do not keep tuning UX or visuals for perfection. If a blocker exists, fix all release-experience blockers together, retest once, and move forward.
 
 ## Verification
 

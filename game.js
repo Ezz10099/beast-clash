@@ -3,14 +3,23 @@ const ctx = canvas.getContext("2d");
 const healthText = document.querySelector("#healthText");
 const waveText = document.querySelector("#waveText");
 const scoreText = document.querySelector("#scoreText");
-const restartButton = document.querySelector("#restartButton");
+const menuButton = document.querySelector("#menuButton");
 const upgradePanel = document.querySelector("#upgradePanel");
 const upgradeChoices = document.querySelector("#upgradeChoices");
+const menuPanel = document.querySelector("#menuPanel");
+const menuEyebrow = document.querySelector("#menuEyebrow");
+const menuTitle = document.querySelector("#menuTitle");
+const menuStatus = document.querySelector("#menuStatus");
+const resumeButton = document.querySelector("#resumeButton");
+const soundButton = document.querySelector("#soundButton");
+const hapticsButton = document.querySelector("#hapticsButton");
+const newRunButton = document.querySelector("#newRunButton");
 
 const W = canvas.width;
 const H = canvas.height;
 const TOTAL_WAVES = 5;
 const BEST_SCORE_KEY = "pixel_mage_best_score_v1";
+const SETTINGS_KEY = "pixel_mage_settings_v1";
 const WAVE_BANNER_DURATION = 60;
 const SLIME_VARIANTS = Object.freeze({
   moss: {
@@ -45,6 +54,38 @@ const WAVE_DEFINITIONS = Object.freeze([
   { slimes: ["moss", "moss", "moss", "swift", "swift", "iron"], hp: 3, speed: 0.52 },
   { slimes: ["swift", "iron"], hp: 4, speed: 0.54, bossHp: 16, bossSpeed: 0.36 },
 ]);
+const SOUND_CUES = Object.freeze({
+  click: [{ start: 420, end: 560, duration: 0.035, volume: 0.018, type: "square" }],
+  cast: [{ start: 580, end: 920, duration: 0.055, volume: 0.014, type: "square" }],
+  hit: [{ start: 190, end: 95, duration: 0.06, volume: 0.022, type: "square" }],
+  enemyDown: [
+    { start: 260, end: 150, duration: 0.08, volume: 0.023, type: "square" },
+    { start: 170, end: 90, duration: 0.09, delay: 0.045, volume: 0.018, type: "triangle" },
+  ],
+  damage: [{ start: 135, end: 58, duration: 0.18, volume: 0.045, type: "sawtooth" }],
+  warning: [
+    { start: 300, end: 230, duration: 0.16, volume: 0.025, type: "triangle" },
+    { start: 230, end: 180, duration: 0.16, delay: 0.11, volume: 0.024, type: "triangle" },
+  ],
+  wave: [
+    { start: 392, end: 440, duration: 0.09, volume: 0.025, type: "square" },
+    { start: 523, end: 587, duration: 0.11, delay: 0.08, volume: 0.026, type: "square" },
+  ],
+  upgrade: [
+    { start: 440, end: 523, duration: 0.09, volume: 0.022, type: "triangle" },
+    { start: 659, end: 784, duration: 0.13, delay: 0.07, volume: 0.026, type: "triangle" },
+  ],
+  win: [
+    { start: 523, end: 587, duration: 0.12, volume: 0.03, type: "square" },
+    { start: 659, end: 698, duration: 0.14, delay: 0.1, volume: 0.03, type: "square" },
+    { start: 784, end: 988, duration: 0.22, delay: 0.21, volume: 0.034, type: "triangle" },
+  ],
+  lose: [
+    { start: 220, end: 185, duration: 0.16, volume: 0.033, type: "triangle" },
+    { start: 165, end: 82, duration: 0.28, delay: 0.13, volume: 0.037, type: "sawtooth" },
+  ],
+});
+const SOUND_GAPS = Object.freeze({ cast: 0.08, hit: 0.035, enemyDown: 0.06 });
 const keys = {
   left: false,
   right: false,
@@ -57,9 +98,13 @@ const pointerControl = {
   x: W / 2,
   y: H - 72,
 };
+const settings = loadSettings();
+const lastSoundAt = new Map();
+let audioContext = null;
 
 const state = {
   mode: "menu",
+  menuOpen: false,
   time: 0,
   wave: 0,
   score: 0,
@@ -129,8 +174,134 @@ function saveBestScore() {
   }
 }
 
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+    return {
+      sound: saved.sound !== false,
+      haptics: saved.haptics !== false,
+    };
+  } catch {
+    return { sound: true, haptics: true };
+  }
+}
+
+function saveSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch {
+    // Settings remain active for this session when storage is unavailable.
+  }
+}
+
+function unlockAudio() {
+  if (!settings.sound) return;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  try {
+    if (!audioContext) audioContext = new AudioContextClass();
+    if (audioContext.state === "suspended") {
+      const resume = audioContext.resume();
+      if (resume?.catch) resume.catch(() => {});
+    }
+  } catch {
+    audioContext = null;
+  }
+}
+
+function playTone(cue) {
+  if (!audioContext || audioContext.state !== "running") return;
+  const startAt = audioContext.currentTime + (cue.delay || 0);
+  const endAt = startAt + cue.duration;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = cue.type || "square";
+  oscillator.frequency.setValueAtTime(Math.max(1, cue.start), startAt);
+  oscillator.frequency.exponentialRampToValueAtTime(Math.max(1, cue.end), endAt);
+  gain.gain.setValueAtTime(0.0001, startAt);
+  gain.gain.exponentialRampToValueAtTime(cue.volume || 0.02, startAt + 0.008);
+  gain.gain.exponentialRampToValueAtTime(0.0001, endAt);
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start(startAt);
+  oscillator.stop(endAt + 0.01);
+}
+
+function playSound(name) {
+  if (!settings.sound || !SOUND_CUES[name]) return;
+  unlockAudio();
+  if (!audioContext || audioContext.state !== "running") return;
+
+  const now = audioContext.currentTime;
+  const minimumGap = SOUND_GAPS[name] || 0;
+  if (now - (lastSoundAt.get(name) ?? -Infinity) < minimumGap) return;
+  lastSoundAt.set(name, now);
+  for (const cue of SOUND_CUES[name]) playTone(cue);
+}
+
+function triggerHaptic(pattern) {
+  if (!settings.haptics || typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
+  navigator.vibrate(pattern);
+}
+
+function syncSettingsUi() {
+  soundButton.textContent = `Sound: ${settings.sound ? "On" : "Off"}`;
+  soundButton.setAttribute("aria-pressed", String(settings.sound));
+  hapticsButton.textContent = `Haptics: ${settings.haptics ? "On" : "Off"}`;
+  hapticsButton.setAttribute("aria-pressed", String(settings.haptics));
+}
+
+function openMenu(reason = "manual") {
+  if (state.menuOpen) return;
+  clearInput();
+  state.menuOpen = true;
+  menuPanel.hidden = false;
+
+  if (state.mode === "playing") {
+    menuEyebrow.textContent = reason === "interruption" ? "Auto-Paused" : "Run Paused";
+    menuTitle.textContent = reason === "interruption" ? "Your Run Is Safe" : "Take a Breath";
+    menuStatus.textContent = reason === "interruption"
+      ? "The action stopped when the game lost focus. Resume when ready."
+      : "Enemies and timers are completely frozen.";
+    resumeButton.textContent = "Resume Run";
+    newRunButton.textContent = "Restart Run";
+  } else if (state.mode === "upgrade") {
+    menuEyebrow.textContent = "Run Options";
+    menuTitle.textContent = "Upgrade Waiting";
+    menuStatus.textContent = "Return to choose an upgrade, or restart the run.";
+    resumeButton.textContent = "Back to Upgrades";
+    newRunButton.textContent = "Restart Run";
+  } else {
+    menuEyebrow.textContent = "Options";
+    menuTitle.textContent = "Game Settings";
+    menuStatus.textContent = "Sound and haptic choices save automatically.";
+    resumeButton.textContent = "Close";
+    newRunButton.textContent = state.mode === "menu" ? "Start New Run" : "Play Again";
+  }
+
+  syncSettingsUi();
+  updateHud();
+}
+
+function closeMenu() {
+  if (!state.menuOpen) return;
+  state.menuOpen = false;
+  menuPanel.hidden = true;
+  clearInput();
+  updateHud();
+}
+
+function pauseForInterruption() {
+  if (state.mode === "playing" && !state.menuOpen) openMenu("interruption");
+  else clearInput();
+}
+
 function resetGame() {
   clearInput();
+  state.menuOpen = false;
+  menuPanel.hidden = true;
   state.time = 0;
   state.wave = 0;
   state.score = 0;
@@ -233,7 +404,7 @@ function makeEnemy(x, y, options) {
 function castSpell() {
   const player = state.player;
 
-  if (!player || player.cooldown > 0 || state.mode !== "playing") {
+  if (!player || player.cooldown > 0 || state.mode !== "playing" || state.menuOpen) {
     return;
   }
 
@@ -251,9 +422,11 @@ function castSpell() {
     });
   }
   addSparks(player.x, player.y - 18, 5, "#9bf6ff");
+  playSound("cast");
 }
 
 function update() {
+  if (state.menuOpen) return;
   state.time += 1;
   state.waveBannerTimer = Math.max(0, state.waveBannerTimer - 1);
   state.screenShake = Math.max(0, state.screenShake - 1);
@@ -310,6 +483,7 @@ function updateBolts() {
         enemy.hp -= bolt.damage;
         bolt.spent = true;
         addSparks(bolt.x, bolt.y, 7, enemy.boss ? "#ffd166" : "#b8f2a2");
+        playSound("hit");
         if (enemy.hp <= 0) break;
       }
     }
@@ -320,6 +494,7 @@ function updateBolts() {
     state.score += enemy.boss ? 1000 : state.wave * 100;
     addSparks(enemy.x, enemy.y, enemy.boss ? 34 : 12, enemy.boss ? "#ffd166" : enemy.highlightColor);
     state.screenShake = Math.max(state.screenShake, enemy.boss ? 16 : 3);
+    playSound("enemyDown");
   }
   state.enemies = state.enemies.filter((enemy) => enemy.hp > 0);
   state.defeated += defeated.length;
@@ -341,6 +516,8 @@ function updateEnemies() {
       addSparks(player.x, player.y, 16, "#ff6b6b");
       state.screenShake = Math.max(state.screenShake, 10);
       state.damageFlash = 8;
+      playSound("damage");
+      triggerHaptic(45);
     }
   }
 }
@@ -365,6 +542,8 @@ function updateBoss(enemy, player) {
       enemy.targetX = player.x;
       enemy.targetY = player.y;
       addSparks(enemy.x, enemy.y, 12, "#ffd166");
+      playSound("warning");
+      triggerHaptic(16);
     }
     return;
   }
@@ -427,11 +606,15 @@ function finishRun(mode) {
   state.mode = mode;
   clearInput();
   saveBestScore();
+  playSound(mode);
+  triggerHaptic(mode === "win" ? [35, 45, 35, 45, 70] : [90, 60, 120]);
 }
 
 function showUpgradePanel() {
   state.mode = "upgrade";
   clearInput();
+  playSound("wave");
+  triggerHaptic([24, 45, 24]);
   upgradeChoices.replaceChildren();
 
   for (const upgrade of pickUpgradeChoices()) {
@@ -444,7 +627,10 @@ function showUpgradePanel() {
     detail.textContent = upgrade.describe(state.player);
     button.append(title, detail);
     button.addEventListener("click", () => {
+      unlockAudio();
       upgrade.apply(state.player);
+      playSound("upgrade");
+      triggerHaptic(28);
       startWave(state.wave + 1);
     }, { once: true });
     upgradeChoices.append(button);
@@ -494,7 +680,7 @@ function draw() {
   ctx.fillStyle = "#080b12";
   ctx.fillRect(0, 0, W, H);
   ctx.save();
-  if (state.screenShake > 0) {
+  if (state.screenShake > 0 && !state.menuOpen) {
     const strength = Math.min(4, state.screenShake * 0.35);
     ctx.translate((Math.random() - 0.5) * strength * 2, (Math.random() - 0.5) * strength * 2);
   }
@@ -534,6 +720,27 @@ function drawBackground() {
     }
   }
 
+  ctx.save();
+  ctx.globalAlpha = 0.28;
+  ctx.strokeStyle = "#52618d";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(W / 2, H / 2 + 20, 58, 0, Math.PI * 2);
+  ctx.arc(W / 2, H / 2 + 20, 38, 0, Math.PI * 2);
+  ctx.moveTo(W / 2 - 58, H / 2 + 20);
+  ctx.lineTo(W / 2 + 58, H / 2 + 20);
+  ctx.moveTo(W / 2, H / 2 - 38);
+  ctx.lineTo(W / 2, H / 2 + 78);
+  ctx.stroke();
+  ctx.restore();
+
+  for (let index = 0; index < 7; index += 1) {
+    const fireflyX = 24 + ((index * 47 + state.time * 0.14) % (W - 48));
+    const fireflyY = 74 + ((index * 61 + Math.sin((state.time + index * 20) / 24) * 18) % (H - 138));
+    ctx.fillStyle = index % 2 === 0 ? "rgba(155, 246, 255, 0.5)" : "rgba(255, 209, 102, 0.42)";
+    ctx.fillRect(Math.round(fireflyX), Math.round(fireflyY), 2, 2);
+  }
+
   ctx.fillStyle = "#24314e";
   ctx.fillRect(0, 0, W, 50);
   ctx.fillStyle = "#2e6b4f";
@@ -549,12 +756,14 @@ function drawBackground() {
 }
 
 function drawMenu() {
-  drawPanel(28, 118, 264, 210);
-  drawText("PIXEL MAGE", W / 2, 164, 22, "#ffd166", "center");
-  drawText("Five waves. One boss.", W / 2, 195, 12, "#f3ead7", "center");
-  drawText("Drag to move. Casting is automatic.", W / 2, 225, 10, "#aab1c7", "center");
-  drawText("Tap arena / Enter to start", W / 2, 268, 12, "#9bf6ff", "center");
-  drawMage(W / 2, 360, false);
+  drawPanel(24, 104, 272, 238);
+  drawText("PIXEL MAGE", W / 2, 145, 22, "#ffd166", "center");
+  drawText("FIVE WAVES • ONE BOSS", W / 2, 177, 10, "#f3ead7", "center");
+  drawText("DRAG TO DODGE", W / 2, 211, 11, "#9bf6ff", "center");
+  drawText("SPELLS CAST AUTOMATICALLY", W / 2, 235, 9, "#aab1c7", "center");
+  drawText("Choose an upgrade after each wave", W / 2, 263, 9, "#aab1c7", "center");
+  drawText("TAP ARENA TO START", W / 2, 305, 12, "#ffd166", "center");
+  drawMage(W / 2, 382, false);
 }
 
 function drawPlayer() {
@@ -586,20 +795,35 @@ function drawMage(x, y, moving) {
   const py = Math.round(y + bob);
 
   ctx.fillStyle = "#0a0d15";
-  ctx.fillRect(px - 9, py + 10, 18, 5);
+  ctx.fillRect(px - 10, py + 10, 20, 5);
 
+  ctx.fillStyle = "#24203b";
+  ctx.fillRect(px - 8, py - 5, 16, 20);
   ctx.fillStyle = "#5b3d9a";
-  ctx.fillRect(px - 7, py - 4, 14, 18);
+  ctx.fillRect(px - 6, py - 3, 12, 17);
   ctx.fillStyle = "#7d5bd6";
   ctx.fillRect(px - 4, py - 1, 8, 13);
+  ctx.fillStyle = "#ffd166";
+  ctx.fillRect(px - 1, py + 2, 2, 10);
 
+  ctx.fillStyle = "#3a283e";
+  ctx.fillRect(px - 6, py - 15, 12, 11);
   ctx.fillStyle = "#f4c38b";
-  ctx.fillRect(px - 5, py - 14, 10, 9);
+  ctx.fillRect(px - 4, py - 14, 8, 9);
+  ctx.fillStyle = "#30243c";
+  ctx.fillRect(px - 1, py - 11, 2, 2);
   ctx.fillStyle = "#22283d";
-  ctx.fillRect(px - 7, py - 18, 14, 5);
-  ctx.fillRect(px - 3, py - 25, 6, 9);
+  ctx.fillRect(px - 9, py - 19, 18, 5);
+  ctx.fillRect(px - 4, py - 27, 8, 10);
+  ctx.fillStyle = "#5c4ba0";
+  ctx.fillRect(px - 2, py - 25, 4, 7);
+
+  ctx.fillStyle = "#253044";
+  ctx.fillRect(px + 8, py - 9, 4, 20);
   ctx.fillStyle = "#9bf6ff";
-  ctx.fillRect(px + 8, py - 8, 4, 12);
+  ctx.fillRect(px + 7, py - 13, 6, 6);
+  ctx.fillStyle = Math.floor(state.time / 5) % 2 === 0 ? "#e0fbff" : "#9bf6ff";
+  ctx.fillRect(px + 9, py - 12, 2, 2);
 }
 
 function drawEnemies() {
@@ -631,6 +855,21 @@ function drawSlime(enemy) {
   ctx.fillStyle = "#101420";
   ctx.fillRect(-5, 0, 3, 3);
   ctx.fillRect(3, 0, 3, 3);
+
+  if (enemy.variant === "swift") {
+    ctx.fillStyle = "#9bf6ff";
+    ctx.fillRect(-14, -3, 5, 2);
+    ctx.fillRect(9, 3, 5, 2);
+  } else if (enemy.variant === "iron") {
+    ctx.fillStyle = "#c6b7e5";
+    ctx.fillRect(-9, -3, 18, 3);
+    ctx.fillRect(-8, 5, 5, 4);
+    ctx.fillRect(3, 5, 5, 4);
+  } else {
+    ctx.fillStyle = "#b8f2a2";
+    ctx.fillRect(-2, -13, 4, 4);
+    ctx.fillRect(2, -16, 5, 3);
+  }
   ctx.restore();
   const barWidth = Math.max(24, enemy.w + 4);
   drawHealthBar(enemy.x - barWidth / 2, enemy.y - enemy.h - 4, barWidth, enemy.hp / enemy.maxHp);
@@ -674,6 +913,8 @@ function drawBoss(enemy) {
 
 function drawBolts() {
   for (const bolt of state.bolts) {
+    ctx.fillStyle = "rgba(61, 160, 184, 0.55)";
+    ctx.fillRect(Math.round(bolt.x) - 3, Math.round(bolt.y) + 3, 6, 8);
     ctx.fillStyle = "#9bf6ff";
     ctx.fillRect(Math.round(bolt.x) - 2, Math.round(bolt.y) - 7, 4, 12);
     ctx.fillStyle = "#e0fbff";
@@ -722,6 +963,11 @@ function drawPanel(x, y, w, h) {
   ctx.fillRect(x + 4, y + 4, w - 8, h - 8);
   ctx.fillStyle = "#1b2233";
   ctx.fillRect(x + 8, y + 8, w - 16, h - 16);
+  ctx.fillStyle = "#53618a";
+  ctx.fillRect(x + 8, y + 8, w - 16, 2);
+  ctx.fillStyle = "#ffd166";
+  ctx.fillRect(x + 4, y + 4, 6, 6);
+  ctx.fillRect(x + w - 10, y + 4, 6, 6);
 }
 
 function drawText(text, x, y, size, color, align = "left") {
@@ -741,6 +987,9 @@ function drawHealthBar(x, y, w, percent) {
 
 function updateHud() {
   const player = state.player;
+
+  menuButton.textContent = state.menuOpen ? "Resume" : state.mode === "playing" ? "Pause" : "Options";
+  menuButton.setAttribute("aria-label", state.menuOpen ? "Resume game" : state.mode === "playing" ? "Pause game" : "Open options");
 
   healthText.textContent = player ? `HP ${Math.max(0, player.hp)}/${player.maxHp}` : "HP 3/3";
 
@@ -783,6 +1032,8 @@ function clamp(value, min, max) {
 
 function handleStartAction() {
   if (state.mode === "menu" || state.mode === "win" || state.mode === "lose") {
+    playSound("wave");
+    triggerHaptic(18);
     resetGame();
   }
 }
@@ -801,6 +1052,16 @@ const keyboardMap = {
 window.addEventListener("keydown", (event) => {
   const key = keyboardMap[event.code];
 
+  unlockAudio();
+
+  if (event.code === "Escape" || event.code === "KeyP") {
+    event.preventDefault();
+    playSound("click");
+    if (state.menuOpen) closeMenu();
+    else openMenu();
+    return;
+  }
+
   if (key) {
     event.preventDefault();
     keys[key] = true;
@@ -808,7 +1069,7 @@ window.addEventListener("keydown", (event) => {
 
   if (event.code === "Space" || event.code === "Enter") {
     event.preventDefault();
-    handleStartAction();
+    if (!state.menuOpen) handleStartAction();
   }
 });
 
@@ -825,6 +1086,8 @@ function updatePointerTarget(event) {
 
 function startPointerControl(event) {
   event.preventDefault();
+  unlockAudio();
+  if (state.menuOpen) return;
   handleStartAction();
   if (state.mode !== "playing") return;
 
@@ -851,8 +1114,53 @@ canvas.addEventListener("pointerdown", startPointerControl);
 canvas.addEventListener("pointermove", movePointerControl);
 canvas.addEventListener("pointerup", stopPointerControl);
 canvas.addEventListener("pointercancel", stopPointerControl);
-restartButton.addEventListener("click", resetGame);
-window.addEventListener("blur", clearInput);
+
+menuButton.addEventListener("click", () => {
+  unlockAudio();
+  playSound("click");
+  if (state.menuOpen) closeMenu();
+  else openMenu();
+});
+
+resumeButton.addEventListener("click", () => {
+  unlockAudio();
+  playSound("click");
+  closeMenu();
+});
+
+soundButton.addEventListener("click", () => {
+  if (settings.sound) playSound("click");
+  settings.sound = !settings.sound;
+  saveSettings();
+  syncSettingsUi();
+  if (settings.sound) {
+    unlockAudio();
+    playSound("click");
+  }
+});
+
+hapticsButton.addEventListener("click", () => {
+  settings.haptics = !settings.haptics;
+  saveSettings();
+  syncSettingsUi();
+  if (settings.haptics) triggerHaptic(24);
+  playSound("click");
+});
+
+newRunButton.addEventListener("click", () => {
+  unlockAudio();
+  playSound("wave");
+  triggerHaptic(24);
+  closeMenu();
+  resetGame();
+});
+
+window.addEventListener("blur", pauseForInterruption);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) pauseForInterruption();
+});
+
+syncSettingsUi();
 
 function loop() {
   update();

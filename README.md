@@ -20,6 +20,9 @@ Locked launch scope:
 - Score and locally saved best score.
 - Touch controls.
 - Keyboard controls.
+- Pause/options menu with persistent sound and haptic toggles.
+- Automatic safe pause when the game loses focus.
+- Original synthesized sound effects with no external audio files.
 - Win state.
 - Lose state.
 - Pixel-art visuals drawn in code.
@@ -54,13 +57,14 @@ Mobile:
 
 - Drag anywhere in the arena: move toward your finger.
 - Spells cast automatically.
-- Restart button: restart.
+- Pause button: pause, change feedback settings, or restart.
 
 Laptop:
 
 - WASD / Arrow keys: move.
 - Spells cast automatically.
 - Space / Enter: start.
+- P / Escape: pause or resume.
 
 ## Definition of Done
 

@@ -8,7 +8,23 @@ const [html, gameCode] = await Promise.all([
   readFile(new URL('game.js', root), 'utf8'),
 ]);
 
-for (const id of ['game', 'healthText', 'waveText', 'scoreText', 'restartButton', 'upgradePanel', 'upgradeChoices']) {
+for (const id of [
+  'game',
+  'healthText',
+  'waveText',
+  'scoreText',
+  'menuButton',
+  'upgradePanel',
+  'upgradeChoices',
+  'menuPanel',
+  'menuEyebrow',
+  'menuTitle',
+  'menuStatus',
+  'resumeButton',
+  'soundButton',
+  'hapticsButton',
+  'newRunButton',
+]) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `index.html is missing #${id}`);
 }
 assert.match(html, /Drag in the arena to move/);
@@ -25,10 +41,12 @@ function makeElement(id = '') {
     textContent: '',
     children: [],
     handlers: {},
+    attributes: {},
     classList: { toggle() {} },
     append(...children) { this.children.push(...children); },
     replaceChildren(...children) { this.children = [...children]; },
     addEventListener(type, handler) { this.handlers[type] = handler; },
+    setAttribute(name, value) { this.attributes[name] = String(value); },
     querySelectorAll() { return []; },
   };
 }
@@ -53,30 +71,78 @@ canvas.setPointerCapture = () => {};
 canvas.hasPointerCapture = () => false;
 canvas.releasePointerCapture = () => {};
 
+const menuPanel = makeElement('menuPanel');
+menuPanel.hidden = true;
 const elements = new Map([
   ['#game', canvas],
   ['#healthText', makeElement('healthText')],
   ['#waveText', makeElement('waveText')],
   ['#scoreText', makeElement('scoreText')],
-  ['#restartButton', makeElement('restartButton')],
+  ['#menuButton', makeElement('menuButton')],
   ['#upgradePanel', makeElement('upgradePanel')],
   ['#upgradeChoices', makeElement('upgradeChoices')],
+  ['#menuPanel', menuPanel],
+  ['#menuEyebrow', makeElement('menuEyebrow')],
+  ['#menuTitle', makeElement('menuTitle')],
+  ['#menuStatus', makeElement('menuStatus')],
+  ['#resumeButton', makeElement('resumeButton')],
+  ['#soundButton', makeElement('soundButton')],
+  ['#hapticsButton', makeElement('hapticsButton')],
+  ['#newRunButton', makeElement('newRunButton')],
 ]);
 
 const storage = new Map();
+const windowHandlers = new Map();
+const documentHandlers = new Map();
+const vibrations = [];
+
+class FakeAudioParam {
+  setValueAtTime() {}
+  exponentialRampToValueAtTime() {}
+}
+
+class FakeAudioNode {
+  constructor() {
+    this.frequency = new FakeAudioParam();
+    this.gain = new FakeAudioParam();
+  }
+
+  connect() {}
+  start() {}
+  stop() {}
+}
+
+class FakeAudioContext {
+  constructor() {
+    this.state = 'running';
+    this.currentTime = 1;
+    this.destination = {};
+  }
+
+  createOscillator() { return new FakeAudioNode(); }
+  createGain() { return new FakeAudioNode(); }
+  resume() { return Promise.resolve(); }
+}
+
 const sandbox = {
   console,
   document: {
+    hidden: false,
     querySelector: (selector) => elements.get(selector) || null,
     querySelectorAll: () => [],
     createElement: () => makeElement(),
+    addEventListener: (type, handler) => documentHandlers.set(type, handler),
   },
   localStorage: {
     getItem: (key) => storage.get(key) ?? null,
     setItem: (key, value) => storage.set(key, String(value)),
   },
+  navigator: { vibrate: (pattern) => vibrations.push(pattern) },
   requestAnimationFrame: () => 0,
-  window: { addEventListener() {} },
+  window: {
+    AudioContext: FakeAudioContext,
+    addEventListener: (type, handler) => windowHandlers.set(type, handler),
+  },
 };
 
 vm.createContext(sandbox);
@@ -84,18 +150,45 @@ vm.runInContext(gameCode, sandbox, { filename: 'game.js' });
 const evaluate = (source) => vm.runInContext(source, sandbox);
 
 assert.equal(evaluate('state.mode'), 'menu');
-evaluate('resetGame()');
+canvas.handlers.pointerdown({ clientX: 40, clientY: 240, pointerId: 1, preventDefault() {} });
 assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 1);
 assert.equal(evaluate('state.enemies.length'), 3);
 
 const startingX = evaluate('state.player.x');
-canvas.handlers.pointerdown({ clientX: 40, clientY: 240, pointerId: 1, preventDefault() {} });
 evaluate('update()');
 assert.ok(evaluate('state.player.x') < startingX, 'dragging in the arena should move the mage');
 assert.ok(evaluate('state.bolts.length') > 0, 'the mage should cast automatically');
+assert.ok(evaluate('audioContext !== null'), 'the first gesture should unlock synthesized audio');
+assert.ok(vibrations.length > 0, 'the first gesture should provide haptic feedback');
 canvas.handlers.pointerup({ pointerId: 1 });
 assert.equal(evaluate('pointerControl.active'), false);
+
+const timeBeforePause = evaluate('state.time');
+elements.get('#menuButton').handlers.click();
+assert.equal(evaluate('state.menuOpen'), true);
+assert.equal(menuPanel.hidden, false);
+evaluate('update()');
+assert.equal(evaluate('state.time'), timeBeforePause, 'pause should freeze all gameplay timers');
+
+elements.get('#soundButton').handlers.click();
+assert.equal(evaluate('settings.sound'), false);
+assert.equal(JSON.parse(storage.get('pixel_mage_settings_v1')).sound, false);
+elements.get('#soundButton').handlers.click();
+assert.equal(evaluate('settings.sound'), true);
+elements.get('#hapticsButton').handlers.click();
+assert.equal(evaluate('settings.haptics'), false);
+assert.equal(JSON.parse(storage.get('pixel_mage_settings_v1')).haptics, false);
+elements.get('#hapticsButton').handlers.click();
+assert.equal(evaluate('settings.haptics'), true);
+elements.get('#resumeButton').handlers.click();
+assert.equal(evaluate('state.menuOpen'), false);
+
+windowHandlers.get('blur')();
+assert.equal(evaluate('state.menuOpen'), true, 'losing focus during play should auto-pause');
+assert.equal(elements.get('#menuEyebrow').textContent, 'Auto-Paused');
+elements.get('#resumeButton').handlers.click();
+assert.equal(evaluate('state.menuOpen'), false);
 
 for (let wave = 1; wave < 5; wave += 1) {
   evaluate('state.enemies.forEach((enemy) => { enemy.hp = 0; }); update()');
