@@ -3,9 +3,25 @@
   "version": "0.1.0-rc.1",
   "private": true,
   "description": "A tiny mobile-first five-wave pixel-action game.",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "node scripts/build-web.mjs",
-    "check": "node --check game.js && node scripts/check.mjs && npm run build && node scripts/check-build.mjs",
-    "preview": "npm run build && python3 -m http.server 4173 --directory dist"
+    "check": "node --check game.js && node scripts/check.mjs && npm run build && node scripts/check-build.mjs && npm run assets:android && node scripts/check-android.mjs",
+    "preview": "npm run build && python3 -m http.server 4173 --directory dist",
+    "assets:android": "node scripts/build-android-assets.mjs",
+    "android:sync": "npm run check && cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.4.1",
+    "@capacitor/app": "8.1.0",
+    "@capacitor/core": "8.4.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.4.1",
+    "esbuild": "0.28.1",
+    "sharp": "0.35.3"
   }
 }

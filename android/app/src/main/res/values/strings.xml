@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pixel Mage</string>
+    <string name="title_activity_main">Pixel Mage</string>
+    <string name="package_name">com.ezz10099.pixelmage</string>
+    <string name="custom_url_scheme">com.ezz10099.pixelmage</string>
+</resources>

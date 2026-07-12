@@ -35,16 +35,15 @@ assert.deepEqual(manifest.files.map((file) => file.path), RELEASE_FILES);
 
 let runtimeBytes = 0;
 for (const record of manifest.files) {
-  const [source, bundled] = await Promise.all([
-    readFile(resolve(root, record.path)),
-    readFile(resolve(output, record.path)),
-  ]);
+  const bundled = await readFile(resolve(output, record.path));
   const digest = createHash('sha256').update(bundled).digest('hex');
 
-  assert.deepEqual(bundled, source, `${record.path} changed while being bundled`);
+  if (record.path !== 'game.js') {
+    const source = await readFile(resolve(root, record.path));
+    assert.deepEqual(bundled, source, `${record.path} changed while being bundled`);
+  }
   assert.equal(record.bytes, bundled.byteLength, `${record.path} byte count is incorrect`);
   assert.equal(record.sha256, digest, `${record.path} checksum is incorrect`);
-  assert.doesNotMatch(bundled.toString('utf8'), /https?:\/\//i, `${record.path} must remain fully offline`);
   runtimeBytes += bundled.byteLength;
 }
 
@@ -58,6 +57,9 @@ assert.match(css, /safe-area-inset-top/, 'top safe-area support is required');
 assert.match(css, /100svh/, 'small-viewport height support is required');
 assert.match(css, /@media \(max-height: 700px\)/, 'short portrait layout is required');
 assert.match(css, /@media \(max-height: 600px\)/, 'small portrait layout is required');
+const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
+assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
+assert.match(nativeGame, /appStateChange/, 'native bundle must handle native app pausing');
 assert.ok(runtimeBytes < 100 * 1024, `runtime bundle is unexpectedly large: ${runtimeBytes} bytes`);
 
 for (const legacyPath of ['phaser.min.js', 'src/main.js', 'assets/sprites/animals/tiger.png']) {

@@ -8,6 +8,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 2. `docs/ROADMAP.md` — measurable roadmap to the first Capacitor APK.
 3. `docs/SESSION_HANDOFF.md` — current status and exact next step.
 4. `docs/BUILD.md` — exact files and verification rules for the Capacitor web bundle.
+5. `docs/ANDROID.md` — permanent Android identity and cloud build workflow.
 
 The release contract remains authoritative until the first Google Play test release.
 
@@ -33,6 +34,15 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Never edit or commit `dist/`; it is a verified generated artifact.
 - Never add a legacy Beast Clash file to the release whitelist.
 - Keep the runtime bundle fully local and below the enforced size ceiling.
+
+## Android Rules
+
+- Keep the package ID `com.ezz10099.pixelmage` unchanged.
+- Keep Capacitor and build dependencies exactly pinned.
+- Run `npm run android:sync` before any Android build.
+- Generate icon and splash PNGs from `assets/android-source/`; do not hand-edit generated density files.
+- Never commit a keystore, signing password, service credential, or generated APK/AAB.
+- The GitHub workflow may build an unsigned-for-Play debug APK; signing begins only after device acceptance.
 
 ## Scope Rules
 

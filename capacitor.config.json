@@ -1,0 +1,9 @@
+{
+  "appId": "com.ezz10099.pixelmage",
+  "appName": "Pixel Mage",
+  "webDir": "dist",
+  "backgroundColor": "#101420",
+  "android": {
+    "allowMixedContent": false
+  }
+}

@@ -10,7 +10,7 @@
 
 ## Current Session Goal
 
-Complete Batch 3: freeze and verify the exact offline web release candidate intended for Capacitor.
+Complete Batch 4: produce the first installable Android APK without requiring a laptop.
 
 ## Completed This Session
 
@@ -35,24 +35,32 @@ Complete Batch 3: freeze and verify the exact offline web release candidate inte
 - Added hard caps for bolts and particles to prevent runaway runtime growth.
 - Added compact responsive layouts for short and small portrait screens.
 - Added release-bundle size, safe-area, viewport, checksum, and content checks.
+- Froze the accepted web release candidate on `web-rc-0.1.0`.
+- Added pinned Capacitor 8 core, Android, App, CLI, esbuild, and artwork-generation dependencies.
+- Created the native Android project with package ID `com.ezz10099.pixelmage`.
+- Locked portrait orientation, API 24 minimum, API 36 target, and offline-only permissions.
+- Added native app switching and Android Back behavior.
+- Created original vector-based Pixel Mage launcher and splash artwork with deterministic PNG generation.
+- Added a read-only GitHub Actions workflow that builds and uploads a debug APK.
+- Added Android identity, artwork, workflow, permission, and version checks.
 
 ## Phone Validation Result
 
-The user pulled and tested both the gameplay/control batch and the release-experience batch through SPCK, then told development to continue. Batches 1 and 2 are accepted.
+The user pulled and tested the gameplay/control, release-experience, and web-release-candidate batches through SPCK, then told development to continue. Batches 1–3 are accepted.
 
 ## Current Development Objective
 
-The web release candidate is implemented as version `0.1.0-rc.1`. `npm run check` now completes ten runs, rebuilds the exact offline package, verifies its checksums, and rejects unexpected or legacy files. The generated package is approximately 44 KB before the future Android icon and splash.
+The Android delivery batch is implemented. Pushing it to `main` will start the cloud build. The remaining work is to verify the GitHub Actions result, download the debug APK, install it on the target phone, and run the APK acceptance checklist.
 
 Request one consolidated phone test after the batch is pushed. Ask only:
 
-1. Does the interface still fit and play normally after the responsive changes?
-2. Do settings and best score survive a preview refresh?
-3. Can a complete run finish without a pause, control, sound, or visual problem?
+1. Does the APK install and launch offline?
+2. Do drag, pause, app switching, Android Back, sound, haptics, upgrades, win, and lose work?
+3. Do settings and best score persist after fully closing and reopening the APK?
 
 ## Next Session Entry Point
 
-If the consolidated test has no blocker, tag this exact commit as the web release candidate and begin Batch 4: Capacitor Android delivery. If a blocker exists, fix all release-candidate blockers together, rerun the complete QA suite, retest once, and move forward.
+If the APK passes, accept Milestones 6 and 7 and proceed to Google Play preparation: privacy disclosures, signing, AAB, store assets, and closed testing. If it fails, fix all APK blockers together and produce one replacement build.
 
 ## Verification
 
@@ -65,3 +73,5 @@ Current expected result:
 `Pixel Mage checks passed: 10 complete runs.`
 
 `Release bundle checks passed (... runtime bytes).`
+
+`Android configuration checks passed.`

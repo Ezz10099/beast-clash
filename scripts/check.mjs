@@ -190,6 +190,14 @@ assert.equal(elements.get('#menuEyebrow').textContent, 'Auto-Paused');
 elements.get('#resumeButton').handlers.click();
 assert.equal(evaluate('state.menuOpen'), false);
 
+assert.equal(evaluate('typeof window.PixelMageNative.handleBackButton'), 'function');
+assert.equal(evaluate('window.PixelMageNative.handleBackButton()'), true, 'Back should pause an active run');
+assert.equal(evaluate('state.menuOpen'), true);
+assert.match(elements.get('#menuStatus').textContent, /Back again to exit/);
+assert.equal(evaluate('window.PixelMageNative.handleBackButton()'), false, 'Back from pause should allow native exit');
+elements.get('#resumeButton').handlers.click();
+assert.equal(evaluate('state.menuOpen'), false);
+
 for (let wave = 1; wave < 5; wave += 1) {
   evaluate('state.enemies.forEach((enemy) => { enemy.hp = 0; }); update()');
   assert.equal(evaluate('state.mode'), 'upgrade', `wave ${wave} should open an upgrade choice`);

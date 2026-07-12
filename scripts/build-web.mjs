@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { build } from 'esbuild';
 
 import { OUTPUT_DIRECTORY, RELEASE_FILES } from './release-config.mjs';
 
@@ -12,14 +13,31 @@ const packageJson = JSON.parse(await readFile(resolve(root, 'package.json'), 'ut
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 
-const files = [];
-for (const path of RELEASE_FILES) {
+for (const path of RELEASE_FILES.filter((file) => file !== 'game.js')) {
   const source = resolve(root, path);
   const destination = resolve(output, path);
-  const content = await readFile(source);
 
   await mkdir(dirname(destination), { recursive: true });
   await copyFile(source, destination);
+}
+
+await build({
+  entryPoints: [resolve(root, 'scripts/native-entry.mjs')],
+  outfile: resolve(output, 'game.js'),
+  bundle: true,
+  format: 'iife',
+  platform: 'browser',
+  target: ['chrome60'],
+  minify: true,
+  legalComments: 'none',
+  define: {
+    'process.env.NODE_ENV': '"production"',
+  },
+});
+
+const files = [];
+for (const path of RELEASE_FILES) {
+  const content = await readFile(resolve(output, path));
   files.push({
     path,
     bytes: content.byteLength,

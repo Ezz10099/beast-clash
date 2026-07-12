@@ -98,7 +98,7 @@ Exit criteria:
 
 ## Milestone 4 — Visual and Audio Polish
 
-**Status:** Runtime visual/audio polish is phone-accepted. App icon and splash remain for Android delivery.
+**Status:** Complete. Runtime polish is phone-accepted, and original Android icon/splash artwork is implemented.
 
 **Goal:** make the small scope cohesive rather than prototype-like.
 
@@ -117,7 +117,7 @@ Exit criteria:
 
 ## Milestone 5 — Web Release Candidate
 
-**Status:** Release-candidate build and QA are implemented; awaiting one phone validation before tagging.
+**Status:** Complete and phone-accepted. Frozen on branch `web-rc-0.1.0`.
 
 **Goal:** freeze a browser build that is ready to wrap.
 
@@ -131,10 +131,12 @@ Objectives:
 
 Exit criteria:
 
-- The exact web build intended for Capacitor is tagged as the web release candidate.
+- The exact web build intended for Capacitor is frozen as the web release candidate.
 - Ten test runs produce no crash, blank screen, lost input, or corrupted saved data.
 
 ## Milestone 6 — Capacitor Android Build
+
+**Status:** Capacitor project and cloud APK workflow implemented; first cloud build starts when this batch reaches `main`.
 
 **Goal:** generate the first installable Android APK.
 
@@ -179,7 +181,7 @@ Only after APK acceptance:
 
 1. Gameplay completion — complete and phone-accepted.
 2. Release experience and polish — complete and phone-accepted.
-3. Web release-candidate QA — implemented, awaiting phone acceptance and tag.
-4. Capacitor build and APK acceptance.
+3. Web release-candidate QA — complete and frozen.
+4. Capacitor build and APK acceptance — in progress.
 
 One correction batch may be used only for a release blocker. Scope expansion is never a valid use of that reserve.

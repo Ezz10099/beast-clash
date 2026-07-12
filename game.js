@@ -283,6 +283,10 @@ function openMenu(reason = "manual") {
     newRunButton.textContent = state.mode === "menu" ? "Start New Run" : "Play Again";
   }
 
+  if (reason === "back") {
+    menuStatus.textContent = "The run is paused. Resume here, or press Back again to exit.";
+  }
+
   syncSettingsUi();
   updateHud();
 }
@@ -298,6 +302,16 @@ function closeMenu() {
 function pauseForInterruption() {
   if (state.mode === "playing" && !state.menuOpen) openMenu("interruption");
   else clearInput();
+}
+
+function handleNativeBackButton() {
+  clearInput();
+  if (state.menuOpen) return false;
+  if (state.mode === "playing" || state.mode === "upgrade") {
+    openMenu("back");
+    return true;
+  }
+  return false;
 }
 
 function resetGame() {
@@ -1166,6 +1180,11 @@ newRunButton.addEventListener("click", () => {
 window.addEventListener("blur", pauseForInterruption);
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) pauseForInterruption();
+});
+
+window.PixelMageNative = Object.freeze({
+  handleBackButton: handleNativeBackButton,
+  pauseForInterruption,
 });
 
 syncSettingsUi();

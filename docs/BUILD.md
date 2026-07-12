@@ -13,7 +13,7 @@ The repository still contains the retired Beast Clash prototype for reference. I
 - `game.js`
 - `build-manifest.json`
 
-The manifest records the release version, byte count, and SHA-256 checksum of each runtime file. The build contains no remote URLs, frameworks, animal assets, or legacy Phaser code, so it can load entirely offline inside Capacitor.
+The manifest records the release version, byte count, and SHA-256 checksum of each runtime file. `game.js` is bundled with the small Capacitor App bridge for native pause and Android Back handling. The build contains no remote URLs, animal assets, or legacy Phaser code, so it can load entirely offline inside Capacitor.
 
 ## Verification
 
@@ -21,7 +21,7 @@ Run:
 
 `npm run check`
 
-This validates gameplay and settings, completes ten automated five-wave runs, rebuilds `dist/`, verifies every checksum, rejects unexpected bundle files, and enforces a small runtime-size ceiling.
+This validates gameplay and settings, completes ten automated five-wave runs, rebuilds `dist/`, verifies every checksum, regenerates Android artwork, validates native configuration, rejects unexpected bundle files, and enforces a small runtime-size ceiling.
 
 Preview the exact release bundle with:
 

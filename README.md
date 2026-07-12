@@ -57,6 +57,12 @@ Run `npm run check` to execute ten complete automated runs, create the offline r
 
 Run `npm run preview` to serve the exact generated `dist/` bundle intended for Capacitor. Legacy Beast Clash files remain available in the repository but are excluded from that bundle.
 
+## Android build
+
+The Capacitor 8 project uses the permanent package ID `com.ezz10099.pixelmage`. A GitHub Actions workflow builds an installable debug APK in the cloud, so Android Studio is not required for the first device test.
+
+See `docs/ANDROID.md` for the build and installation workflow.
+
 ## Controls
 
 Mobile:
@@ -95,3 +101,4 @@ Project authority:
 - `docs/ROADMAP.md` — roadmap to the first Capacitor APK.
 - `docs/SESSION_HANDOFF.md` — current status and next-session entry point.
 - `docs/BUILD.md` — deterministic offline release-build contract.
+- `docs/ANDROID.md` — Capacitor, cloud APK, and signing-safety contract.
