@@ -86,7 +86,7 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 
 ## First Approved Implementation Batch — Representative Slice
 
-**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch; `0.2.0-representative.2` passes automation and awaits consolidated phone acceptance and the second owner go/no-go.
+**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` adds the permanent evidence gate; full launch scaling still awaits fresh-player comprehension evidence and the second owner go/no-go.
 
 Build this as one substantial related batch before producing the full launch content:
 
@@ -106,7 +106,15 @@ Build this as one substantial related batch before producing the full launch con
 - No control, layout, save, crash, or performance blocker was reported in that result.
 - Acceptance did not pass: the opening and some systems were not understood, Waves 9–11 became boring, Spellbook completion sounded like a rote recipe, and Orbit felt much weaker than Bolt.
 - The correction stays inside the representative cap: clearer axis onboarding and live role text; complete-result rewrite previews with `NEW`/`KNOWN` status; Bolt as marked single-target damage; Orbit as a competitive nearby crowd shield that blocks shots; immediate completion after the final scheduled pack is defeated; and distinct Mote-rush, Glyph-crossfire, and twin-guardian encounters before the earlier-arriving boss.
-- Full launch-content production remains blocked pending one consolidated retest.
+- Correction feedback was strongly positive on entertainment, while estimating only about 15 minutes of representative experimentation and warning that some players may still not immediately understand each choice.
+- Full launch-content production remains blocked pending one fresh-player comprehension cell and the second explicit go/no-go. Evidence-only infrastructure does not require another owner micro-test.
+
+### Automated Evidence Contract
+
+- `npm run check` remains the fast development suite.
+- `npm run evidence` runs all 8 builds across 25 seeds with real damage, verifies one deterministic replay per build, grades runtime integrity, survivability, dominance, pacing, and the choice-text schema, then writes CI-uploaded reports.
+- The July 13 baseline is green: 200/200 wins, 0 runtime violations, 8/8 deterministic replays, 9.7% build median spread, 4.9% Form gap, no post-schedule waiting, and a 7-second boss arrival.
+- This contract supports technical and balance judgments only. Human fun and understanding remain human gates under `docs/EVIDENCE_PROTOCOL.md`.
 
 ## Representative-Slice Acceptance Gate
 
@@ -115,9 +123,9 @@ Full launch-content production begins only when:
 - no control, save, layout, or performance blocker appears on the target phone;
 - a complete winning run is measured and feels active rather than padded;
 - the player can explain the three spell words and predict their result without outside instruction;
-- at least three mechanically different builds finish deterministic tests;
+- all eight prototype combinations complete the 25-seed automated evidence matrix without a red gate;
 - all eight prototype combinations remain readable under stress;
-- the owner wants to try another build after the completed run;
+- human evidence shows that another build feels worth trying after a completed run;
 - the owner gives the second explicit go/no-go.
 
 The earlier 7–9-minute hypothesis is rejected: the 5:49 clear already felt padded before the boss. The correction intentionally removes forced post-clear waiting; the next phone measurement decides the active run duration and remaining batch estimate.

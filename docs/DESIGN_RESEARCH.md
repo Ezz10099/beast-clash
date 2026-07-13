@@ -166,8 +166,23 @@ This evidence changes the design judgment:
 4. Quantity escalation alone does not create an act. The pre-boss sequence needs different compositions and spatial pressures, followed by an earlier boss arrival.
 5. Positive replay curiosity and boss enjoyment are promising, but they do not pass the representative gate while comprehension and pacing fail.
 
-Correction build `0.2.0-representative.2` encodes those conclusions without expanding the approved representative content cap. Its effect remains provisional until the consolidated SPCK retest.
+Correction build `0.2.0-representative.2` encoded those conclusions without expanding the approved representative content cap. The resulting owner feedback is recorded below.
+
+## Correction Feedback and Evidence Model — July 13, 2026
+
+After trying the correction, the owner reported being “really happy” and finding the game entertaining. They estimated that the available representative content supplied about 15 minutes of entertainment, and still believed some players might not easily understand what every rewrite choice provides.
+
+This updates the design judgment without pretending the feedback proves more than it does:
+
+1. The living-spell loop, corrected encounter sequence, and boss payoff are promising enough to continue bounded development.
+2. The earlier late-run boredom and severe Orbit complaint were not repeated, but perceived Form balance still remains a human question at the next major gate.
+3. Roughly 15 minutes across the representative content is not a launch-duration promise or a reason to multiply content blindly. It establishes a depth gap to solve with the locked reusable systems and capped Trials.
+4. Existing labels satisfy an automated information contract, but the remaining concern is whether fresh players actually interpret them. That requires fresh-player evidence, not more wording asserted from the developer side.
+
+The permanent feedback model is now three-lane: CI bot evidence for reliability/balance/pacing proxies, targeted public-review mining for comparable mechanic risks, and small human cells for fun/comprehension/value at major commercial gates. The exact contract and boundaries are recorded in `docs/EVIDENCE_PROTOCOL.md`; stable results belong in `docs/EVIDENCE_LEDGER.md`.
+
+The first full automated baseline ran 200 real-damage trials across all 8 representative builds. Every run won, all deterministic replays matched, the build median clear-time spread was 9.7%, the Bolt/Orbit median gap was 4.9%, and no forced post-schedule wait appeared. These results support runtime and relative-balance confidence under the bot policy; they do not resolve human choice comprehension.
 
 ## Research Stop Rule
 
-The required final research round and owner choice are complete. Stop broad ideation. Retest the bounded representative correction and use that phone evidence for the second go/no-go and all later content estimates.
+The required broad research round and owner choice are complete. Stop broad ideation. Continue only targeted review mining tied to a concrete mechanic or commercial gate, and use the evidence protocol before later content estimates or the second go/no-go.

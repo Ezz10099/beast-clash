@@ -7,12 +7,13 @@ Pixel Mage is the only active game in this repository. Read these files before m
 1. `docs/START_HERE.md` — permanent project map and mandatory session protocol.
 2. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
 3. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
-4. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
-5. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
-6. `docs/ROADMAP.md` — measurable roadmap through Google Play.
-7. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-8. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
-9. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+4. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
+5. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
+6. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
+7. `docs/ROADMAP.md` — measurable roadmap through Google Play.
+8. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
+9. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+10. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
 The accepted technical foundation and the owner-approved Living Spell Trials commercial scope are authoritative. Exact duration, balance, component behavior, final title, and monetization remain gated.
 
@@ -60,7 +61,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 
 - Work in substantial milestone batches, not micro-feature test cycles.
 - Implement the representative slice as one substantial related batch, then request one consolidated phone test and a second go/no-go.
-- After the lock, group related implementation, run automated checks, and request one consolidated phone test per batch.
+- After the lock, group related implementation and run automated checks. Request one consolidated human cell only at an explicit major commercial gate; do not create micro-test fatigue.
 - Prefer a stable, engaging, time-bounded release over either a one-minute shell or an unfinishable large RPG.
 
 ## Decision Boundaries
@@ -81,6 +82,6 @@ Before ending any meaningful session:
 
 ## Verification
 
-Run `npm run check` before every stable code commit. Documentation-only commits must still preserve all expected check results.
+Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must still preserve all expected check results.
 
 For browser preview, run `npm run preview` and test the complete accepted phone checklist.

@@ -23,6 +23,12 @@ Run:
 
 This validates controls and settings, all eight readable representative spell combinations, full-result rewrite previews, Bolt/Orbit role balance, active wave completion, versioned save migration and boundary recovery, stress limits, and three seeded 12-wave clears. It then rebuilds `dist/`, verifies every checksum, regenerates Android artwork, validates native configuration, rejects unexpected bundle files, and enforces the runtime-size ceiling.
 
+Before a gameplay gate or commercial recommendation, also run:
+
+`npm run evidence`
+
+This executes the 8-build × 25-seed real-damage matrix plus deterministic replays and writes `artifacts/evidence/evidence-report.json` and `.md`. GitHub Actions uploads those reports as `pixel-mage-evidence`. Generated evidence and `dist/` are intentionally excluded from Git; stable conclusions are recorded in `docs/EVIDENCE_LEDGER.md`.
+
 Preview the exact release bundle with:
 
 `npm run preview`

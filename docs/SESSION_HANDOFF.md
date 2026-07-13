@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Record the first Living Spell Trials phone evidence, implement its bounded comprehension/balance/pacing correction, verify and publish it, then request one consolidated SPCK retest.
+Make the agreed feedback system permanent: build the full automated evidence lane, record exactly what bots can and cannot prove, integrate it into CI, and preserve the latest correction feedback without scaling beyond the representative slice.
 
 ## Completed This Session
 
@@ -101,32 +101,40 @@ Record the first Living Spell Trials phone evidence, implement its bounded compr
 - Expanded automation to verify self-explanatory rewrite previews, unseen-combination marking, no post-clear timer floor, distinct late-wave compositions, Orbit shot blocking, Bolt's single-target lead, Orbit's greater crowd output, and competitive full-run clear time.
 - Updated the representative build version to `0.2.0-representative.2`.
 - Ran `npm run check`: three active 12-wave clears, all eight readable combinations, Form balance, save migration, stress limits, the 65,780-byte offline release bundle, Android artwork generation, and Android configuration all passed.
+- Recorded the owner's correction feedback: highly entertaining and roughly 15 minutes of representative experimentation, with a remaining concern that some players may not quickly understand every choice outcome.
+- Added `docs/EVIDENCE_PROTOCOL.md`, `docs/EVIDENCE_LEDGER.md`, and D-012 so continuous evidence ownership cannot drift out of future sessions.
+- Extracted the reusable headless runtime harness used by the fast and full suites.
+- Added `npm run evidence`: all 8 builds × 25 shared seeds, real damage, deterministic form-aware movement, fixed-build Support choices, 8 replay checks, finite-state/cap validation, survivability, dominance, pacing, and choice-schema grading.
+- Added green/yellow/red thresholds with an explicit boundary: automation does not prove fun, human comprehension, touch feel, replay desire, or commercial value.
+- Integrated the 200-run gate and `pixel-mage-evidence` report artifact into the Android GitHub Actions workflow.
+- Updated the representative build version to `0.2.0-representative.3` without changing gameplay.
+- Ran the full local evidence gate: 200/200 wins, 8/8 deterministic replays, 0 runtime violations, 9.7% build spread, 4.9% Form gap, 0 seconds post-schedule waiting, and a 7-second boss arrival. Result: GREEN.
 
 ## Phone Validation Result
 
 The user accepted the earlier gameplay/control, release-experience, web-release-candidate, and native APK batches with no reported bugs. Milestone 7 remains complete.
 
-The first Living Spell Trials representative phone run completed in 5:49. The screenshot showed the result screen fitting the POCO X2-class portrait layout, and the owner reported interest in experimentation and an entertaining boss. The representative gate did not pass: the owner did not understand the opening and some systems fully, became bored shortly before the boss, rejected a rote Spellbook recipe, and found Orbit much weaker than Bolt.
+The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-Correction build `0.2.0-representative.2` passes automation but is not phone-accepted. Its comprehension, touch readability, Orbit feel, active pacing, and measured clear time remain provisional until one consolidated SPCK retest.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. The core direction is promising; fresh-player comprehension and commercial content depth remain open. No player-facing behavior changed in `0.2.0-representative.3`, so this evidence-only batch does not require another owner micro-test.
 
 ## Current Development Objective
 
-Complete one consolidated SPCK phone retest of `0.2.0-representative.2` and obtain the second explicit go/no-go. Do not scale to the remaining 27-combination/9-Trial content or final assets yet.
-
-The retest must use only the in-game explanation, compare Bolt and Orbit for at least two waves each, judge the three distinct pre-boss encounters and boss arrival, finish and record the new time, confirm one checkpoint close/reopen plus layout/performance, and state whether the words are now predictable and another build feels worth trying.
+Use the green evidence baseline to design one bounded representative choice-comprehension batch. Keep the 27-combination/9-Trial production and final assets blocked. After that player-facing batch passes `npm run check` and `npm run evidence`, request one short fresh-player commercial cell that can decide the second explicit go/no-go.
 
 ## Next Session Entry Point
 
-Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 in `docs/DECISIONS.md`, and this handoff. Option B is locked.
+Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 and D-012 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, and this handoff. Option B and the evidence workflow are locked.
 
-Review the owner's consolidated correction-build SPCK result, record the measured run and comprehension/Orbit/pacing verdicts, and make the second go/no-go. Do not build the remaining launch content or final assets before that decision.
+Implement one bounded choice-comprehension solution inside the representative slice, using targeted review mining only where it informs that concrete mechanic. Run both suites before asking the owner to coordinate the next major human gate. Do not build the remaining launch content or final assets before the second go/no-go.
 
 ## Verification
 
 Run:
 
 `npm run check`
+
+`npm run evidence`
 
 Current expected result:
 
@@ -135,3 +143,5 @@ Current expected result:
 `Release bundle checks passed (65780 runtime bytes).`
 
 `Android configuration checks passed.`
+
+`Pixel Mage evidence GREEN: 200 full runs, 100% wins, 9.7% build spread, 9.47s longest empty stretch.`

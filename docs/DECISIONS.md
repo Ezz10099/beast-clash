@@ -80,7 +80,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Status: Active planning rule
 - Decision: Complete one final focused research round, compare feasible capped options, and phone-time a representative full run before locking content-count or playtime claims.
 - Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
-- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49; its bounded comprehension, pacing, and Orbit-balance correction now awaits retest.
+- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49. Its correction received strong entertainment feedback; fresh-player choice comprehension and the second explicit go/no-go remain open.
 - Change rule: The representative run must be phone-timed before duration or total-playtime claims are locked.
 
 
@@ -97,3 +97,14 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Still provisional: Exact component names and behaviors, balance, successful-run duration, final display/store title, monetization, and external SDKs.
 - Reason: This is the strongest researched balance of marketable identity, mobile usability, reusable code-driven variety, limited asset burden, and finishable scope.
 - Change rule: Reopen the overall direction only if the representative slice fails its acceptance gate or the owner explicitly approves a scope change.
+
+## D-012 — Continuous Evidence Ownership
+
+- Date: July 13, 2026
+- Status: Locked workflow rule
+- Decision: Codex owns continuous automated evidence, targeted public-review mining, the evidence ledger, and recommendations about when a major human gate is ready. The owner coordinates short, asynchronous human cells only at explicit commercial gates and is not expected to provide friends on command.
+- Automated contract: Keep the fast `npm run check` suite and the full `npm run evidence` matrix in CI. The representative baseline is 8 builds × 25 seeds with real damage plus 8 deterministic replays, graded against recorded runtime, survivability, dominance, pacing, and choice-schema thresholds.
+- Human boundary: Bot runs and text-schema checks must never be represented as proof of fun, comprehension, touch feel, replay desire, or commercial value.
+- Privacy boundary: Do not add analytics, accounts, network permissions, telemetry, or external SDKs for this workflow without separate owner approval.
+- Reason: The project needs objective, repeatable evidence without exhausting the owner or drifting away from solutions agreed in chat.
+- Change rule: Future agents may strengthen the harness or thresholds with a recorded reason, but may not silently skip the protocol, weaken a threshold to hide a regression, or move human-only claims into the automated column.

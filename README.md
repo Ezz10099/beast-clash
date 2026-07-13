@@ -18,8 +18,9 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - Capacitor 8 and the Android project are configured.
 - The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
 - The accepted five-wave APK remains the stable native foundation and takes roughly one minute.
-- The first Living Spell Trials phone run cleared in 5:49 and confirmed replay curiosity and an entertaining boss, but failed the gate on onboarding clarity, late-run repetition, and Orbit balance.
-- Representative correction build `0.2.0-representative.2` addresses that evidence and awaits one consolidated SPCK retest.
+- The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
+- The correction was later reported as highly entertaining, with roughly 15 minutes of representative experimentation; fresh-player choice comprehension remains open.
+- Evidence build `0.2.0-representative.3` adds a green 200-run automated matrix and CI report without changing gameplay.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -48,6 +49,7 @@ The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypoth
 ## Verification and Android
 
 - `npm run check` verifies all eight readable spell combinations, Bolt/Orbit role balance, active wave pacing, save migration/checkpointing, runtime stress limits, three seeded 12-wave clears, the offline release bundle, and Android configuration.
+- `npm run evidence` runs 200 real-damage bot trials across every representative build, deterministic replays, regression gates, and balance/pacing/choice-schema reports.
 - `npm run preview` serves the exact generated `dist/` bundle.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts.
@@ -78,9 +80,10 @@ Start every new development session with:
 2. `docs/START_HERE.md`
 3. `docs/RELEASE_SCOPE.md`
 4. `docs/DECISIONS.md`
-5. `docs/DESIGN_RESEARCH.md`
-6. `docs/SCOPE_OPTIONS.md`
-7. `docs/ROADMAP.md`
-8. `docs/SESSION_HANDOFF.md`
+5. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
+6. `docs/DESIGN_RESEARCH.md`
+7. `docs/SCOPE_OPTIONS.md`
+8. `docs/ROADMAP.md`
+9. `docs/SESSION_HANDOFF.md`
 
 Implement only the locked Living Spell Trials scope. Phone-test and explicitly accept the representative slice before scaling to the remaining launch content.

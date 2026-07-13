@@ -1,12 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import vm from 'node:vm';
+import { createHeadlessGame } from './headless-game.mjs';
 
 const root = new URL('../', import.meta.url);
-const [html, gameCode] = await Promise.all([
-  readFile(new URL('index.html', root), 'utf8'),
-  readFile(new URL('game.js', root), 'utf8'),
-]);
+const html = await readFile(new URL('index.html', root), 'utf8');
 
 for (const id of [
   'game',
@@ -44,143 +41,23 @@ assert.match(html, /Unseen rewrites are marked NEW/);
 assert.match(html, /Drag to move and dodge\. Your spell casts itself/);
 assert.doesNotMatch(html, /data-key=/, 'legacy touch buttons should not return');
 
-function makeElement(id = '') {
-  return {
-    id,
-    width: 0,
-    height: 0,
-    hidden: false,
-    disabled: false,
-    className: '',
-    textContent: '',
-    children: [],
-    handlers: {},
-    attributes: {},
-    dataset: {},
-    classList: { toggle() {} },
-    append(...children) { this.children.push(...children); },
-    replaceChildren(...children) { this.children = [...children]; },
-    addEventListener(type, handler) { this.handlers[type] = handler; },
-    setAttribute(name, value) { this.attributes[name] = String(value); },
-    querySelectorAll() { return []; },
-  };
-}
-
-const drawingContext = new Proxy({}, {
-  get(target, property) {
-    if (!(property in target)) target[property] = () => {};
-    return target[property];
-  },
-  set(target, property, value) {
-    target[property] = value;
-    return true;
-  },
+const {
+  canvas,
+  elements,
+  evaluate,
+  menuPanel,
+  resumeRunButton,
+  startPanel,
+  storage,
+  upgradePanel,
+  vibrations,
+  windowHandlers,
+} = await createHeadlessGame({
+  storageEntries: [
+    ['pixel_mage_best_score_v1', '321'],
+    ['pixel_mage_settings_v1', JSON.stringify({ sound: true, haptics: true })],
+  ],
 });
-
-const canvas = makeElement('game');
-canvas.width = 320;
-canvas.height = 480;
-canvas.getContext = () => drawingContext;
-canvas.getBoundingClientRect = () => ({ left: 0, top: 0, width: 320, height: 480 });
-canvas.setPointerCapture = () => {};
-canvas.hasPointerCapture = () => false;
-canvas.releasePointerCapture = () => {};
-
-const startPanel = makeElement('startPanel');
-const resumeRunButton = makeElement('resumeRunButton');
-resumeRunButton.hidden = true;
-const upgradePanel = makeElement('upgradePanel');
-upgradePanel.hidden = true;
-const menuPanel = makeElement('menuPanel');
-menuPanel.hidden = true;
-const elements = new Map([
-  ['#game', canvas],
-  ['#healthText', makeElement('healthText')],
-  ['#waveText', makeElement('waveText')],
-  ['#scoreText', makeElement('scoreText')],
-  ['#spellText', makeElement('spellText')],
-  ['#menuButton', makeElement('menuButton')],
-  ['#startPanel', startPanel],
-  ['#startStatus', makeElement('startStatus')],
-  ['#spellbookText', makeElement('spellbookText')],
-  ['#resumeRunButton', resumeRunButton],
-  ['#startRunButton', makeElement('startRunButton')],
-  ['#upgradePanel', upgradePanel],
-  ['#upgradeEyebrow', makeElement('upgradeEyebrow')],
-  ['#upgradeTitle', makeElement('upgradeTitle')],
-  ['#upgradeHelp', makeElement('upgradeHelp')],
-  ['#upgradeChoices', makeElement('upgradeChoices')],
-  ['#menuPanel', menuPanel],
-  ['#menuEyebrow', makeElement('menuEyebrow')],
-  ['#menuTitle', makeElement('menuTitle')],
-  ['#menuStatus', makeElement('menuStatus')],
-  ['#resumeButton', makeElement('resumeButton')],
-  ['#soundButton', makeElement('soundButton')],
-  ['#hapticsButton', makeElement('hapticsButton')],
-  ['#newRunButton', makeElement('newRunButton')],
-  ['#controlHint', makeElement('controlHint')],
-]);
-
-const storage = new Map([
-  ['pixel_mage_best_score_v1', '321'],
-  ['pixel_mage_settings_v1', JSON.stringify({ sound: true, haptics: true })],
-]);
-const windowHandlers = new Map();
-const documentHandlers = new Map();
-const vibrations = [];
-
-class FakeAudioParam {
-  setValueAtTime() {}
-  exponentialRampToValueAtTime() {}
-}
-
-class FakeAudioNode {
-  constructor() {
-    this.frequency = new FakeAudioParam();
-    this.gain = new FakeAudioParam();
-  }
-
-  connect() {}
-  start() {}
-  stop() {}
-}
-
-class FakeAudioContext {
-  constructor() {
-    this.state = 'running';
-    this.currentTime = 1;
-    this.destination = {};
-  }
-
-  createOscillator() { return new FakeAudioNode(); }
-  createGain() { return new FakeAudioNode(); }
-  resume() { return Promise.resolve(); }
-}
-
-const sandbox = {
-  console,
-  document: {
-    hidden: false,
-    querySelector: (selector) => elements.get(selector) || null,
-    querySelectorAll: () => [],
-    createElement: () => makeElement(),
-    addEventListener: (type, handler) => documentHandlers.set(type, handler),
-  },
-  localStorage: {
-    getItem: (key) => storage.get(key) ?? null,
-    setItem: (key, value) => storage.set(key, String(value)),
-  },
-  navigator: { vibrate: (pattern) => vibrations.push(pattern) },
-  requestAnimationFrame: () => 0,
-  window: {
-    AudioContext: FakeAudioContext,
-    addEventListener: (type, handler) => windowHandlers.set(type, handler),
-  },
-};
-
-vm.createContext(sandbox);
-vm.runInContext(gameCode, sandbox, { filename: 'game.js' });
-const evaluate = (source) => vm.runInContext(source, sandbox);
 
 assert.equal(evaluate('state.mode'), 'menu');
 assert.equal(startPanel.hidden, false);

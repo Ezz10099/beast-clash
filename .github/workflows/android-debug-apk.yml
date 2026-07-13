@@ -70,6 +70,18 @@ jobs:
       - name: Install pinned dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Run 200-run automated evidence gate
+        run: npm run evidence
+
+      - name: Upload automated evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pixel-mage-evidence
+          path: artifacts/evidence/evidence-report.*
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Verify and sync Android project
         run: npm run android:sync
 

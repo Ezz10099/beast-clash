@@ -14,6 +14,7 @@ The current debug APK proves the technical route. It is not the project endpoint
 - Provide replay through combinations, challenges, difficulty, and/or endless continuation without grind-heavy padding.
 - Keep story optional and light unless research proves it materially strengthens the game.
 - Measure a representative full run on the target phone before setting duration or total-playtime claims.
+- Maintain automated evidence and targeted review mining continuously, reserving human cells for major commercial gates.
 - Maintain responsive portrait layout, safe-area fit, offline play, local persistence, stable performance, and secure Android delivery.
 
 ## Time Boundary and Batch Rule
@@ -26,10 +27,12 @@ The commercial expansion uses a bounded decision gate:
 2. Record three capped scope options with implementation and asset costs — complete in `docs/SCOPE_OPTIONS.md`.
 3. Obtain one explicit owner-approved commercial scope — complete: Option B selected July 13, 2026.
 4. Build one representative full run — complete on `main`; automated gates pass.
-5. Complete its first SPCK phone test — complete: 5:49 clear, promising experimentation and boss response, failed comprehension/pacing/Orbit gates; bounded correction implemented and one consolidated retest is next.
-6. Revise the remaining batch count from that measured unit — pending.
+5. Complete its first SPCK phone test and bounded correction feedback — complete: the 5:49 run exposed comprehension/pacing/Orbit problems; the correction was later reported as highly entertaining, with roughly 15 minutes of representative depth and a remaining choice-comprehension concern.
+6. Establish the continuous evidence lane — complete: 200-run matrix, deterministic replays, documented thresholds, CI artifact, and green baseline in `0.2.0-representative.3`.
+7. Resolve fresh-player choice comprehension and obtain the second explicit go/no-go — pending.
+8. Revise the remaining batch count from the measured unit — pending.
 
-Do not conduct indefinite research and do not start speculative content before the scope lock. After approval, group related work into substantial batches with automated checks and one consolidated phone test per batch.
+Do not conduct indefinite research and do not start speculative content before the scope lock. Group related work into substantial batches, run both automated suites at gameplay gates, and request one consolidated asynchronous human cell only when it can decide a major commercial gate.
 
 ## Milestone 0 — Foundation
 
@@ -178,7 +181,7 @@ Exit criteria:
 
 ## Milestone 8 — Research and Commercial Scope Lock
 
-**Status:** Commercial scope locked. First representative phone result recorded; bounded correction implemented and consolidated SPCK acceptance retest is next.
+**Status:** Commercial scope locked. The corrected representative loop has positive owner feedback and a green 200-run automated baseline; fresh-player choice comprehension and the second explicit go/no-go remain open.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
@@ -192,7 +195,8 @@ Objectives:
 - Keep `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` authoritative.
 - Phone-time and accept the implemented representative slice before locking duration estimates or scaling full content.
 - Preserve the first phone evidence: a 5:49 clear, positive experimentation and boss response, unclear onboarding, repetitive late pacing, rote discovery risk, and weak-feeling Orbit.
-- Retest `0.2.0-representative.2`, which previews complete rewrites, marks unseen combinations, validates Bolt/Orbit roles, removes fixed post-clear padding, and differentiates the final pre-boss encounters.
+- Preserve correction feedback: highly entertaining play, roughly 15 minutes of representative experimentation, and a remaining concern that choice outcomes may not be obvious to every player.
+- Keep `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` current; maintain the fast suite and 200-run CI gate without substituting bots for human judgment.
 
 Exit criteria:
 
@@ -201,7 +205,8 @@ Exit criteria:
 - The first implementation batch and its phone acceptance test are precisely defined. Complete in `docs/RELEASE_SCOPE.md`.
 - The representative slice is implemented and passes automation. Complete July 13, 2026.
 - One complete phone-timed run and replay-intent result. Complete: 5:49, with correction blockers recorded.
-- Corrected consolidated phone acceptance and second explicit go/no-go. Pending.
+- Continuous automated evidence system and green baseline. Complete July 13, 2026.
+- Fresh-player choice-comprehension cell and second explicit go/no-go. Pending.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -242,11 +247,12 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Representative correction consolidated SPCK retest and second go/no-go — next.
-2. Remaining approved gameplay/content batches — blocked; count revised after the measured slice.
-3. External playtest, balance, and release QA — pending.
-4. Publisher, monetization, privacy, and SDK decisions — pending.
-5. Signed AAB and store preparation — pending.
-6. Google Play testing, blocker fixes, production access, and rollout — pending.
+1. One bounded representative choice-comprehension batch, green automation, then one fresh-player commercial cell — next.
+2. Second explicit go/no-go and remaining batch estimate — pending.
+3. Remaining approved gameplay/content batches — blocked until that decision.
+4. External playtest, balance, and release QA — pending.
+5. Publisher, monetization, privacy, and SDK decisions — pending.
+6. Signed AAB and store preparation — pending.
+7. Google Play testing, blocker fixes, production access, and rollout — pending.
 
 One correction batch per gate may be used for verified blockers. New scope requires a new explicit decision.

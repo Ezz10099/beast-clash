@@ -1,5 +1,6 @@
 dist/
 node_modules/
+/artifacts/evidence/
 .DS_Store
 
 # Deterministically generated Android artwork

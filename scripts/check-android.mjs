@@ -46,6 +46,9 @@ assert.match(workflow, /workflow_dispatch:/);
 assert.match(workflow, /assembleDebug/);
 assert.match(workflow, /upload-artifact/);
 assert.match(workflow, /app-debug\.apk/);
+assert.match(workflow, /npm run evidence/);
+assert.match(workflow, /pixel-mage-evidence/);
+assert.match(workflow, /evidence-report\.\*/);
 
 const requiredImages = [
   ['assets/icon-only.png', 1024, 1024],

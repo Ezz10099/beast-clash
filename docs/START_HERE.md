@@ -21,12 +21,13 @@ Read these files in order:
 2. `docs/START_HERE.md`
 3. `docs/RELEASE_SCOPE.md`
 4. `docs/DECISIONS.md`
-5. `docs/DESIGN_RESEARCH.md`
-6. `docs/SCOPE_OPTIONS.md`
-7. `docs/ROADMAP.md`
-8. `docs/SESSION_HANDOFF.md`
-9. `docs/GOOGLE_PLAY.md`
-10. `docs/BUILD.md` and `docs/ANDROID.md`
+5. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
+6. `docs/DESIGN_RESEARCH.md`
+7. `docs/SCOPE_OPTIONS.md`
+8. `docs/ROADMAP.md`
+9. `docs/SESSION_HANDOFF.md`
+10. `docs/GOOGLE_PLAY.md`
+11. `docs/BUILD.md` and `docs/ANDROID.md`
 
 If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
@@ -42,23 +43,17 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
 - Option B — Living Spell Trials — and its capped launch direction were owner-approved on July 13, 2026.
 - The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, with no reported layout or runtime blocker, but the gate failed because onboarding remained unclear, the late pre-boss stretch became boring, and Orbit felt much weaker than Bolt.
-- Correction build `0.2.0-representative.2` makes rewrite outcomes self-explanatory, marks unseen combinations, validates separate Bolt/Orbit roles, removes fixed post-clear timer padding, and gives Waves 9–11 distinct encounter structures.
-- One consolidated SPCK retest and the second go/no-go are now the active gate; full launch content and final assets remain blocked until it passes.
+- Correction build `0.2.0-representative.2` made the owner “really happy” and was reported as entertaining, with roughly 15 minutes of available representative experimentation. Choice outcomes may still be unclear to some players.
+- Evidence build `0.2.0-representative.3` adds a required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact. Its local baseline is green.
+- The automated lane is ready. Full launch content and final assets remain blocked on fresh-player choice comprehension and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
 The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
-## Current Phone Gate
+## Current Commercial Gate
 
-The corrected representative slice is implemented. Before scaling content:
-
-1. Pull current `main` into SPCK and start one new Trial.
-2. Read only the in-game guidance, then say what Form, Essence, and Law do; confirm rewrite cards make the resulting full spell and `NEW` status obvious.
-3. Use Bolt for at least two waves and Orbit for at least two waves; judge whether Bolt wins single-target fights while Orbit earns close-range risk against crowds and shots.
-4. Judge Mote Stampede, Glyph Crossfire, Twin Wards, and the boss for distinctness and whether any empty or repetitive stretch remains.
-5. Complete the winning run and record its phone-measured time; also check pause/resume, one close/reopen checkpoint, layout, readability, and performance.
-6. State whether another build feels worth trying and give the second explicit go/no-go before the remaining 27-combination/9-Trial content is built.
+No phone retest is required for the evidence-only `0.2.0-representative.3` batch because it does not change player-facing behavior. Before scaling launch content, one fresh-player cell must use only in-game guidance and determine whether players can predict Form, Essence, and Law rewrite outcomes, while also recording replay desire, boredom, touch/layout blockers, and an explicit go/no-go. Request it only after the next complete player-facing batch and green automation.
 
 ## Mandatory Session Protocol
 
@@ -75,7 +70,8 @@ During work:
 2. Preserve the SPCK and responsive portrait workflow.
 3. Stay inside the current approval boundary.
 4. Run `npm run check` before publishing code.
-5. Ask for one consolidated phone test after each complete implementation batch.
+5. Run `npm run evidence` before gameplay gates or commercial recommendations.
+6. Ask for one consolidated asynchronous human cell only at a major commercial gate.
 
 Before ending:
 
@@ -95,4 +91,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow their authority links. Option B — Living Spell Trials — is locked. Report the current milestone and one substantial session goal, complete one approved verified batch, push it to `main`, and update the handoff and roadmap. Do not scale beyond the representative slice until its phone gate passes.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow their authority links, including the evidence protocol and ledger. Option B — Living Spell Trials — is locked. Report the current milestone and one substantial session goal, complete one approved verified batch, run the required evidence, push it to `main`, and update the handoff and roadmap. Do not scale beyond the representative slice until its commercial gate passes.

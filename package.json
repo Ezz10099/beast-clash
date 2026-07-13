@@ -1,6 +1,6 @@
 {
   "name": "pixel-mage",
-  "version": "0.2.0-representative.2",
+  "version": "0.2.0-representative.3",
   "private": true,
   "description": "A mobile-first one-thumb action game about rewriting one living spell.",
   "engines": {
@@ -9,6 +9,7 @@
   "scripts": {
     "build": "node scripts/build-web.mjs",
     "check": "node --check game.js && node scripts/check.mjs && npm run build && node scripts/check-build.mjs && npm run assets:android && node scripts/check-android.mjs",
+    "evidence": "node scripts/evidence.mjs",
     "preview": "npm run build && python3 -m http.server 4173 --directory dist",
     "assets:android": "node scripts/build-android-assets.mjs",
     "android:sync": "npm run check && cap sync android",
