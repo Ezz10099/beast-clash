@@ -2,7 +2,7 @@
 
 ## Status
 
-**Final research complete; owner decision required. Nothing in this file is approved gameplay scope yet.**
+**Decision complete: Option B — Living Spell Trials — was owner-approved as written on July 13, 2026.**
 
 Last updated: July 13, 2026.
 
@@ -51,7 +51,7 @@ This is the fastest route and reuses nearly all accepted systems. It is not reco
 
 ## Option B — Living Spell Trials
 
-### Recommendation — not approved
+### Approved commercial direction
 
 **Store-pitch draft:** “One thumb. One spell. Rewrite it.”
 
@@ -210,13 +210,10 @@ The slice may expand only when:
 
 External release testing should record—not guess—first-run understanding, run duration, failure cause, immediate second-run starts, favorite combinations, confusion, and device problems.
 
-## Decision Required From the Owner
+## Owner Decision Outcome
 
-Choose one:
+The owner selected **Option B — Living Spell Trials** as written on July 13, 2026.
 
-1. Approve Option B as the working commercial scope.
-2. Approve Option B with named changes to its caps or loop.
-3. Choose Option A or C and accept its stated tradeoffs.
-4. Reject all three and identify the specific missing player fantasy before any more implementation.
+The capped launch direction is locked in `docs/RELEASE_SCOPE.md` and D-011 in `docs/DECISIONS.md`. Development begins with the representative slice only. Full 27-combination/9-Trial production and final assets remain blocked until the slice passes its phone gate and receives a second go/no-go.
 
-After approval, update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`, define the first implementation batch, and stop reopening the overall direction unless the representative run fails its gate.
+The overall direction must not be reopened unless the representative slice fails its gate or the owner explicitly approves a scope change.

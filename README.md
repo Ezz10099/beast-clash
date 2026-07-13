@@ -23,19 +23,19 @@ That installed build is a **validated native vertical slice**, not the approved 
 
 ## Commercial Scope Status
 
-The final focused research round is complete. The commercial gameplay scope still requires explicit owner approval.
+**Option B — Living Spell Trials — was owner-approved on July 13, 2026.**
 
-Three bounded directions are compared in `docs/SCOPE_OPTIONS.md`. The recommendation is **Living Spell Trials**:
+The locked launch direction uses:
 
-- one mage and one evolving spell;
-- three readable spell words that can be rewritten between timed waves;
-- a Spellbook for horizontal discovery rather than currency grind;
-- a 12-wave representative run that must be phone-timed before full content production;
-- limited reusable arenas, enemy behaviors, and bosses instead of a large animated roster.
+- one mage and exactly one evolving spell;
+- three readable spell axes—Form, Essence, and Law—with 3 parts each and 27 possible combinations;
+- timed three-act runs, three arena themes, nine authored Trials, six normal enemy behavior families, three bosses, and optional post-victory Endless;
+- a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
+- light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
 
-The recommended counts and 7–9-minute run target are test hypotheses, not locked promises. No gameplay expansion begins until the owner chooses or edits an option.
+Development starts with a smaller representative slice: one arena, one 12-wave run, 2×2×2 spell parts, limited enemies, one boss, checkpoint/resume, and stress tests. Full content and final assets wait until that slice passes a phone test.
 
-`Pixel Mage` is also a working title. Existing Google Play games use closely related names, so the final display/store name must be approved before store assets are produced. The package ID remains unchanged unless the owner explicitly decides otherwise.
+The proposed 7–9-minute clear remains a measurement target, not a promise. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
 
 ## Run in SPCK Editor
 
@@ -77,7 +77,8 @@ Start every new development session with:
 3. `docs/RELEASE_SCOPE.md`
 4. `docs/DECISIONS.md`
 5. `docs/DESIGN_RESEARCH.md`
-6. `docs/ROADMAP.md`
-7. `docs/SESSION_HANDOFF.md`
+6. `docs/SCOPE_OPTIONS.md`
+7. `docs/ROADMAP.md`
+8. `docs/SESSION_HANDOFF.md`
 
-Do not implement a speculative scope expansion. Research first, obtain explicit approval for the capped commercial scope, then update the authority documents before gameplay expansion.
+Implement only the locked Living Spell Trials scope. Complete and phone-test the representative slice before scaling to the remaining launch content.

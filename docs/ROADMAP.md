@@ -24,8 +24,8 @@ The commercial expansion uses a bounded decision gate:
 
 1. Complete one final focused internet/player-review research round — complete.
 2. Record three capped scope options with implementation and asset costs — complete in `docs/SCOPE_OPTIONS.md`.
-3. Obtain one explicit owner-approved commercial scope — pending.
-4. Build one representative full run and phone-time it — pending approval.
+3. Obtain one explicit owner-approved commercial scope — complete: Option B selected July 13, 2026.
+4. Build one representative full run and phone-time it — next.
 5. Revise the remaining batch count from that measured unit — pending.
 
 Do not conduct indefinite research and do not start speculative content before the scope lock. After approval, group related work into substantial batches with automated checks and one consolidated phone test per batch.
@@ -177,7 +177,7 @@ Exit criteria:
 
 ## Milestone 8 — Research and Commercial Scope Lock
 
-**Status:** Research complete; explicit owner scope choice pending. The old tiny scope is superseded as a commercial target, and no replacement count is approved.
+**Status:** Commercial scope locked: Option B — Living Spell Trials. Representative-slice implementation is next.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
@@ -187,15 +187,16 @@ Objectives:
 - Preserve the completed final comparison of feasible games, player feedback, original hooks, run structures, and early commercial content.
 - Keep reusable genre patterns separate from Pixel Mage's required original identity.
 - Present the three capped options in `docs/SCOPE_OPTIONS.md`, including code, art, animation, testing, and schedule implications.
-- Obtain explicit approval for the core loop, original hook, run structure, content caps, progression/replay, story level, and exclusions.
-- Update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` before gameplay expansion.
-- Build and phone-time one representative full run before locking duration and total-content estimates.
+- Preserve the owner-approved Living Spell Trials core loop, hook, content cap, horizontal progression, light framing, and exclusions.
+- Keep `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` authoritative.
+- Build and phone-time the approved representative slice before locking duration estimates or scaling full content.
 
 Exit criteria:
 
-- One commercially credible scope is explicitly approved.
-- Provisional ideas are clearly separated from locked requirements.
-- The first implementation batch and its phone acceptance test are precisely defined.
+- One commercially credible scope is explicitly approved. Complete: Option B.
+- Provisional duration, behavior, naming, and monetization are separated from locked requirements. Complete.
+- The first implementation batch and its phone acceptance test are precisely defined. Complete in `docs/RELEASE_SCOPE.md`.
+- The representative slice is implemented and phone-timed. Pending.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -236,9 +237,8 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Owner commercial scope lock from the completed option packet — pending.
-2. Representative full-run system and phone timing — pending scope approval.
-3. Remaining commercial gameplay/content batches — count set only after the representative run.
+1. Representative Living Spell Trials slice and phone timing — next.
+2. Remaining approved gameplay/content batches — count revised after the measured slice.
 4. External playtest, balance, and release QA — pending.
 5. Publisher, monetization, privacy, and SDK decisions — pending.
 6. Signed AAB and store preparation — pending.

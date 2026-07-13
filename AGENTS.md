@@ -14,7 +14,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 8. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
 9. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
-The accepted technical foundation is authoritative. The exact commercial gameplay scope is not locked yet.
+The accepted technical foundation and the owner-approved Living Spell Trials commercial scope are authoritative. Exact duration, balance, component behavior, final title, and monetization remain gated.
 
 ## User Workflow
 
@@ -48,9 +48,10 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 
 - Treat the accepted one-minute five-wave build as a stable vertical slice, not a commercially finished game.
 - Preserve its validated controls, technical route, Android identity, and automated checks.
-- The final research round is complete. Present `docs/SCOPE_OPTIONS.md` and obtain an explicit owner choice before commercial gameplay expansion.
-- Do not implement new heroes, arenas, stories, currencies, equipment, shops, quests, external SDKs, or major progression systems until the owner explicitly approves the capped launch scope.
-- Provisional ideas—including timed waves, endless continuation, the “living spell” concept, content caps, and duration targets—must not be described as locked.
+- Option B — Living Spell Trials — was explicitly owner-approved on July 13, 2026. Follow the locked cap in `docs/RELEASE_SCOPE.md`.
+- Build the representative slice before scaling content: one arena, one 12-wave timed run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, one elite behavior, one boss, wave-boundary checkpoint/resume, and expanded automated checks.
+- Do not produce the remaining launch content or final assets until that slice passes its consolidated phone gate.
+- The 7–9-minute successful-run target, exact spell-word names/behaviors, balance, and final display title remain provisional until their listed gates pass.
 - Treat Pixel Mage as a working title. Do not change the display name or package ID without explicit owner approval.
 - Do not invent fixed content counts or playtime promises before a representative full run is built and phone-timed.
 - Prefer code-driven variety and reusable data over asset-heavy animation or large rosters.
@@ -58,7 +59,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 ## Delivery Pace
 
 - Work in substantial milestone batches, not micro-feature test cycles.
-- Present the recorded capped options and obtain a scope lock before commercial gameplay expansion.
+- Implement the representative slice as one substantial related batch, then request one consolidated phone test and a second go/no-go.
 - After the lock, group related implementation, run automated checks, and request one consolidated phone test per batch.
 - Prefer a stable, engaging, time-bounded release over either a one-minute shell or an unfinishable large RPG.
 

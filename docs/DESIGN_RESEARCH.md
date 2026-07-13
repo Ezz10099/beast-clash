@@ -152,8 +152,8 @@ Three bounded options are recorded in `docs/SCOPE_OPTIONS.md`:
 2. Living Spell Trials — recommended balance.
 3. Rune-Path Arena — strongest interaction novelty, highest control risk.
 
-The recommendation is **Living Spell Trials**, subject to explicit owner approval. Its proposed counts and 7–9-minute successful-run target are hypotheses for a representative phone test, not release promises.
+The recommendation was **Living Spell Trials**. The owner explicitly approved Option B as written on July 13, 2026. Its 7–9-minute successful-run target remains a hypothesis for a representative phone test, not a release promise.
 
 ## Research Stop Rule
 
-The required final research round is complete. Do not continue broad ideation or implement any option until the owner chooses or edits one. After approval, build the representative slice, measure it, and use that evidence for the second go/no-go and all later content estimates.
+The required final research round and owner choice are complete. Stop broad ideation. Build the approved representative slice, measure it, and use that evidence for the second go/no-go and all later content estimates.

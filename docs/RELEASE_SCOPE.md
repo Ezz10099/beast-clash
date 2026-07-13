@@ -2,18 +2,11 @@
 
 ## Status
 
-**Final research complete; explicit owner scope choice pending.**
+**Locked: Option B — Living Spell Trials. Owner-approved July 13, 2026.**
 
-The one-mage, five-wave build successfully produced a stable Android vertical slice, but the owner completed it in roughly one minute. It remains the technical foundation, not the intended commercial launch game.
-
-This document prevents two opposite errors:
-
-- publishing an experience that is technically stable but commercially too thin;
-- expanding into an asset-heavy RPG that is unlikely to be finished.
+The earlier five-wave Android build remains a stable, accepted vertical slice. It is the technical foundation, not the intended commercial launch game.
 
 ## Locked Foundation
-
-These decisions remain locked unless an explicit exception is approved:
 
 - Pixel Mage is the only active project.
 - Repository `Ezz10099/beast-clash` and branch `main` remain authoritative.
@@ -22,76 +15,117 @@ These decisions remain locked unless an explicit exception is approved:
 - Keep responsive portrait layout, safe areas, offline play, local persistence, and the accepted drag-plus-auto-cast controls.
 - Preserve the verified web and Android build pipeline.
 
-## Validated Vertical Slice
+## Commercial Identity
 
-The accepted baseline contains:
+**Working pitch:** “One thumb. One spell. Rewrite it.”
 
-1. One mage.
-2. Five fixed one-time enemy groups.
-3. Three offered upgrades between waves.
-4. Slime variants and one boss.
-5. Score, best score, win, loss, and immediate replay.
-6. Pause, settings, sound, haptics, focus-loss safety, and Android behavior.
-7. A complete runtime of roughly one minute on the owner's phone.
+The player controls one mage and exactly one living spell. The spell has three readable words—Form, Essence, and Law. Between combat waves, the player rewrites one word or takes a universal support improvement. The spell's mechanics, generated name, color, sound, and code-driven effect change coherently.
 
-The baseline proves the workflow and technology. It does not prove commercial depth, retention, replay value, or final playtime.
+The distinct identity is the complete combination of:
 
-## Final Research Result — Not Locked
+1. one evolving spell rather than an unrelated weapon arsenal;
+2. three readable spell words;
+3. a rewrite-one-word decision structure;
+4. coherent named and visible combinations;
+5. permanent Spellbook discovery;
+6. one-thumb movement and automatic threat targeting designed for mobile.
 
-The completed evidence review produced three capped options in `docs/SCOPE_OPTIONS.md`:
+## Locked Repeatable Core Loop
 
-- **Option A — Refined Survivor:** fastest and safest, but commercially generic.
-- **Option B — Living Spell Trials:** recommended balance of identity, mobile fit, asset efficiency, and replay.
-- **Option C — Rune-Path Arena:** potentially novel, but high touch-control and testing risk.
+1. Select an unlocked Trial.
+2. Enter with one simple three-part spell.
+3. Drag to dodge and position while the spell automatically targets a suitable threat.
+4. Survive a short timed wave with scheduled enemy arrivals.
+5. Rewrite one spell word or choose one universal support improvement.
+6. Face guardians at the ends of Acts 1 and 2 and a distinct boss at the end of Act 3.
+7. Record newly proven spell combinations, Trial Mastery, and local best results.
+8. Unlock the next Trial or replay for another discovery; after victory, optionally continue into Endless.
 
-Option B's provisional identity is “one thumb, one spell, rewrite its three words.” Its proposed cap uses one mage, a limited three-axis spell system, timed acts, reusable Trials, horizontal Spellbook discovery, limited arenas and bosses, light framing, and optional endless continuation.
+## Locked Launch Cap
 
-No option, count, duration, name, or feature in the packet is approved until the owner explicitly chooses it.
+| Content | Version-1 cap |
+|---|---:|
+| Playable mages | 1 |
+| Arena themes | 3 |
+| Authored Trials | 9 total; 3 per arena |
+| Spell axes | Form, Essence, Law |
+| Spell parts | 9 total; 3 per axis |
+| Discoverable combinations | 27 |
+| Universal support upgrades | 6 |
+| Normal enemy behavior families | 6, with data-driven variants/elites |
+| Distinct bosses | 3; one per arena |
+| Trial Mastery objectives | 9; one additional objective per Trial |
+| Modes | Trials plus post-victory Endless |
+| Narrative | One short premise, arena introductions, and one ending |
 
-## Why the Current Run Is Short
+The working component set is Bolt, Orbit, Sigil; Ember, Frost, Storm; and Split, Echo, Seek. Exact names or behaviors may be replaced during the representative prototype when a combination is unclear, but the three-axis 3×3×3 cap remains locked.
 
-The current code spawns one fixed group of only 3–6 enemies at the beginning of each wave. It has no timed spawn director, no sustained pressure, and mostly numerical upgrades. A representative commercial run can therefore become longer through scheduled arrivals, formations, behavior changes, elites, meaningful spell transformations, guardians, and a boss—not inflated health or waiting.
+## Locked Progression
 
-## Required Owner Scope Lock
+- Unlock Trials and spell words horizontally.
+- Record all 27 proven combinations in the Spellbook.
+- Record Trial wins, Mastery, best score, and best survival.
+- Introduce words gradually through clear achievements.
+- Do not use permanent purchasable or grind-based damage, health, or speed. Run 1 must remain winnable through skill and choices.
 
-Before gameplay implementation, explicitly approve:
+## Locked Story Level
 
-1. One of the three directions, including any requested changes.
-2. The repeatable core loop and original marketable hook.
-3. The representative run structure to prototype.
-4. The provisional launch caps for mages, arenas, Trials, enemy families, bosses, spell parts, modes, and progression.
-5. The story level and hard version-1 exclusions.
-6. The representative-run acceptance gate.
-7. Pixel Mage as a working title until a later explicit naming decision.
+Use light framing only: a short reason the mage enters the Trials, one line introducing each arena, boss identity, and a brief ending.
 
-## Representative-Run Gate After Approval
+Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated cast for version 1.
 
-The first expansion must remain a test slice, not the complete content build. For the recommended option it would contain one arena, one timed 12-wave run, 2×2×2 spell parts, limited enemies, one boss, checkpoint/resume, automated stress checks, and a consolidated phone test.
+## Locked Version-1 Exclusions
 
-Only measured phone results may replace the provisional duration and schedule estimates. Full content and final asset production wait for a second go/no-go after this slice.
+- No additional playable heroes.
+- No equipment inventory, crafting, shop, currencies, permanent stat tree, gacha, energy, daily rewards, or battle pass.
+- No conventional campaign map, quests, dialogue system, cutscenes, or branching story.
+- No multiplayer, online accounts, cloud save, or online leaderboard.
+- No external advertising, analytics, login, or purchase SDK until the representative slice and external playtest gates pass and the owner separately approves monetization and data collection.
+- No engine change, 3D content, full character animation set, or large bespoke asset pack.
+- No content beyond the locked caps without a new explicit owner decision.
 
-## Prohibited Until Scope Lock
+## First Approved Implementation Batch — Representative Slice
 
-- New heroes, extra arenas, stories, currencies, equipment, shops, quests, crafting, gacha, accounts, multiplayer, or external SDKs.
-- Large art or animation commitments.
-- Changing the display name or package identity.
-- Treating the recommendation or its caps as approved.
-- Google Play submission of the one-minute vertical slice as the intended commercial product.
+Build this as one substantial related batch before producing the full launch content:
+
+1. Separate data-driven run, spawn, enemy, spell, save, and UI responsibilities while preserving the accepted runtime and controls.
+2. Implement one three-act, 12-wave timed run with scheduled enemy spawning.
+3. Add deterministic automatic threat targeting with clear target feedback.
+4. Implement 2 Forms × 2 Essences × 2 Laws: 8 prototype combinations.
+5. Use one arena, two normal enemy behavior families, one elite behavior, and one boss.
+6. Add a versioned save schema, migrations, and checkpoint/resume at wave boundaries.
+7. Expand automation with seeded builds, full-run checks, save-migration checks, and maximum projectile/particle stress checks.
+8. Preserve pause, settings, safe areas, offline play, Android identity, and the current release pipeline.
+9. Request one consolidated SPCK phone test after all automated checks pass.
+
+## Representative-Slice Acceptance Gate
+
+Full launch-content production begins only when:
+
+- no control, save, layout, or performance blocker appears on the target phone;
+- a complete winning run is measured and feels active rather than padded;
+- the player can explain the three spell words and predict their result without outside instruction;
+- at least three mechanically different builds finish deterministic tests;
+- all eight prototype combinations remain readable under stress;
+- the owner wants to try another build after the completed run;
+- the owner gives the second explicit go/no-go.
+
+The proposed 7–9-minute successful clear is a test target, not a locked promise. Measured phone results decide the actual timing and remaining batch estimate.
 
 ## Naming Gate
 
-Google Play currently contains Pixel Mage Survival, Pixel Mage TD, Pixel Mage: Idle RPG, and closely positioned Pixel Wizard titles. Pixel Mage therefore remains a working title. The final display/store name must follow the approved hook and receive owner approval before store graphics and listing text are produced.
+Pixel Mage remains the working title. The final display/store name must follow the proven hook and receive owner approval before store graphics and listing text are produced.
 
-The Android package ID can remain `com.ezz10099.pixelmage` even if the later user-facing title changes.
+The package ID remains `com.ezz10099.pixelmage` unless the owner explicitly approves a separate identity change.
 
 ## Commercial Completion Gate
 
-The launch game will be considered finished only after:
+The game is finished only after:
 
-- the owner-approved capped scope is implemented;
-- a representative run and total progression are measured through real phone tests;
+- the locked capped scope is implemented;
+- representative-run and total-progression measurements are recorded;
 - automated, save-migration, stress, web, and native reliability gates pass;
-- external target-player testing provides evidence that the loop is understandable and worth replaying;
-- required store, policy, signing, monetization, testing, and business gates are complete.
+- external target-player testing shows that the loop is understandable and worth replaying;
+- store, policy, signing, monetization, Play testing, and business gates are complete.
 
-Google Play acceptance alone is not the definition of commercial readiness.
+Google Play acceptance alone is not commercial readiness.

@@ -80,6 +80,20 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Status: Active planning rule
 - Decision: Complete one final focused research round, compare feasible capped options, and phone-time a representative full run before locking content-count or playtime claims.
 - Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
-- Progress: The final research round and three capped options were completed on July 13, 2026. Living Spell Trials is recommended but not approved. The representative run remains unbuilt.
-- Change rule: Research must end in an owner decision; it may not become an indefinite substitute for development. Exact gameplay scope still requires explicit owner approval.
+- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run remains unbuilt.
+- Change rule: The representative run must be phone-timed before duration or total-playtime claims are locked.
 
+
+## D-011 — Living Spell Trials Commercial Scope
+
+- Date: July 13, 2026
+- Status: Locked by explicit owner approval
+- Decision: Build Option B — Living Spell Trials — as Pixel Mage's commercial direction.
+- Core identity: One thumb, one mage, one evolving three-word spell; rewrite one Form, Essence, or Law between timed waves and record proven combinations in a Spellbook.
+- Launch cap: 1 mage, 3 arena themes, 9 authored Trials, 9 spell parts creating 27 combinations, 6 universal support upgrades, 6 normal enemy behavior families, 3 bosses, 9 Trial Mastery objectives, Trials plus post-victory Endless, and light narrative framing.
+- Progression: Horizontal Trial/spell discovery and local records; no permanent-stat currency grind.
+- Exclusions: No extra heroes, inventory, equipment, crafting, shop, currencies, permanent stat tree, gacha, energy, daily rewards, battle pass, conventional campaign map, quest/dialogue/cutscene system, multiplayer, online accounts, cloud saves, online leaderboards, external SDKs, engine change, 3D, or large animated asset set for version 1.
+- First gate: Build and phone-test one 12-wave representative slice with 2×2×2 spell parts before producing the remaining launch content or final assets.
+- Still provisional: Exact component names and behaviors, balance, successful-run duration, final display/store title, monetization, and external SDKs.
+- Reason: This is the strongest researched balance of marketable identity, mobile usability, reusable code-driven variety, limited asset burden, and finishable scope.
+- Change rule: Reopen the overall direction only if the representative slice fails its acceptance gate or the owner explicitly approves a scope change.

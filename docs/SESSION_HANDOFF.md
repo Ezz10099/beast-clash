@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Complete the final commercial-design research, audit technical feasibility, record three bounded options, and stop before owner scope approval.
+Lock the owner's Option B selection into the permanent project record and define the representative-slice implementation batch.
 
 ## Completed This Session
 
@@ -74,6 +74,9 @@ Complete the final commercial-design research, audit technical feasibility, reco
 - Defined a 2×2×2 representative spell prototype and one 12-wave phone-timed run as the fastest safe validation route before full content and final assets.
 - Ran `npm run check` in an isolated copy: ten complete runs, 39,442-byte release bundle verification, Android asset generation, and Android configuration checks all passed.
 - Made no gameplay, package, display-name, monetization, SDK, or asset changes during the research gate.
+- The owner explicitly selected Option B — Living Spell Trials — as written on July 13, 2026.
+- Locked the core loop, launch cap, progression, light-framing level, exclusions, and representative-slice gate in `docs/RELEASE_SCOPE.md` and D-011.
+- Defined the next substantial batch: one 12-wave timed run, 2×2×2 spell prototype, limited enemy set and boss, automatic threat targeting, versioned checkpoint/resume, and expanded deterministic/stress tests.
 
 ## Phone Validation Result
 
@@ -81,15 +84,15 @@ The user accepted the gameplay/control, release-experience, and web-release-cand
 
 ## Current Development Objective
 
-Present `docs/SCOPE_OPTIONS.md` to the owner. The recommendation is Option B — Living Spell Trials — but it remains provisional.
+Build the approved Living Spell Trials representative slice as one substantial batch. Do not scale to the remaining 27-combination/9-Trial content or final assets yet.
 
-The next authorized action is an owner choice: approve Option B, approve it with named changes, choose another option, or reject all three with the specific missing player fantasy. Do not implement commercial gameplay before that choice.
+The batch includes one arena, one timed three-act 12-wave run, 2×2×2 spell parts, two normal enemy families, one elite behavior, one boss, deterministic automatic targeting, wave-boundary checkpoint/resume with migration, and expanded seeded/stress automation.
 
 ## Next Session Entry Point
 
-Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/SCOPE_OPTIONS.md`. Briefly present the three choices and the Option B recommendation. Obtain explicit owner approval or requested changes.
+Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 in `docs/DECISIONS.md`, and this handoff. Option B is locked.
 
-After approval, update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`, then define the first substantial implementation batch for the representative run. Do not build the remaining 27-combination/9-Trial content until that representative run passes its phone gate.
+Implement the complete representative-slice batch, run `npm run check`, push the stable result to `main`, update the handoff and roadmap, then request one consolidated SPCK phone test. Do not build the remaining launch content or final assets before the second go/no-go.
 
 ## Verification
 

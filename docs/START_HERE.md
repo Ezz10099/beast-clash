@@ -40,21 +40,24 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - That build is a validated native vertical slice, not the approved commercial launch game.
 - The old tiny release contract has been superseded as a commercial target.
 - The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
-- Living Spell Trials is recommended, but no replacement feature count, run target, or commercial scope is owner-approved yet.
+- Option B — Living Spell Trials — and its capped launch direction were owner-approved on July 13, 2026.
+- The representative slice is the next implementation gate; full launch content and final assets remain blocked until it passes.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
 The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
-## Current Decision Gate
+## Current Implementation Gate
 
-Before commercial gameplay expansion:
+Build the approved representative slice before scaling content:
 
-1. Read `docs/SCOPE_OPTIONS.md`.
-2. The owner chooses one option, approves the recommendation with changes, or rejects all three with a specific missing player fantasy.
-3. Record that explicit choice in `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`.
-4. Build only the representative full-run slice defined by the approved option.
-5. Phone-time and evaluate that slice before producing the remaining content or final assets.
+1. Refactor the monolithic prototype into data-driven run, enemy, spell, save, and UI responsibilities without changing the engine.
+2. Implement one three-act, 12-wave timed run with scheduled spawning and deterministic automatic threat targeting.
+3. Implement only 2 Forms × 2 Essences × 2 Laws: 8 readable spell combinations.
+4. Use one arena, two normal enemy families, one elite behavior, and one boss.
+5. Add versioned wave-boundary checkpoint/resume, save migration, seeded run checks, and projectile/particle stress checks.
+6. Run all automated checks and request one consolidated SPCK phone test.
+7. Use the measured run and replay result for a second go/no-go before building the remaining 27-combination/9-Trial launch content.
 
 ## Mandatory Session Protocol
 
@@ -91,4 +94,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow their authority links. Report the current milestone and one substantial session goal. If the commercial scope is not owner-approved, present `docs/SCOPE_OPTIONS.md` and do not expand gameplay. Otherwise complete one approved verified batch, push it to `main`, and update the handoff and roadmap.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow their authority links. Option B — Living Spell Trials — is locked. Report the current milestone and one substantial session goal, complete one approved verified batch, push it to `main`, and update the handoff and roadmap. Do not scale beyond the representative slice until its phone gate passes.
