@@ -41,8 +41,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The old tiny release contract has been superseded as a commercial target.
 - The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
 - Option B — Living Spell Trials — and its capped launch direction were owner-approved on July 13, 2026.
-- The complete Living Spell Trials representative slice is implemented on `main` and passes automation.
-- Its consolidated SPCK phone test and second go/no-go are now the active gate; full launch content and final assets remain blocked until it passes.
+- The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, with no reported layout or runtime blocker, but the gate failed because onboarding remained unclear, the late pre-boss stretch became boring, and Orbit felt much weaker than Bolt.
+- Correction build `0.2.0-representative.2` makes rewrite outcomes self-explanatory, marks unseen combinations, validates separate Bolt/Orbit roles, removes fixed post-clear timer padding, and gives Waves 9–11 distinct encounter structures.
+- One consolidated SPCK retest and the second go/no-go are now the active gate; full launch content and final assets remain blocked until it passes.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -50,15 +51,14 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Phone Gate
 
-The approved representative slice is implemented. Before scaling content:
+The corrected representative slice is implemented. Before scaling content:
 
 1. Pull current `main` into SPCK and start one new Trial.
-2. Complete one winning 12-wave run and record its phone-measured time.
-3. During that run, test Form, Essence, and Law rewrites, both normal enemy families, guardians, the boss, pause/resume, and target feedback.
-4. Close/reopen once during a combat wave and once at a rewrite boundary to verify checkpoint recovery.
-5. Check the complete run for control, layout, readability, performance, save, or pacing blockers.
-6. Decide whether the spell words are predictable and whether another build feels worth trying.
-7. Give the second explicit go/no-go before building the remaining 27-combination/9-Trial launch content.
+2. Read only the in-game guidance, then say what Form, Essence, and Law do; confirm rewrite cards make the resulting full spell and `NEW` status obvious.
+3. Use Bolt for at least two waves and Orbit for at least two waves; judge whether Bolt wins single-target fights while Orbit earns close-range risk against crowds and shots.
+4. Judge Mote Stampede, Glyph Crossfire, Twin Wards, and the boss for distinctness and whether any empty or repetitive stretch remains.
+5. Complete the winning run and record its phone-measured time; also check pause/resume, one close/reopen checkpoint, layout, readability, and performance.
+6. State whether another build feels worth trying and give the second explicit go/no-go before the remaining 27-combination/9-Trial content is built.
 
 ## Mandatory Session Protocol
 

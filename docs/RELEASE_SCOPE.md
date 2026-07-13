@@ -86,7 +86,7 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 
 ## First Approved Implementation Batch — Representative Slice
 
-**Implementation status:** Complete on `main` on July 13, 2026; automated gates pass. Consolidated SPCK phone acceptance and the second owner go/no-go are pending.
+**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch; `0.2.0-representative.2` passes automation and awaits consolidated phone acceptance and the second owner go/no-go.
 
 Build this as one substantial related batch before producing the full launch content:
 
@@ -100,6 +100,14 @@ Build this as one substantial related batch before producing the full launch con
 8. Preserve pause, settings, safe areas, offline play, Android identity, and the current release pipeline.
 9. Request one consolidated SPCK phone test after all automated checks pass.
 
+### First Phone Evidence and Bounded Correction
+
+- The owner completed the run in 5:49, wanted to try different builds, and found The Redactor entertaining.
+- No control, layout, save, crash, or performance blocker was reported in that result.
+- Acceptance did not pass: the opening and some systems were not understood, Waves 9–11 became boring, Spellbook completion sounded like a rote recipe, and Orbit felt much weaker than Bolt.
+- The correction stays inside the representative cap: clearer axis onboarding and live role text; complete-result rewrite previews with `NEW`/`KNOWN` status; Bolt as marked single-target damage; Orbit as a competitive nearby crowd shield that blocks shots; immediate completion after the final scheduled pack is defeated; and distinct Mote-rush, Glyph-crossfire, and twin-guardian encounters before the earlier-arriving boss.
+- Full launch-content production remains blocked pending one consolidated retest.
+
 ## Representative-Slice Acceptance Gate
 
 Full launch-content production begins only when:
@@ -112,7 +120,7 @@ Full launch-content production begins only when:
 - the owner wants to try another build after the completed run;
 - the owner gives the second explicit go/no-go.
 
-The proposed 7–9-minute successful clear is a test target, not a locked promise. Measured phone results decide the actual timing and remaining batch estimate.
+The earlier 7–9-minute hypothesis is rejected: the 5:49 clear already felt padded before the boss. The correction intentionally removes forced post-clear waiting; the next phone measurement decides the active run duration and remaining batch estimate.
 
 ## Naming Gate
 

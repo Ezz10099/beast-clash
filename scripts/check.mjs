@@ -21,7 +21,9 @@ for (const id of [
   'resumeRunButton',
   'startRunButton',
   'upgradePanel',
+  'upgradeEyebrow',
   'upgradeTitle',
+  'upgradeHelp',
   'upgradeChoices',
   'menuPanel',
   'menuEyebrow',
@@ -31,11 +33,15 @@ for (const id of [
   'soundButton',
   'hapticsButton',
   'newRunButton',
+  'controlHint',
 ]) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `index.html is missing #${id}`);
 }
-assert.match(html, /Form<\/strong> is its path/);
-assert.match(html, /Drag in the arena to move/);
+assert.match(html, /<strong>FORM<\/strong> — Bolt hunts the mark/);
+assert.match(html, /<strong>ESSENCE<\/strong> — Ember burns/);
+assert.match(html, /<strong>LAW<\/strong> — Split casts three/);
+assert.match(html, /Unseen rewrites are marked NEW/);
+assert.match(html, /Drag to move and dodge\. Your spell casts itself/);
 assert.doesNotMatch(html, /data-key=/, 'legacy touch buttons should not return');
 
 function makeElement(id = '') {
@@ -100,7 +106,9 @@ const elements = new Map([
   ['#resumeRunButton', resumeRunButton],
   ['#startRunButton', makeElement('startRunButton')],
   ['#upgradePanel', upgradePanel],
+  ['#upgradeEyebrow', makeElement('upgradeEyebrow')],
   ['#upgradeTitle', makeElement('upgradeTitle')],
+  ['#upgradeHelp', makeElement('upgradeHelp')],
   ['#upgradeChoices', makeElement('upgradeChoices')],
   ['#menuPanel', menuPanel],
   ['#menuEyebrow', makeElement('menuEyebrow')],
@@ -110,6 +118,7 @@ const elements = new Map([
   ['#soundButton', makeElement('soundButton')],
   ['#hapticsButton', makeElement('hapticsButton')],
   ['#newRunButton', makeElement('newRunButton')],
+  ['#controlHint', makeElement('controlHint')],
 ]);
 
 const storage = new Map([
@@ -180,7 +189,8 @@ assert.equal(evaluate('persistent.version'), 2);
 assert.equal(evaluate('persistent.profile.bestScore'), 321, 'legacy best score should migrate');
 assert.equal(evaluate('JSON.stringify(persistent.settings)'), '{"sound":true,"haptics":true}');
 assert.equal(JSON.parse(storage.get('pixel_mage_save_v2')).version, 2);
-assert.match(elements.get('#startStatus').textContent, /twelve scheduled waves/i);
+assert.match(elements.get('#startStatus').textContent, /three acts, twelve waves/i);
+assert.match(elements.get('#spellbookText').textContent, /marked NEW/);
 
 elements.get('#startRunButton').handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
@@ -197,6 +207,7 @@ evaluate('update()');
 assert.ok(evaluate('state.player.x') < startingX, 'dragging in the arena should move the mage');
 assert.ok(evaluate('state.projectiles.length') > 0, 'the living spell should cast automatically');
 assert.ok(evaluate('state.targetId !== null'), 'automatic casting should mark a deterministic threat');
+assert.match(elements.get('#controlHint').textContent, /BOLT hunts the marked enemy/);
 assert.ok(evaluate('audioContext !== null'), 'the first gesture should unlock synthesized audio');
 assert.ok(vibrations.length > 0, 'the first action should provide haptic feedback');
 canvas.handlers.pointerup({ pointerId: 1 });
@@ -255,14 +266,19 @@ assert.equal(
 assert.equal(evaluate('RUN_DEFINITION.filter((wave) => wave.guardian).length'), 2);
 assert.equal(evaluate('RUN_DEFINITION.filter((wave) => wave.boss).length'), 1);
 assert.equal(evaluate('RUN_DEFINITION[11].events.filter((event) => event.boss).length'), 1);
+assert.equal(evaluate('RUN_DEFINITION[8].events.every((event) => event.family === "chaser")'), true, 'Wave 9 should be a distinct Mote rush');
+assert.ok(evaluate('RUN_DEFINITION[9].events.filter((event) => event.family === "caster").length') >= 4, 'Wave 10 should emphasize crossfire');
+assert.equal(evaluate('RUN_DEFINITION[10].events.filter((event) => event.elite).length'), 2, 'Wave 11 should be a twin-guardian test');
+assert.ok(evaluate('RUN_DEFINITION[11].events.find((event) => event.boss).at <= 9 * FPS'), 'the boss should arrive without a long prelude');
 
 evaluate(`
-  state.waveFrame = currentWaveDefinition().duration;
+  state.waveFrame = 1;
   state.spawnIndex = currentWaveDefinition().events.length;
   state.enemies = [];
   state.enemyProjectiles = [];
   RunSystem.update();
 `);
+assert.ok(evaluate('state.waveFrame < RUN_DEFINITION[0].duration'), 'the wave should clear before its old fixed timer');
 assert.equal(evaluate('state.mode'), 'upgrade');
 assert.equal(upgradePanel.hidden, false);
 assert.equal(elements.get('#upgradeChoices').children.length, 4);
@@ -272,12 +288,22 @@ assert.equal(
 );
 assert.equal(evaluate('persistent.checkpoint.phase'), 'upgrade');
 assert.equal(evaluate('persistent.profile.discovered.length'), 1);
+assert.match(elements.get('#upgradeEyebrow').textContent, /New Spell Proven/);
+assert.match(elements.get('#upgradeHelp').textContent, /CURRENT · Bolt · Ember · Split/);
+assert.equal(
+  JSON.stringify(elements.get('#upgradeChoices').children.slice(0, 3).map((button) => button.dataset.discovery)),
+  '["new","new","new"]',
+  'rewrite cards should mark unseen full combinations without requiring a recipe',
+);
 
 const formChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'form');
+assert.match(formChoice.children[1].textContent, /NEW SPELL · Orbit · Ember · Split/);
 formChoice.handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 2);
 assert.equal(evaluate('state.spell.form'), 'orbit');
+evaluate('UISystem.updateHud()');
+assert.match(elements.get('#controlHint').textContent, /ORBIT hits nearby crowds and blocks shots/);
 assert.equal(evaluate('persistent.checkpoint.wave'), 2);
 assert.equal(evaluate('persistent.checkpoint.phase'), 'wave');
 
@@ -329,6 +355,10 @@ assert.equal(
   'migration should reject unknown Spellbook combinations',
 );
 
+const discoveriesBeforeLoss = evaluate('persistent.profile.discovered.length');
+evaluate('RunSystem.startNew(6060); state.spell = { form: "bolt", essence: "frost", law: "echo" }; RunSystem.finish("lose")');
+assert.equal(evaluate('persistent.profile.discovered.length'), discoveriesBeforeLoss, 'a spell should be proven by clearing a wave, not merely equipped before defeat');
+
 for (const form of ['bolt', 'orbit']) {
   for (const essence of ['ember', 'frost']) {
     for (const law of ['split', 'echo']) {
@@ -367,6 +397,57 @@ evaluate(`
 `);
 assert.ok(evaluate('state.enemies[0].burnUntil > state.time'), 'Ember should apply a burn');
 assert.ok(evaluate('state.enemies[1].slowUntil > state.time'), 'Frost should apply a slow');
+
+const formDamage = JSON.parse(evaluate(`
+  JSON.stringify((function () {
+    function measure(form, count) {
+      RunSystem.startNew(8282);
+      state.spell = { form, essence: "frost", law: "echo" };
+      state.enemies = [];
+      state.projectiles = [];
+      state.pendingCasts = [];
+      for (let index = 0; index < count; index += 1) {
+        const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
+        const enemy = EnemySystem.makeEnemy(
+          state.player.x + Math.cos(angle) * 44,
+          state.player.y + Math.sin(angle) * 44,
+          { family: "chaser", count: 1 }
+        );
+        enemy.hp = 400;
+        enemy.maxHp = 400;
+        state.enemies.push(enemy);
+      }
+      for (let frame = 0; frame < 240; frame += 1) {
+        state.time += 1;
+        if (state.player.cooldown > 0) state.player.cooldown -= 1;
+        SpellSystem.update();
+      }
+      return count * 400 - state.enemies.reduce((total, enemy) => total + enemy.hp, 0);
+    }
+    return {
+      boltSingle: measure("bolt", 1),
+      orbitSingle: measure("orbit", 1),
+      boltCrowd: measure("bolt", 6),
+      orbitCrowd: measure("orbit", 6)
+    };
+  })())
+`));
+assert.ok(formDamage.boltSingle > formDamage.orbitSingle * 1.4, 'Bolt should retain the clearer single-target advantage');
+assert.ok(formDamage.orbitSingle > formDamage.boltSingle * 0.45, 'Orbit single-target damage must remain viable rather than becoming a trap');
+assert.ok(formDamage.orbitCrowd > formDamage.boltCrowd * 2.5, 'Orbit should earn its positioning risk with a strong crowd advantage');
+
+evaluate(`
+  RunSystem.startNew(8383);
+  state.spell = { form: "orbit", essence: "frost", law: "echo" };
+  state.enemies = [EnemySystem.makeEnemy(state.player.x + 44, state.player.y, { family: "chaser", count: 1 })];
+  state.projectiles = [];
+  SpellSystem.spawnCast(state.enemies[0], 1);
+  SpellSystem.updateProjectiles();
+  const ward = state.projectiles[0];
+  EnemySystem.fireProjectile(ward.x, ward.y, 0, 0, "#ffffff", 60);
+  SpellSystem.updateProjectiles();
+`);
+assert.equal(evaluate('state.enemyProjectiles.length'), 0, 'Orbit should visibly protect its close-range role by blocking shots');
 
 evaluate(`
   state.enemyProjectiles = [];
@@ -481,15 +562,16 @@ const buildResults = JSON.parse(evaluate(`
 for (const [index, result] of buildResults.entries()) {
   assert.equal(result.mode, 'win', `seeded build ${index + 1} should complete the full 12-wave run`);
   assert.equal(result.wave, 12);
-  assert.ok(result.elapsed >= 300 * 60, 'the representative combat schedule should exceed five minutes');
-  assert.ok(result.elapsed < 9 * 60 * 60, 'the automated clear should remain inside the provisional nine-minute ceiling');
+  assert.ok(result.elapsed >= 3 * 60 * 60, 'the active representative clear should remain substantial');
+  assert.ok(result.elapsed < 349 * 60, 'removing forced timer padding should beat the phone-tested 5:49 floor');
   assert.ok(result.score > 0);
   assert.equal(result.checkpoint, null, 'victory should clear the checkpoint');
 }
 assert.equal(new Set(buildResults.map((result) => result.score)).size, 1, 'seeded full runs should keep deterministic scoring');
+assert.ok(buildResults[2].elapsed <= buildResults[0].elapsed * 1.15, 'Orbit should clear the representative run competitively with Bolt');
 assert.ok(evaluate('persistent.profile.wins >= 3'));
 assert.ok(evaluate('persistent.profile.discovered.length >= 3'));
 
 process.stdout.write(
-  'Pixel Mage checks passed: 3 seeded 12-wave runs, 8 spell combinations, save migration, and stress limits.\n',
+  'Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.\n',
 );

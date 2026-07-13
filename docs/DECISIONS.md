@@ -80,7 +80,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Status: Active planning rule
 - Decision: Complete one final focused research round, compare feasible capped options, and phone-time a representative full run before locking content-count or playtime claims.
 - Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
-- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run remains unbuilt.
+- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49; its bounded comprehension, pacing, and Orbit-balance correction now awaits retest.
 - Change rule: The representative run must be phone-timed before duration or total-playtime claims are locked.
 
 

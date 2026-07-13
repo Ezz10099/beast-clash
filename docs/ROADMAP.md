@@ -26,7 +26,7 @@ The commercial expansion uses a bounded decision gate:
 2. Record three capped scope options with implementation and asset costs — complete in `docs/SCOPE_OPTIONS.md`.
 3. Obtain one explicit owner-approved commercial scope — complete: Option B selected July 13, 2026.
 4. Build one representative full run — complete on `main`; automated gates pass.
-5. Complete its consolidated SPCK phone test and record the measured clear/replay result — next.
+5. Complete its first SPCK phone test — complete: 5:49 clear, promising experimentation and boss response, failed comprehension/pacing/Orbit gates; bounded correction implemented and one consolidated retest is next.
 6. Revise the remaining batch count from that measured unit — pending.
 
 Do not conduct indefinite research and do not start speculative content before the scope lock. After approval, group related work into substantial batches with automated checks and one consolidated phone test per batch.
@@ -178,7 +178,7 @@ Exit criteria:
 
 ## Milestone 8 — Research and Commercial Scope Lock
 
-**Status:** Commercial scope locked and representative slice implemented. Consolidated SPCK phone acceptance is next.
+**Status:** Commercial scope locked. First representative phone result recorded; bounded correction implemented and consolidated SPCK acceptance retest is next.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
@@ -191,6 +191,8 @@ Objectives:
 - Preserve the owner-approved Living Spell Trials core loop, hook, content cap, horizontal progression, light framing, and exclusions.
 - Keep `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` authoritative.
 - Phone-time and accept the implemented representative slice before locking duration estimates or scaling full content.
+- Preserve the first phone evidence: a 5:49 clear, positive experimentation and boss response, unclear onboarding, repetitive late pacing, rote discovery risk, and weak-feeling Orbit.
+- Retest `0.2.0-representative.2`, which previews complete rewrites, marks unseen combinations, validates Bolt/Orbit roles, removes fixed post-clear padding, and differentiates the final pre-boss encounters.
 
 Exit criteria:
 
@@ -198,7 +200,8 @@ Exit criteria:
 - Provisional duration, behavior, naming, and monetization are separated from locked requirements. Complete.
 - The first implementation batch and its phone acceptance test are precisely defined. Complete in `docs/RELEASE_SCOPE.md`.
 - The representative slice is implemented and passes automation. Complete July 13, 2026.
-- One complete phone-timed run, replay-intent result, and second explicit go/no-go. Pending.
+- One complete phone-timed run and replay-intent result. Complete: 5:49, with correction blockers recorded.
+- Corrected consolidated phone acceptance and second explicit go/no-go. Pending.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -239,7 +242,7 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Representative Living Spell Trials consolidated phone test and second go/no-go — next.
+1. Representative correction consolidated SPCK retest and second go/no-go — next.
 2. Remaining approved gameplay/content batches — blocked; count revised after the measured slice.
 3. External playtest, balance, and release QA — pending.
 4. Publisher, monetization, privacy, and SDK decisions — pending.

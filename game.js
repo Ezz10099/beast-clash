@@ -11,7 +11,9 @@ const spellbookText = document.querySelector("#spellbookText");
 const resumeRunButton = document.querySelector("#resumeRunButton");
 const startRunButton = document.querySelector("#startRunButton");
 const upgradePanel = document.querySelector("#upgradePanel");
+const upgradeEyebrow = document.querySelector("#upgradeEyebrow");
 const upgradeTitle = document.querySelector("#upgradeTitle");
+const upgradeHelp = document.querySelector("#upgradeHelp");
 const upgradeChoices = document.querySelector("#upgradeChoices");
 const menuPanel = document.querySelector("#menuPanel");
 const menuEyebrow = document.querySelector("#menuEyebrow");
@@ -21,6 +23,7 @@ const resumeButton = document.querySelector("#resumeButton");
 const soundButton = document.querySelector("#soundButton");
 const hapticsButton = document.querySelector("#hapticsButton");
 const newRunButton = document.querySelector("#newRunButton");
+const controlHint = document.querySelector("#controlHint");
 
 const W = canvas.width;
 const H = canvas.height;
@@ -36,6 +39,7 @@ const MAX_PROJECTILES = 96;
 const MAX_ENEMY_PROJECTILES = 72;
 const MAX_PENDING_CASTS = 24;
 const MAX_SPARKS = 360;
+const ORBIT_HIT_GAP = 18;
 const VALID_FORMS = Object.freeze(["bolt", "orbit"]);
 const VALID_ESSENCES = Object.freeze(["ember", "frost"]);
 const VALID_LAWS = Object.freeze(["split", "echo"]);
@@ -44,13 +48,13 @@ const SPELL_PARTS = Object.freeze({
   forms: Object.freeze({
     bolt: Object.freeze({
       title: "Bolt",
-      description: "Flies directly toward the marked threat.",
+      description: "Marked-target shot; strongest against one threat.",
       cooldown: 20,
     }),
     orbit: Object.freeze({
       title: "Orbit",
-      description: "Circles the mage and damages nearby threats.",
-      cooldown: 48,
+      description: "Close-range crowd shield; repeatedly hits and blocks shots.",
+      cooldown: 36,
     }),
   }),
   essences: Object.freeze({
@@ -107,6 +111,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 1,
     act: 1,
     title: "First Script",
+    cue: "DRAG TO MOVE · SPELLS CAST THEMSELVES",
     duration: 22 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "chaser", count: 2 }),
@@ -119,6 +124,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 2,
     act: 1,
     title: "Crossfire",
+    cue: "BLUE AIM LINE = MOVE BEFORE THE SHOT",
     duration: 24 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "chaser", count: 3 }),
@@ -131,6 +137,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 3,
     act: 1,
     title: "Broken Lines",
+    cue: "THE MARK SHOWS BOLT'S CURRENT TARGET",
     duration: 26 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "chaser", count: 3 }),
@@ -144,6 +151,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 4,
     act: 1,
     title: "First Guardian",
+    cue: "GOLD RING AND LINE WARN OF A CHARGE",
     duration: 30 * FPS,
     guardian: true,
     events: Object.freeze([
@@ -157,6 +165,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 5,
     act: 2,
     title: "Second Act",
+    cue: "FORM CHANGES WHERE YOUR SPELL FIGHTS",
     duration: 25 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "caster", count: 2 }),
@@ -170,6 +179,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 6,
     act: 2,
     title: "Twin Pressure",
+    cue: "ESSENCE CHANGES WHAT EVERY HIT DOES",
     duration: 27 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "chaser", count: 4 }),
@@ -183,6 +193,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 7,
     act: 2,
     title: "Crowded Page",
+    cue: "LAW CHANGES HOW EACH CAST MULTIPLIES",
     duration: 29 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "caster", count: 2 }),
@@ -196,6 +207,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 8,
     act: 2,
     title: "Second Guardian",
+    cue: "BAIT THE CHARGE · STRIKE DURING RECOVERY",
     duration: 34 * FPS,
     guardian: true,
     events: Object.freeze([
@@ -209,53 +221,55 @@ const RUN_DEFINITION = Object.freeze([
   Object.freeze({
     wave: 9,
     act: 3,
-    title: "Final Act",
-    duration: 28 * FPS,
+    title: "Mote Stampede",
+    cue: "MOTES RUSH FROM EVERY EDGE",
+    duration: 20 * FPS,
     events: Object.freeze([
-      Object.freeze({ at: 0, family: "caster", count: 2 }),
-      Object.freeze({ at: 5 * FPS, family: "chaser", count: 4 }),
-      Object.freeze({ at: 10 * FPS, family: "caster", count: 3 }),
-      Object.freeze({ at: 16 * FPS, family: "chaser", count: 4 }),
-      Object.freeze({ at: 22 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 0, family: "chaser", count: 4, entry: "top" }),
+      Object.freeze({ at: 4 * FPS, family: "chaser", count: 4, entry: "sides" }),
+      Object.freeze({ at: 8 * FPS, family: "chaser", count: 5, entry: "top" }),
+      Object.freeze({ at: 12 * FPS, family: "chaser", count: 5, entry: "sides" }),
     ]),
   }),
   Object.freeze({
     wave: 10,
     act: 3,
-    title: "Moving Ink",
-    duration: 30 * FPS,
+    title: "Glyph Crossfire",
+    cue: "CASTERS ENTER FROM BOTH SIDES",
+    duration: 24 * FPS,
     events: Object.freeze([
-      Object.freeze({ at: 0, family: "chaser", count: 4 }),
-      Object.freeze({ at: 5 * FPS, family: "caster", count: 3 }),
-      Object.freeze({ at: 11 * FPS, family: "chaser", count: 4 }),
-      Object.freeze({ at: 17 * FPS, family: "caster", count: 3 }),
-      Object.freeze({ at: 23 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 0, family: "caster", count: 2, entry: "sides" }),
+      Object.freeze({ at: 4 * FPS, family: "caster", count: 2, entry: "sides" }),
+      Object.freeze({ at: 8 * FPS, family: "chaser", count: 3, entry: "top" }),
+      Object.freeze({ at: 12 * FPS, family: "caster", count: 3, entry: "sides" }),
+      Object.freeze({ at: 16 * FPS, family: "caster", count: 2, entry: "sides" }),
     ]),
   }),
   Object.freeze({
     wave: 11,
     act: 3,
-    title: "Last Rewrite",
-    duration: 32 * FPS,
+    title: "Twin Wards",
+    cue: "TWO CHARGERS · BREAK EACH TELEGRAPH",
+    duration: 24 * FPS,
     events: Object.freeze([
-      Object.freeze({ at: 0, family: "caster", count: 3 }),
-      Object.freeze({ at: 6 * FPS, family: "chaser", count: 4 }),
-      Object.freeze({ at: 12 * FPS, family: "caster", count: 3 }),
-      Object.freeze({ at: 18 * FPS, family: "chaser", count: 5 }),
-      Object.freeze({ at: 25 * FPS, family: "caster", count: 3 }),
+      Object.freeze({ at: 0, family: "chaser", count: 1, elite: true, entry: "center" }),
+      Object.freeze({ at: 0, family: "caster", count: 2, entry: "sides" }),
+      Object.freeze({ at: 6 * FPS, family: "chaser", count: 4, entry: "sides" }),
+      Object.freeze({ at: 12 * FPS, family: "chaser", count: 1, elite: true, entry: "center" }),
+      Object.freeze({ at: 14 * FPS, family: "caster", count: 2, entry: "sides" }),
     ]),
   }),
   Object.freeze({
     wave: 12,
     act: 3,
     title: "The Redactor",
-    duration: 42 * FPS,
+    cue: "DODGE THE RING · BAIT THE CHARGE",
+    duration: 34 * FPS,
     boss: true,
     events: Object.freeze([
-      Object.freeze({ at: 0, family: "chaser", count: 4 }),
-      Object.freeze({ at: 6 * FPS, family: "caster", count: 3 }),
-      Object.freeze({ at: 13 * FPS, family: "chaser", count: 4 }),
-      Object.freeze({ at: 25 * FPS, boss: true, count: 1 }),
+      Object.freeze({ at: 0, family: "chaser", count: 3, entry: "sides" }),
+      Object.freeze({ at: 3 * FPS, family: "caster", count: 2, entry: "sides" }),
+      Object.freeze({ at: 7 * FPS, boss: true, count: 1 }),
     ]),
   }),
 ]);
@@ -525,12 +539,14 @@ const SaveSystem = Object.freeze({
   },
 
   proveCombination: function (spell) {
-    const key = spell.form + "|" + spell.essence + "|" + spell.law;
+    const key = spellKey(spell);
     if (!persistent.profile.discovered.includes(key)) {
       persistent.profile.discovered.push(key);
       persistent.profile.discovered.sort();
       this.write();
+      return true;
     }
+    return false;
   },
 });
 
@@ -570,6 +586,7 @@ const state = {
   sparks: [],
   waveBannerTimer: 0,
   waveBannerText: "",
+  lastDiscovery: "",
   screenShake: 0,
   damageFlash: 0,
 };
@@ -664,6 +681,30 @@ function spellName(spell) {
   return SPELL_PARTS.forms[spell.form].title + " · " +
     SPELL_PARTS.essences[spell.essence].title + " · " +
     SPELL_PARTS.laws[spell.law].title;
+}
+
+function spellKey(spell) {
+  return spell.form + "|" + spell.essence + "|" + spell.law;
+}
+
+function spellReadout(spell) {
+  return "FORM " + SPELL_PARTS.forms[spell.form].title + " · ESSENCE " +
+    SPELL_PARTS.essences[spell.essence].title + " · LAW " + SPELL_PARTS.laws[spell.law].title;
+}
+
+function spellRole(spell) {
+  const form = spell.form === "bolt" ? "single-target" : "crowd shield";
+  const essence = spell.essence === "ember" ? "burn splash" : "slow";
+  const law = spell.law === "split" ? "3 now" : "repeat later";
+  return form + " · " + essence + " · " + law;
+}
+
+function rewrittenSpell(axis, value) {
+  return {
+    form: axis === "form" ? value : state.spell.form,
+    essence: axis === "essence" ? value : state.spell.essence,
+    law: axis === "law" ? value : state.spell.law,
+  };
 }
 
 function currentWaveDefinition() {
@@ -1014,8 +1055,21 @@ const EnemySystem = Object.freeze({
 });
 
 const SpawnSystem = Object.freeze({
-  point: function (eventIndex, unitIndex, boss) {
-    if (boss) return { x: W / 2, y: 92 };
+  point: function (event, eventIndex, unitIndex) {
+    if (event.boss) return { x: W / 2, y: 92 };
+    if (event.entry === "center") {
+      return { x: W / 2 + (unitIndex - (event.count - 1) / 2) * 34, y: 82 };
+    }
+    if (event.entry === "top") {
+      return { x: 38 + ((unitIndex + 1) / (event.count + 1)) * (W - 76), y: 72 };
+    }
+    if (event.entry === "sides") {
+      const side = (eventIndex + unitIndex) % 2;
+      const lane = Math.floor(unitIndex / 2);
+      const laneCount = Math.ceil(event.count / 2);
+      const y = 104 + ((lane + 1) / (laneCount + 1)) * (H - 206);
+      return { x: side === 0 ? 22 : W - 22, y };
+    }
     const side = Math.floor(seededUnit(state.seed, state.wave, eventIndex, unitIndex, 1) * 3);
     const position = seededUnit(state.seed, state.wave, eventIndex, unitIndex, 2);
     if (side === 0) return { x: 34 + position * (W - 68), y: 72 };
@@ -1025,7 +1079,7 @@ const SpawnSystem = Object.freeze({
 
   event: function (event, eventIndex) {
     for (let unitIndex = 0; unitIndex < event.count; unitIndex += 1) {
-      const point = this.point(eventIndex, unitIndex, event.boss);
+      const point = this.point(event, eventIndex, unitIndex);
       state.enemies.push(EnemySystem.makeEnemy(point.x, point.y, event));
     }
     const color = event.boss || event.elite ? "#ffd166" : event.family === "caster" ? "#8bc9eb" : "#83dc91";
@@ -1125,18 +1179,18 @@ const SpellSystem = Object.freeze({
           hitIds: {},
         });
       } else {
-        const damageBase = essence === "ember" ? 0.94 : 0.72;
+        const damageBase = essence === "ember" ? 1.08 : 0.86;
         state.projectiles.push({
           kind: "orbit",
           essence,
           x: player.x,
           y: player.y,
-          r: 10,
-          damage: (damageBase + player.power * 0.42) * castMultiplier * (split ? 0.72 : 1),
-          life: 112,
+          r: 12,
+          damage: (damageBase + player.power * 0.55) * castMultiplier * (split ? 0.78 : 1),
+          life: 168,
           angle: baseAngle + offset + (Math.PI * 2 * index) / count,
-          radius: count === 1 ? 35 : 30 + index * 5,
-          angularVelocity: essence === "frost" ? 0.073 : 0.088,
+          radius: count === 1 ? 44 : 34 + index * 10,
+          angularVelocity: essence === "frost" ? 0.084 : 0.096,
           hitIds: {},
         });
       }
@@ -1155,6 +1209,14 @@ const SpellSystem = Object.freeze({
   hitEnemy: function (projectile, enemy) {
     EnemySystem.applySpellHit(enemy, projectile.damage, projectile.essence);
     projectile.hitIds[enemy.id] = state.time;
+    if (projectile.kind === "orbit" && !enemy.boss) {
+      const dx = enemy.x - state.player.x;
+      const dy = enemy.y - state.player.y;
+      const distance = Math.max(1, Math.hypot(dx, dy));
+      const push = enemy.elite ? 0.5 : 1;
+      enemy.x = clamp(enemy.x + (dx / distance) * push, 18, W - 18);
+      enemy.y = clamp(enemy.y + (dy / distance) * push, 64, H - 28);
+    }
     if (projectile.essence === "ember") {
       for (const nearby of state.enemies) {
         if (nearby.id === enemy.id || nearby.hp <= 0) continue;
@@ -1199,13 +1261,19 @@ const SpellSystem = Object.freeze({
         projectile.angle += projectile.angularVelocity;
         projectile.x = state.player.x + Math.cos(projectile.angle) * projectile.radius;
         projectile.y = state.player.y + Math.sin(projectile.angle) * projectile.radius;
+        for (const shot of state.enemyProjectiles) {
+          if (shot.life <= 0 || Math.hypot(shot.x - projectile.x, shot.y - projectile.y) > shot.r + projectile.r) continue;
+          shot.life = 0;
+          addSparks(shot.x, shot.y, 5, SPELL_PARTS.essences[projectile.essence].light);
+        }
         for (const enemy of state.enemies) {
           const lastHit = projectile.hitIds[enemy.id] === undefined ? -Infinity : projectile.hitIds[enemy.id];
-          if (enemy.hp <= 0 || state.time - lastHit < 24 || !rectCircle(enemy, projectile)) continue;
+          if (enemy.hp <= 0 || state.time - lastHit < ORBIT_HIT_GAP || !rectCircle(enemy, projectile)) continue;
           this.hitEnemy(projectile, enemy);
         }
       }
     }
+    state.enemyProjectiles = state.enemyProjectiles.filter(function (shot) { return shot.life > 0; });
     state.projectiles = state.projectiles.filter(function (projectile) {
       if (projectile.life <= 0) return false;
       if (projectile.kind === "orbit") return true;
@@ -1241,6 +1309,7 @@ const RunSystem = Object.freeze({
     state.sparks = [];
     state.waveBannerTimer = 0;
     state.waveBannerText = "";
+    state.lastDiscovery = "";
     state.screenShake = 0;
     state.damageFlash = 0;
     state.player = normalizePlayer(null);
@@ -1302,9 +1371,9 @@ const RunSystem = Object.freeze({
     state.enemyProjectiles = [];
     state.pendingCasts = [];
     state.waveBannerText = definition.boss
-      ? "ACT III BOSS"
+      ? "ACT III · BOSS"
       : definition.guardian
-        ? "ACT " + roman(definition.act) + " GUARDIAN"
+        ? "ACT " + roman(definition.act) + " · GUARDIAN"
         : "ACT " + roman(definition.act) + " · WAVE " + wave;
     state.waveBannerTimer = WAVE_BANNER_DURATION;
     startPanel.hidden = true;
@@ -1323,13 +1392,13 @@ const RunSystem = Object.freeze({
       this.finish("lose");
       return;
     }
-    if (state.spawnIndex >= definition.events.length && state.waveFrame >= definition.duration && state.enemies.length === 0) {
+    if (state.spawnIndex >= definition.events.length && state.enemies.length === 0) {
       this.completeWave();
     }
   },
 
   completeWave: function () {
-    SaveSystem.proveCombination(state.spell);
+    state.lastDiscovery = SaveSystem.proveCombination(state.spell) ? spellName(state.spell) : "";
     if (state.wave === 4 || state.wave === 8) state.player.hp = state.player.maxHp;
     else state.player.hp = Math.min(state.player.maxHp, state.player.hp + 1);
     if (state.wave >= TOTAL_WAVES) {
@@ -1347,6 +1416,7 @@ const RunSystem = Object.freeze({
   chooseRewrite: function (apply) {
     if (state.mode !== "upgrade") return;
     apply();
+    state.lastDiscovery = "";
     playSound("upgrade");
     triggerHaptic(28);
     this.startWave(state.wave + 1, true);
@@ -1355,7 +1425,7 @@ const RunSystem = Object.freeze({
   finish: function (mode) {
     state.mode = mode;
     clearInput();
-    SaveSystem.proveCombination(state.spell);
+    if (mode === "win" && SaveSystem.proveCombination(state.spell)) state.lastDiscovery = spellName(state.spell);
     if (state.score > persistent.profile.bestScore) persistent.profile.bestScore = state.score;
     state.bestScore = persistent.profile.bestScore;
     if (mode === "win") {
@@ -1401,48 +1471,54 @@ const UISystem = Object.freeze({
         : "Resume Wave " + checkpoint.wave;
       startStatus.textContent = "Checkpoint: " + spellName(checkpoint.spell) + " · " + formatFrames(checkpoint.elapsedFrames);
     } else {
-      startStatus.textContent = "Survive three acts and twelve scheduled waves.";
+      startStatus.textContent = "Three acts, twelve waves. Rewrite for a new play style or take Support.";
     }
-    spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length + "/8";
+    spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length + "/8 · Unseen rewrites are marked NEW";
   },
 
   showRewrite: function (saveBoundary) {
     if (saveBoundary) SaveSystem.setCheckpoint(checkpointFromState("upgrade"));
     upgradeChoices.replaceChildren();
-    const definition = currentWaveDefinition();
+    upgradeEyebrow.textContent = state.lastDiscovery
+      ? "New Spell Proven · " + persistent.profile.discovered.length + "/8"
+      : "Wave Cleared";
     upgradeTitle.textContent = state.wave === 4
       ? "Act I cleared · Rewrite"
       : state.wave === 8
         ? "Act II cleared · Rewrite"
         : "Rewrite one word";
+    upgradeHelp.textContent = "CURRENT · " + spellName(state.spell) + " — " + spellRole(state.spell);
 
     const nextForm = state.spell.form === "bolt" ? "orbit" : "bolt";
     const nextEssence = state.spell.essence === "ember" ? "frost" : "ember";
     const nextLaw = state.spell.law === "split" ? "echo" : "split";
     const support = SUPPORT_UPGRADES[hashNumbers(state.seed, state.wave, 77) % SUPPORT_UPGRADES.length];
+    const formSpell = rewrittenSpell("form", nextForm);
+    const essenceSpell = rewrittenSpell("essence", nextEssence);
+    const lawSpell = rewrittenSpell("law", nextLaw);
     const options = [
       {
         axis: "form",
-        title: "FORM → " + SPELL_PARTS.forms[nextForm].title,
-        detail: SPELL_PARTS.forms[nextForm].description,
+        spell: formSpell,
+        title: "FORM · " + SPELL_PARTS.forms[state.spell.form].title + " → " + SPELL_PARTS.forms[nextForm].title,
         apply: function () { state.spell.form = nextForm; },
       },
       {
         axis: "essence",
-        title: "ESSENCE → " + SPELL_PARTS.essences[nextEssence].title,
-        detail: SPELL_PARTS.essences[nextEssence].description,
+        spell: essenceSpell,
+        title: "ESSENCE · " + SPELL_PARTS.essences[state.spell.essence].title + " → " + SPELL_PARTS.essences[nextEssence].title,
         apply: function () { state.spell.essence = nextEssence; },
       },
       {
         axis: "law",
-        title: "LAW → " + SPELL_PARTS.laws[nextLaw].title,
-        detail: SPELL_PARTS.laws[nextLaw].description,
+        spell: lawSpell,
+        title: "LAW · " + SPELL_PARTS.laws[state.spell.law].title + " → " + SPELL_PARTS.laws[nextLaw].title,
         apply: function () { state.spell.law = nextLaw; },
       },
       {
         axis: "support",
-        title: "SUPPORT → " + support.title,
-        detail: support.describe(state.player),
+        title: "SUPPORT · " + support.title,
+        detail: "KEEP CURRENT SPELL · " + support.describe(state.player),
         apply: function () { support.apply(state.player, state.supports); },
       },
     ];
@@ -1454,6 +1530,13 @@ const UISystem = Object.freeze({
       button.className = "upgrade-choice";
       button.type = "button";
       button.dataset.axis = option.axis;
+      if (option.spell) {
+        const isNew = !persistent.profile.discovered.includes(spellKey(option.spell));
+        button.dataset.discovery = isNew ? "new" : "known";
+        option.detail = (isNew ? "NEW SPELL · " : "KNOWN · ") + spellName(option.spell) + " — " + spellRole(option.spell);
+      } else {
+        button.dataset.discovery = "support";
+      }
       title.textContent = option.title;
       detail.textContent = option.detail;
       button.append(title, detail);
@@ -1518,7 +1601,10 @@ const UISystem = Object.freeze({
     menuButton.textContent = state.menuOpen ? "Resume" : state.mode === "playing" ? "Pause" : "Options";
     menuButton.setAttribute("aria-label", state.menuOpen ? "Resume game" : state.mode === "playing" ? "Pause game" : "Open options");
     healthText.textContent = player ? "HP " + Math.max(0, Math.ceil(player.hp)) + "/" + player.maxHp : "HP 5/5";
-    spellText.textContent = spellName(state.spell);
+    spellText.textContent = spellReadout(state.spell);
+    controlHint.textContent = state.spell.form === "orbit"
+      ? "ORBIT hits nearby crowds and blocks shots · Drag close, then dodge"
+      : "BOLT hunts the marked enemy · Drag to dodge";
     if (state.mode === "menu") {
       waveText.textContent = TOTAL_WAVES + " Waves";
       scoreText.textContent = "Best " + state.bestScore;
@@ -1533,8 +1619,8 @@ const UISystem = Object.freeze({
       scoreText.textContent = "Score " + state.score;
     } else {
       const definition = currentWaveDefinition();
-      const remaining = Math.max(0, definition.duration - state.waveFrame);
-      waveText.textContent = "A" + definition.act + " " + state.wave + "/" + TOTAL_WAVES + " " + formatFrames(remaining);
+      const foes = state.enemies.filter(function (enemy) { return enemy.hp > 0; }).length;
+      waveText.textContent = "A" + definition.act + " W" + state.wave + " · " + (foes > 0 ? foes + " foes" : "incoming");
       scoreText.textContent = "Score " + state.score;
     }
   },
@@ -1688,6 +1774,18 @@ function drawPointerTarget() {
 }
 
 function drawTargetFeedback() {
+  if (state.spell.form === "orbit" && state.mode === "playing" && state.player) {
+    ctx.save();
+    ctx.globalAlpha = 0.42;
+    ctx.strokeStyle = SPELL_PARTS.essences[state.spell.essence].light;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    ctx.arc(state.player.x, state.player.y, 58, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+    return;
+  }
   const target = SpellSystem.targetById(state.targetId);
   if (!target || state.mode !== "playing") return;
   const radius = Math.max(target.w, target.h) * 0.68 + 7 + Math.sin(state.time / 5) * 1.5;
@@ -1866,17 +1964,10 @@ function drawProjectiles() {
     const x = Math.round(projectile.x);
     const y = Math.round(projectile.y);
     if (projectile.kind === "orbit") {
-      ctx.save();
-      ctx.globalAlpha = 0.22;
-      ctx.strokeStyle = essence.color;
-      ctx.beginPath();
-      ctx.arc(state.player.x, state.player.y, projectile.radius, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
       ctx.fillStyle = essence.color;
-      ctx.fillRect(x - 5, y - 5, 10, 10);
+      ctx.fillRect(x - 6, y - 6, 12, 12);
       ctx.fillStyle = essence.light;
-      ctx.fillRect(x - 2, y - 2, 4, 4);
+      ctx.fillRect(x - 3, y - 3, 6, 6);
     } else {
       ctx.fillStyle = essence.color;
       ctx.fillRect(x - 4, y - 4, 8, 8);
@@ -1911,8 +2002,8 @@ function drawEndBanner() {
     drawPanel(28, 154, 264, 156);
     drawText("TRIAL COMPLETE", W / 2, 194, 20, "#ffd166", "center");
     drawText("Time " + formatFrames(state.runElapsed) + " · Score " + state.score, W / 2, 229, 11, "#f3ead7", "center");
-    drawText("Spellbook " + persistent.profile.discovered.length + "/8", W / 2, 255, 11, "#9bf6ff", "center");
-    drawText("Tap to begin another Trial", W / 2, 285, 10, "#d9b8ff", "center");
+    drawText("Spellbook " + persistent.profile.discovered.length + "/8 proven", W / 2, 255, 11, "#9bf6ff", "center");
+    drawText("Tap to try a different build", W / 2, 285, 10, "#d9b8ff", "center");
   }
   if (state.mode === "lose") {
     drawPanel(28, 164, 264, 140);
@@ -1926,11 +2017,13 @@ function drawWaveAnnouncement() {
   if (state.waveBannerTimer <= 0 || state.mode !== "playing") return;
   const elapsed = WAVE_BANNER_DURATION - state.waveBannerTimer;
   const alpha = Math.min(1, elapsed / 10, state.waveBannerTimer / 18);
+  const definition = currentWaveDefinition();
   ctx.save();
   ctx.globalAlpha = alpha;
-  drawPanel(64, 58, 192, 58);
-  drawText(state.waveBannerText, W / 2, 80, 13, currentWaveDefinition().boss ? "#ff9d66" : "#ffd166", "center");
-  drawText(currentWaveDefinition().title.toUpperCase(), W / 2, 99, 9, "#aab1c7", "center");
+  drawPanel(44, 54, 232, 78);
+  drawText(state.waveBannerText, W / 2, 74, 11, definition.boss ? "#ff9d66" : "#ffd166", "center");
+  drawText(definition.title.toUpperCase(), W / 2, 94, 13, "#f3ead7", "center");
+  drawText(definition.cue, W / 2, 114, 8, "#aab1c7", "center");
   ctx.restore();
 }
 

@@ -35,19 +35,24 @@
           ></canvas>
           <section id="startPanel" class="start-panel" aria-labelledby="startTitle">
             <p class="eyebrow">Representative Trial</p>
-            <h2 id="startTitle">Rewrite one living spell</h2>
-            <p class="axis-guide"><strong>Form</strong> is its path · <strong>Essence</strong> is its effect · <strong>Law</strong> is its pattern</p>
-            <p id="startStatus" class="start-status">Survive three acts and twelve scheduled waves.</p>
+            <h2 id="startTitle">Move. Watch. Rewrite.</h2>
+            <p class="opening-guide">Drag to move and dodge. Your spell casts itself.</p>
+            <div class="axis-guide" aria-label="How spell words work">
+              <p><strong>FORM</strong> — Bolt hunts the mark; Orbit guards nearby.</p>
+              <p><strong>ESSENCE</strong> — Ember burns; Frost slows.</p>
+              <p><strong>LAW</strong> — Split casts three; Echo repeats later.</p>
+            </div>
+            <p id="startStatus" class="start-status">After each wave, rewrite one word or strengthen the current build.</p>
             <div class="start-actions">
               <button id="resumeRunButton" class="menu-primary" type="button" hidden>Resume Trial</button>
               <button id="startRunButton" class="menu-secondary" type="button">Start New Trial</button>
             </div>
-            <p id="spellbookText" class="spellbook-text">Spellbook 0/8</p>
+            <p id="spellbookText" class="spellbook-text">Spellbook 0/8 · Unseen rewrites are marked NEW</p>
           </section>
           <section id="upgradePanel" class="upgrade-panel" aria-labelledby="upgradeTitle" hidden>
-            <p class="eyebrow">Wave Cleared</p>
+            <p id="upgradeEyebrow" class="eyebrow">Wave Cleared</p>
             <h2 id="upgradeTitle">Rewrite one word</h2>
-            <p class="upgrade-help">Change Form, Essence, or Law—or take support.</p>
+            <p id="upgradeHelp" class="upgrade-help">Each card previews the complete resulting spell.</p>
             <div id="upgradeChoices" class="upgrade-choices"></div>
           </section>
           <section
@@ -72,7 +77,7 @@
           </section>
         </div>
 
-        <section id="spellText" class="spell-readout" aria-live="polite">Bolt · Ember · Split</section>
+        <section id="spellText" class="spell-readout" aria-live="polite">FORM Bolt · ESSENCE Ember · LAW Split</section>
 
         <section class="hud" aria-live="polite">
           <span id="healthText">HP 5/5</span>

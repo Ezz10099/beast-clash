@@ -21,7 +21,7 @@ Run:
 
 `npm run check`
 
-This validates controls and settings, all eight representative spell combinations, versioned save migration and boundary recovery, stress limits, and three seeded 12-wave clears. It then rebuilds `dist/`, verifies every checksum, regenerates Android artwork, validates native configuration, rejects unexpected bundle files, and enforces the runtime-size ceiling.
+This validates controls and settings, all eight readable representative spell combinations, full-result rewrite previews, Bolt/Orbit role balance, active wave completion, versioned save migration and boundary recovery, stress limits, and three seeded 12-wave clears. It then rebuilds `dist/`, verifies every checksum, regenerates Android artwork, validates native configuration, rejects unexpected bundle files, and enforces the runtime-size ceiling.
 
 Preview the exact release bundle with:
 

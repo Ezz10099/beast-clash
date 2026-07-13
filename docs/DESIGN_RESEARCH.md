@@ -152,8 +152,22 @@ Three bounded options are recorded in `docs/SCOPE_OPTIONS.md`:
 2. Living Spell Trials — recommended balance.
 3. Rune-Path Arena — strongest interaction novelty, highest control risk.
 
-The recommendation was **Living Spell Trials**. The owner explicitly approved Option B as written on July 13, 2026. Its 7–9-minute successful-run target remains a hypothesis for a representative phone test, not a release promise.
+The recommendation was **Living Spell Trials**. The owner explicitly approved Option B as written on July 13, 2026. Its proposed 7–9-minute successful-run target was a test hypothesis, not a release promise.
+
+## Representative Phone Evidence — July 13, 2026
+
+The owner completed the first 12-wave representative run in 5:49. They were entertained by trying different things and found the boss interesting, which supports the living-spell direction and boss climax. They did not understand the game fully at first, became bored in the late stages immediately before the boss, rejected a memorized sequence for filling the 8-slot Spellbook as boring, and judged Orbit much weaker than Bolt.
+
+This evidence changes the design judgment:
+
+1. A longer 7–9-minute target would worsen the observed problem; 5:49 was already long enough to expose padding.
+2. Spellbook discovery should record enjoyable experimentation, not ask the player to follow an external recipe. The game must preview the whole resulting spell and identify unseen combinations itself.
+3. A rewrite is not meaningful when one Form is a clear downgrade. Bolt should own single-target damage while Orbit earns its positioning risk through competitive clears, crowd damage, and shot defense.
+4. Quantity escalation alone does not create an act. The pre-boss sequence needs different compositions and spatial pressures, followed by an earlier boss arrival.
+5. Positive replay curiosity and boss enjoyment are promising, but they do not pass the representative gate while comprehension and pacing fail.
+
+Correction build `0.2.0-representative.2` encodes those conclusions without expanding the approved representative content cap. Its effect remains provisional until the consolidated SPCK retest.
 
 ## Research Stop Rule
 
-The required final research round and owner choice are complete. Stop broad ideation. Build the approved representative slice, measure it, and use that evidence for the second go/no-go and all later content estimates.
+The required final research round and owner choice are complete. Stop broad ideation. Retest the bounded representative correction and use that phone evidence for the second go/no-go and all later content estimates.

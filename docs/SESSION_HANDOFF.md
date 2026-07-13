@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Implement, verify, and publish the complete Living Spell Trials representative slice, then request one consolidated SPCK phone test.
+Record the first Living Spell Trials phone evidence, implement its bounded comprehension/balance/pacing correction, verify and publish it, then request one consolidated SPCK retest.
 
 ## Completed This Session
 
@@ -77,7 +77,7 @@ Implement, verify, and publish the complete Living Spell Trials representative s
 - The owner explicitly selected Option B — Living Spell Trials — as written on July 13, 2026.
 - Locked the core loop, launch cap, progression, light-framing level, exclusions, and representative-slice gate in `docs/RELEASE_SCOPE.md` and D-011.
 - Defined the next substantial batch: one 12-wave timed run, 2×2×2 spell prototype, limited enemy set and boss, automatic threat targeting, versioned checkpoint/resume, and expanded deterministic/stress tests.
-- Replaced fixed one-time groups with one data-driven, three-act, 12-wave Trial using scheduled arrivals and a 349-second minimum combat schedule before player choice time.
+- Initially replaced fixed one-time groups with one data-driven, three-act, 12-wave Trial using scheduled arrivals and a 349-second minimum combat schedule before player choice time; the later phone correction removed that fixed completion floor.
 - Separated run/spawn, enemy, spell, save, and UI responsibilities inside the accepted three-file runtime without changing the engine or controls.
 - Implemented Bolt and Orbit Forms, Ember and Frost Essences, and Split and Echo Laws for eight named, visually coherent prototype combinations.
 - Added rewrite-one-word choices after each wave plus one deterministic universal support choice.
@@ -90,24 +90,37 @@ Implement, verify, and publish the complete Living Spell Trials representative s
 - Completed three mechanically different seeded 12-wave automated clears.
 - Updated the representative build version to `0.2.0-representative.1`.
 - Ran `npm run check`: gameplay checks, the 61,745-byte offline release bundle, Android artwork generation, and Android configuration all passed.
+- Recorded the owner's first complete representative phone run: a 5:49 clear, interest in trying different things, an entertaining boss, unclear opening/systems, boredom in the late pre-boss stages, a rote-feeling Spellbook route, and Orbit feeling much weaker than Bolt.
+- Kept the Living Spell Trials direction and representative cap locked while treating comprehension, pacing, and Form balance as failed phone gates.
+- Reworked the opening into concise control and axis examples; labeled the live spell as `FORM`, `ESSENCE`, and `LAW`; and added wave-specific mechanic cues.
+- Changed rewrite cards to preview the complete resulting spell, its combat role, and `NEW`/`KNOWN` Spellbook status so discovery no longer requires an external sequence.
+- Kept Spellbook discovery tied to clearing a wave and stopped recording an unproven combination on defeat.
+- Rebalanced Bolt as marked single-target damage and Orbit as a viable nearby crowd shield with a larger/longer/faster field, repeated hits, light pushback, projectile blocking, a visible range guide, and form-specific control text.
+- Re-authored Act III's pre-boss stretch as Mote Stampede, Glyph Crossfire, and Twin Wards using the same approved enemy and elite behaviors with deterministic top/side formations.
+- Moved The Redactor earlier in its wave and removed the fixed duration floor after the final scheduled pack dies, eliminating the exact 5:49 timer padding without inventing a new duration promise.
+- Expanded automation to verify self-explanatory rewrite previews, unseen-combination marking, no post-clear timer floor, distinct late-wave compositions, Orbit shot blocking, Bolt's single-target lead, Orbit's greater crowd output, and competitive full-run clear time.
+- Updated the representative build version to `0.2.0-representative.2`.
+- Ran `npm run check`: three active 12-wave clears, all eight readable combinations, Form balance, save migration, stress limits, the 65,780-byte offline release bundle, Android artwork generation, and Android configuration all passed.
 
 ## Phone Validation Result
 
 The user accepted the earlier gameplay/control, release-experience, web-release-candidate, and native APK batches with no reported bugs. Milestone 7 remains complete.
 
-The new Living Spell Trials representative slice has passed automation but has not yet been tested on the target phone. Its layout, control feel, performance, readability, pacing, checkpoint recovery, successful-run time, and replay desire must not be called accepted yet.
+The first Living Spell Trials representative phone run completed in 5:49. The screenshot showed the result screen fitting the POCO X2-class portrait layout, and the owner reported interest in experimentation and an entertaining boss. The representative gate did not pass: the owner did not understand the opening and some systems fully, became bored shortly before the boss, rejected a rote Spellbook recipe, and found Orbit much weaker than Bolt.
+
+Correction build `0.2.0-representative.2` passes automation but is not phone-accepted. Its comprehension, touch readability, Orbit feel, active pacing, and measured clear time remain provisional until one consolidated SPCK retest.
 
 ## Current Development Objective
 
-Complete one consolidated SPCK phone test of the implemented representative slice and obtain the second explicit go/no-go. Do not scale to the remaining 27-combination/9-Trial content or final assets yet.
+Complete one consolidated SPCK phone retest of `0.2.0-representative.2` and obtain the second explicit go/no-go. Do not scale to the remaining 27-combination/9-Trial content or final assets yet.
 
-The phone test must cover one complete winning run and its measured time; all three rewrite axes; both enemy families; both guardians and the boss; pause/resume; close/reopen recovery during a wave and at a rewrite boundary; small-screen fit; stress readability; and whether another build feels worth trying.
+The retest must use only the in-game explanation, compare Bolt and Orbit for at least two waves each, judge the three distinct pre-boss encounters and boss arrival, finish and record the new time, confirm one checkpoint close/reopen plus layout/performance, and state whether the words are now predictable and another build feels worth trying.
 
 ## Next Session Entry Point
 
 Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 in `docs/DECISIONS.md`, and this handoff. Option B is locked.
 
-Review the owner's consolidated SPCK result, separate blockers from balance/preferences, record the measured run, and make the second go/no-go. Do not build the remaining launch content or final assets before that decision.
+Review the owner's consolidated correction-build SPCK result, record the measured run and comprehension/Orbit/pacing verdicts, and make the second go/no-go. Do not build the remaining launch content or final assets before that decision.
 
 ## Verification
 
@@ -117,8 +130,8 @@ Run:
 
 Current expected result:
 
-`Pixel Mage checks passed: 3 seeded 12-wave runs, 8 spell combinations, save migration, and stress limits.`
+`Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (61745 runtime bytes).`
+`Release bundle checks passed (65780 runtime bytes).`
 
 `Android configuration checks passed.`
