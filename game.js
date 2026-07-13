@@ -8,6 +8,15 @@ const menuButton = document.querySelector("#menuButton");
 const startPanel = document.querySelector("#startPanel");
 const startStatus = document.querySelector("#startStatus");
 const spellbookText = document.querySelector("#spellbookText");
+const spellbookButton = document.querySelector("#spellbookButton");
+const openingSpellIcon = document.querySelector("#openingSpellIcon");
+const openingSpellName = document.querySelector("#openingSpellName");
+const openingSpellRole = document.querySelector("#openingSpellRole");
+const openingSpellAction = document.querySelector("#openingSpellAction");
+const spellbookPanel = document.querySelector("#spellbookPanel");
+const spellbookStatus = document.querySelector("#spellbookStatus");
+const spellbookChoices = document.querySelector("#spellbookChoices");
+const spellbookBackButton = document.querySelector("#spellbookBackButton");
 const resumeRunButton = document.querySelector("#resumeRunButton");
 const startRunButton = document.querySelector("#startRunButton");
 const upgradePanel = document.querySelector("#upgradePanel");
@@ -33,7 +42,7 @@ const W = canvas.width;
 const H = canvas.height;
 const FPS = 60;
 const TOTAL_WAVES = 12;
-const SAVE_VERSION = 2;
+const SAVE_VERSION = 3;
 const CHECKPOINT_VERSION = 2;
 const SAVE_KEY = "pixel_mage_save_v2";
 const LEGACY_BEST_SCORE_KEY = "pixel_mage_best_score_v1";
@@ -44,12 +53,24 @@ const MAX_PROJECTILES = 96;
 const MAX_ENEMY_PROJECTILES = 72;
 const MAX_PENDING_CASTS = 24;
 const MAX_SPARKS = 360;
+const MAX_TRIAL_MARKS = 4;
 const ORBIT_HIT_GAP = 18;
+const TRIAL_MARK_WARNING = 52;
+const TRIAL_MARK_BLAST = 12;
+const TRIAL_MARK_RADIUS = 34;
 const SPELL_GROWTH_DAMAGE = 0.06;
 const SPELL_GROWTH_HASTE = 0.015;
 const VALID_FORMS = Object.freeze(["bolt", "orbit"]);
 const VALID_ESSENCES = Object.freeze(["ember", "frost"]);
 const VALID_LAWS = Object.freeze(["split", "echo"]);
+const DEFAULT_SPELL = Object.freeze({ form: "bolt", essence: "ember", law: "split" });
+const ALL_SPELLS = Object.freeze(VALID_FORMS.flatMap(function (form) {
+  return VALID_ESSENCES.flatMap(function (essence) {
+    return VALID_LAWS.map(function (law) {
+      return Object.freeze({ form, essence, law });
+    });
+  });
+}));
 
 const SPELL_PARTS = Object.freeze({
   forms: Object.freeze({
@@ -118,7 +139,7 @@ const RUN_DEFINITION = Object.freeze([
     wave: 1,
     act: 1,
     title: "First Script",
-    cue: "DRAG TO MOVE · SPELLS CAST THEMSELVES",
+    cue: "RED RUNE = MOVE BEFORE IT CLOSES",
     duration: 22 * FPS,
     events: Object.freeze([
       Object.freeze({ at: 0, family: "chaser", count: 2 }),
@@ -362,6 +383,7 @@ function makeDefaultSave() {
       bestTimeFrames: 0,
       wins: 0,
       discovered: [],
+      selectedSpell: { ...DEFAULT_SPELL },
     },
     checkpoint: null,
   };
@@ -370,9 +392,9 @@ function makeDefaultSave() {
 function normalizeSpell(spell) {
   const value = spell && typeof spell === "object" ? spell : {};
   return {
-    form: validPart(value.form, VALID_FORMS, "bolt"),
-    essence: validPart(value.essence, VALID_ESSENCES, "ember"),
-    law: validPart(value.law, VALID_LAWS, "split"),
+    form: validPart(value.form, VALID_FORMS, DEFAULT_SPELL.form),
+    essence: validPart(value.essence, VALID_ESSENCES, DEFAULT_SPELL.essence),
+    law: validPart(value.law, VALID_LAWS, DEFAULT_SPELL.law),
   };
 }
 
@@ -463,6 +485,11 @@ const SaveSystem = Object.freeze({
     next.profile.bestTimeFrames = safeInteger(sourceProfile.bestTimeFrames, 0, 0, 100000000);
     next.profile.wins = safeInteger(sourceProfile.wins, 0, 0, 1000000);
     next.profile.discovered = Array.from(new Set(discovered)).slice(0, 8);
+    const selectedSpell = normalizeSpell(sourceProfile.selectedSpell);
+    const selectedKey = spellKey(selectedSpell);
+    next.profile.selectedSpell = selectedKey === spellKey(DEFAULT_SPELL) || next.profile.discovered.includes(selectedKey)
+      ? selectedSpell
+      : { ...DEFAULT_SPELL };
     next.checkpoint = normalizeCheckpoint(source.checkpoint);
     return next;
   },
@@ -524,6 +551,15 @@ const SaveSystem = Object.freeze({
     }
     return false;
   },
+
+  selectStartingSpell: function (spell) {
+    const selected = normalizeSpell(spell);
+    const key = spellKey(selected);
+    if (key !== spellKey(DEFAULT_SPELL) && !persistent.profile.discovered.includes(key)) return false;
+    persistent.profile.selectedSpell = selected;
+    this.write();
+    return true;
+  },
 });
 
 const persistent = SaveSystem.load();
@@ -559,6 +595,8 @@ const state = {
   projectiles: [],
   enemyProjectiles: [],
   pendingCasts: [],
+  trialMarks: [],
+  nextTrialMarkAt: 0,
   sparks: [],
   waveBannerTimer: 0,
   waveBannerText: "",
@@ -664,6 +702,26 @@ function spellName(spell) {
 
 function spellKey(spell) {
   return spell.form + "|" + spell.essence + "|" + spell.law;
+}
+
+function startingSpellUnlocked(spell) {
+  const key = spellKey(spell);
+  return key === spellKey(DEFAULT_SPELL) || persistent.profile.discovered.includes(key);
+}
+
+function availableStartingSpellCount() {
+  return new Set([spellKey(DEFAULT_SPELL)].concat(persistent.profile.discovered)).size;
+}
+
+function fillSpellIcon(icon, spell) {
+  icon.dataset.form = spell.form;
+  icon.dataset.essence = spell.essence;
+  icon.dataset.law = spell.law;
+  for (let markIndex = 0; markIndex < 3; markIndex += 1) {
+    const mark = document.createElement("i");
+    mark.className = "spell-shape";
+    icon.append(mark);
+  }
 }
 
 function spellReadout(spell) {
@@ -1326,6 +1384,52 @@ const SpellSystem = Object.freeze({
   },
 });
 
+function trialMarkInterval() {
+  if (state.wave <= 4) return 6 * FPS;
+  if (state.wave <= 8) return Math.round(5.5 * FPS);
+  return 5 * FPS;
+}
+
+const TrialPressureSystem = Object.freeze({
+  spawn: function () {
+    if (!state.player || state.mode !== "playing") return;
+    state.trialMarks.push({
+      x: state.player.x,
+      y: state.player.y,
+      radius: TRIAL_MARK_RADIUS,
+      timer: TRIAL_MARK_WARNING,
+      hit: false,
+    });
+    if (state.trialMarks.length > MAX_TRIAL_MARKS) {
+      state.trialMarks.splice(0, state.trialMarks.length - MAX_TRIAL_MARKS);
+    }
+    addSparks(state.player.x, state.player.y, 7, "#ff6b6b");
+    playSound("warning");
+    triggerHaptic(10);
+  },
+
+  update: function () {
+    while (state.waveFrame >= state.nextTrialMarkAt) {
+      this.spawn();
+      state.nextTrialMarkAt += trialMarkInterval();
+    }
+    for (const mark of state.trialMarks) {
+      mark.timer -= 1;
+      if (mark.timer === 0) {
+        const distance = Math.hypot(state.player.x - mark.x, state.player.y - mark.y);
+        if (distance <= mark.radius) {
+          mark.hit = true;
+          EnemySystem.damagePlayer(1);
+        }
+        addSparks(mark.x, mark.y, 18, "#ff6b6b");
+      }
+    }
+    state.trialMarks = state.trialMarks.filter(function (mark) {
+      return mark.timer > -TRIAL_MARK_BLAST;
+    });
+  },
+});
+
 const RunSystem = Object.freeze({
   resetRuntime: function () {
     clearInput();
@@ -1343,6 +1447,8 @@ const RunSystem = Object.freeze({
     state.projectiles = [];
     state.enemyProjectiles = [];
     state.pendingCasts = [];
+    state.trialMarks = [];
+    state.nextTrialMarkAt = 0;
     state.sparks = [];
     state.waveBannerTimer = 0;
     state.waveBannerText = "";
@@ -1361,8 +1467,17 @@ const RunSystem = Object.freeze({
 
   startNew: function (seed) {
     this.resetRuntime();
+    state.spell = normalizeSpell(persistent.profile.selectedSpell);
     state.seed = safeInteger(seed === undefined ? createRunSeed() : seed, 1, 1, 0xffffffff);
     this.startWave(1, true);
+  },
+
+  returnToMenu: function () {
+    this.resetRuntime();
+    state.mode = "menu";
+    spellbookPanel.hidden = true;
+    UISystem.syncStartPanel();
+    UISystem.updateHud();
   },
 
   resume: function () {
@@ -1411,6 +1526,8 @@ const RunSystem = Object.freeze({
     state.projectiles = [];
     state.enemyProjectiles = [];
     state.pendingCasts = [];
+    state.trialMarks = [];
+    state.nextTrialMarkAt = 5 * FPS;
     state.waveBannerText = definition.boss
       ? "ACT III · BOSS"
       : definition.guardian
@@ -1418,6 +1535,7 @@ const RunSystem = Object.freeze({
         : "ACT " + roman(definition.act) + " · WAVE " + wave;
     state.waveBannerTimer = WAVE_BANNER_DURATION;
     startPanel.hidden = true;
+    spellbookPanel.hidden = true;
     UISystem.hideRewrite();
     if (saveBoundary !== false) SaveSystem.setCheckpoint(checkpointFromState("wave"));
     SpawnSystem.spawnDue();
@@ -1488,6 +1606,9 @@ const RunSystem = Object.freeze({
         persistent.profile.bestTimeFrames = state.runElapsed;
       }
     }
+    if (startingSpellUnlocked(state.spell)) {
+      persistent.profile.selectedSpell = normalizeSpell(state.spell);
+    }
     persistent.checkpoint = null;
     SaveSystem.write();
     playSound(mode);
@@ -1515,6 +1636,78 @@ const UISystem = Object.freeze({
     hapticsButton.setAttribute("aria-pressed", String(settings.haptics));
   },
 
+  syncStartingSpell: function () {
+    const selected = normalizeSpell(persistent.profile.selectedSpell);
+    openingSpellIcon.dataset.form = selected.form;
+    openingSpellIcon.dataset.essence = selected.essence;
+    openingSpellIcon.dataset.law = selected.law;
+    openingSpellName.textContent = spellName(selected);
+    openingSpellRole.textContent = spellPartPromise("form", selected.form) + " · " +
+      spellPartPromise("essence", selected.essence) + " · " + spellPartPromise("law", selected.law);
+    const available = availableStartingSpellCount();
+    openingSpellAction.textContent = available > 1
+      ? "Tap to choose from " + available + " starting spells"
+      : "Prove rewrites to unlock starting spells";
+    spellbookButton.setAttribute("aria-label", "Starting spell: " + spellName(selected) + ". " +
+      spellRole(selected) + ". Open the Spellbook to choose another proven spell.");
+  },
+
+  syncSpellbookChoices: function () {
+    spellbookChoices.replaceChildren();
+    const selectedKey = spellKey(persistent.profile.selectedSpell);
+    for (const spell of ALL_SPELLS) {
+      const unlocked = startingSpellUnlocked(spell);
+      const button = document.createElement("button");
+      const icon = document.createElement("span");
+      const copy = document.createElement("span");
+      const name = document.createElement("strong");
+      const status = document.createElement("span");
+      button.className = "spellbook-choice";
+      button.type = "button";
+      button.disabled = !unlocked;
+      button.dataset.locked = String(!unlocked);
+      button.dataset.selected = String(unlocked && spellKey(spell) === selectedKey);
+      button.dataset.spell = spellKey(spell);
+      icon.className = "choice-spell-icon";
+      fillSpellIcon(icon, spell);
+      copy.className = "spellbook-choice-copy";
+      name.className = "spellbook-choice-name";
+      status.className = "spellbook-choice-state";
+      name.textContent = unlocked ? spellName(spell) : "Unproven Spell";
+      status.textContent = unlocked && spellKey(spell) === selectedKey ? "SELECTED" : unlocked ? "READY" : "FIND IN A TRIAL";
+      copy.append(name, status);
+      button.append(icon, copy);
+      button.setAttribute("aria-label", unlocked
+        ? spellName(spell) + ". " + spellRole(spell) + (spellKey(spell) === selectedKey ? ". Selected starting spell." : ". Choose as starting spell.")
+        : "Unproven spell. Rewrite during a Trial to discover it.");
+      if (unlocked) {
+        button.addEventListener("click", function () {
+          unlockAudio();
+          playSound("click");
+          triggerHaptic(18);
+          SaveSystem.selectStartingSpell(spell);
+          spellbookStatus.textContent = spellName(spell) + " will begin the next Trial.";
+          UISystem.syncStartingSpell();
+          UISystem.hideSpellbook();
+        });
+      }
+      spellbookChoices.append(button);
+    }
+  },
+
+  showSpellbook: function () {
+    if (state.mode !== "menu") return;
+    this.syncSpellbookChoices();
+    spellbookStatus.textContent = "Choose the starter or a proven spell. Locked spells are found by rewriting.";
+    startPanel.hidden = true;
+    spellbookPanel.hidden = false;
+  },
+
+  hideSpellbook: function () {
+    spellbookPanel.hidden = true;
+    if (state.mode === "menu") startPanel.hidden = false;
+  },
+
   syncStartPanel: function () {
     const checkpoint = normalizeCheckpoint(persistent.checkpoint);
     startPanel.hidden = state.mode !== "menu";
@@ -1527,8 +1720,9 @@ const UISystem = Object.freeze({
     } else {
       startStatus.textContent = "12 waves · Rewrite or hold · Every choice grows the spell";
     }
+    this.syncStartingSpell();
     spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length +
-      "/8 · Clear a wave with a NEW spell to prove it";
+      "/8 · Proven spells can start future Trials";
   },
 
   showRewrite: function (saveBoundary) {
@@ -1792,6 +1986,7 @@ function update() {
     EnemySystem.update();
     EnemySystem.updateProjectiles();
     SpellSystem.update();
+    TrialPressureSystem.update();
     EnemySystem.collectDefeated();
     RunSystem.update();
   }
@@ -1811,6 +2006,7 @@ function draw() {
   if (state.mode === "menu") {
     drawMage(W / 2, 390, false);
   } else {
+    drawTrialMarks();
     drawEnemyProjectiles();
     drawProjectiles();
     drawEnemies();
@@ -2162,6 +2358,39 @@ function drawBoss(enemy) {
   ctx.fillRect(x + 5, y + pulse, 5, 5);
 }
 
+function drawTrialMarks() {
+  for (const mark of state.trialMarks) {
+    const x = Math.round(mark.x);
+    const y = Math.round(mark.y);
+    const warning = mark.timer > 0;
+    const urgency = warning ? 1 - mark.timer / TRIAL_MARK_WARNING : 1;
+    ctx.save();
+    ctx.strokeStyle = warning ? "#ff6b6b" : "#fff0be";
+    ctx.fillStyle = mark.hit ? "rgba(255, 107, 107, 0.32)" : "rgba(255, 107, 107, 0.18)";
+    ctx.lineWidth = warning && mark.timer > 18 ? 1.5 : 3;
+    ctx.globalAlpha = warning ? 0.48 + urgency * 0.42 : Math.max(0, (mark.timer + TRIAL_MARK_BLAST) / TRIAL_MARK_BLAST);
+    if (warning) ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    ctx.arc(x, y, mark.radius, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    if (warning) {
+      const closingRadius = Math.max(4, mark.radius * (mark.timer / TRIAL_MARK_WARNING));
+      ctx.beginPath();
+      ctx.arc(x, y, closingRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillRect(x - 2, y - 2, 4, 4);
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, mark.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillRect(x - mark.radius, y - 2, mark.radius * 2, 4);
+      ctx.fillRect(x - 2, y - mark.radius, 4, mark.radius * 2);
+    }
+    ctx.restore();
+  }
+}
+
 function drawProjectiles() {
   for (const projectile of state.projectiles) {
     const essence = SPELL_PARTS.essences[projectile.essence];
@@ -2220,13 +2449,13 @@ function drawEndBanner() {
     drawText("TRIAL COMPLETE", W / 2, 194, 20, "#ffd166", "center");
     drawText("Time " + formatFrames(state.runElapsed) + " · Score " + state.score, W / 2, 229, 11, "#f3ead7", "center");
     drawText("Spellbook " + persistent.profile.discovered.length + "/8 proven", W / 2, 255, 11, "#9bf6ff", "center");
-    drawText("Tap to try a different build", W / 2, 285, 10, "#d9b8ff", "center");
+    drawText("Tap to choose your next spell", W / 2, 285, 10, "#d9b8ff", "center");
   }
   if (state.mode === "lose") {
     drawPanel(28, 164, 264, 140);
     drawText("THE SPELL UNRAVELS", W / 2, 202, 17, "#ff6b6b", "center");
     drawText("Reached Wave " + state.wave + " of " + TOTAL_WAVES, W / 2, 237, 12, "#f3ead7", "center");
-    drawText("Tap to try another rewrite", W / 2, 273, 10, "#9bf6ff", "center");
+    drawText("Tap to choose your next spell", W / 2, 273, 10, "#9bf6ff", "center");
   }
 }
 
@@ -2280,6 +2509,10 @@ function pauseForInterruption() {
 
 function handleNativeBackButton() {
   clearInput();
+  if (!spellbookPanel.hidden) {
+    UISystem.hideSpellbook();
+    return true;
+  }
   if (state.menuOpen) return false;
   if (state.mode === "playing" || state.mode === "upgrade") {
     UISystem.openMenu("back");
@@ -2295,9 +2528,9 @@ function handleStartAction() {
     if (persistent.checkpoint) RunSystem.resume();
     else RunSystem.startNew();
   } else if (state.mode === "win" || state.mode === "lose") {
-    playSound("wave");
+    playSound("click");
     triggerHaptic(18);
-    RunSystem.startNew();
+    RunSystem.returnToMenu();
   }
 }
 
@@ -2318,7 +2551,8 @@ window.addEventListener("keydown", function (event) {
   if (event.code === "Escape" || event.code === "KeyP") {
     event.preventDefault();
     playSound("click");
-    if (state.menuOpen) UISystem.closeMenu();
+    if (!spellbookPanel.hidden) UISystem.hideSpellbook();
+    else if (state.menuOpen) UISystem.closeMenu();
     else UISystem.openMenu("manual");
     return;
   }
@@ -2378,6 +2612,19 @@ startRunButton.addEventListener("click", function () {
   playSound("wave");
   triggerHaptic(18);
   RunSystem.startNew();
+});
+
+spellbookButton.addEventListener("click", function () {
+  unlockAudio();
+  playSound("click");
+  triggerHaptic(14);
+  UISystem.showSpellbook();
+});
+
+spellbookBackButton.addEventListener("click", function () {
+  unlockAudio();
+  playSound("click");
+  UISystem.hideSpellbook();
 });
 
 resumeRunButton.addEventListener("click", function () {

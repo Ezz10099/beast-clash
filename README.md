@@ -22,7 +22,7 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The correction was later reported as highly entertaining, with roughly 15 minutes of representative experimentation; fresh-player choice comprehension remains open.
 - Evidence build `0.2.0-representative.3` added the green 200-run automated matrix and CI report.
 - Text-heavy choice build `.4` failed immediate visual review. Compact visual `.5` passed the owner's SPCK review.
-- `0.2.0-representative.6` closed that observable loop and passed SPCK. `.7` removes the power penalty for rewriting: Hold and every rewrite now advance the same visible living-spell level, and 100 real choice-policy runs join the 200-build matrix.
+- `0.2.0-representative.6` closed that observable loop and passed SPCK. `.7` removed the rewrite power penalty and passed SPCK. `.8` adds readable movement pressure and lets every proven Spellbook combination become the next Trial's starting spell.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -38,7 +38,7 @@ The current working launch direction uses:
 - a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
 - light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
 
-The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The current choice loop shows the resulting spell, coming threat, transformation, combat effect, and shared spell growth. Full content and final assets still wait for the `.7` phone result, a later fresh-player cell, and the owner's second go/no-go.
+The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The current loop shows the resulting spell, coming threat, transformation, combat effect, shared spell growth, active dodge pressure, and a usable horizontal Spellbook. Full content and final assets still wait for the `.8` phone result, a later fresh-player cell, and the owner's second go/no-go.
 
 The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypothesis: engagement and clarity now decide the duration. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
 

@@ -84,6 +84,8 @@ export async function createHeadlessGame(options = {}) {
   canvas.releasePointerCapture = () => {};
 
   const startPanel = makeElement('startPanel');
+  const spellbookPanel = makeElement('spellbookPanel');
+  spellbookPanel.hidden = true;
   const resumeRunButton = makeElement('resumeRunButton');
   resumeRunButton.hidden = true;
   const upgradePanel = makeElement('upgradePanel');
@@ -100,6 +102,15 @@ export async function createHeadlessGame(options = {}) {
     ['#startPanel', startPanel],
     ['#startStatus', makeElement('startStatus')],
     ['#spellbookText', makeElement('spellbookText')],
+    ['#spellbookButton', makeElement('spellbookButton')],
+    ['#openingSpellIcon', makeElement('openingSpellIcon')],
+    ['#openingSpellName', makeElement('openingSpellName')],
+    ['#openingSpellRole', makeElement('openingSpellRole')],
+    ['#openingSpellAction', makeElement('openingSpellAction')],
+    ['#spellbookPanel', spellbookPanel],
+    ['#spellbookStatus', makeElement('spellbookStatus')],
+    ['#spellbookChoices', makeElement('spellbookChoices')],
+    ['#spellbookBackButton', makeElement('spellbookBackButton')],
     ['#resumeRunButton', resumeRunButton],
     ['#startRunButton', makeElement('startRunButton')],
     ['#upgradePanel', upgradePanel],

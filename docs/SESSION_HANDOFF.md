@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Independently find the undisclosed remaining issue after `.6` passed SPCK, correct the strongest verified player-logic failure, strengthen automation so it cannot miss the same class of problem, and leave one exact owner phone judgment before any fresh-player cell.
+Continue independent product development after `.7` passed SPCK: identify and correct the next player-agency failures, strengthen automation so passive play and cosmetic progression cannot look healthy, and leave one exact owner phone judgment before any fresh-player cell.
 
 ## Completed This Session
 
@@ -147,6 +147,17 @@ Independently find the undisclosed remaining issue after `.6` passed SPCK, corre
 - Ran `npm run check`: gameplay, equal-growth, migration, bundle, artwork, and Android checks passed; the release bundle is 79,285 runtime bytes.
 - Ran `npm run evidence`: 200 build runs recorded with 99% wins, 100 policy runs recorded with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% policy spread, and level 12 for every policy median. Result: GREEN.
 - Attempted independent browser visual validation, but the available cloud browser could not reach the private localhost preview. Automated responsive checks passed; target-phone visual feel remains the requested SPCK judgment.
+- Recorded the owner's SPCK pass for `.7`; equal spell growth no longer needs another isolated phone test.
+- Audited player participation and found that untouched Bolt · Ember · Split won 25/25 deterministic runs, typically taking only two damage events. Automatic casting and between-wave healing made the accepted movement control unnecessary.
+- Audited replay logic and found that the result screen's “different build” action silently restarted Bolt · Ember · Split. Spellbook discovery changed only a count and unlocked no playable possibility.
+- Added slow red Trial runes that visibly close on the mage's current position and deal damage only if the player remains inside; ordinary continuous movement escapes them.
+- Replaced the static opening-spell display with a compact Living Spellbook selector. The starter and every proven combination can begin a future Trial, locked entries remain silhouettes, and result-screen taps return to this choice instead of silently restarting.
+- Added save-version-3 migration for the selected starting spell while preserving all existing settings, records, discoveries, and checkpoints.
+- Expanded evidence with 25 idle controls, 25 simple-movement controls, trial-mark runtime caps, and 8/8 starting-spell payoff checks. Idle play must fail while simple and danger-aware movement remain viable.
+- Updated the representative build version to `0.2.0-representative.8`.
+- Ran `npm run check`: active clears, movement pressure, all 8 selectable Spellbook builds, migration, release bundle, Android artwork, and Android configuration passed; the release bundle is 87,967 runtime bytes.
+- Ran `npm run evidence`: 200 active build runs recorded with 99% wins, 100 choice-policy runs passed with a 5.8% spread, 25/25 idle controls lost, 25/25 simple-movement controls won, 8/8 replays matched, all 8 proven starting spells equipped correctly, and no runtime violation occurred. Result: GREEN.
+- Attempted a local 390×844 browser capture for `.8`, but the environment has no installed browser executable. Responsive markup/style checks pass; actual rune and Spellbook readability remain the exact SPCK phone judgment.
 
 ## Phone Validation Result
 
@@ -154,17 +165,17 @@ The user accepted the earlier gameplay/control, release-experience, web-release-
 
 The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5` and closed-loop `.6` passed the owner's SPCK review. `.7` has no phone result yet, so satisfying/visible spell growth remains pending human evidence.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5`, closed-loop `.6`, and equal-growth `.7` passed the owner's SPCK review. `.8` has no phone result yet, so rune readability/fairness and the starting-spell payoff remain pending human evidence.
 
 ## Current Development Objective
 
-Verify `0.2.0-representative.7` in one fresh-start SPCK run. Mix rewrites with Hold and judge one thing: does the spell clearly feel as though it grows while experimentation remains safe and tempting? Keep the fresh-player cell and full production blocked until this result.
+Verify `0.2.0-representative.8` in one consolidated SPCK pass: the red rune should make movement necessary without feeling unfair, and a proven spell should clearly become a selectable starting build. Keep the fresh-player cell and full production blocked until this result.
 
 ## Next Session Entry Point
 
-Read `AGENTS.md`, `docs/START_HERE.md`, D-013 and D-014 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, roadmap, and this handoff. The Product Compass and independent-development mandate are binding; exact scope is not.
+Read `AGENTS.md`, `docs/START_HERE.md`, D-013 through D-015 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, roadmap, and this handoff. The Product Compass and independent-development mandate are binding; exact scope is not.
 
-Pull `.7` in SPCK and start a new Trial. Use at least two rewrites and two Holds. Judge whether `LV` growth, larger/stronger spells, and equal growth make the living spell's evolution obvious without making Hold the hidden correct choice. Report only pass/fail and the first thing that breaks the promise. Do not recruit friends yet.
+Pull `.8` in SPCK. Start a Trial, wait for one red rune, and move out before it closes. Prove any rewritten spell, return to the start screen after the run, select that spell in the Living Spellbook, and confirm the next Trial begins with it. Report one pass/fail plus the first thing that feels unclear or unfair. Do not recruit friends yet.
 
 ## Verification
 
@@ -176,10 +187,10 @@ Run:
 
 Current expected result:
 
-`Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.`
+`Pixel Mage checks passed: 3 active clears, movement pressure, 8 selectable Spellbook builds, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (79285 runtime bytes).`
+`Release bundle checks passed (87967 runtime bytes).`
 
 `Android configuration checks passed.`
 
-`Pixel Mage evidence GREEN: 200 full runs, 99% wins, 9.3% build spread, 100 policy runs, 5.8% policy spread.`
+`Pixel Mage evidence GREEN: 200 full runs, 99% wins, 9% build spread, 100 policy runs, 5.8% policy spread, 0% idle wins.`

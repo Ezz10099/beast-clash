@@ -80,7 +80,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Status: Active planning rule
 - Decision: Complete one final focused research round, compare feasible capped options, and phone-time a representative full run before locking content-count or playtime claims.
 - Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
-- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49. Its correction received strong entertainment feedback; compact visual `.5` and closed-loop `.6` passed owner SPCK review. Incentive correction `.7`, fresh-player comprehension, and the second explicit go/no-go remain open.
+- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49. Its correction received strong entertainment feedback; compact visual `.5`, closed-loop `.6`, and incentive correction `.7` passed owner SPCK review. Agency correction `.8`, fresh-player comprehension, and the second explicit go/no-go remain open.
 - Change rule: The representative run must be phone-timed before duration or total-playtime claims are locked.
 
 
@@ -103,7 +103,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Date: July 13, 2026
 - Status: Locked workflow rule
 - Decision: Codex owns continuous automated evidence, targeted public-review mining, the evidence ledger, and recommendations about when a major human gate is ready. The owner coordinates short, asynchronous human cells only at explicit commercial gates and is not expected to provide friends on command.
-- Automated contract: Keep the fast `npm run check` suite and the full `npm run evidence` matrix in CI. The current contract is 8 builds × 25 seeds with real damage, 4 real choice policies × 25 seeds, and 8 deterministic replays, graded against runtime, survivability, build dominance, rewrite incentives, pacing, and feedback thresholds.
+- Automated contract: Keep the fast `npm run check` suite and the full `npm run evidence` matrix in CI. The current contract is 8 builds × 25 seeds with real damage, 4 real choice policies × 25 seeds, 25 idle controls, 25 simple-movement controls, 8 deterministic replays, and 8 starting-spell payoff checks, graded against runtime, survivability, active agency, build dominance, rewrite incentives, pacing, progression, and feedback thresholds.
 - Human boundary: Bot runs and text-schema checks must never be represented as proof of fun, comprehension, touch feel, replay desire, or commercial value.
 - Privacy boundary: Do not add analytics, accounts, network permissions, telemetry, or external SDKs for this workflow without separate owner approval.
 - Reason: The project needs objective, repeatable evidence without exhausting the owner or drifting away from solutions agreed in chat.
@@ -126,3 +126,12 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Evidence: The original fixed-build bots always took Support and therefore never tested the central choice. A new policy audit found median clears of 247 seconds for always-Support, 265 seconds for discovery-first, and 274 seconds for rewrite-only, with Support also ending ahead in damage, haste, health, and speed. After `.7`, 100 real policy runs passed with 99% wins, every policy reaching level 12, and only 5.8% median clear spread.
 - Reason: The game promised an evolving spell while generic Support supplied the actual vertical growth. That made ignoring the hook the rational strategy and turned Spellbook experimentation into a power tax.
 - Change rule: Future growth systems may replace spell levels, but engaging with the game's central expressive mechanic must not be systematically weaker than avoiding it.
+
+## D-015 — Playing and Discovering Must Change Outcomes
+
+- Date: July 13, 2026
+- Status: Active representative design decision
+- Decision: The automatic spell cannot complete the Trial while the player remains untouched. Combat must contain a slow, readable, avoidable movement check. A proven Spellbook combination must also become a usable starting spell, and the result screen must return to build selection instead of silently repeating the default.
+- Evidence: Before `.8`, the default Bolt won 25/25 deterministic idle runs with a median of only two damage events, while the “try a different build” action started Bolt · Ember · Split again and the Spellbook only changed a count. After `.8`, idle, simple-movement, active-build, and starting-spell payoff controls are permanent evidence gates.
+- Reason: One-thumb movement and horizontal discovery are part of the player promise. If neither action changes an outcome, the game can look complete while withholding actual agency and replay value.
+- Change rule: The exact hazard, UI, and unlock presentation may change, but active input must matter and discovery must unlock a different playable possibility rather than a cosmetic checklist entry.

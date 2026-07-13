@@ -72,4 +72,17 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Local automation: `npm run check` passed with a 79,285-byte release bundle. `npm run evidence` was **GREEN**: 200/200 build runs recorded with 99% wins, 100/100 policy runs recorded with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% policy spread, and level 12 for every policy median.
 - Research triangulation: MDA supports tracing mechanics into runtime dynamics rather than inspecting labels alone; meaningful-play theory requires outcomes to be both visible and integrated into the larger system; game-balance literature warns against dominant strategies; Mega Crit's published process supports decision-level telemetry alongside human feedback. These sources shaped the audit method, not the answer by themselves.
 - Boundary: the gate proves that configured rewrite behaviors are no longer systematically denied growth. It does not prove that spell growth feels satisfying or visually clear on the target phone.
-- Decision: request one consolidated owner SPCK pass on `.7`; if it passes, prepare the fresh-player cell and second explicit go/no-go.
+- Phone result: the owner passed `.7` in SPCK.
+- Decision: accept equal Hold/rewrite growth, then continue the independent player-logic audit before recruiting fresh players.
+
+## July 13, 2026 — Active Agency and Functional Discovery
+
+- Build: `0.2.0-representative.8`
+- Independent diagnosis: the default Bolt won 25/25 deterministic runs while the player never moved, with a median of two damage events. The result prompt also promised a different build but immediately restarted the default spell; Spellbook discovery only increased a count.
+- Player-logic failure: one-thumb movement and horizontal discovery were both advertised but optional. The game could complete without input, and collecting a spell unlocked no new playable start.
+- Implemented correction: add a slow red Trial rune that closes on the mage's current position and is escaped by moving; expose one compact Living Spellbook whose starter and proven combinations can be selected for the next Trial; return win/loss taps to that choice.
+- Save contract: version 3 preserves existing discoveries, settings, records, and checkpoints while validating the selected starting spell.
+- Evidence contract: retain 200 active build runs and 100 choice-policy runs; add 25 untouched idle controls, 25 simple continuous-movement controls, visible-rune runtime validation, and 8 starting-spell payoff checks.
+- Local automation: `npm run check` passed with an 87,967-byte offline bundle. The evidence gate remained **GREEN**: 99% active-build wins, 0% idle wins, 100% simple-movement wins, 8/8 selectable starting spells, 0 runtime violations, 9% build spread, 4.4% Form gap, and 5.8% choice-policy spread.
+- Boundary: automation proves that active input and discovery now change state and outcomes. It does not prove that the red warning feels readable/fair or that the Spellbook creates enough replay desire on a phone.
+- Decision: request one consolidated owner SPCK pass on rune fairness and starting-spell payoff before the fresh-player cell.

@@ -36,12 +36,17 @@
           <section id="startPanel" class="start-panel" aria-labelledby="startTitle">
             <p class="eyebrow">Representative Trial</p>
             <h2 id="startTitle">Move. Watch. Rewrite.</h2>
-            <p class="opening-guide">Drag to move and dodge. Your spell casts itself.</p>
-            <div
+            <p class="opening-guide">Drag away from red runes. Your spell casts itself.</p>
+            <button
+              id="spellbookButton"
               class="opening-spell"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="spellbookPanel"
               aria-label="Starting spell: Form Bolt hunts the marked enemy. Essence Ember burns. Law Split casts three copies."
             >
               <span
+                id="openingSpellIcon"
                 class="choice-spell-icon opening-spell-icon"
                 data-form="bolt"
                 data-essence="ember"
@@ -53,16 +58,31 @@
                 <i class="spell-shape"></i>
               </span>
               <span class="opening-spell-copy">
-                <strong>Bolt · Ember · Split</strong>
-                <span>hunts · burns · casts 3</span>
+                <strong id="openingSpellName">Bolt · Ember · Split</strong>
+                <span id="openingSpellRole">hunts · burns · casts 3</span>
+                <small id="openingSpellAction">Starting spell · open Spellbook</small>
               </span>
-            </div>
+            </button>
             <p id="startStatus" class="start-status">Rewrite or hold. Every choice grows the living spell.</p>
             <div class="start-actions">
               <button id="resumeRunButton" class="menu-primary" type="button" hidden>Resume Trial</button>
               <button id="startRunButton" class="menu-secondary" type="button">Start New Trial</button>
             </div>
-            <p id="spellbookText" class="spellbook-text">Spellbook 0/8 · Clear a wave with a NEW spell to prove it</p>
+            <p id="spellbookText" class="spellbook-text">Spellbook 0/8 · Proven spells can start future Trials</p>
+          </section>
+          <section
+            id="spellbookPanel"
+            class="spellbook-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="spellbookTitle"
+            hidden
+          >
+            <p class="eyebrow">Living Spellbook</p>
+            <h2 id="spellbookTitle">Choose your first spell</h2>
+            <p id="spellbookStatus" class="spellbook-status">The starter and proven spells can begin a Trial.</p>
+            <div id="spellbookChoices" class="spellbook-choices"></div>
+            <button id="spellbookBackButton" class="menu-secondary" type="button">Back</button>
           </section>
           <section id="upgradePanel" class="upgrade-panel" aria-labelledby="upgradeTitle" hidden>
             <p id="upgradeEyebrow" class="eyebrow">Wave Cleared</p>

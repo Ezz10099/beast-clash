@@ -245,6 +245,25 @@ Targeted sources were used to test the reasoning method:
 
 `0.2.0-representative.7` removes that contradiction. Support becomes Hold; every Hold or rewrite advances the same spell level; the level increases damage and cast rate and visibly enlarges the spell. The choice is now whether the coming threat justifies a different play style, not whether the player is willing to sacrifice vertical growth.
 
+## Independent Agency Audit — July 13, 2026
+
+After `.7` passed SPCK, the next audit tested whether the two accepted player actions—moving and discovering—changed outcomes. They did not. Bolt · Ember · Split won 25/25 deterministic runs with no pointer or keyboard input and a median of only two damage events. Separately, tapping the result prompt immediately started the default spell again; the Spellbook count did not unlock or equip anything.
+
+This is stronger local evidence than a genre analogy: the game promised one-thumb dodging and horizontal discovery while succeeding without either. Two bounded corrections were compared:
+
+1. Merely raising enemy health or damage could make the same passive interaction slower or harsher without creating a readable movement decision.
+2. A persistent currency or stat tree could reward collection, but would violate the no-grind direction and still leave discovered spell identities cosmetic.
+3. A slow position-targeted Trial mark directly asks for the accepted drag action, while selectable proven starting spells make the existing horizontal collection alter the next run. This was the chosen pair.
+
+The targeted comparable check supported presentation constraints rather than supplying the diagnosis:
+
+- Xbox Accessibility Guideline 114 recommends contextual information and realistic visual previews. The starting-spell control therefore shows the real Form shape, Essence color, and Law pattern instead of a separate text inventory: https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/114
+- The Game Accessibility Guidelines warn against flickering and repetitive high-contrast patterns. The Trial mark uses one steady outlined circle that visibly closes, then one brief non-flickering blast: https://gameaccessibilityguidelines.com/avoid-flickering-images-and-repetitive-patterns/
+- The developer-controlled *20 Minutes Till Dawn* listing explicitly presents unlocked characters and weapons as fresh build opportunities. Pixel Mage adopts only that horizontal payoff—new starting play styles—not its permanent-power progression: https://store.steampowered.com/app/1966900/20_Minutes_Till_Dawn/
+- Poncle's official *Vampire Survivors* FAQ confirms that a player's saved characters, weapons, and unlocks become selectable availability. This reinforces the narrow rule that an unlock should be usable, while Pixel Mage retains its own three-word spell identity: https://poncle.games/vs-online-faq
+
+`0.2.0-representative.8` implements the bounded correction. Red Trial runes force visible, avoidable movement; the starter and every proven combination can be selected for the next Trial; result taps return to that choice. Evidence now compares 25 idle controls against 25 simple continuous-movement controls in addition to the active matrices, and verifies all 8 starting spells. This does not prove phone readability, fairness, or sufficient long-term replay value; those remain the consolidated human question and later commercial gate.
+
 The strengthened gate adds 100 runs across always-Hold, mixed, discovery-first, and rewrite-only behaviors. Locally, those policies produced 99/100 wins, all reached level 12, and their median clear times stayed within 5.8%. This does not prove fun. It does prove that the automated system now exercises the promised mechanic and that experimentation no longer loses its growth budget.
 
 ## Research Stop Rule

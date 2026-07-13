@@ -59,7 +59,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - Compact visual build `0.2.0-representative.5` replaced the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge; the owner approved it in SPCK.
 - Player-logic build `0.2.0-representative.6` closed the observable choice loop and passed the owner's SPCK check.
 - Incentive build `0.2.0-representative.7` fixes the independently discovered power tax: Support no longer competes with rewriting, every rewrite or hold advances the same visible living-spell level, and automation now compares 100 real choice-policy runs in addition to the 200-build matrix.
-- Full launch content and final assets remain blocked on the `.7` phone result, one later fresh-player cell, and the second explicit go/no-go.
+- The owner passed `.7` in SPCK. A subsequent independent audit found that the default Bolt won 25/25 untouched runs and that the post-run “different build” promise silently restarted the same spell.
+- Agency build `0.2.0-representative.8` adds clearly telegraphed red Trial runes that require movement and turns proven Spellbook combinations into selectable starting spells.
+- Full launch content and final assets remain blocked on the `.8` phone result, one later fresh-player cell, and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -67,7 +69,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-Run one owner SPCK pass on `0.2.0-representative.7`: start fresh, mix rewrites with Hold, and judge whether the spell now feels like it grows without punishing experimentation. Do not recruit friends yet. If this passes, Codex prepares one consolidated fresh-player cell and the second explicit go/no-go.
+Run one consolidated owner SPCK pass on `0.2.0-representative.8`: confirm that a closing red rune is readable and fair to dodge, then prove a spell and verify that it can be selected as the next Trial's starting spell. Do not recruit friends yet. If this passes, Codex prepares one consolidated fresh-player cell and the second explicit go/no-go.
 
 ## Mandatory Session Protocol
 

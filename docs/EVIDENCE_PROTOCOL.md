@@ -26,22 +26,26 @@ The full gate first runs all 8 representative spell combinations across the same
 
 It then runs 100 additional real-damage trials from the same starting spell: 25 seeds each for always-Hold, mixed Hold/rewrite, discovery-first, and rewrite-only policies. Movement adapts to the current spell. This second matrix exists because fixed-build runs cannot detect whether the game quietly punishes players for engaging with rewriting.
 
+Finally, it runs 25 untouched idle controls and 25 simple continuous-movement controls. The idle controls must fail while ordinary movement remains viable; this catches a game whose automatic casting can win without the player. The gate also equips all 8 proven combinations as starting spells to prove that Spellbook discovery changes the next run rather than only increasing a counter.
+
 | Gate | Green | Yellow | Red |
 |---|---|---|---|
 | Matrix | All configured runs recorded | — | Missing run |
 | Runtime integrity | 0 timeouts, invalid states, or cap violations | — | Any violation |
 | Determinism | 8/8 replays match | — | Any mismatch |
 | Bot survivability | Every build wins at least 80% | 60–79.9% weakest build | Below 60% |
+| Movement agency | 0% idle wins, at least 80% simple-movement wins, and at least 80% danger-grid wins | Idle wins ≤10% and both movement controls win at least 60% | Worse |
 | Dominance proxy | Build median spread ≤20% and Form gap ≤15% | Spread ≤35% and Form gap ≤25% | Worse |
 | Rewrite incentive | Every policy wins at least 80%, median clear spread ≤20%, and all finish at level 12 | Every policy wins at least 60% and spread ≤35% | Worse |
 | Pacing proxy | Empty stretch stays inside authored arrival gap, no post-schedule wait, boss arrives within 9 seconds | At most 2 seconds over the authored gap, ≤0.5-second post-schedule wait, or ≤1-second boss overrun | Worse |
 | Choice feedback loop | 8/8 builds expose a compact resulting-spell visual, next-wave threat context, and post-tap transformation confirmation | — | Missing, verbose, or inconsistent loop |
+| Progression payoff | 8/8 proven spells can be selected and begin the next run equipped | — | Any proven spell is cosmetic or unusable |
 
 A red result fails CI. Yellow preserves the report and permits diagnosis, but cannot support a commercial gate recommendation by itself. Threshold changes require a reason in the evidence ledger; do not move them merely to turn a regression green.
 
 ## Interpretation Boundary
 
-Automation can support claims about termination, finite state, caps, deterministic outcomes, relative outcomes across the configured builds and choice policies, authored empty intervals, and whether required visual/context/confirmation states exist.
+Automation can support claims about termination, finite state, caps, deterministic outcomes, relative outcomes across the configured builds and choice policies, active-vs-idle outcomes, authored empty intervals, whether required visual/context/confirmation states exist, and whether a proven spell actually changes the next run's starting state.
 
 Automation cannot establish that a human understood the text, enjoyed the run, felt a choice was fair, wanted to replay, or received enough entertainment for the price. Those claims require human evidence and must remain labeled pending until collected.
 

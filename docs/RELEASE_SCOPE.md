@@ -88,7 +88,7 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 
 ## First Approved Implementation Batch — Representative Slice
 
-**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removes the power penalty for engaging with rewrites and awaits one consolidated phone pass. Full launch scaling still awaits that result, a later fresh-player cell, and the second owner go/no-go.
+**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removed the rewrite power penalty and passed SPCK. Agency build `.8` now closes two further contradictions: untouched Bolt could clear the Trial, and proven spells could not alter the next run. Full launch scaling still awaits the `.8` phone result, a later fresh-player cell, and the second owner go/no-go.
 
 Build this as one substantial related batch before producing the full launch content:
 
@@ -114,13 +114,17 @@ Build this as one substantial related batch before producing the full launch con
 - The follow-up closes the observable loop: it previews the actual next enemy mix before the rewrite, confirms the chosen transformation in the arena, keeps all three live effects visible, differentiates Ember/Frost and Split/Echo feedback, and states how a `NEW` spell becomes proven.
 - The `.6` phone result passed, but an independent incentive audit found that generic Support accumulated power while rewrites only sidegraded the spell. This made ignoring the central hook the rational route.
 - `.7` replaces Support with Hold and gives every choice the same visible spell-level growth. The choice remains about play style, not whether to accept an invisible power tax.
-- Full launch-content production remains blocked pending the `.7` phone result, one later fresh-player comprehension cell, and the second explicit go/no-go.
+- The owner passed `.7` in SPCK.
+- `.8` adds a slow, clearly telegraphed red Trial rune that punishes remaining stationary while ordinary movement escapes it; it also makes every proven Spellbook combination a selectable starting spell and returns the result screen to that selection instead of silently repeating the default build.
+- Full launch-content production remains blocked pending the `.8` phone result, one later fresh-player comprehension cell, and the second explicit go/no-go.
 
 ### Automated Evidence Contract
 
 - `npm run check` remains the fast development suite.
 - `npm run evidence` runs all 8 builds across 25 seeds with real damage, 100 additional runs across Hold/mixed/discovery-first/rewrite-only policies, and one deterministic replay per build. It grades runtime integrity, survivability, build dominance, rewrite incentives, pacing, and the compact feedback loop, then writes CI-uploaded reports.
 - The `.7` local result is green: 200/200 build runs recorded with 99% wins, 100 policy runs with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% choice-policy spread, no post-schedule waiting, and a 7-second boss arrival.
+- The `.8` gate adds 25 untouched idle controls, 25 simple-movement controls, and 8/8 starting-spell payoff checks. Idle Bolt must not clear, ordinary movement must remain viable, and every proven combination must begin equipped when selected.
+- The `.8` local result is green: 0/25 idle wins, 25/25 simple-movement wins, 99% active-build wins, 8/8 selectable starting spells, 0 runtime violations, 9% build spread, 4.4% Form gap, and 5.8% choice-policy spread.
 - This contract supports technical and balance judgments only. Human fun and understanding remain human gates under `docs/EVIDENCE_PROTOCOL.md`.
 
 ## Representative-Slice Acceptance Gate

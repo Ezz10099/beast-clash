@@ -16,6 +16,15 @@ for (const id of [
   'startPanel',
   'startStatus',
   'spellbookText',
+  'spellbookButton',
+  'openingSpellIcon',
+  'openingSpellName',
+  'openingSpellRole',
+  'openingSpellAction',
+  'spellbookPanel',
+  'spellbookStatus',
+  'spellbookChoices',
+  'spellbookBackButton',
   'resumeRunButton',
   'startRunButton',
   'upgradePanel',
@@ -42,13 +51,15 @@ for (const id of [
 assert.match(html, /class="choice-spell-icon opening-spell-icon"/);
 assert.match(html, /data-form="bolt"[\s\S]*data-essence="ember"[\s\S]*data-law="split"/);
 assert.match(html, /Bolt · Ember · Split/);
-assert.match(html, /Clear a wave with a NEW spell to prove it/);
-assert.match(html, /Drag to move and dodge\. Your spell casts itself/);
+assert.match(html, /The starter and proven spells can begin a Trial/);
+assert.match(html, /Drag away from red runes\. Your spell casts itself/);
 assert.doesNotMatch(html, /data-key=/, 'legacy touch buttons should not return');
 assert.match(css, /\.upgrade-choice\s*\{[\s\S]*?min-height: 58px/, 'choice cards should remain compact');
 assert.match(css, /\.choice-name\s*\{[\s\S]*?font-size: 0\.78rem/);
 assert.match(css, /\.choice-detail\s*\{[\s\S]*?font-size: 0\.64rem/);
 assert.match(css, /\.next-wave-preview\s*\{/);
+assert.match(css, /\.spellbook-choices\s*\{[\s\S]*?grid-template-columns: repeat\(2/);
+assert.match(css, /\.spellbook-choice\[data-selected="true"\]/);
 assert.match(css, /\.threat-icon\[data-kind="boss"\]/);
 for (const selector of [
   'data-form="bolt"',
@@ -82,12 +93,30 @@ const {
 assert.equal(evaluate('state.mode'), 'menu');
 assert.equal(startPanel.hidden, false);
 assert.equal(resumeRunButton.hidden, true);
-assert.equal(evaluate('persistent.version'), 2);
+assert.equal(evaluate('persistent.version'), 3);
 assert.equal(evaluate('persistent.profile.bestScore'), 321, 'legacy best score should migrate');
 assert.equal(evaluate('JSON.stringify(persistent.settings)'), '{"sound":true,"haptics":true}');
-assert.equal(JSON.parse(storage.get('pixel_mage_save_v2')).version, 2);
+assert.equal(JSON.parse(storage.get('pixel_mage_save_v2')).version, 3);
 assert.match(elements.get('#startStatus').textContent, /12 waves.*Every choice grows/i);
-assert.match(elements.get('#spellbookText').textContent, /Clear a wave with a NEW spell/);
+assert.match(elements.get('#spellbookText').textContent, /Proven spells can start future Trials/);
+assert.equal(elements.get('#openingSpellName').textContent, 'Bolt · Ember · Split');
+assert.match(elements.get('#openingSpellAction').textContent, /Prove rewrites/);
+
+elements.get('#spellbookButton').handlers.click();
+assert.equal(elements.get('#spellbookPanel').hidden, false);
+assert.equal(startPanel.hidden, true);
+assert.equal(elements.get('#spellbookChoices').children.length, 8);
+assert.equal(elements.get('#spellbookChoices').children.filter((button) => !button.disabled).length, 1);
+const defaultSpellbookCard = elements.get('#spellbookChoices').children.find((button) => button.dataset.spell === 'bolt|ember|split');
+assert.equal(defaultSpellbookCard.dataset.selected, 'true');
+assert.equal(defaultSpellbookCard.children[1].children[1].textContent, 'SELECTED');
+assert.equal(elements.get('#spellbookChoices').children.filter((button) => button.dataset.locked === 'true').length, 7);
+assert.equal(evaluate('window.PixelMageNative.handleBackButton()'), true, 'Android Back should close the Spellbook before exiting');
+assert.equal(elements.get('#spellbookPanel').hidden, true);
+elements.get('#spellbookButton').handlers.click();
+elements.get('#spellbookBackButton').handlers.click();
+assert.equal(elements.get('#spellbookPanel').hidden, true);
+assert.equal(startPanel.hidden, false);
 
 elements.get('#startRunButton').handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
@@ -109,6 +138,27 @@ assert.ok(evaluate('audioContext !== null'), 'the first gesture should unlock sy
 assert.ok(vibrations.length > 0, 'the first action should provide haptic feedback');
 canvas.handlers.pointerup({ pointerId: 1 });
 assert.equal(evaluate('pointerControl.active'), false);
+
+const hpBeforeSafeMark = evaluate('state.player.hp');
+evaluate(`
+  state.trialMarks = [];
+  state.player.invincible = 0;
+  TrialPressureSystem.spawn();
+  state.trialMarks[0].timer = 1;
+  state.player.x = clamp(state.trialMarks[0].x + TRIAL_MARK_RADIUS + 20, 20, W - 20);
+  TrialPressureSystem.update();
+`);
+assert.equal(evaluate('state.player.hp'), hpBeforeSafeMark, 'leaving a visible red rune should avoid its blast');
+evaluate(`
+  state.trialMarks = [];
+  state.player.invincible = 0;
+  TrialPressureSystem.spawn();
+  state.trialMarks[0].timer = 1;
+  TrialPressureSystem.update();
+`);
+assert.equal(evaluate('state.player.hp'), hpBeforeSafeMark - 1, 'standing inside a closing red rune should deal damage');
+assert.ok(evaluate('state.trialMarks[0].hit'), 'the rune should retain a brief visible hit result');
+assert.equal(evaluate('RUN_DEFINITION[0].cue'), 'RED RUNE = MOVE BEFORE IT CLOSES');
 
 const timeBeforePause = evaluate('state.time');
 elements.get('#menuButton').handlers.click();
@@ -287,7 +337,7 @@ const migratedV1 = JSON.parse(evaluate(`JSON.stringify(SaveSystem.migrate({
     spell: { form: "orbit", essence: "frost", law: "echo" }
   }
 }, {}))`));
-assert.equal(migratedV1.version, 2);
+assert.equal(migratedV1.version, 3);
 assert.equal(migratedV1.profile.bestScore, 987);
 assert.equal(migratedV1.settings.sound, false);
 assert.equal(migratedV1.checkpoint.wave, 6);
@@ -313,10 +363,36 @@ assert.equal(
   1,
   'migration should reject unknown Spellbook combinations',
 );
+assert.equal(
+  evaluate('spellKey(SaveSystem.migrate({ profile: { discovered: ["orbit|frost|echo"], selectedSpell: { form: "orbit", essence: "frost", law: "echo" } } }, {}).profile.selectedSpell)'),
+  'orbit|frost|echo',
+  'a proven selected starting spell should survive migration',
+);
+assert.equal(
+  evaluate('spellKey(SaveSystem.migrate({ profile: { selectedSpell: { form: "orbit", essence: "frost", law: "echo" } } }, {}).profile.selectedSpell)'),
+  'bolt|ember|split',
+  'an unproven selected spell should fall back safely',
+);
 
 const discoveriesBeforeLoss = evaluate('persistent.profile.discovered.length');
 evaluate('RunSystem.startNew(6060); state.spell = { form: "bolt", essence: "frost", law: "echo" }; RunSystem.finish("lose")');
 assert.equal(evaluate('persistent.profile.discovered.length'), discoveriesBeforeLoss, 'a spell should be proven by clearing a wave, not merely equipped before defeat');
+canvas.handlers.pointerdown({ clientX: 160, clientY: 240, pointerId: 9, preventDefault() {} });
+assert.equal(evaluate('state.mode'), 'menu', 'the end-screen tap should return to build selection instead of silently repeating the same run');
+assert.equal(startPanel.hidden, false);
+
+evaluate(`
+  SaveSystem.proveCombination({ form: "orbit", essence: "frost", law: "echo" });
+  UISystem.syncStartPanel();
+`);
+elements.get('#spellbookButton').handlers.click();
+const unlockedReplayCard = elements.get('#spellbookChoices').children.find((button) => button.dataset.spell === 'orbit|frost|echo');
+assert.equal(unlockedReplayCard.disabled, false, 'a proven spell should become a starting-build choice');
+unlockedReplayCard.handlers.click();
+assert.equal(evaluate('spellKey(persistent.profile.selectedSpell)'), 'orbit|frost|echo');
+assert.equal(elements.get('#openingSpellName').textContent, 'Orbit · Frost · Echo');
+elements.get('#startRunButton').handlers.click();
+assert.equal(evaluate('spellKey(state.spell)'), 'orbit|frost|echo', 'the selected proven spell should begin the next Trial equipped');
 
 for (const form of ['bolt', 'orbit']) {
   for (const essence of ['ember', 'frost']) {
@@ -472,6 +548,26 @@ evaluate(`
 assert.ok(evaluate('state.pendingCasts.length <= MAX_PENDING_CASTS'), 'pending Echo casts must remain capped');
 evaluate('draw()');
 
+const idleControl = JSON.parse(evaluate(`
+  JSON.stringify((function () {
+    RunSystem.startNew(515151);
+    state.spell = { ...DEFAULT_SPELL };
+    let frames = 0;
+    while (state.mode !== "win" && state.mode !== "lose" && frames < 18000) {
+      if (state.mode === "upgrade") {
+        upgradeChoices.children.find((button) => button.dataset.axis === "hold").handlers.click();
+      } else {
+        pointerControl.active = false;
+        update();
+      }
+      frames += 1;
+    }
+    return { mode: state.mode, wave: state.wave, frames };
+  })())
+`));
+assert.equal(idleControl.mode, 'lose', 'the default spell must not clear the Trial while the player never moves');
+assert.ok(idleControl.wave <= 3, 'the visible Trial pressure should expose idle play early');
+
 const buildResults = JSON.parse(evaluate(`
   JSON.stringify((function () {
     const builds = [
@@ -536,5 +632,5 @@ assert.ok(evaluate('persistent.profile.wins >= 3'));
 assert.ok(evaluate('persistent.profile.discovered.length >= 3'));
 
 process.stdout.write(
-  'Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.\n',
+  'Pixel Mage checks passed: 3 active clears, movement pressure, 8 selectable Spellbook builds, form balance, save migration, and stress limits.\n',
 );

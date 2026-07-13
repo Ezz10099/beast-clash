@@ -50,7 +50,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Treat the accepted one-minute five-wave build as a stable vertical slice, not a commercially finished game.
 - Preserve its validated controls, technical route, Android identity, and automated checks.
 - Living Spell Trials remains the current product direction because it has positive phone evidence, not because its old exact cap is untouchable.
-- Treat the implemented representative slice—one arena, one 12-wave run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, one elite behavior, one boss, checkpoint/resume, and expanded evidence—as the current test bed.
+- Treat the implemented representative slice—one arena, one 12-wave run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, one elite behavior, one boss, readable Trial-rune movement pressure, selectable proven starting spells, checkpoint/resume, and expanded evidence—as the current test bed.
 - Do not produce the remaining launch content or final assets until that slice passes its consolidated phone gate.
 - The 7–9-minute successful-run target, exact spell-word names/behaviors, balance, and final display title remain provisional until their listed gates pass.
 - Treat Pixel Mage as a working title. Do not change the display name or package ID without explicit owner approval.

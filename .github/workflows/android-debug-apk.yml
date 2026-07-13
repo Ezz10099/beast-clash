@@ -70,7 +70,7 @@ jobs:
       - name: Install pinned dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Run 200-run automated evidence gate
+      - name: Run automated evidence gate
         run: npm run evidence
 
       - name: Upload automated evidence

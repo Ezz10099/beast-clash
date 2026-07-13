@@ -88,6 +88,13 @@ const raw = JSON.parse(evaluate(`
         if (pathDistance < 25) score += (25 - pathDistance) ** 2 * 7;
       }
 
+      for (const mark of state.trialMarks) {
+        if (mark.timer <= 0) continue;
+        const distance = Math.hypot(x - mark.x, y - mark.y);
+        const dangerRadius = mark.radius + 12;
+        if (distance < dangerRadius) score += (dangerRadius - distance) ** 2 * 18;
+      }
+
       if (target) {
         const targetDistance = Math.hypot(x - target.x, y - target.y);
         if (build.form === 'orbit') {
@@ -158,6 +165,7 @@ const raw = JSON.parse(evaluate(`
       for (const enemy of state.enemies) values.push(enemy.x, enemy.y, enemy.hp, enemy.speed);
       for (const projectile of state.projectiles) values.push(projectile.x, projectile.y, projectile.life, projectile.damage);
       for (const shot of state.enemyProjectiles) values.push(shot.x, shot.y, shot.life, shot.vx, shot.vy);
+      for (const mark of state.trialMarks) values.push(mark.x, mark.y, mark.radius, mark.timer);
       return values.every(Number.isFinite);
     }
 
@@ -175,11 +183,12 @@ const raw = JSON.parse(evaluate(`
       return hold;
     }
 
-    function simulate(build, seed, buildIndex, policy) {
+    function simulate(build, seed, buildIndex, policy, movementPolicy) {
       resetRandom(seed, buildIndex);
       RunSystem.startNew(seed);
       state.spell = { ...build };
       const choicePolicy = policy || 'hold';
+      const movement = movementPolicy || 'active';
       const seenSpells = new Set([spellKey(state.spell)]);
       const choicesMade = { hold: 0, rewrite: 0 };
       let decisionIndex = 0;
@@ -198,7 +207,7 @@ const raw = JSON.parse(evaluate(`
       let bossWaitFrames = null;
       let waveStartedAt = 0;
       const waveDurations = [];
-      const maxima = { enemies: 0, projectiles: 0, enemyProjectiles: 0, pendingCasts: 0, sparks: 0 };
+      const maxima = { enemies: 0, projectiles: 0, enemyProjectiles: 0, pendingCasts: 0, trialMarks: 0, sparks: 0 };
 
       while (state.mode !== 'win' && state.mode !== 'lose' && frames < MAX_RUN_FRAMES) {
         if (state.mode === 'upgrade') {
@@ -217,7 +226,13 @@ const raw = JSON.parse(evaluate(`
           continue;
         }
 
-        if (frames % DECISION_GAP === 0) chooseDestination(state.spell, frames, seed);
+        if (movement === 'active' && frames % DECISION_GAP === 0) chooseDestination(state.spell, frames, seed);
+        if (movement === 'idle') pointerControl.active = false;
+        if (movement === 'patrol') {
+          pointerControl.active = true;
+          pointerControl.x = clamp(W / 2 + Math.cos(frames / 165) * 105, 20, W - 20);
+          pointerControl.y = clamp((H + 50) / 2 + Math.sin(frames / 145) * 150, 76, H - 34);
+        }
         const waveBefore = state.wave;
         update();
 
@@ -253,6 +268,7 @@ const raw = JSON.parse(evaluate(`
         maxima.projectiles = Math.max(maxima.projectiles, state.projectiles.length);
         maxima.enemyProjectiles = Math.max(maxima.enemyProjectiles, state.enemyProjectiles.length);
         maxima.pendingCasts = Math.max(maxima.pendingCasts, state.pendingCasts.length);
+        maxima.trialMarks = Math.max(maxima.trialMarks, state.trialMarks.length);
         maxima.sparks = Math.max(maxima.sparks, state.sparks.length);
 
         if (!finiteRuntime()) invalidFrames += 1;
@@ -260,6 +276,7 @@ const raw = JSON.parse(evaluate(`
           state.projectiles.length > MAX_PROJECTILES ||
           state.enemyProjectiles.length > MAX_ENEMY_PROJECTILES ||
           state.pendingCasts.length > MAX_PENDING_CASTS ||
+          state.trialMarks.length > MAX_TRIAL_MARKS ||
           state.sparks.length > MAX_SPARKS
         ) capViolations += 1;
 
@@ -272,6 +289,7 @@ const raw = JSON.parse(evaluate(`
       return {
         build: build.form + '|' + build.essence + '|' + build.law,
         policy: choicePolicy,
+        movement,
         seed,
         mode: state.mode,
         finalWave: state.wave,
@@ -382,12 +400,31 @@ const raw = JSON.parse(evaluate(`
       for (const seed of config.seeds) policyRuns.push(simulate(startingBuild, seed, 0, policy));
     }
 
+    const idleRuns = config.seeds.map(function (seed) {
+      return simulate(startingBuild, seed, 0, 'hold', 'idle');
+    });
+    const patrolRuns = config.seeds.map(function (seed) {
+      return simulate(startingBuild, seed, 0, 'hold', 'patrol');
+    });
+
     const determinism = [];
     for (let buildIndex = 0; buildIndex < config.builds.length; buildIndex += 1) {
       const original = runs[buildIndex * config.seeds.length];
       const replay = simulate(config.builds[buildIndex], config.seeds[0], buildIndex, 'hold');
       determinism.push({ build: original.build, matches: fingerprint(original) === fingerprint(replay) });
     }
+
+    const progressionContracts = config.builds.map(function (build, buildIndex) {
+      const key = spellKey(build);
+      if (!persistent.profile.discovered.includes(key)) persistent.profile.discovered.push(key);
+      const selected = SaveSystem.selectStartingSpell(build);
+      RunSystem.startNew(88000 + buildIndex);
+      return {
+        build: key,
+        selectable: selected,
+        startsEquipped: spellKey(state.spell) === key,
+      };
+    });
 
     const authoredArrivalGaps = RUN_DEFINITION.flatMap(function (wave) {
       let previous = 0;
@@ -401,8 +438,11 @@ const raw = JSON.parse(evaluate(`
     return {
       runs,
       policyRuns,
+      idleRuns,
+      patrolRuns,
       determinism,
       choiceContracts,
+      progressionContracts,
       pacingContract: {
         maxAuthoredArrivalGapFrames: Math.max(...authoredArrivalGaps),
         bossArrivalLimitFrames: 9 * FPS,
@@ -432,12 +472,14 @@ function round(value, digits = 2) {
 
 function summarizeRuns(runs) {
   const wins = runs.filter((run) => run.mode === 'win');
+  const medianClearFrames = median(wins.map((run) => run.elapsedFrames));
+  const p95ClearFrames = percentile(wins.map((run) => run.elapsedFrames), 95);
   return {
     runs: runs.length,
     wins: wins.length,
     winRate: round(wins.length / runs.length, 3),
-    medianClearSeconds: round(median(wins.map((run) => run.elapsedFrames)) / 60),
-    p95ClearSeconds: round(percentile(wins.map((run) => run.elapsedFrames), 95) / 60),
+    medianClearSeconds: medianClearFrames === null ? null : round(medianClearFrames / 60),
+    p95ClearSeconds: p95ClearFrames === null ? null : round(p95ClearFrames / 60),
     medianDamageHits: round(median(runs.map((run) => run.damageHits)), 1),
     p95IdleShare: round(percentile(runs.map((run) => run.idleFrames / Math.max(1, run.elapsedFrames)), 95), 3),
     maxIdleSeconds: round(Math.max(...runs.map((run) => run.maxIdleStreak)) / 60),
@@ -453,6 +495,8 @@ const byForm = Object.fromEntries(['bolt', 'orbit'].map((form) => [
   summarizeRuns(raw.runs.filter((run) => run.build.startsWith(`${form}|`))),
 ]));
 const overall = summarizeRuns(raw.runs);
+const idle = summarizeRuns(raw.idleRuns);
+const patrol = summarizeRuns(raw.patrolRuns);
 const byPolicy = Object.fromEntries(['hold', 'mixed', 'explore', 'rewrite'].map((policy) => {
   const runs = raw.policyRuns.filter((run) => run.policy === policy);
   return [policy, {
@@ -475,13 +519,14 @@ const policyClearSpread = Math.max(...policyClearMedians) / Math.min(...policyCl
 const minimumPolicyWinRate = Math.min(...Object.values(byPolicy).map((summary) => summary.winRate));
 const minimumFinalSpellLevel = Math.min(...Object.values(byPolicy).map((summary) => summary.medianFinalSpellLevel));
 
-const allRuns = [...raw.runs, ...raw.policyRuns];
+const allRuns = [...raw.runs, ...raw.policyRuns, ...raw.idleRuns, ...raw.patrolRuns];
 const counts = {
   timeouts: allRuns.filter((run) => run.timedOut).length,
   invalidRuns: allRuns.filter((run) => run.invalidFrames > 0).length,
   capViolationRuns: allRuns.filter((run) => run.capViolations > 0).length,
   deterministicReplays: raw.determinism.filter((entry) => entry.matches).length,
   choiceContracts: raw.choiceContracts.filter((entry) => entry.complete).length,
+  progressionContracts: raw.progressionContracts.filter((entry) => entry.selectable && entry.startsEquipped).length,
 };
 const pacing = {
   longestEmptySeconds: round(Math.max(...raw.runs.map((run) => run.maxIdleStreak)) / 60),
@@ -517,6 +562,17 @@ const gates = [
     evidence: `${round(overall.winRate * 100, 1)}% overall · ${round(minimumBuildWinRate * 100, 1)}% weakest build`,
   },
   {
+    id: 'active-agency',
+    title: 'Movement must matter',
+    status: raw.idleRuns.length === seedsPerBuild && raw.patrolRuns.length === seedsPerBuild &&
+      idle.winRate === 0 && patrol.winRate >= 0.8 && overall.winRate >= 0.8
+      ? 'pass'
+      : idle.winRate <= 0.1 && patrol.winRate >= 0.6 && overall.winRate >= 0.6 ? 'warn' : 'fail',
+    evidence: `${raw.idleRuns.length} idle / ${raw.patrolRuns.length} simple-movement controls · ` +
+      `${round(idle.winRate * 100, 1)}% idle wins · ${round(patrol.winRate * 100, 1)}% simple-movement wins · ` +
+      `${round(overall.winRate * 100, 1)}% danger-grid wins`,
+  },
+  {
     id: 'dominance',
     title: 'Dominant-build screen',
     status: clearSpread <= 0.2 && maximumFormGap <= 0.15 ? 'pass' : clearSpread <= 0.35 && maximumFormGap <= 0.25 ? 'warn' : 'fail',
@@ -550,6 +606,12 @@ const gates = [
     status: counts.choiceContracts === builds.length ? 'pass' : 'fail',
     evidence: `${counts.choiceContracts}/${builds.length} builds expose a compact result, next-threat context, and post-tap transformation feedback`,
   },
+  {
+    id: 'progression-payoff',
+    title: 'Spellbook changes the next run',
+    status: counts.progressionContracts === builds.length ? 'pass' : 'fail',
+    evidence: `${counts.progressionContracts}/${builds.length} proven spells can be selected and start equipped`,
+  },
 ];
 
 const status = gates.some((gate) => gate.status === 'fail')
@@ -558,7 +620,7 @@ const status = gates.some((gate) => gate.status === 'fail')
 
 const generatedAt = new Date().toISOString();
 const report = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   generatedAt,
   gameVersion: packageJson.version,
   status,
@@ -567,16 +629,20 @@ const report = {
     seedsPerBuild,
     fullRuns: raw.runs.length,
     policyRuns: raw.policyRuns.length,
+    idleRuns: raw.idleRuns.length,
+    patrolRuns: raw.patrolRuns.length,
     replayRuns: raw.determinism.length,
-    botPolicy: 'deterministic danger-grid movement across hold, mixed, discovery-first, and rewrite-only choice policies',
+    botPolicy: 'visible-danger-grid choice policies plus untouched idle and simple continuous-movement control runs',
   },
   gates,
-  summary: { overall, byForm, byBuild, byPolicy, pacing },
+  summary: { overall, idle, patrol, byForm, byBuild, byPolicy, pacing },
   automatedClaims: [
     'runtime termination, finite state, and hard collection caps',
     'seeded replay determinism',
     'relative build outcomes under one fixed movement policy',
     'survival and clear-time outcomes across four real rewrite/hold policies',
+    'active movement survives while untouched idle controls do not clear the Trial',
+    'proven Spellbook combinations can equip the next run',
     'empty-arena pacing and clear-time proxies',
     'compact resulting-spell visual, next-threat context, and post-tap transformation-feedback schema',
   ],
@@ -600,7 +666,7 @@ const markdown = `# Pixel Mage Automated Evidence\n\n` +
   `- Result: **${status.toUpperCase()}**\n` +
   `- Version: \`${packageJson.version}\`\n` +
   `- Generated: ${generatedAt}\n` +
-  `- Matrix: ${raw.runs.length} build runs + ${raw.policyRuns.length} choice-policy runs + ${raw.determinism.length} deterministic replays\n\n` +
+  `- Matrix: ${raw.runs.length} build runs + ${raw.policyRuns.length} choice-policy runs + ${raw.idleRuns.length} idle controls + ${raw.patrolRuns.length} simple-movement controls + ${raw.determinism.length} deterministic replays\n\n` +
   `## Gates\n\n| Result | Gate | Evidence |\n|---|---|---|\n${gateRows.join('\n')}\n\n` +
   `## Build Outcomes\n\n| Build | Wins | Median clear (s) | Median hits taken | Longest empty stretch (s) |\n|---|---:|---:|---:|---:|\n${tableRows.join('\n')}\n\n` +
   `## Choice-Policy Outcomes\n\n| Policy | Wins | Median clear (s) | Median hits | Rewrites | Unique spells | Final level |\n|---|---:|---:|---:|---:|---:|---:|\n${policyRows.join('\n')}\n\n` +
@@ -615,7 +681,7 @@ await Promise.all([
 process.stdout.write(
   `Pixel Mage evidence ${status.toUpperCase()}: ${raw.runs.length} full runs, ${round(overall.winRate * 100, 1)}% wins, ` +
   `${round(clearSpread * 100, 1)}% build spread, ${raw.policyRuns.length} policy runs, ` +
-  `${round(policyClearSpread * 100, 1)}% policy spread.\n`,
+  `${round(policyClearSpread * 100, 1)}% policy spread, ${round(idle.winRate * 100, 1)}% idle wins.\n`,
 );
 process.stdout.write(`Reports: artifacts/evidence/evidence-report.{json,md}\n`);
 
