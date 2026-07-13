@@ -102,6 +102,35 @@ assert.match(elements.get('#spellbookText').textContent, /Proven spells can star
 assert.equal(elements.get('#openingSpellName').textContent, 'Bolt · Ember · Split');
 assert.match(elements.get('#openingSpellAction').textContent, /Prove rewrites/);
 
+const normalSaveBeforeFreshCell = storage.get('pixel_mage_save_v2');
+const freshCell = await createHeadlessGame({
+  search: '?fresh=gate-a',
+  storageEntries: [
+    ...storage.entries(),
+    ['pixel_mage_best_score_v1', '9999'],
+    ['pixel_mage_settings_v1', JSON.stringify({ sound: false, haptics: false })],
+  ],
+});
+assert.equal(freshCell.evaluate('FRESH_CELL_TOKEN'), 'gate-a');
+assert.equal(freshCell.evaluate('SAVE_KEY'), 'pixel_mage_fresh_cell_gate-a_v3');
+assert.equal(freshCell.evaluate('persistent.profile.bestScore'), 0, 'a fresh cell must not inherit owner progress');
+assert.equal(freshCell.evaluate('persistent.profile.discovered.length'), 0);
+assert.equal(freshCell.evaluate('persistent.settings.sound'), true, 'a fresh cell must not migrate legacy settings');
+assert.equal(freshCell.storage.get('pixel_mage_save_v2'), normalSaveBeforeFreshCell, 'fresh-cell writes must preserve the normal save');
+freshCell.elements.get('#startRunButton').handlers.click();
+assert.equal(JSON.parse(freshCell.storage.get('pixel_mage_fresh_cell_gate-a_v3')).checkpoint.wave, 1);
+const reloadedFreshCell = await createHeadlessGame({
+  search: '?fresh=gate-a',
+  storageEntries: [...freshCell.storage.entries()],
+});
+assert.equal(reloadedFreshCell.evaluate('persistent.checkpoint.wave'), 1, 'a fresh-cell reload should preserve its checkpoint');
+const secondFreshCell = await createHeadlessGame({
+  search: '?fresh=gate-b',
+  storageEntries: [...freshCell.storage.entries()],
+});
+assert.equal(secondFreshCell.evaluate('persistent.profile.bestScore'), 0, 'each fresh token must create an independent profile');
+assert.equal(secondFreshCell.evaluate('persistent.checkpoint'), null);
+
 elements.get('#spellbookButton').handlers.click();
 assert.equal(elements.get('#spellbookPanel').hidden, false);
 assert.equal(startPanel.hidden, true);

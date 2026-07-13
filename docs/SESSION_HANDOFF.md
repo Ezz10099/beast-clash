@@ -9,13 +9,14 @@
 - Release contract: `docs/RELEASE_SCOPE.md`
 - Durable decisions: `docs/DECISIONS.md`
 - Design evidence: `docs/DESIGN_RESEARCH.md`
+- Fresh-player gate: `docs/FRESH_PLAYER_CELL.md`
 - Scope decision packet: `docs/SCOPE_OPTIONS.md`
 - Roadmap: `docs/ROADMAP.md`
 - Publishing path: `docs/GOOGLE_PLAY.md`
 
 ## Current Session Goal
 
-Continue independent product development after `.7` passed SPCK: identify and correct the next player-agency failures, strengthen automation so passive play and cosmetic progression cannot look healthy, and leave one exact owner phone judgment before any fresh-player cell.
+Apply the goal-driven model after `.8` passed SPCK, decide whether another product blocker justifies code, and make the strongest remaining commercial question reproducible at the correct human evidence level.
 
 ## Completed This Session
 
@@ -158,6 +159,15 @@ Continue independent product development after `.7` passed SPCK: identify and co
 - Ran `npm run check`: active clears, movement pressure, all 8 selectable Spellbook builds, migration, release bundle, Android artwork, and Android configuration passed; the release bundle is 87,967 runtime bytes.
 - Ran `npm run evidence`: 200 active build runs recorded with 99% wins, 100 choice-policy runs passed with a 5.8% spread, 25/25 idle controls lost, 25/25 simple-movement controls won, 8/8 replays matched, all 8 proven starting spells equipped correctly, and no runtime violation occurred. Result: GREEN.
 - Attempted a local 390×844 browser capture for `.8`, but the environment has no installed browser executable. Responsive markup/style checks pass; actual rune and Spellbook readability remain the exact SPCK phone judgment.
+- Reconstructed the clean newcomer journey from opening through result and compared content scaling, another speculative tutorial/reward patch, and a direct fresh-player cell.
+- Chose the cell because automation, targeted research, and the owner-aware phone passes have reached their honest boundary: they cannot establish newcomer comprehension, experienced boredom/fairness, climax satisfaction, or replay desire.
+- Added unique `?fresh=` test tokens. Each token starts from an isolated local profile, preserves its own reload checkpoint, ignores legacy progress/settings, and cannot overwrite the owner's normal save.
+- Added fast checks proving two fresh tokens remain independent while normal owner progress is preserved.
+- Added `docs/FRESH_PLAYER_CELL.md` with one non-leading script, exact observations and questions, pre-registered predictions, result template, and GO/revision/no-go conditions.
+- Updated the development model's dependent memory: start guide, agent guide, scope, decisions, evidence protocol/ledger, research, roadmap, README, Google Play status, and this handoff.
+- Updated the representative build version to `0.2.0-representative.9`; normal gameplay and the accepted `.8` phone behavior are unchanged.
+- Ran `npm run check`: fresh-token isolation, normal-save preservation, gameplay, bundle, artwork, and Android checks passed; the offline bundle is 88,240 bytes.
+- Ran `npm run evidence`: 200 active build runs remained at 99% wins with 9% build spread, 100 policy runs held a 5.8% spread, idle wins remained 0%, simple-movement wins remained 100%, all replays and starting-spell checks passed, and no runtime violation occurred. Result: GREEN.
 
 ## Phone Validation Result
 
@@ -169,13 +179,13 @@ After the correction, the owner reported being very happy and finding the game e
 
 ## Current Development Objective
 
-Apply `docs/DEVELOPMENT_MODEL.md` to the complete representative slice. Confirm the strongest remaining question, prepare the prediction and evidence packet for one consolidated fresh-player cell, and use that cell to support the second explicit go/no-go. Keep full production blocked until the decision.
+Run one genuinely fresh participant through `docs/FRESH_PLAYER_CELL.md`, return the completed result record, compare it with the pre-registered predictions, and obtain the owner's second explicit go/no-go. Keep full production blocked until that decision.
 
 ## Next Session Entry Point
 
 Read `AGENTS.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, D-013 through D-016 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, roadmap, and this handoff. The Product Compass and goal-to-code development model are binding; exact mechanics and scope are not.
 
-`.8` passed SPCK. Apply the full model to the current game rather than mechanically executing the old checklist: reconstruct the player journey, identify the strongest remaining Product-Compass risk, compare alternatives with public-human, synthetic, creative, and production evidence, and choose the strongest bounded next step. If the representative slice is genuinely ready, prepare one consolidated fresh-player cell with predictions and stop conditions; otherwise close the better-supported blocker first. Do not scale full content before the second go/no-go.
+`.8` passed SPCK and `.9` prepared the clean human gate. Use a unique `?fresh=` token, do not coach or change the frozen questions during the cell, and return the completed record. Calibrate predictions against the result before recommending GO, bounded revision, or rethink. Do not scale full content before the second go/no-go.
 
 ## Verification
 
@@ -189,7 +199,7 @@ Current expected result:
 
 `Pixel Mage checks passed: 3 active clears, movement pressure, 8 selectable Spellbook builds, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (87967 runtime bytes).`
+`Release bundle checks passed (88240 runtime bytes).`
 
 `Android configuration checks passed.`
 

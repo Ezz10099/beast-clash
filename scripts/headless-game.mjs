@@ -148,9 +148,11 @@ export async function createHeadlessGame(options = {}) {
     },
     navigator: { vibrate: (pattern) => vibrations.push(pattern) },
     requestAnimationFrame: () => 0,
+    URLSearchParams,
     window: {
       AudioContext: FakeAudioContext,
       addEventListener: (type, handler) => windowHandlers.set(type, handler),
+      location: { search: options.search || '' },
     },
   };
 

@@ -20,7 +20,7 @@ GitHub Actions is only the cloud computer that performs builds. It replaces rout
 - Capacitor Android project: complete.
 - First cloud debug APK: built successfully.
 - Native APK acceptance: complete on July 13, 2026; the current build is now treated as a validated vertical slice.
-- Commercial launch scope: Living Spell Trials is locked. The first 5:49 representative phone run exposed comprehension, pacing, and Orbit-balance blockers; the automated correction is complete, while consolidated phone acceptance and the second go/no-go remain pending.
+- Commercial direction: Living Spell Trials remains evidence-supported, while its exact old cap is revisable. The corrected representative slice passed owner phone review through `.8`; `.9` prepared the clean fresh-player cell. That cell and the second go/no-go remain pending before launch scaling.
 - Monetization and privacy decisions: pending.
 - Release signing and AAB: pending.
 - Play Console setup, store listing, and testing: pending.

@@ -68,6 +68,8 @@ The owner is not expected to have testers available on command. Codex must conti
 
 Before opening a human cell, record predictions for comprehension, enjoyment, boredom, fairness, replay motivation, and the likely first failure moment. After the result, compare those predictions with reality and add every reusable miss to `docs/EVIDENCE_LEDGER.md`.
 
+The current representative-slice cell is fully specified in `docs/FRESH_PLAYER_CELL.md`. Use a unique `?fresh=` token for each participant so owner progress and earlier test progress cannot contaminate the result. Do not alter its questions, coaching boundary, or stop conditions during the cell; record any needed revision afterward.
+
 ## Session Rule
 
 Every meaningful gameplay or commercial session must read this protocol, preserve the latest stable conclusion in the ledger, and update the roadmap and handoff. A future agent may improve the harness, but may not silently skip it or substitute bot results for people.

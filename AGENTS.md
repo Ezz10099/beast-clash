@@ -9,12 +9,13 @@ Pixel Mage is the only active game in this repository. Read these files before m
 3. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
 4. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
 5. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
-6. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
-7. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
-8. `docs/ROADMAP.md` — measurable roadmap through Google Play.
-9. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-10. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
-11. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+6. `docs/FRESH_PLAYER_CELL.md` — exact clean setup, non-leading questions, predictions, and commercial stop conditions.
+7. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
+8. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
+9. `docs/ROADMAP.md` — measurable roadmap through Google Play.
+10. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
+11. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+12. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
 The final product goal and player promise in the Product Compass are authoritative. Everything else—scope details, mechanics, counts, process, and earlier decisions—is a revisable working hypothesis when evidence shows a better route to that goal. Apply `docs/DEVELOPMENT_MODEL.md` to every material decision: the goal must actively shape the intended experience, alternatives, code, evidence, and learning. Do not wait for the owner to identify problems or invent patches.
 

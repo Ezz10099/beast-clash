@@ -285,6 +285,22 @@ Design conclusion: no single source supplies human intuition. The strongest nonh
 
 The strengthened gate adds 100 runs across always-Hold, mixed, discovery-first, and rewrite-only behaviors. Locally, those policies produced 99/100 wins, all reached level 12, and their median clear times stayed within 5.8%. This does not prove fun. It does prove that the automated system now exercises the promised mechanic and that experimentation no longer loses its growth budget.
 
+## Fresh-Player Gate Readiness Audit — July 13, 2026
+
+The complete `.8` journey was re-read from a clean newcomer state: opening promise → first movement/rune → automatic casting → first rewrite → visible transformation → act escalation → boss → proof → next starting spell. Source inspection and the green behavioral matrix found no remaining technical or incentive contradiction strong enough to justify another speculative gameplay patch before fresh evidence.
+
+Three bounded routes were compared:
+
+1. **Scale content now:** could increase apparent value, but would multiply an unproven comprehension/replay loop and violate the commercial gate.
+2. **Add more tutorial or reward UI:** might treat the predicted failure, but would optimize against designer assumptions after compact `.5` already showed that more explanation can make the phone experience worse.
+3. **Run one clean, non-leading cell:** directly distinguishes newcomer comprehension, experienced pacing/fairness, climax, and replay desire—the exact claims automation and owner familiarity cannot establish. This is the chosen route.
+
+The cell needed one technical safeguard. An owner save can expose proven spells, records, and a selected build before a newcomer acts. `0.2.0-representative.9` therefore accepts a bounded `?fresh=` token and writes that session to an isolated local save. Each token starts clean, reload checkpoints remain available, no data leaves the device, and the owner's normal profile is unchanged.
+
+`docs/FRESH_PLAYER_CELL.md` freezes the setup, coaching boundary, observation record, eight post-play questions, predictions, and GO/revision/no-go conditions. The likely first failure remains the first rewrite: understanding one-word change, complete-result preview, and equal growth. Frost/Echo noticeability, middle-act repetition, overlapping pressure, and specific second-build curiosity are the other pre-registered risks.
+
+Decision: stop speculative changes and broad research. The cheapest discriminating experiment is now human. Full content remains blocked until the cell is recorded and the owner gives the second explicit go/no-go.
+
 ## Research Stop Rule
 
 The required broad research round is complete. Stop broad ideation. Continue only targeted research tied to a concrete mechanic or commercial gate, and use the evidence protocol before later content estimates or the second go/no-go. Earlier exact scope is a revisable hypothesis under D-013; research should serve the Product Compass, not preserve the old cap by default.

@@ -23,6 +23,7 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - Evidence build `0.2.0-representative.3` added the green 200-run automated matrix and CI report.
 - Text-heavy choice build `.4` failed immediate visual review. Compact visual `.5` passed the owner's SPCK review.
 - `0.2.0-representative.6` closed that observable loop and passed SPCK. `.7` removed the rewrite power penalty and passed SPCK. `.8` adds readable movement pressure and lets every proven Spellbook combination become the next Trial's starting spell; the owner passed its consolidated SPCK test.
+- `.9` prepares the commercial cell with token-isolated clean saves and the fixed protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay is unchanged.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -38,7 +39,7 @@ The current working launch direction uses:
 - a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
 - light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
 
-The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The current loop shows the resulting spell, coming threat, transformation, combat effect, shared spell growth, active dodge pressure, and a usable horizontal Spellbook. Full content and final assets still wait for one fresh-player cell and the owner's second go/no-go.
+The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The current loop shows the resulting spell, coming threat, transformation, combat effect, shared spell growth, active dodge pressure, and a usable horizontal Spellbook. Full content and final assets still wait for the prepared fresh-player cell and the owner's second go/no-go.
 
 The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypothesis: engagement and clarity now decide the duration. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
 

@@ -97,3 +97,15 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Fun-potential contract: Codex estimates potential through exact/component/experience analogues, public review mining, motivational and design research, cross-platform idea discovery, mobile translation, synthetic play styles, and fresh-context criticism.
 - Human boundary: none of those methods is proof of experienced fun. Sparse owner/fresh-player results remain the calibration truth at major gates.
 - Decision: use prediction-versus-result calibration so each human result becomes a reusable warning pattern rather than one disposable opinion.
+
+## July 13, 2026 — Fresh-Player Gate Preparation
+
+- Build: `0.2.0-representative.9`
+- Goal-level diagnosis: source inspection and the complete behavioral suite expose no remaining local contradiction stronger than the human uncertainty itself. Newcomer comprehension, experienced boredom/fairness, climax satisfaction, and replay desire cannot be closed by another bot or owner-aware review.
+- Alternatives: reject launch-content scaling because it multiplies an unproven loop; reject another speculative tutorial/reward patch because `.4` already showed the cost of designer-side over-explanation; choose one clean, non-leading cell as the cheapest discriminating experiment.
+- Technical safeguard: a validated `?fresh=` token selects an isolated local save. Unique tokens do not inherit legacy settings, records, discoveries, selected spells, or checkpoints; they preserve their own reload checkpoints and cannot overwrite the owner's normal profile.
+- Human packet: `docs/FRESH_PLAYER_CELL.md` fixes the participant boundary, neutral introduction, observations, eight post-play questions, GO/revision/no-go rules, result template, and predictions before anyone plays.
+- Predictions: controls and the rune should read naturally; Form should be easiest while Frost/Echo are the likeliest missed effects; the middle acts and repeated rewrite pauses are the boredom risks; overlapping pressure is the fairness risk; and the first rewrite is the likeliest comprehension failure.
+- Local automation: `npm run check` passed, including independent fresh-token and normal-save tests; the offline release bundle is 88,240 bytes. `npm run evidence` remained **GREEN**: 200 active build runs with 99% wins and 9% build spread, 100 choice-policy runs with 5.8% spread, 0% idle wins, 100% simple-movement wins, 8/8 deterministic replays, 8/8 selectable starting spells, and no runtime violation.
+- Boundary: the new code proves clean evidence setup only. No newcomer, enjoyment, boredom, fairness, replay, or commercial claim is accepted until the cell is run.
+- Decision: freeze speculative gameplay and full content. The next step legitimately requires one genuinely fresh participant and then the owner's second explicit go/no-go.

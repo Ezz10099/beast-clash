@@ -32,8 +32,9 @@ The commercial expansion uses a bounded decision gate:
 7. Close the representative choice-feedback loop — complete: `.5` and `.6` passed owner SPCK review.
 8. Remove the rewrite power tax and test real choice policies — complete: `.7` passed automation and the owner SPCK pass.
 9. Restore active agency and make discovery alter replay — complete: `.8` passed automation and the owner SPCK gate.
-10. Run one consolidated fresh-player cell and obtain the second explicit go/no-go — next; prepare its evidence packet and predictions under `docs/DEVELOPMENT_MODEL.md`.
-11. Revise the remaining batch count from the measured unit — pending.
+10. Prepare one clean consolidated fresh-player cell — complete in `.9`: isolated saves, exact questions, predictions, and stop conditions are recorded in `docs/FRESH_PLAYER_CELL.md`.
+11. Run the cell and obtain the second explicit go/no-go — next.
+12. Revise the remaining batch count from the measured unit — pending.
 
 Do not conduct indefinite research or start speculative content before the representative commercial gate. Group related work into substantial batches, run both automated suites at gameplay gates, and request one consolidated asynchronous human cell only when it can decide a major commercial gate.
 
@@ -184,7 +185,7 @@ Exit criteria:
 
 ## Milestone 8 — Representative Commercial Gate
 
-**Status:** The corrected representative loop has positive owner feedback and green automation. Compact `.5`, closed-loop `.6`, and incentive correction `.7` passed owner SPCK review. Agency correction `.8` is implemented and awaits one consolidated owner phone pass before the fresh-player cell and second go/no-go.
+**Status:** The corrected representative loop has positive owner feedback and green automation. Compact `.5`, closed-loop `.6`, incentive correction `.7`, and agency correction `.8` passed owner SPCK review. `.9` makes the pending fresh-player cell clean and reproducible; the cell result and second go/no-go are next.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
@@ -215,6 +216,7 @@ Exit criteria:
 - Next-threat preview, visual rewrite confirmation, three-part live feedback, and clearer status/Law effects. Complete in `.6`; owner SPCK passed.
 - Rewrite incentive audit and real choice-policy evidence. Complete in `.7`; owner SPCK passed.
 - Untouched-play audit, readable movement pressure, and selectable proven starting spells. Complete in `.8`; owner SPCK passed.
+- Token-isolated clean save, non-leading protocol, pre-registered predictions, and stop conditions for the commercial cell. Complete in `.9` and `docs/FRESH_PLAYER_CELL.md`.
 - Wider launch-scale reward/replay motivation. Still open; `.8` makes discovery functional but does not prove sufficient commercial longevity.
 - Fresh-player choice-comprehension cell and second explicit go/no-go. Pending.
 
@@ -258,8 +260,8 @@ Exit criteria:
 ## Remaining Major Batches
 
 1. Owner runs one consolidated SPCK pass on `0.2.0-representative.8`: dodge a closing red rune, prove a spell, and select it as the next starting spell — complete; passed July 13, 2026.
-2. Codex applies the goal-driven model, records predictions, and prepares one consolidated fresh-player cell — next.
-3. Run and record the cell, obtain the second explicit go/no-go, and revise the remaining batch estimate — pending.
+2. Codex applies the goal-driven model, records predictions, and prepares one consolidated fresh-player cell — complete in `.9`.
+3. Run and record the cell, obtain the second explicit go/no-go, and revise the remaining batch estimate — next; requires one genuinely fresh participant.
 4. Remaining approved gameplay/content batches — blocked until that decision.
 5. External playtest, balance, and release QA — pending.
 6. Publisher, monetization, privacy, and SDK decisions — pending.

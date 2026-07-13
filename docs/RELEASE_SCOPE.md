@@ -88,7 +88,7 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 
 ## First Approved Implementation Batch — Representative Slice
 
-**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removed the rewrite power penalty and passed SPCK. Agency build `.8` closed two further contradictions—untouched Bolt could clear the Trial, and proven spells could not alter the next run—and passed the owner's consolidated SPCK test. Full launch scaling now awaits one fresh-player cell and the second owner go/no-go.
+**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removed the rewrite power penalty and passed SPCK. Agency build `.8` closed two further contradictions—untouched Bolt could clear the Trial, and proven spells could not alter the next run—and passed the owner's consolidated SPCK test. Gate-preparation build `.9` isolates clean fresh-player saves and freezes the non-leading cell packet. Full launch scaling now awaits that cell and the second owner go/no-go.
 
 Build this as one substantial related batch before producing the full launch content:
 
@@ -126,6 +126,7 @@ Build this as one substantial related batch before producing the full launch con
 - The `.7` local result is green: 200/200 build runs recorded with 99% wins, 100 policy runs with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% choice-policy spread, no post-schedule waiting, and a 7-second boss arrival.
 - The `.8` gate adds 25 untouched idle controls, 25 simple-movement controls, and 8/8 starting-spell payoff checks. Idle Bolt must not clear, ordinary movement must remain viable, and every proven combination must begin equipped when selected.
 - The `.8` local result is green: 0/25 idle wins, 25/25 simple-movement wins, 99% active-build wins, 8/8 selectable starting spells, 0 runtime violations, 9% build spread, 4.4% Form gap, and 5.8% choice-policy spread.
+- `.9` adds automated save-isolation checks for unique `?fresh=` tokens. A fresh cell cannot inherit owner records, settings, discoveries, selected spells, or checkpoints, and it cannot overwrite the normal save.
 - This contract supports technical and balance judgments only. Human fun and understanding remain human gates under `docs/EVIDENCE_PROTOCOL.md`.
 
 ## Representative-Slice Acceptance Gate

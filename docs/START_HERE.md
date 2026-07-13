@@ -35,12 +35,13 @@ Read these files in order:
 4. `docs/RELEASE_SCOPE.md`
 5. `docs/DECISIONS.md`
 6. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
-7. `docs/DESIGN_RESEARCH.md`
-8. `docs/SCOPE_OPTIONS.md`
-9. `docs/ROADMAP.md`
-10. `docs/SESSION_HANDOFF.md`
-11. `docs/GOOGLE_PLAY.md`
-12. `docs/BUILD.md` and `docs/ANDROID.md`
+7. `docs/FRESH_PLAYER_CELL.md`
+8. `docs/DESIGN_RESEARCH.md`
+9. `docs/SCOPE_OPTIONS.md`
+10. `docs/ROADMAP.md`
+11. `docs/SESSION_HANDOFF.md`
+12. `docs/GOOGLE_PLAY.md`
+13. `docs/BUILD.md` and `docs/ANDROID.md`
 
 If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
@@ -65,6 +66,8 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The owner passed `.7` in SPCK. A subsequent independent audit found that the default Bolt won 25/25 untouched runs and that the post-run “different build” promise silently restarted the same spell.
 - Agency build `0.2.0-representative.8` adds clearly telegraphed red Trial runes that require movement and turns proven Spellbook combinations into selectable starting spells.
 - The owner passed `.8` in SPCK: the red rune was accepted and a proven spell successfully became the next Trial's selected starting build.
+- Gate-preparation build `0.2.0-representative.9` adds token-isolated clean saves for reproducible fresh-player sessions without changing normal gameplay or the owner's save.
+- The exact non-leading cell, predictions, result record, and stop conditions are ready in `docs/FRESH_PLAYER_CELL.md`.
 - Full launch content and final assets remain blocked on one consolidated fresh-player cell and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
@@ -73,7 +76,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-Apply the locked development model to the complete representative slice, confirm that the evidence packet and exact questions are sufficient for one consolidated fresh-player cell, then prepare that cell and the second explicit go/no-go. Do not scale launch content before the decision.
+Run the prepared cell in `docs/FRESH_PLAYER_CELL.md`, record the result against its pre-registered predictions, then obtain the second explicit go/no-go. Do not scale launch content before the decision.
 
 ## Mandatory Session Protocol
 
@@ -111,4 +114,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/DEVELOPMENT_MODEL.md`, then the evidence protocol, ledger, roadmap, and handoff. The final Product Compass and goal-to-code model are binding; all implementation details are revisable. `.8` passed SPCK. Apply the complete development model to the current game, independently choose the strongest bounded next step, verify it at the correct evidence level, push stable changes to `main`, and update project memory. Ask the owner only for genuinely needed resources or a major commercial gate.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/DEVELOPMENT_MODEL.md`, then the evidence protocol, ledger, fresh-player cell, roadmap, and handoff. The final Product Compass and goal-to-code model are binding; all implementation details are revisable. `.8` passed SPCK and `.9` prepared a clean fresh-player gate. Record the cell result and obtain the second explicit go/no-go before scaling content. Ask the owner only for genuinely needed resources or a major commercial gate.

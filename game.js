@@ -44,7 +44,11 @@ const FPS = 60;
 const TOTAL_WAVES = 12;
 const SAVE_VERSION = 3;
 const CHECKPOINT_VERSION = 2;
-const SAVE_KEY = "pixel_mage_save_v2";
+const STANDARD_SAVE_KEY = "pixel_mage_save_v2";
+const FRESH_CELL_TOKEN = readFreshCellToken();
+const SAVE_KEY = FRESH_CELL_TOKEN
+  ? "pixel_mage_fresh_cell_" + FRESH_CELL_TOKEN + "_v3"
+  : STANDARD_SAVE_KEY;
 const LEGACY_BEST_SCORE_KEY = "pixel_mage_best_score_v1";
 const LEGACY_SETTINGS_KEY = "pixel_mage_settings_v1";
 const WAVE_BANNER_DURATION = 78;
@@ -71,6 +75,18 @@ const ALL_SPELLS = Object.freeze(VALID_FORMS.flatMap(function (form) {
     });
   });
 }));
+
+function readFreshCellToken() {
+  try {
+    const search = window.location && typeof window.location.search === "string"
+      ? window.location.search
+      : "";
+    const token = new URLSearchParams(search).get("fresh") || "";
+    return /^[a-z0-9_-]{1,32}$/i.test(token) ? token : "";
+  } catch {
+    return "";
+  }
+}
 
 const SPELL_PARTS = Object.freeze({
   forms: Object.freeze({
@@ -504,15 +520,17 @@ const SaveSystem = Object.freeze({
     } catch {
       raw = null;
     }
-    try {
-      legacySettings = JSON.parse(localStorage.getItem(LEGACY_SETTINGS_KEY) || "{}");
-    } catch {
-      legacySettings = {};
-    }
-    try {
-      legacyBest = Number.parseInt(localStorage.getItem(LEGACY_BEST_SCORE_KEY) || "0", 10) || 0;
-    } catch {
-      legacyBest = 0;
+    if (!FRESH_CELL_TOKEN) {
+      try {
+        legacySettings = JSON.parse(localStorage.getItem(LEGACY_SETTINGS_KEY) || "{}");
+      } catch {
+        legacySettings = {};
+      }
+      try {
+        legacyBest = Number.parseInt(localStorage.getItem(LEGACY_BEST_SCORE_KEY) || "0", 10) || 0;
+      } catch {
+        legacyBest = 0;
+      }
     }
     const migrated = this.migrate(raw, { settings: legacySettings, bestScore: legacyBest });
     try {
