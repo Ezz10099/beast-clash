@@ -66,6 +66,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Decision: GitHub documentation, not chat memory, is the permanent project record. Every meaningful session must close by updating the handoff and roadmap.
 - Reason: Different sessions may have incomplete conversation context.
 - Change rule: None; only the specific document structure may be improved.
+
 ## D-009 — Native Build Is a Vertical Slice
 
 - Date: July 13, 2026
@@ -82,7 +83,6 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
 - Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49. Its correction received strong entertainment feedback; compact visual `.5`, closed-loop `.6`, incentive correction `.7`, and agency correction `.8` passed owner SPCK review. The clean fresh-player packet is ready in `.9`; its result and the second explicit go/no-go remain open.
 - Change rule: The representative run must be phone-timed before duration or total-playtime claims are locked.
-
 
 ## D-011 — Living Spell Trials Commercial Scope
 
@@ -147,3 +147,15 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Calibration rule: Before a rare human gate, Codex records predictions. Afterward it records correct predictions, misses, causes, and reusable warning patterns in the evidence ledger so sparse feedback improves future independent judgment.
 - Reason: A locally correct patch can still fail the final game if it ignores tacit context, optimizes the immediate request, or mistakes measurable proxies for player value. The project needs an external brain that connects every implementation level to the finishable commercial outcome.
 - Change rule: Only an explicit owner instruction may replace the Product Compass or this development model. The methods may improve when the reason and evidence boundary are recorded.
+
+## D-017 — Fun-First Continuity
+
+- Date: July 13, 2026
+- Status: Locked owner mandate
+- Decision: Pixel Mage remains the game and project continuity is the default. Future sessions must not casually reopen project selection or replace the core game. Maximizing fun and engagement potential is a primary development objective alongside actually finishing and publishing the game.
+- Interpretation: Finishability, scope control, evidence, testing, documentation, and release safety exist to help produce a worthwhile game. They must not become substitutes for moment-to-moment enjoyment, meaningful choice, escalation, build excitement, curiosity, mastery, satisfying payoff, and replay desire.
+- Creative responsibility: Codex must proactively diagnose and improve the strongest fun or engagement limitation using the complete development model. It must not wait for the owner to invent every improvement or treat lack of immediate testers as a reason to stop product development.
+- Testing constraint: Arabic-speaking or genre-unfamiliar players remain valid testers when the game uses appropriate visual clarity, localization, simple language, behavioral observation, and meaning-preserving translated questions. English terminology is not a prerequisite for testing the game itself.
+- Scope balance: Avoid both endless expansion and premature minimalism. The target is the smallest release that is genuinely fun, engaging, replayable, polished, worth keeping, and realistically finishable through the GitHub–SPCK–Capacitor workflow.
+- Permanent source: `docs/OWNER_MANDATE.md` contains the full interpretation and mandatory copy-paste new-session prompt.
+- Change rule: Only an explicit owner instruction may replace this continuity and priority mandate. Strong evidence may justify changing mechanics inside Pixel Mage, but not casual project switching.
