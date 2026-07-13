@@ -3,8 +3,15 @@ const ctx = canvas.getContext("2d");
 const healthText = document.querySelector("#healthText");
 const waveText = document.querySelector("#waveText");
 const scoreText = document.querySelector("#scoreText");
+const spellText = document.querySelector("#spellText");
 const menuButton = document.querySelector("#menuButton");
+const startPanel = document.querySelector("#startPanel");
+const startStatus = document.querySelector("#startStatus");
+const spellbookText = document.querySelector("#spellbookText");
+const resumeRunButton = document.querySelector("#resumeRunButton");
+const startRunButton = document.querySelector("#startRunButton");
 const upgradePanel = document.querySelector("#upgradePanel");
+const upgradeTitle = document.querySelector("#upgradeTitle");
 const upgradeChoices = document.querySelector("#upgradeChoices");
 const menuPanel = document.querySelector("#menuPanel");
 const menuEyebrow = document.querySelector("#menuEyebrow");
@@ -17,45 +24,283 @@ const newRunButton = document.querySelector("#newRunButton");
 
 const W = canvas.width;
 const H = canvas.height;
-const TOTAL_WAVES = 5;
-const BEST_SCORE_KEY = "pixel_mage_best_score_v1";
-const SETTINGS_KEY = "pixel_mage_settings_v1";
-const WAVE_BANNER_DURATION = 60;
-const MAX_BOLTS = 40;
-const MAX_SPARKS = 260;
-const SLIME_VARIANTS = Object.freeze({
-  moss: {
-    hpBonus: 0,
-    speedBonus: 0,
-    width: 20,
-    height: 18,
-    body: "#3fa66b",
-    highlight: "#73d685",
-  },
-  swift: {
-    hpBonus: -1,
-    speedBonus: 0.16,
-    width: 17,
-    height: 15,
-    body: "#3576a8",
-    highlight: "#70c1e8",
-  },
-  iron: {
-    hpBonus: 2,
-    speedBonus: -0.12,
-    width: 26,
-    height: 23,
-    body: "#68548f",
-    highlight: "#a58ad1",
-  },
+const FPS = 60;
+const TOTAL_WAVES = 12;
+const SAVE_VERSION = 2;
+const CHECKPOINT_VERSION = 1;
+const SAVE_KEY = "pixel_mage_save_v2";
+const LEGACY_BEST_SCORE_KEY = "pixel_mage_best_score_v1";
+const LEGACY_SETTINGS_KEY = "pixel_mage_settings_v1";
+const WAVE_BANNER_DURATION = 78;
+const MAX_PROJECTILES = 96;
+const MAX_ENEMY_PROJECTILES = 72;
+const MAX_PENDING_CASTS = 24;
+const MAX_SPARKS = 360;
+const VALID_FORMS = Object.freeze(["bolt", "orbit"]);
+const VALID_ESSENCES = Object.freeze(["ember", "frost"]);
+const VALID_LAWS = Object.freeze(["split", "echo"]);
+
+const SPELL_PARTS = Object.freeze({
+  forms: Object.freeze({
+    bolt: Object.freeze({
+      title: "Bolt",
+      description: "Flies directly toward the marked threat.",
+      cooldown: 20,
+    }),
+    orbit: Object.freeze({
+      title: "Orbit",
+      description: "Circles the mage and damages nearby threats.",
+      cooldown: 48,
+    }),
+  }),
+  essences: Object.freeze({
+    ember: Object.freeze({
+      title: "Ember",
+      description: "Burns its target and splashes nearby enemies.",
+      color: "#ff8c42",
+      light: "#ffd08a",
+    }),
+    frost: Object.freeze({
+      title: "Frost",
+      description: "Slows every enemy the spell touches.",
+      color: "#61d4e8",
+      light: "#d9fbff",
+    }),
+  }),
+  laws: Object.freeze({
+    split: Object.freeze({
+      title: "Split",
+      description: "Creates three smaller copies at once.",
+    }),
+    echo: Object.freeze({
+      title: "Echo",
+      description: "Repeats the spell a moment later.",
+    }),
+  }),
 });
-const WAVE_DEFINITIONS = Object.freeze([
-  { slimes: ["moss", "moss", "moss"], hp: 2, speed: 0.42 },
-  { slimes: ["moss", "moss", "moss", "swift"], hp: 2, speed: 0.45 },
-  { slimes: ["moss", "moss", "moss", "swift", "swift"], hp: 3, speed: 0.48 },
-  { slimes: ["moss", "moss", "moss", "swift", "swift", "iron"], hp: 3, speed: 0.52 },
-  { slimes: ["swift", "iron"], hp: 4, speed: 0.54, bossHp: 16, bossSpeed: 0.36 },
+
+const ENEMY_FAMILIES = Object.freeze({
+  chaser: Object.freeze({
+    title: "Mote",
+    width: 18,
+    height: 16,
+    hp: 3,
+    speed: 0.48,
+    score: 45,
+    body: "#42a66c",
+    light: "#83dc91",
+  }),
+  caster: Object.freeze({
+    title: "Glyph Caster",
+    width: 20,
+    height: 22,
+    hp: 4,
+    speed: 0.34,
+    score: 65,
+    body: "#416aa3",
+    light: "#8bc9eb",
+  }),
+});
+
+const RUN_DEFINITION = Object.freeze([
+  Object.freeze({
+    wave: 1,
+    act: 1,
+    title: "First Script",
+    duration: 22 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 2 }),
+      Object.freeze({ at: 5 * FPS, family: "chaser", count: 2 }),
+      Object.freeze({ at: 11 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 17 * FPS, family: "chaser", count: 2 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 2,
+    act: 1,
+    title: "Crossfire",
+    duration: 24 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 3 }),
+      Object.freeze({ at: 6 * FPS, family: "caster", count: 1 }),
+      Object.freeze({ at: 12 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 18 * FPS, family: "caster", count: 1 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 3,
+    act: 1,
+    title: "Broken Lines",
+    duration: 26 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 3 }),
+      Object.freeze({ at: 5 * FPS, family: "caster", count: 1 }),
+      Object.freeze({ at: 11 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 17 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 22 * FPS, family: "chaser", count: 2 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 4,
+    act: 1,
+    title: "First Guardian",
+    duration: 30 * FPS,
+    guardian: true,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 3 }),
+      Object.freeze({ at: 6 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 12 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 22 * FPS, family: "chaser", count: 1, elite: true }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 5,
+    act: 2,
+    title: "Second Act",
+    duration: 25 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "caster", count: 2 }),
+      Object.freeze({ at: 5 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 11 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 17 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 21 * FPS, family: "caster", count: 1 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 6,
+    act: 2,
+    title: "Twin Pressure",
+    duration: 27 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 4 }),
+      Object.freeze({ at: 6 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 12 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 18 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 23 * FPS, family: "chaser", count: 2 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 7,
+    act: 2,
+    title: "Crowded Page",
+    duration: 29 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "caster", count: 2 }),
+      Object.freeze({ at: 5 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 11 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 17 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 23 * FPS, family: "caster", count: 2 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 8,
+    act: 2,
+    title: "Second Guardian",
+    duration: 34 * FPS,
+    guardian: true,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 4 }),
+      Object.freeze({ at: 7 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 13 * FPS, family: "chaser", count: 3 }),
+      Object.freeze({ at: 19 * FPS, family: "caster", count: 2 }),
+      Object.freeze({ at: 27 * FPS, family: "chaser", count: 1, elite: true }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 9,
+    act: 3,
+    title: "Final Act",
+    duration: 28 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "caster", count: 2 }),
+      Object.freeze({ at: 5 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 10 * FPS, family: "caster", count: 3 }),
+      Object.freeze({ at: 16 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 22 * FPS, family: "caster", count: 2 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 10,
+    act: 3,
+    title: "Moving Ink",
+    duration: 30 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 4 }),
+      Object.freeze({ at: 5 * FPS, family: "caster", count: 3 }),
+      Object.freeze({ at: 11 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 17 * FPS, family: "caster", count: 3 }),
+      Object.freeze({ at: 23 * FPS, family: "chaser", count: 3 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 11,
+    act: 3,
+    title: "Last Rewrite",
+    duration: 32 * FPS,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "caster", count: 3 }),
+      Object.freeze({ at: 6 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 12 * FPS, family: "caster", count: 3 }),
+      Object.freeze({ at: 18 * FPS, family: "chaser", count: 5 }),
+      Object.freeze({ at: 25 * FPS, family: "caster", count: 3 }),
+    ]),
+  }),
+  Object.freeze({
+    wave: 12,
+    act: 3,
+    title: "The Redactor",
+    duration: 42 * FPS,
+    boss: true,
+    events: Object.freeze([
+      Object.freeze({ at: 0, family: "chaser", count: 4 }),
+      Object.freeze({ at: 6 * FPS, family: "caster", count: 3 }),
+      Object.freeze({ at: 13 * FPS, family: "chaser", count: 4 }),
+      Object.freeze({ at: 25 * FPS, boss: true, count: 1 }),
+    ]),
+  }),
 ]);
+
+const SUPPORT_UPGRADES = Object.freeze([
+  Object.freeze({
+    id: "power",
+    title: "Arcane Focus",
+    describe: function () { return "All spell hits gain +0.25 damage."; },
+    apply: function (player, supports) {
+      supports.power += 1;
+      player.power += 0.25;
+    },
+  }),
+  Object.freeze({
+    id: "haste",
+    title: "Quickening",
+    describe: function () { return "Cast every Form 6% more often."; },
+    apply: function (player, supports) {
+      supports.haste += 1;
+      player.haste = Math.min(0.3, player.haste + 0.06);
+    },
+  }),
+  Object.freeze({
+    id: "vitality",
+    title: "Vital Spark",
+    describe: function (player) { return "Maximum HP " + player.maxHp + " → " + (player.maxHp + 1) + "; heal 2."; },
+    apply: function (player, supports) {
+      supports.vitality += 1;
+      player.maxHp += 1;
+      player.hp = Math.min(player.maxHp, player.hp + 2);
+    },
+  }),
+  Object.freeze({
+    id: "step",
+    title: "Wind Step",
+    describe: function () { return "Move 6% faster and heal 1 HP."; },
+    apply: function (player, supports) {
+      supports.step += 1;
+      player.speed += 0.13;
+      player.hp = Math.min(player.maxHp, player.hp + 1);
+    },
+  }),
+]);
+
 const SOUND_CUES = Object.freeze({
   click: [{ start: 420, end: 560, duration: 0.035, volume: 0.018, type: "square" }],
   cast: [{ start: 580, end: 920, duration: 0.055, volume: 0.014, type: "square" }],
@@ -88,19 +333,216 @@ const SOUND_CUES = Object.freeze({
   ],
 });
 const SOUND_GAPS = Object.freeze({ cast: 0.08, hit: 0.035, enemyDown: 0.06 });
-const keys = {
-  left: false,
-  right: false,
-  up: false,
-  down: false,
-};
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function finiteNumber(value, fallback, min, max) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return clamp(number, min, max);
+}
+
+function safeInteger(value, fallback, min, max) {
+  return Math.round(finiteNumber(value, fallback, min, max));
+}
+
+function validPart(value, allowed, fallback) {
+  return allowed.includes(value) ? value : fallback;
+}
+
+function hashNumbers() {
+  let hash = 2166136261;
+  for (let index = 0; index < arguments.length; index += 1) {
+    let value = Number(arguments[index]) >>> 0;
+    hash ^= value;
+    hash = Math.imul(hash, 16777619);
+    hash ^= hash >>> 13;
+  }
+  return hash >>> 0;
+}
+
+function seededUnit() {
+  return hashNumbers.apply(null, arguments) / 4294967296;
+}
+
+function createRunSeed() {
+  const now = Date.now() >>> 0;
+  const entropy = Math.floor(Math.random() * 0xffffffff) >>> 0;
+  return hashNumbers(now, entropy, 0x504d) || 1;
+}
+
+function makeDefaultSave() {
+  return {
+    version: SAVE_VERSION,
+    settings: { sound: true, haptics: true },
+    profile: {
+      bestScore: 0,
+      bestTimeFrames: 0,
+      wins: 0,
+      discovered: [],
+    },
+    checkpoint: null,
+  };
+}
+
+function normalizeSpell(spell) {
+  const value = spell && typeof spell === "object" ? spell : {};
+  return {
+    form: validPart(value.form, VALID_FORMS, "bolt"),
+    essence: validPart(value.essence, VALID_ESSENCES, "ember"),
+    law: validPart(value.law, VALID_LAWS, "split"),
+  };
+}
+
+function normalizePlayer(player) {
+  const value = player && typeof player === "object" ? player : {};
+  const maxHp = safeInteger(value.maxHp, 5, 1, 20);
+  return {
+    x: finiteNumber(value.x, W / 2, 20, W - 20),
+    y: finiteNumber(value.y, H - 72, 76, H - 34),
+    w: 16,
+    h: 20,
+    hp: finiteNumber(value.hp, maxHp, 0.25, maxHp),
+    maxHp,
+    speed: finiteNumber(value.speed, 2.08, 1, 4),
+    power: finiteNumber(value.power, 0, 0, 10),
+    haste: finiteNumber(value.haste, 0, 0, 0.3),
+    invincible: 0,
+    cooldown: 0,
+  };
+}
+
+function normalizeSupports(supports) {
+  const value = supports && typeof supports === "object" ? supports : {};
+  return {
+    power: safeInteger(value.power, 0, 0, 20),
+    haste: safeInteger(value.haste, 0, 0, 20),
+    vitality: safeInteger(value.vitality, 0, 0, 20),
+    step: safeInteger(value.step, 0, 0, 20),
+  };
+}
+
+function normalizeCheckpoint(checkpoint) {
+  if (!checkpoint || typeof checkpoint !== "object") return null;
+  const rawWave = Number(checkpoint.wave || checkpoint.currentWave);
+  if (!Number.isFinite(rawWave) || rawWave < 1 || rawWave > TOTAL_WAVES) return null;
+  const wave = Math.round(rawWave);
+
+  return {
+    version: CHECKPOINT_VERSION,
+    phase: checkpoint.phase === "upgrade" ? "upgrade" : "wave",
+    seed: safeInteger(checkpoint.seed, 1, 1, 0xffffffff),
+    wave,
+    score: safeInteger(checkpoint.score, 0, 0, 100000000),
+    defeated: safeInteger(checkpoint.defeated, 0, 0, 1000000),
+    elapsedFrames: safeInteger(checkpoint.elapsedFrames, 0, 0, 100000000),
+    player: normalizePlayer(checkpoint.player),
+    spell: normalizeSpell(checkpoint.spell),
+    supports: normalizeSupports(checkpoint.supports),
+  };
+}
+
+const SaveSystem = Object.freeze({
+  migrate: function (raw, legacy) {
+    const next = makeDefaultSave();
+    const source = raw && typeof raw === "object" ? raw : {};
+    const old = legacy && typeof legacy === "object" ? legacy : {};
+    const sourceSettings = source.settings && typeof source.settings === "object" ? source.settings : old.settings || {};
+    const sourceProfile = source.profile && typeof source.profile === "object" ? source.profile : {};
+    const discovered = Array.isArray(sourceProfile.discovered)
+      ? sourceProfile.discovered.filter(function (key) {
+        if (typeof key !== "string") return false;
+        const parts = key.split("|");
+        return parts.length === 3 &&
+          VALID_FORMS.includes(parts[0]) &&
+          VALID_ESSENCES.includes(parts[1]) &&
+          VALID_LAWS.includes(parts[2]);
+      })
+      : [];
+
+    next.settings.sound = sourceSettings.sound !== false;
+    next.settings.haptics = sourceSettings.haptics !== false;
+    next.profile.bestScore = safeInteger(
+      sourceProfile.bestScore !== undefined ? sourceProfile.bestScore : source.bestScore !== undefined ? source.bestScore : old.bestScore,
+      0,
+      0,
+      100000000,
+    );
+    next.profile.bestTimeFrames = safeInteger(sourceProfile.bestTimeFrames, 0, 0, 100000000);
+    next.profile.wins = safeInteger(sourceProfile.wins, 0, 0, 1000000);
+    next.profile.discovered = Array.from(new Set(discovered)).slice(0, 8);
+    next.checkpoint = normalizeCheckpoint(source.checkpoint);
+    return next;
+  },
+
+  load: function () {
+    let raw = null;
+    let legacySettings = {};
+    let legacyBest = 0;
+    try {
+      const saved = localStorage.getItem(SAVE_KEY);
+      if (saved) raw = JSON.parse(saved);
+    } catch {
+      raw = null;
+    }
+    try {
+      legacySettings = JSON.parse(localStorage.getItem(LEGACY_SETTINGS_KEY) || "{}");
+    } catch {
+      legacySettings = {};
+    }
+    try {
+      legacyBest = Number.parseInt(localStorage.getItem(LEGACY_BEST_SCORE_KEY) || "0", 10) || 0;
+    } catch {
+      legacyBest = 0;
+    }
+    const migrated = this.migrate(raw, { settings: legacySettings, bestScore: legacyBest });
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(migrated));
+    } catch {
+      // The game remains playable when local storage is unavailable.
+    }
+    return migrated;
+  },
+
+  write: function () {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(persistent));
+    } catch {
+      // The current session remains playable when storage is unavailable.
+    }
+  },
+
+  setCheckpoint: function (checkpoint) {
+    persistent.checkpoint = normalizeCheckpoint(checkpoint);
+    this.write();
+  },
+
+  clearCheckpoint: function () {
+    persistent.checkpoint = null;
+    this.write();
+  },
+
+  proveCombination: function (spell) {
+    const key = spell.form + "|" + spell.essence + "|" + spell.law;
+    if (!persistent.profile.discovered.includes(key)) {
+      persistent.profile.discovered.push(key);
+      persistent.profile.discovered.sort();
+      this.write();
+    }
+  },
+});
+
+const persistent = SaveSystem.load();
+const settings = persistent.settings;
+const keys = { left: false, right: false, up: false, down: false };
 const pointerControl = {
   active: false,
   pointerId: null,
   x: W / 2,
   y: H - 72,
 };
-const settings = loadSettings();
 const lastSoundAt = new Map();
 let audioContext = null;
 
@@ -108,13 +550,23 @@ const state = {
   mode: "menu",
   menuOpen: false,
   time: 0,
+  seed: 1,
   wave: 0,
+  waveFrame: 0,
+  runElapsed: 0,
+  spawnIndex: 0,
+  nextEnemyId: 1,
+  targetId: null,
   score: 0,
-  bestScore: loadBestScore(),
+  bestScore: persistent.profile.bestScore,
   defeated: 0,
   player: null,
+  spell: normalizeSpell(null),
+  supports: normalizeSupports(null),
   enemies: [],
-  bolts: [],
+  projectiles: [],
+  enemyProjectiles: [],
+  pendingCasts: [],
   sparks: [],
   waveBannerTimer: 0,
   waveBannerText: "",
@@ -122,90 +574,15 @@ const state = {
   damageFlash: 0,
 };
 
-const UPGRADES = Object.freeze([
-  {
-    id: "power",
-    title: "Empowered Bolt",
-    describe: (player) => `Bolt damage ${player.damage} → ${player.damage + 1}`,
-    apply: (player) => { player.damage += 1; },
-  },
-  {
-    id: "rapid",
-    title: "Rapid Casting",
-    describe: (player) => player.cooldownMax <= 8 ? "Casting is already at maximum speed" : "Cast bolts more frequently",
-    apply: (player) => { player.cooldownMax = Math.max(8, player.cooldownMax - 3); },
-  },
-  {
-    id: "vitality",
-    title: "Vital Spark",
-    describe: (player) => `Maximum HP ${player.maxHp} → ${player.maxHp + 1}; fully heal`,
-    apply: (player) => { player.maxHp += 1; player.hp = player.maxHp; },
-  },
-  {
-    id: "speed",
-    title: "Wind Step",
-    describe: () => "Move faster and recover 1 HP",
-    apply: (player) => { player.speed += 0.32; player.hp = Math.min(player.maxHp, player.hp + 1); },
-  },
-  {
-    id: "volley",
-    title: "Twin Cast",
-    describe: (player) => player.boltCount === 1 ? "Fire a three-bolt spread" : "Strengthen every bolt in the spread",
-    apply: (player) => {
-      if (player.boltCount === 1) player.boltCount = 3;
-      else player.damage += 1;
-    },
-  },
-]);
-
-function loadBestScore() {
-  try {
-    return Math.max(0, Number.parseInt(localStorage.getItem(BEST_SCORE_KEY) || "0", 10) || 0);
-  } catch {
-    return 0;
-  }
-}
-
-function saveBestScore() {
-  if (state.score <= state.bestScore) return;
-  state.bestScore = state.score;
-  try {
-    localStorage.setItem(BEST_SCORE_KEY, String(state.bestScore));
-  } catch {
-    // The run remains playable when storage is unavailable.
-  }
-}
-
-function loadSettings() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
-    return {
-      sound: saved.sound !== false,
-      haptics: saved.haptics !== false,
-    };
-  } catch {
-    return { sound: true, haptics: true };
-  }
-}
-
-function saveSettings() {
-  try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  } catch {
-    // Settings remain active for this session when storage is unavailable.
-  }
-}
-
 function unlockAudio() {
   if (!settings.sound) return;
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return;
-
   try {
     if (!audioContext) audioContext = new AudioContextClass();
     if (audioContext.state === "suspended") {
       const resume = audioContext.resume();
-      if (resume?.catch) resume.catch(() => {});
+      if (resume && resume.catch) resume.catch(function () {});
     }
   } catch {
     audioContext = null;
@@ -218,7 +595,6 @@ function playTone(cue) {
   const endAt = startAt + cue.duration;
   const oscillator = audioContext.createOscillator();
   const gain = audioContext.createGain();
-
   oscillator.type = cue.type || "square";
   oscillator.frequency.setValueAtTime(Math.max(1, cue.start), startAt);
   oscillator.frequency.exponentialRampToValueAtTime(Math.max(1, cue.end), endAt);
@@ -235,10 +611,9 @@ function playSound(name) {
   if (!settings.sound || !SOUND_CUES[name]) return;
   unlockAudio();
   if (!audioContext || audioContext.state !== "running") return;
-
   const now = audioContext.currentTime;
   const minimumGap = SOUND_GAPS[name] || 0;
-  if (now - (lastSoundAt.get(name) ?? -Infinity) < minimumGap) return;
+  if (now - (lastSoundAt.get(name) === undefined ? -Infinity : lastSoundAt.get(name)) < minimumGap) return;
   lastSoundAt.set(name, now);
   for (const cue of SOUND_CUES[name]) playTone(cue);
 }
@@ -248,433 +623,9 @@ function triggerHaptic(pattern) {
   navigator.vibrate(pattern);
 }
 
-function syncSettingsUi() {
-  soundButton.textContent = `Sound: ${settings.sound ? "On" : "Off"}`;
-  soundButton.setAttribute("aria-pressed", String(settings.sound));
-  hapticsButton.textContent = `Haptics: ${settings.haptics ? "On" : "Off"}`;
-  hapticsButton.setAttribute("aria-pressed", String(settings.haptics));
-}
-
-function openMenu(reason = "manual") {
-  if (state.menuOpen) return;
-  clearInput();
-  state.menuOpen = true;
-  menuPanel.hidden = false;
-
-  if (state.mode === "playing") {
-    menuEyebrow.textContent = reason === "interruption" ? "Auto-Paused" : "Run Paused";
-    menuTitle.textContent = reason === "interruption" ? "Your Run Is Safe" : "Take a Breath";
-    menuStatus.textContent = reason === "interruption"
-      ? "The action stopped when the game lost focus. Resume when ready."
-      : "Enemies and timers are completely frozen.";
-    resumeButton.textContent = "Resume Run";
-    newRunButton.textContent = "Restart Run";
-  } else if (state.mode === "upgrade") {
-    menuEyebrow.textContent = "Run Options";
-    menuTitle.textContent = "Upgrade Waiting";
-    menuStatus.textContent = "Return to choose an upgrade, or restart the run.";
-    resumeButton.textContent = "Back to Upgrades";
-    newRunButton.textContent = "Restart Run";
-  } else {
-    menuEyebrow.textContent = "Options";
-    menuTitle.textContent = "Game Settings";
-    menuStatus.textContent = "Sound and haptic choices save automatically.";
-    resumeButton.textContent = "Close";
-    newRunButton.textContent = state.mode === "menu" ? "Start New Run" : "Play Again";
-  }
-
-  if (reason === "back") {
-    menuStatus.textContent = "The run is paused. Resume here, or press Back again to exit.";
-  }
-
-  syncSettingsUi();
-  updateHud();
-}
-
-function closeMenu() {
-  if (!state.menuOpen) return;
-  state.menuOpen = false;
-  menuPanel.hidden = true;
-  clearInput();
-  updateHud();
-}
-
-function pauseForInterruption() {
-  if (state.mode === "playing" && !state.menuOpen) openMenu("interruption");
-  else clearInput();
-}
-
-function handleNativeBackButton() {
-  clearInput();
-  if (state.menuOpen) return false;
-  if (state.mode === "playing" || state.mode === "upgrade") {
-    openMenu("back");
-    return true;
-  }
-  return false;
-}
-
-function resetGame() {
-  clearInput();
-  state.menuOpen = false;
-  menuPanel.hidden = true;
-  state.time = 0;
-  state.wave = 0;
-  state.score = 0;
-  state.defeated = 0;
-  state.player = {
-    x: W / 2,
-    y: H - 72,
-    w: 16,
-    h: 20,
-    hp: 3,
-    maxHp: 3,
-    speed: 2.05,
-    damage: 1,
-    cooldownMax: 17,
-    boltCount: 1,
-    invincible: 0,
-    cooldown: 0,
-  };
-  state.bolts = [];
-  state.sparks = [];
-  state.waveBannerTimer = 0;
-  state.waveBannerText = "";
-  state.screenShake = 0;
-  state.damageFlash = 0;
-  pointerControl.x = state.player.x;
-  pointerControl.y = state.player.y;
-  startWave(1);
-}
-
-function startWave(wave) {
-  const definition = WAVE_DEFINITIONS[wave - 1];
-  state.wave = wave;
-  state.mode = "playing";
-  state.bolts = [];
-  state.enemies = [];
-  state.waveBannerText = definition.bossHp ? "FINAL WAVE" : `WAVE ${wave}`;
-  state.waveBannerTimer = WAVE_BANNER_DURATION;
-  hideUpgradePanel();
-
-  if (definition.bossHp) {
-    state.enemies.push(makeEnemy(W / 2, 82, {
-      boss: true,
-      hp: definition.bossHp,
-      speed: definition.bossSpeed,
-      variant: "boss",
-    }));
-  }
-
-  for (let index = 0; index < definition.slimes.length; index += 1) {
-    const variant = definition.slimes[index];
-    const variantConfig = SLIME_VARIANTS[variant];
-    const position = getSpawnPosition(index, definition.slimes.length, Boolean(definition.bossHp));
-    state.enemies.push(makeEnemy(position.x, position.y, {
-      boss: false,
-      hp: Math.max(1, definition.hp + variantConfig.hpBonus),
-      speed: Math.max(0.2, definition.speed + variantConfig.speedBonus),
-      variant,
-    }));
-  }
-
-  addSparks(W / 2, 92, definition.bossHp ? 24 : 12, definition.bossHp ? "#ffd166" : "#9bf6ff");
-}
-
-function getSpawnPosition(index, count, hasBoss) {
-  if (hasBoss) {
-    return { x: index === 0 ? 76 : W - 76, y: 132 };
-  }
-  const columns = Math.min(4, count);
-  const column = index % columns;
-  const row = Math.floor(index / columns);
-  const spacing = W / (columns + 1);
-  return { x: spacing * (column + 1), y: 88 + row * 46 };
-}
-
-function makeEnemy(x, y, options) {
-  const { boss, hp, speed, variant } = options;
-  const variantConfig = SLIME_VARIANTS[variant];
-  return {
-    x,
-    y,
-    w: boss ? 34 : variantConfig.width,
-    h: boss ? 30 : variantConfig.height,
-    hp,
-    maxHp: hp,
-    speed,
-    boss,
-    variant,
-    bodyColor: boss ? "#7b2d43" : variantConfig.body,
-    highlightColor: boss ? "#c44569" : variantConfig.highlight,
-    touchCooldown: 0,
-    attackState: boss ? "chase" : null,
-    attackTimer: boss ? 120 : 0,
-    targetX: x,
-    targetY: y,
-    dashVx: 0,
-    dashVy: 0,
-  };
-}
-
-function castSpell() {
-  const player = state.player;
-
-  if (!player || player.cooldown > 0 || state.mode !== "playing" || state.menuOpen) {
-    return;
-  }
-
-  player.cooldown = player.cooldownMax;
-  const velocities = player.boltCount === 3 ? [-1.15, 0, 1.15] : [0];
-  for (const vx of velocities) {
-    state.bolts.push({
-      x: player.x + vx * 3,
-      y: player.y - 16,
-      r: 4,
-      vx,
-      vy: -5.6,
-      damage: player.damage,
-      spent: false,
-    });
-  }
-  if (state.bolts.length > MAX_BOLTS) {
-    state.bolts.splice(0, state.bolts.length - MAX_BOLTS);
-  }
-  addSparks(player.x, player.y - 18, 5, "#9bf6ff");
-  playSound("cast");
-}
-
-function update() {
-  if (state.menuOpen) return;
-  state.time += 1;
-  state.waveBannerTimer = Math.max(0, state.waveBannerTimer - 1);
-  state.screenShake = Math.max(0, state.screenShake - 1);
-  state.damageFlash = Math.max(0, state.damageFlash - 1);
-  if (state.mode === "playing") {
-    updatePlayer();
-    updateBolts();
-    updateEnemies();
-    updateMode();
-  }
-  updateSparks();
-}
-
-function updatePlayer() {
-  const player = state.player;
-  let dx = 0;
-  let dy = 0;
-
-  if (pointerControl.active) {
-    dx = pointerControl.x - player.x;
-    dy = pointerControl.y - player.y;
-  } else {
-    if (keys.left) dx -= 1;
-    if (keys.right) dx += 1;
-    if (keys.up) dy -= 1;
-    if (keys.down) dy += 1;
-  }
-
-  const distance = Math.hypot(dx, dy);
-  if (distance > 3) {
-    const step = pointerControl.active ? Math.min(distance, player.speed) : player.speed;
-    const length = Math.hypot(dx, dy);
-    player.x += (dx / length) * step;
-    player.y += (dy / length) * step;
-  }
-
-  player.x = clamp(player.x, 20, W - 20);
-  player.y = clamp(player.y, 76, H - 34);
-
-  if (player.cooldown > 0) player.cooldown -= 1;
-  if (player.invincible > 0) player.invincible -= 1;
-  castSpell();
-}
-
-function updateBolts() {
-  for (const bolt of state.bolts) {
-    bolt.x += bolt.vx;
-    bolt.y += bolt.vy;
-  }
-
-  for (const enemy of state.enemies) {
-    for (const bolt of state.bolts) {
-      if (!bolt.spent && enemy.hp > 0 && rectCircle(enemy, bolt)) {
-        enemy.hp -= bolt.damage;
-        bolt.spent = true;
-        addSparks(bolt.x, bolt.y, 7, enemy.boss ? "#ffd166" : "#b8f2a2");
-        playSound("hit");
-        if (enemy.hp <= 0) break;
-      }
-    }
-  }
-
-  const defeated = state.enemies.filter((enemy) => enemy.hp <= 0);
-  for (const enemy of defeated) {
-    state.score += enemy.boss ? 1000 : state.wave * 100;
-    addSparks(enemy.x, enemy.y, enemy.boss ? 34 : 12, enemy.boss ? "#ffd166" : enemy.highlightColor);
-    state.screenShake = Math.max(state.screenShake, enemy.boss ? 16 : 3);
-    playSound("enemyDown");
-  }
-  state.enemies = state.enemies.filter((enemy) => enemy.hp > 0);
-  state.defeated += defeated.length;
-  state.bolts = state.bolts.filter((bolt) => !bolt.spent && bolt.y > -20 && bolt.x > -20 && bolt.x < W + 20);
-}
-
-function updateEnemies() {
-  const player = state.player;
-
-  for (const enemy of state.enemies) {
-    enemy.touchCooldown = Math.max(0, enemy.touchCooldown - 1);
-    if (enemy.boss) updateBoss(enemy, player);
-    else moveEnemyToward(enemy, player, 0.35);
-
-    if (overlap(player, enemy) && player.invincible <= 0 && enemy.touchCooldown <= 0) {
-      player.hp -= 1;
-      player.invincible = 70;
-      enemy.touchCooldown = 58;
-      addSparks(player.x, player.y, 16, "#ff6b6b");
-      state.screenShake = Math.max(state.screenShake, 10);
-      state.damageFlash = 8;
-      playSound("damage");
-      triggerHaptic(45);
-    }
-  }
-}
-
-function moveEnemyToward(enemy, target, wobbleAmount = 0) {
-  const dx = target.x - enemy.x;
-  const dy = target.y - enemy.y;
-  const length = Math.max(1, Math.hypot(dx, dy));
-  const wobble = Math.sin((state.time + enemy.x) / 18) * wobbleAmount;
-  enemy.x += (dx / length) * enemy.speed + wobble;
-  enemy.y += (dy / length) * enemy.speed;
-}
-
-function updateBoss(enemy, player) {
-  enemy.attackTimer -= 1;
-
-  if (enemy.attackState === "chase") {
-    moveEnemyToward(enemy, player, 0.16);
-    if (enemy.attackTimer <= 0) {
-      enemy.attackState = "telegraph";
-      enemy.attackTimer = 42;
-      enemy.targetX = player.x;
-      enemy.targetY = player.y;
-      addSparks(enemy.x, enemy.y, 12, "#ffd166");
-      playSound("warning");
-      triggerHaptic(16);
-    }
-    return;
-  }
-
-  if (enemy.attackState === "telegraph") {
-    if (enemy.attackTimer <= 0) {
-      const dx = enemy.targetX - enemy.x;
-      const dy = enemy.targetY - enemy.y;
-      const length = Math.max(1, Math.hypot(dx, dy));
-      enemy.dashVx = (dx / length) * 5.4;
-      enemy.dashVy = (dy / length) * 5.4;
-      enemy.attackState = "dash";
-      enemy.attackTimer = 24;
-      addSparks(enemy.x, enemy.y, 18, "#ff8c42");
-    }
-    return;
-  }
-
-  if (enemy.attackState === "dash") {
-    enemy.x += enemy.dashVx;
-    enemy.y += enemy.dashVy;
-    enemy.x = clamp(enemy.x, 20, W - 20);
-    enemy.y = clamp(enemy.y, 66, H - 30);
-    if (state.time % 2 === 0) addSparks(enemy.x, enemy.y, 2, "#ff8c42");
-    if (enemy.attackTimer <= 0) {
-      enemy.attackState = "recover";
-      enemy.attackTimer = 34;
-    }
-    return;
-  }
-
-  if (enemy.attackTimer <= 0) {
-    enemy.attackState = "chase";
-    enemy.attackTimer = 135;
-  }
-}
-
-function updateSparks() {
-  for (const spark of state.sparks) {
-    spark.x += spark.vx;
-    spark.y += spark.vy;
-    spark.life -= 1;
-  }
-
-  state.sparks = state.sparks.filter((spark) => spark.life > 0);
-}
-
-function updateMode() {
-  const player = state.player;
-
-  if (player.hp <= 0) {
-    finishRun("lose");
-  } else if (state.enemies.length === 0) {
-    if (state.wave >= TOTAL_WAVES) finishRun("win");
-    else showUpgradePanel();
-  }
-}
-
-function finishRun(mode) {
-  state.mode = mode;
-  clearInput();
-  saveBestScore();
-  playSound(mode);
-  triggerHaptic(mode === "win" ? [35, 45, 35, 45, 70] : [90, 60, 120]);
-}
-
-function showUpgradePanel() {
-  state.mode = "upgrade";
-  clearInput();
-  playSound("wave");
-  triggerHaptic([24, 45, 24]);
-  upgradeChoices.replaceChildren();
-
-  for (const upgrade of pickUpgradeChoices()) {
-    const button = document.createElement("button");
-    const title = document.createElement("strong");
-    const detail = document.createElement("span");
-    button.className = "upgrade-choice";
-    button.type = "button";
-    title.textContent = upgrade.title;
-    detail.textContent = upgrade.describe(state.player);
-    button.append(title, detail);
-    button.addEventListener("click", () => {
-      unlockAudio();
-      upgrade.apply(state.player);
-      playSound("upgrade");
-      triggerHaptic(28);
-      startWave(state.wave + 1);
-    }, { once: true });
-    upgradeChoices.append(button);
-  }
-
-  upgradePanel.hidden = false;
-}
-
-function hideUpgradePanel() {
-  upgradePanel.hidden = true;
-  upgradeChoices.replaceChildren();
-}
-
-function pickUpgradeChoices() {
-  const shuffled = UPGRADES.filter((upgrade) => upgrade.id !== "rapid" || state.player.cooldownMax > 8);
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const target = Math.floor(Math.random() * (index + 1));
-    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
-  }
-  return shuffled.slice(0, 3);
-}
-
 function clearInput() {
   for (const key of Object.keys(keys)) keys[key] = false;
-  if (pointerControl.pointerId !== null && canvas.hasPointerCapture?.(pointerControl.pointerId)) {
+  if (pointerControl.pointerId !== null && canvas.hasPointerCapture && canvas.hasPointerCapture(pointerControl.pointerId)) {
     canvas.releasePointerCapture(pointerControl.pointerId);
   }
   pointerControl.active = false;
@@ -682,7 +633,7 @@ function clearInput() {
 }
 
 function addSparks(x, y, count, color) {
-  for (let i = 0; i < count; i += 1) {
+  for (let index = 0; index < count; index += 1) {
     state.sparks.push({
       x,
       y,
@@ -697,6 +648,950 @@ function addSparks(x, y, count, color) {
   }
 }
 
+function overlap(a, b) {
+  return Math.abs(a.x - b.x) * 2 < a.w + b.w && Math.abs(a.y - b.y) * 2 < a.h + b.h;
+}
+
+function rectCircle(rect, circle) {
+  const nearestX = clamp(circle.x, rect.x - rect.w / 2, rect.x + rect.w / 2);
+  const nearestY = clamp(circle.y, rect.y - rect.h / 2, rect.y + rect.h / 2);
+  const dx = circle.x - nearestX;
+  const dy = circle.y - nearestY;
+  return dx * dx + dy * dy < circle.r * circle.r;
+}
+
+function spellName(spell) {
+  return SPELL_PARTS.forms[spell.form].title + " · " +
+    SPELL_PARTS.essences[spell.essence].title + " · " +
+    SPELL_PARTS.laws[spell.law].title;
+}
+
+function currentWaveDefinition() {
+  return RUN_DEFINITION[state.wave - 1] || RUN_DEFINITION[0];
+}
+
+function checkpointFromState(phase) {
+  return {
+    version: CHECKPOINT_VERSION,
+    phase,
+    seed: state.seed,
+    wave: state.wave,
+    score: state.score,
+    defeated: state.defeated,
+    elapsedFrames: state.runElapsed,
+    player: {
+      x: state.player.x,
+      y: state.player.y,
+      hp: state.player.hp,
+      maxHp: state.player.maxHp,
+      speed: state.player.speed,
+      power: state.player.power,
+      haste: state.player.haste,
+    },
+    spell: { form: state.spell.form, essence: state.spell.essence, law: state.spell.law },
+    supports: {
+      power: state.supports.power,
+      haste: state.supports.haste,
+      vitality: state.supports.vitality,
+      step: state.supports.step,
+    },
+  };
+}
+
+const EnemySystem = Object.freeze({
+  makeEnemy: function (x, y, event) {
+    const id = state.nextEnemyId;
+    state.nextEnemyId += 1;
+    if (event.boss) {
+      return {
+        id,
+        family: "boss",
+        title: "The Redactor",
+        x,
+        y,
+        w: 40,
+        h: 38,
+        hp: 150,
+        maxHp: 150,
+        speed: 0.38,
+        scoreValue: 1800,
+        boss: true,
+        elite: false,
+        bodyColor: "#7b2d43",
+        lightColor: "#e15b78",
+        touchCooldown: 0,
+        attackState: "hunt",
+        attackTimer: 105,
+        attackCycle: 0,
+        targetX: x,
+        targetY: y,
+        dashVx: 0,
+        dashVy: 0,
+        burnUntil: 0,
+        nextBurnAt: 0,
+        burnDamage: 0,
+        slowUntil: 0,
+        hitFlash: 0,
+      };
+    }
+
+    const config = ENEMY_FAMILIES[event.family];
+    const elite = event.elite === true;
+    const waveScale = (state.wave - 1) * 0.46;
+    const hp = elite ? 28 + currentWaveDefinition().act * 8 : config.hp + waveScale;
+    return {
+      id,
+      family: event.family,
+      title: elite ? "Ward Guardian" : config.title,
+      x,
+      y,
+      w: elite ? 30 : config.width,
+      h: elite ? 28 : config.height,
+      hp,
+      maxHp: hp,
+      speed: elite ? 0.43 + currentWaveDefinition().act * 0.02 : config.speed + currentWaveDefinition().act * 0.025,
+      scoreValue: elite ? 460 : config.score + state.wave * 8,
+      boss: false,
+      elite,
+      bodyColor: elite ? "#7455a6" : config.body,
+      lightColor: elite ? "#d8b5ff" : config.light,
+      touchCooldown: 0,
+      attackState: elite ? "hunt" : event.family === "caster" ? "reposition" : "chase",
+      attackTimer: elite ? 90 : event.family === "caster" ? 75 + Math.floor(seededUnit(state.seed, id, 8) * 35) : 0,
+      targetX: x,
+      targetY: y,
+      dashVx: 0,
+      dashVy: 0,
+      burnUntil: 0,
+      nextBurnAt: 0,
+      burnDamage: 0,
+      slowUntil: 0,
+      hitFlash: 0,
+    };
+  },
+
+  moveToward: function (enemy, target, speedScale, wobble) {
+    const dx = target.x - enemy.x;
+    const dy = target.y - enemy.y;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    const drift = Math.sin((state.time + enemy.id * 13) / 18) * wobble;
+    enemy.x += (dx / length) * enemy.speed * speedScale + drift;
+    enemy.y += (dy / length) * enemy.speed * speedScale;
+  },
+
+  moveCaster: function (enemy, player, speedScale) {
+    const dx = player.x - enemy.x;
+    const dy = player.y - enemy.y;
+    const distance = Math.max(1, Math.hypot(dx, dy));
+    if (enemy.attackState === "aim") {
+      if (enemy.attackTimer <= 0) {
+        this.fireAimedShot(enemy, enemy.targetX, enemy.targetY, 2.25, "#87d7ff");
+        enemy.attackState = "reposition";
+        enemy.attackTimer = 92;
+      }
+      return;
+    }
+
+    const direction = distance < 104 ? -1 : distance > 150 ? 1 : 0;
+    enemy.x += (dx / distance) * enemy.speed * speedScale * direction;
+    enemy.y += (dy / distance) * enemy.speed * speedScale * direction;
+    enemy.x += Math.sin((state.time + enemy.id * 19) / 22) * 0.22;
+    if (enemy.attackTimer <= 0) {
+      enemy.attackState = "aim";
+      enemy.attackTimer = 34;
+      enemy.targetX = player.x;
+      enemy.targetY = player.y;
+      playSound("warning");
+    }
+  },
+
+  updateElite: function (enemy, player, speedScale) {
+    if (enemy.attackState === "hunt") {
+      this.moveToward(enemy, player, speedScale, 0.12);
+      if (enemy.attackTimer <= 0) {
+        enemy.attackState = "telegraph";
+        enemy.attackTimer = 40;
+        enemy.targetX = player.x;
+        enemy.targetY = player.y;
+        addSparks(enemy.x, enemy.y, 12, "#d8b5ff");
+        playSound("warning");
+      }
+      return;
+    }
+    if (enemy.attackState === "telegraph") {
+      if (enemy.attackTimer <= 0) {
+        const dx = enemy.targetX - enemy.x;
+        const dy = enemy.targetY - enemy.y;
+        const length = Math.max(1, Math.hypot(dx, dy));
+        enemy.dashVx = (dx / length) * 5.1;
+        enemy.dashVy = (dy / length) * 5.1;
+        enemy.attackState = "dash";
+        enemy.attackTimer = 22;
+      }
+      return;
+    }
+    if (enemy.attackState === "dash") {
+      enemy.x += enemy.dashVx * speedScale;
+      enemy.y += enemy.dashVy * speedScale;
+      if (state.time % 2 === 0) addSparks(enemy.x, enemy.y, 1, "#d8b5ff");
+      if (enemy.attackTimer <= 0) {
+        enemy.attackState = "recover";
+        enemy.attackTimer = 34;
+      }
+      return;
+    }
+    if (enemy.attackTimer <= 0) {
+      enemy.attackState = "hunt";
+      enemy.attackTimer = 105;
+    }
+  },
+
+  updateBoss: function (enemy, player, speedScale) {
+    if (enemy.attackState === "hunt") {
+      this.moveToward(enemy, player, speedScale, 0.1);
+      if (enemy.attackTimer <= 0) {
+        enemy.attackCycle += 1;
+        if (enemy.attackCycle % 2 === 1) {
+          enemy.attackState = "volleyTell";
+          enemy.attackTimer = 48;
+        } else {
+          enemy.attackState = "dashTell";
+          enemy.attackTimer = 44;
+          enemy.targetX = player.x;
+          enemy.targetY = player.y;
+        }
+        addSparks(enemy.x, enemy.y, 16, "#ffd166");
+        playSound("warning");
+        triggerHaptic(18);
+      }
+      return;
+    }
+
+    if (enemy.attackState === "volleyTell") {
+      if (enemy.attackTimer <= 0) {
+        const count = enemy.hp < enemy.maxHp * 0.5 ? 12 : 9;
+        for (let index = 0; index < count; index += 1) {
+          const angle = (Math.PI * 2 * index) / count + enemy.attackCycle * 0.17;
+          this.fireProjectile(enemy.x, enemy.y, Math.cos(angle) * 1.85, Math.sin(angle) * 1.85, "#ff9b72", 240);
+        }
+        this.fireAimedShot(enemy, player.x, player.y, 2.7, "#ffd166");
+        enemy.attackState = "recover";
+        enemy.attackTimer = 42;
+      }
+      return;
+    }
+
+    if (enemy.attackState === "dashTell") {
+      if (enemy.attackTimer <= 0) {
+        const dx = enemy.targetX - enemy.x;
+        const dy = enemy.targetY - enemy.y;
+        const length = Math.max(1, Math.hypot(dx, dy));
+        enemy.dashVx = (dx / length) * 5.8;
+        enemy.dashVy = (dy / length) * 5.8;
+        enemy.attackState = "dash";
+        enemy.attackTimer = 26;
+      }
+      return;
+    }
+
+    if (enemy.attackState === "dash") {
+      enemy.x += enemy.dashVx * speedScale;
+      enemy.y += enemy.dashVy * speedScale;
+      if (state.time % 2 === 0) addSparks(enemy.x, enemy.y, 2, "#ff8c42");
+      if (enemy.attackTimer <= 0) {
+        enemy.attackState = "recover";
+        enemy.attackTimer = 38;
+      }
+      return;
+    }
+
+    if (enemy.attackTimer <= 0) {
+      enemy.attackState = "hunt";
+      enemy.attackTimer = enemy.hp < enemy.maxHp * 0.5 ? 72 : 96;
+    }
+  },
+
+  fireAimedShot: function (enemy, targetX, targetY, speed, color) {
+    const dx = targetX - enemy.x;
+    const dy = targetY - enemy.y;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    this.fireProjectile(enemy.x, enemy.y, (dx / length) * speed, (dy / length) * speed, color, 210);
+  },
+
+  fireProjectile: function (x, y, vx, vy, color, life) {
+    state.enemyProjectiles.push({ x, y, vx, vy, r: 5, color, life });
+    if (state.enemyProjectiles.length > MAX_ENEMY_PROJECTILES) {
+      state.enemyProjectiles.splice(0, state.enemyProjectiles.length - MAX_ENEMY_PROJECTILES);
+    }
+  },
+
+  update: function () {
+    const player = state.player;
+    for (const enemy of state.enemies) {
+      if (enemy.hp <= 0) continue;
+      enemy.touchCooldown = Math.max(0, enemy.touchCooldown - 1);
+      enemy.attackTimer -= 1;
+      enemy.hitFlash = Math.max(0, enemy.hitFlash - 1);
+
+      if (enemy.burnUntil > state.time && state.time >= enemy.nextBurnAt) {
+        enemy.hp -= enemy.burnDamage;
+        enemy.nextBurnAt = state.time + 30;
+        addSparks(enemy.x, enemy.y, 3, "#ff8c42");
+      }
+      if (enemy.hp <= 0) continue;
+
+      const speedScale = enemy.slowUntil > state.time ? 0.62 : 1;
+      if (enemy.boss) this.updateBoss(enemy, player, speedScale);
+      else if (enemy.elite) this.updateElite(enemy, player, speedScale);
+      else if (enemy.family === "caster") this.moveCaster(enemy, player, speedScale);
+      else this.moveToward(enemy, player, speedScale, 0.24);
+
+      enemy.x = clamp(enemy.x, 18, W - 18);
+      enemy.y = clamp(enemy.y, 64, H - 28);
+      if (overlap(player, enemy) && player.invincible <= 0 && enemy.touchCooldown <= 0) {
+        this.damagePlayer(enemy.boss ? 2 : 1);
+        enemy.touchCooldown = 58;
+      }
+    }
+  },
+
+  updateProjectiles: function () {
+    const player = state.player;
+    for (const shot of state.enemyProjectiles) {
+      shot.x += shot.vx;
+      shot.y += shot.vy;
+      shot.life -= 1;
+      if (shot.life > 0 && player.invincible <= 0 && rectCircle(player, shot)) {
+        shot.life = 0;
+        this.damagePlayer(1);
+      }
+    }
+    state.enemyProjectiles = state.enemyProjectiles.filter(function (shot) {
+      return shot.life > 0 && shot.x > -18 && shot.x < W + 18 && shot.y > 48 && shot.y < H + 18;
+    });
+  },
+
+  damagePlayer: function (amount) {
+    const player = state.player;
+    if (!player || player.invincible > 0) return;
+    player.hp -= amount;
+    player.invincible = 72;
+    addSparks(player.x, player.y, 16, "#ff6b6b");
+    state.screenShake = Math.max(state.screenShake, 10);
+    state.damageFlash = 8;
+    playSound("damage");
+    triggerHaptic(45);
+  },
+
+  applySpellHit: function (enemy, damage, essence) {
+    if (!enemy || enemy.hp <= 0) return;
+    enemy.hp -= damage;
+    enemy.hitFlash = 5;
+    if (essence === "ember") {
+      enemy.burnUntil = Math.max(enemy.burnUntil, state.time + 120);
+      enemy.burnDamage = Math.max(enemy.burnDamage, 0.22 + state.player.power * 0.08);
+      if (enemy.nextBurnAt <= state.time) enemy.nextBurnAt = state.time + 24;
+    } else {
+      enemy.slowUntil = Math.max(enemy.slowUntil, state.time + 105);
+    }
+    addSparks(enemy.x, enemy.y, 6, SPELL_PARTS.essences[essence].light);
+    playSound("hit");
+  },
+
+  collectDefeated: function () {
+    const defeated = state.enemies.filter(function (enemy) { return enemy.hp <= 0; });
+    for (const enemy of defeated) {
+      state.score += Math.round(enemy.scoreValue);
+      state.defeated += 1;
+      addSparks(enemy.x, enemy.y, enemy.boss ? 36 : enemy.elite ? 24 : 12, enemy.boss ? "#ffd166" : enemy.lightColor);
+      state.screenShake = Math.max(state.screenShake, enemy.boss ? 16 : enemy.elite ? 9 : 3);
+      playSound("enemyDown");
+    }
+    if (defeated.length > 0) {
+      state.enemies = state.enemies.filter(function (enemy) { return enemy.hp > 0; });
+    }
+  },
+});
+
+const SpawnSystem = Object.freeze({
+  point: function (eventIndex, unitIndex, boss) {
+    if (boss) return { x: W / 2, y: 92 };
+    const side = Math.floor(seededUnit(state.seed, state.wave, eventIndex, unitIndex, 1) * 3);
+    const position = seededUnit(state.seed, state.wave, eventIndex, unitIndex, 2);
+    if (side === 0) return { x: 34 + position * (W - 68), y: 72 };
+    if (side === 1) return { x: 22, y: 92 + position * (H - 174) };
+    return { x: W - 22, y: 92 + position * (H - 174) };
+  },
+
+  event: function (event, eventIndex) {
+    for (let unitIndex = 0; unitIndex < event.count; unitIndex += 1) {
+      const point = this.point(eventIndex, unitIndex, event.boss);
+      state.enemies.push(EnemySystem.makeEnemy(point.x, point.y, event));
+    }
+    const color = event.boss || event.elite ? "#ffd166" : event.family === "caster" ? "#8bc9eb" : "#83dc91";
+    const newest = state.enemies[state.enemies.length - 1];
+    addSparks(event.boss ? W / 2 : newest.x, event.boss ? 92 : newest.y, event.boss ? 28 : 7, color);
+  },
+
+  spawnDue: function () {
+    const definition = currentWaveDefinition();
+    while (state.spawnIndex < definition.events.length && definition.events[state.spawnIndex].at <= state.waveFrame) {
+      this.event(definition.events[state.spawnIndex], state.spawnIndex);
+      state.spawnIndex += 1;
+    }
+  },
+});
+
+const SpellSystem = Object.freeze({
+  selectTarget: function () {
+    let target = null;
+    let bestScore = Infinity;
+    const player = state.player;
+    if (!player) return null;
+    for (const enemy of state.enemies) {
+      if (enemy.hp <= 0) continue;
+      const distance = Math.hypot(enemy.x - player.x, enemy.y - player.y);
+      const priority = (enemy.family === "caster" ? 24 : 0) + (enemy.elite ? 30 : 0) + (enemy.boss ? 18 : 0);
+      const threatScore = distance - priority;
+      if (threatScore < bestScore || (Math.abs(threatScore - bestScore) < 0.001 && target && enemy.id < target.id)) {
+        target = enemy;
+        bestScore = threatScore;
+      }
+    }
+    state.targetId = target ? target.id : null;
+    return target;
+  },
+
+  targetById: function (id) {
+    return state.enemies.find(function (enemy) { return enemy.id === id && enemy.hp > 0; }) || null;
+  },
+
+  cast: function (multiplier, forcedTargetId) {
+    if (!state.player || state.mode !== "playing" || state.menuOpen) return false;
+    const target = this.targetById(forcedTargetId) || this.selectTarget();
+    if (!target) return false;
+    const player = state.player;
+    const form = state.spell.form;
+    const law = state.spell.law;
+    const baseCooldown = SPELL_PARTS.forms[form].cooldown;
+    if (multiplier === undefined) {
+      if (player.cooldown > 0) return false;
+      player.cooldown = Math.max(8, Math.round(baseCooldown * (1 - player.haste)));
+    }
+    const castMultiplier = multiplier === undefined ? 1 : multiplier;
+    this.spawnCast(target, castMultiplier);
+    if (law === "echo" && multiplier === undefined) {
+      state.pendingCasts.push({
+        at: state.time + 12,
+        targetId: target.id,
+        multiplier: 0.74,
+      });
+      if (state.pendingCasts.length > MAX_PENDING_CASTS) {
+        state.pendingCasts.splice(0, state.pendingCasts.length - MAX_PENDING_CASTS);
+      }
+    }
+    addSparks(player.x, player.y - 17, form === "orbit" ? 7 : 5, SPELL_PARTS.essences[state.spell.essence].light);
+    playSound("cast");
+    return true;
+  },
+
+  spawnCast: function (target, castMultiplier) {
+    const player = state.player;
+    const essence = state.spell.essence;
+    const split = state.spell.law === "split";
+    const count = split ? 3 : 1;
+    const dx = target.x - player.x;
+    const dy = target.y - player.y;
+    const baseAngle = Math.atan2(dy, dx);
+    for (let index = 0; index < count; index += 1) {
+      const offset = count === 1 ? 0 : (index - 1) * 0.2;
+      if (state.spell.form === "bolt") {
+        const speed = essence === "frost" ? 5.25 : 5.65;
+        const damageBase = essence === "ember" ? 1.8 : 1.4;
+        const damage = (damageBase + player.power) * castMultiplier * (split ? 0.73 : 1);
+        state.projectiles.push({
+          kind: "bolt",
+          essence,
+          x: player.x,
+          y: player.y - 13,
+          vx: Math.cos(baseAngle + offset) * speed,
+          vy: Math.sin(baseAngle + offset) * speed,
+          speed,
+          targetId: target.id,
+          r: essence === "ember" ? 5 : 4,
+          damage,
+          life: 105,
+          pierce: essence === "frost" ? 1 : 0,
+          hitIds: {},
+        });
+      } else {
+        const damageBase = essence === "ember" ? 0.94 : 0.72;
+        state.projectiles.push({
+          kind: "orbit",
+          essence,
+          x: player.x,
+          y: player.y,
+          r: 10,
+          damage: (damageBase + player.power * 0.42) * castMultiplier * (split ? 0.72 : 1),
+          life: 112,
+          angle: baseAngle + offset + (Math.PI * 2 * index) / count,
+          radius: count === 1 ? 35 : 30 + index * 5,
+          angularVelocity: essence === "frost" ? 0.073 : 0.088,
+          hitIds: {},
+        });
+      }
+    }
+    if (state.projectiles.length > MAX_PROJECTILES) {
+      state.projectiles.splice(0, state.projectiles.length - MAX_PROJECTILES);
+    }
+  },
+
+  processPending: function () {
+    const ready = state.pendingCasts.filter(function (pending) { return pending.at <= state.time; });
+    state.pendingCasts = state.pendingCasts.filter(function (pending) { return pending.at > state.time; });
+    for (const pending of ready) this.cast(pending.multiplier, pending.targetId);
+  },
+
+  hitEnemy: function (projectile, enemy) {
+    EnemySystem.applySpellHit(enemy, projectile.damage, projectile.essence);
+    projectile.hitIds[enemy.id] = state.time;
+    if (projectile.essence === "ember") {
+      for (const nearby of state.enemies) {
+        if (nearby.id === enemy.id || nearby.hp <= 0) continue;
+        if (Math.hypot(nearby.x - enemy.x, nearby.y - enemy.y) <= 34) {
+          EnemySystem.applySpellHit(nearby, projectile.damage * 0.32, "ember");
+        }
+      }
+    }
+  },
+
+  updateProjectiles: function () {
+    for (const projectile of state.projectiles) {
+      projectile.life -= 1;
+      if (projectile.kind === "bolt") {
+        let target = this.targetById(projectile.targetId);
+        if (!target) {
+          target = this.selectTarget();
+          projectile.targetId = target ? target.id : null;
+        }
+        if (target) {
+          const dx = target.x - projectile.x;
+          const dy = target.y - projectile.y;
+          const length = Math.max(1, Math.hypot(dx, dy));
+          projectile.vx = projectile.vx * 0.9 + (dx / length) * projectile.speed * 0.1;
+          projectile.vy = projectile.vy * 0.9 + (dy / length) * projectile.speed * 0.1;
+          const velocityLength = Math.max(0.01, Math.hypot(projectile.vx, projectile.vy));
+          projectile.vx = (projectile.vx / velocityLength) * projectile.speed;
+          projectile.vy = (projectile.vy / velocityLength) * projectile.speed;
+        }
+        projectile.x += projectile.vx;
+        projectile.y += projectile.vy;
+        for (const enemy of state.enemies) {
+          if (enemy.hp <= 0 || projectile.hitIds[enemy.id] || !rectCircle(enemy, projectile)) continue;
+          this.hitEnemy(projectile, enemy);
+          projectile.pierce -= 1;
+          if (projectile.pierce < 0) {
+            projectile.life = 0;
+            break;
+          }
+        }
+      } else {
+        projectile.angle += projectile.angularVelocity;
+        projectile.x = state.player.x + Math.cos(projectile.angle) * projectile.radius;
+        projectile.y = state.player.y + Math.sin(projectile.angle) * projectile.radius;
+        for (const enemy of state.enemies) {
+          const lastHit = projectile.hitIds[enemy.id] === undefined ? -Infinity : projectile.hitIds[enemy.id];
+          if (enemy.hp <= 0 || state.time - lastHit < 24 || !rectCircle(enemy, projectile)) continue;
+          this.hitEnemy(projectile, enemy);
+        }
+      }
+    }
+    state.projectiles = state.projectiles.filter(function (projectile) {
+      if (projectile.life <= 0) return false;
+      if (projectile.kind === "orbit") return true;
+      return projectile.x > -24 && projectile.x < W + 24 && projectile.y > 42 && projectile.y < H + 24;
+    });
+  },
+
+  update: function () {
+    this.selectTarget();
+    this.processPending();
+    this.cast();
+    this.updateProjectiles();
+  },
+});
+
+const RunSystem = Object.freeze({
+  resetRuntime: function () {
+    clearInput();
+    state.menuOpen = false;
+    menuPanel.hidden = true;
+    state.time = 0;
+    state.wave = 0;
+    state.waveFrame = 0;
+    state.runElapsed = 0;
+    state.spawnIndex = 0;
+    state.targetId = null;
+    state.score = 0;
+    state.defeated = 0;
+    state.enemies = [];
+    state.projectiles = [];
+    state.enemyProjectiles = [];
+    state.pendingCasts = [];
+    state.sparks = [];
+    state.waveBannerTimer = 0;
+    state.waveBannerText = "";
+    state.screenShake = 0;
+    state.damageFlash = 0;
+    state.player = normalizePlayer(null);
+    state.spell = normalizeSpell(null);
+    state.supports = normalizeSupports(null);
+    pointerControl.x = state.player.x;
+    pointerControl.y = state.player.y;
+  },
+
+  startNew: function (seed) {
+    this.resetRuntime();
+    state.seed = safeInteger(seed === undefined ? createRunSeed() : seed, 1, 1, 0xffffffff);
+    this.startWave(1, true);
+  },
+
+  resume: function () {
+    const checkpoint = normalizeCheckpoint(persistent.checkpoint);
+    if (!checkpoint) {
+      this.startNew();
+      return false;
+    }
+    this.resetRuntime();
+    state.seed = checkpoint.seed;
+    state.wave = checkpoint.wave;
+    state.score = checkpoint.score;
+    state.defeated = checkpoint.defeated;
+    state.runElapsed = checkpoint.elapsedFrames;
+    state.player = normalizePlayer(checkpoint.player);
+    state.spell = normalizeSpell(checkpoint.spell);
+    state.supports = normalizeSupports(checkpoint.supports);
+    pointerControl.x = state.player.x;
+    pointerControl.y = state.player.y;
+    startPanel.hidden = true;
+    if (checkpoint.phase === "upgrade" && checkpoint.wave < TOTAL_WAVES) {
+      state.mode = "upgrade";
+      UISystem.showRewrite(false);
+    } else {
+      this.startWave(checkpoint.wave, false);
+    }
+    return true;
+  },
+
+  startWave: function (wave, saveBoundary) {
+    const definition = RUN_DEFINITION[wave - 1];
+    state.wave = wave;
+    state.waveFrame = 0;
+    state.spawnIndex = 0;
+    state.nextEnemyId = wave * 1000 + 1;
+    state.targetId = null;
+    state.mode = "playing";
+    state.player.x = W / 2;
+    state.player.y = H - 72;
+    state.player.cooldown = 0;
+    state.player.invincible = 35;
+    pointerControl.x = state.player.x;
+    pointerControl.y = state.player.y;
+    state.enemies = [];
+    state.projectiles = [];
+    state.enemyProjectiles = [];
+    state.pendingCasts = [];
+    state.waveBannerText = definition.boss
+      ? "ACT III BOSS"
+      : definition.guardian
+        ? "ACT " + roman(definition.act) + " GUARDIAN"
+        : "ACT " + roman(definition.act) + " · WAVE " + wave;
+    state.waveBannerTimer = WAVE_BANNER_DURATION;
+    startPanel.hidden = true;
+    UISystem.hideRewrite();
+    if (saveBoundary !== false) SaveSystem.setCheckpoint(checkpointFromState("wave"));
+    SpawnSystem.spawnDue();
+    addSparks(W / 2, 92, definition.boss ? 22 : 10, definition.guardian ? "#d8b5ff" : "#9bf6ff");
+  },
+
+  update: function () {
+    state.waveFrame += 1;
+    state.runElapsed += 1;
+    SpawnSystem.spawnDue();
+    const definition = currentWaveDefinition();
+    if (state.player.hp <= 0) {
+      this.finish("lose");
+      return;
+    }
+    if (state.spawnIndex >= definition.events.length && state.waveFrame >= definition.duration && state.enemies.length === 0) {
+      this.completeWave();
+    }
+  },
+
+  completeWave: function () {
+    SaveSystem.proveCombination(state.spell);
+    if (state.wave === 4 || state.wave === 8) state.player.hp = state.player.maxHp;
+    else state.player.hp = Math.min(state.player.maxHp, state.player.hp + 1);
+    if (state.wave >= TOTAL_WAVES) {
+      this.finish("win");
+      return;
+    }
+    state.mode = "upgrade";
+    clearInput();
+    SaveSystem.setCheckpoint(checkpointFromState("upgrade"));
+    UISystem.showRewrite(false);
+    playSound("wave");
+    triggerHaptic([24, 45, 24]);
+  },
+
+  chooseRewrite: function (apply) {
+    if (state.mode !== "upgrade") return;
+    apply();
+    playSound("upgrade");
+    triggerHaptic(28);
+    this.startWave(state.wave + 1, true);
+  },
+
+  finish: function (mode) {
+    state.mode = mode;
+    clearInput();
+    SaveSystem.proveCombination(state.spell);
+    if (state.score > persistent.profile.bestScore) persistent.profile.bestScore = state.score;
+    state.bestScore = persistent.profile.bestScore;
+    if (mode === "win") {
+      persistent.profile.wins += 1;
+      if (persistent.profile.bestTimeFrames === 0 || state.runElapsed < persistent.profile.bestTimeFrames) {
+        persistent.profile.bestTimeFrames = state.runElapsed;
+      }
+    }
+    persistent.checkpoint = null;
+    SaveSystem.write();
+    playSound(mode);
+    triggerHaptic(mode === "win" ? [35, 45, 35, 45, 70] : [90, 60, 120]);
+    UISystem.syncStartPanel();
+  },
+});
+
+function roman(number) {
+  return number === 1 ? "I" : number === 2 ? "II" : "III";
+}
+
+function formatFrames(frames) {
+  const totalSeconds = Math.max(0, Math.ceil(frames / FPS));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return minutes + ":" + String(seconds).padStart(2, "0");
+}
+
+const UISystem = Object.freeze({
+  syncSettings: function () {
+    soundButton.textContent = "Sound: " + (settings.sound ? "On" : "Off");
+    soundButton.setAttribute("aria-pressed", String(settings.sound));
+    hapticsButton.textContent = "Haptics: " + (settings.haptics ? "On" : "Off");
+    hapticsButton.setAttribute("aria-pressed", String(settings.haptics));
+  },
+
+  syncStartPanel: function () {
+    const checkpoint = normalizeCheckpoint(persistent.checkpoint);
+    startPanel.hidden = state.mode !== "menu";
+    resumeRunButton.hidden = !checkpoint;
+    if (checkpoint) {
+      resumeRunButton.textContent = checkpoint.phase === "upgrade"
+        ? "Resume Rewrite after Wave " + checkpoint.wave
+        : "Resume Wave " + checkpoint.wave;
+      startStatus.textContent = "Checkpoint: " + spellName(checkpoint.spell) + " · " + formatFrames(checkpoint.elapsedFrames);
+    } else {
+      startStatus.textContent = "Survive three acts and twelve scheduled waves.";
+    }
+    spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length + "/8";
+  },
+
+  showRewrite: function (saveBoundary) {
+    if (saveBoundary) SaveSystem.setCheckpoint(checkpointFromState("upgrade"));
+    upgradeChoices.replaceChildren();
+    const definition = currentWaveDefinition();
+    upgradeTitle.textContent = state.wave === 4
+      ? "Act I cleared · Rewrite"
+      : state.wave === 8
+        ? "Act II cleared · Rewrite"
+        : "Rewrite one word";
+
+    const nextForm = state.spell.form === "bolt" ? "orbit" : "bolt";
+    const nextEssence = state.spell.essence === "ember" ? "frost" : "ember";
+    const nextLaw = state.spell.law === "split" ? "echo" : "split";
+    const support = SUPPORT_UPGRADES[hashNumbers(state.seed, state.wave, 77) % SUPPORT_UPGRADES.length];
+    const options = [
+      {
+        axis: "form",
+        title: "FORM → " + SPELL_PARTS.forms[nextForm].title,
+        detail: SPELL_PARTS.forms[nextForm].description,
+        apply: function () { state.spell.form = nextForm; },
+      },
+      {
+        axis: "essence",
+        title: "ESSENCE → " + SPELL_PARTS.essences[nextEssence].title,
+        detail: SPELL_PARTS.essences[nextEssence].description,
+        apply: function () { state.spell.essence = nextEssence; },
+      },
+      {
+        axis: "law",
+        title: "LAW → " + SPELL_PARTS.laws[nextLaw].title,
+        detail: SPELL_PARTS.laws[nextLaw].description,
+        apply: function () { state.spell.law = nextLaw; },
+      },
+      {
+        axis: "support",
+        title: "SUPPORT → " + support.title,
+        detail: support.describe(state.player),
+        apply: function () { support.apply(state.player, state.supports); },
+      },
+    ];
+
+    for (const option of options) {
+      const button = document.createElement("button");
+      const title = document.createElement("strong");
+      const detail = document.createElement("span");
+      button.className = "upgrade-choice";
+      button.type = "button";
+      button.dataset.axis = option.axis;
+      title.textContent = option.title;
+      detail.textContent = option.detail;
+      button.append(title, detail);
+      button.addEventListener("click", function () {
+        unlockAudio();
+        RunSystem.chooseRewrite(option.apply);
+      }, { once: true });
+      upgradeChoices.append(button);
+    }
+    upgradePanel.hidden = false;
+    this.updateHud();
+  },
+
+  hideRewrite: function () {
+    upgradePanel.hidden = true;
+    upgradeChoices.replaceChildren();
+  },
+
+  openMenu: function (reason) {
+    if (state.menuOpen) return;
+    clearInput();
+    state.menuOpen = true;
+    menuPanel.hidden = false;
+    if (state.mode === "playing") {
+      menuEyebrow.textContent = reason === "interruption" ? "Auto-Paused" : "Trial Paused";
+      menuTitle.textContent = reason === "interruption" ? "Your Checkpoint Is Safe" : "Take a Breath";
+      menuStatus.textContent = reason === "interruption"
+        ? "Action stopped when the game lost focus. This wave restarts from its boundary if the app closes."
+        : "Enemies, projectiles, and the wave clock are frozen.";
+      resumeButton.textContent = "Resume Trial";
+      newRunButton.textContent = "Restart Trial";
+    } else if (state.mode === "upgrade") {
+      menuEyebrow.textContent = "Trial Options";
+      menuTitle.textContent = "Rewrite Waiting";
+      menuStatus.textContent = "This wave boundary is saved. Return to choose one change.";
+      resumeButton.textContent = "Back to Rewrite";
+      newRunButton.textContent = "Restart Trial";
+    } else {
+      menuEyebrow.textContent = "Options";
+      menuTitle.textContent = "Game Settings";
+      menuStatus.textContent = "Sound and haptic choices save automatically.";
+      resumeButton.textContent = "Close";
+      newRunButton.textContent = state.mode === "menu" ? "Start New Trial" : "Play Again";
+    }
+    if (reason === "back") {
+      menuStatus.textContent = "The Trial is paused. Resume here, or press Back again to exit.";
+    }
+    this.syncSettings();
+    this.updateHud();
+  },
+
+  closeMenu: function () {
+    if (!state.menuOpen) return;
+    state.menuOpen = false;
+    menuPanel.hidden = true;
+    clearInput();
+    this.updateHud();
+  },
+
+  updateHud: function () {
+    const player = state.player;
+    menuButton.textContent = state.menuOpen ? "Resume" : state.mode === "playing" ? "Pause" : "Options";
+    menuButton.setAttribute("aria-label", state.menuOpen ? "Resume game" : state.mode === "playing" ? "Pause game" : "Open options");
+    healthText.textContent = player ? "HP " + Math.max(0, Math.ceil(player.hp)) + "/" + player.maxHp : "HP 5/5";
+    spellText.textContent = spellName(state.spell);
+    if (state.mode === "menu") {
+      waveText.textContent = TOTAL_WAVES + " Waves";
+      scoreText.textContent = "Best " + state.bestScore;
+    } else if (state.mode === "win") {
+      waveText.textContent = "Complete " + formatFrames(state.runElapsed);
+      scoreText.textContent = "Score " + state.score;
+    } else if (state.mode === "lose") {
+      waveText.textContent = "Wave " + state.wave + "/" + TOTAL_WAVES;
+      scoreText.textContent = "Score " + state.score;
+    } else if (state.mode === "upgrade") {
+      waveText.textContent = "Wave " + state.wave + " Clear";
+      scoreText.textContent = "Score " + state.score;
+    } else {
+      const definition = currentWaveDefinition();
+      const remaining = Math.max(0, definition.duration - state.waveFrame);
+      waveText.textContent = "A" + definition.act + " " + state.wave + "/" + TOTAL_WAVES + " " + formatFrames(remaining);
+      scoreText.textContent = "Score " + state.score;
+    }
+  },
+});
+
+function updatePlayer() {
+  const player = state.player;
+  let dx = 0;
+  let dy = 0;
+  if (pointerControl.active) {
+    dx = pointerControl.x - player.x;
+    dy = pointerControl.y - player.y;
+  } else {
+    if (keys.left) dx -= 1;
+    if (keys.right) dx += 1;
+    if (keys.up) dy -= 1;
+    if (keys.down) dy += 1;
+  }
+  const distance = Math.hypot(dx, dy);
+  if (distance > 3) {
+    const step = pointerControl.active ? Math.min(distance, player.speed) : player.speed;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    player.x += (dx / length) * step;
+    player.y += (dy / length) * step;
+  }
+  player.x = clamp(player.x, 20, W - 20);
+  player.y = clamp(player.y, 76, H - 34);
+  if (player.cooldown > 0) player.cooldown -= 1;
+  if (player.invincible > 0) player.invincible -= 1;
+}
+
+function updateSparks() {
+  for (const spark of state.sparks) {
+    spark.x += spark.vx;
+    spark.y += spark.vy;
+    spark.life -= 1;
+  }
+  state.sparks = state.sparks.filter(function (spark) { return spark.life > 0; });
+}
+
+function update() {
+  if (state.menuOpen) return;
+  state.time += 1;
+  state.waveBannerTimer = Math.max(0, state.waveBannerTimer - 1);
+  state.screenShake = Math.max(0, state.screenShake - 1);
+  state.damageFlash = Math.max(0, state.damageFlash - 1);
+  if (state.mode === "playing") {
+    updatePlayer();
+    EnemySystem.update();
+    EnemySystem.updateProjectiles();
+    SpellSystem.update();
+    EnemySystem.collectDefeated();
+    RunSystem.update();
+  }
+  updateSparks();
+}
+
 function draw() {
   ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = "#080b12";
@@ -707,41 +1602,36 @@ function draw() {
     ctx.translate((Math.random() - 0.5) * strength * 2, (Math.random() - 0.5) * strength * 2);
   }
   drawBackground();
-
   if (state.mode === "menu") {
-    drawMenu();
+    drawMage(W / 2, 390, false);
   } else {
-    drawBolts();
+    drawEnemyProjectiles();
+    drawProjectiles();
     drawEnemies();
+    drawTargetFeedback();
     drawPlayer();
     drawPointerTarget();
     drawSparks();
-    drawBanner();
+    drawEndBanner();
     drawWaveAnnouncement();
   }
   ctx.restore();
-
   if (state.damageFlash > 0) {
-    ctx.fillStyle = `rgba(255, 62, 62, ${0.04 + state.damageFlash * 0.018})`;
+    ctx.fillStyle = "rgba(255, 62, 62, " + (0.04 + state.damageFlash * 0.018) + ")";
     ctx.fillRect(0, 0, W, H);
   }
-
-  updateHud();
+  UISystem.updateHud();
 }
 
 function drawBackground() {
   ctx.fillStyle = "#121827";
   ctx.fillRect(0, 0, W, H);
-
   ctx.fillStyle = "#18223a";
   for (let y = 40; y < H; y += 24) {
     for (let x = 0; x < W; x += 24) {
-      if ((x + y / 2) % 48 === 0) {
-        ctx.fillRect(x, y, 12, 12);
-      }
+      if ((x + y / 2) % 48 === 0) ctx.fillRect(x, y, 12, 12);
     }
   }
-
   ctx.save();
   ctx.globalAlpha = 0.28;
   ctx.strokeStyle = "#52618d";
@@ -755,40 +1645,27 @@ function drawBackground() {
   ctx.lineTo(W / 2, H / 2 + 78);
   ctx.stroke();
   ctx.restore();
-
   for (let index = 0; index < 7; index += 1) {
     const fireflyX = 24 + ((index * 47 + state.time * 0.14) % (W - 48));
     const fireflyY = 74 + ((index * 61 + Math.sin((state.time + index * 20) / 24) * 18) % (H - 138));
     ctx.fillStyle = index % 2 === 0 ? "rgba(155, 246, 255, 0.5)" : "rgba(255, 209, 102, 0.42)";
     ctx.fillRect(Math.round(fireflyX), Math.round(fireflyY), 2, 2);
   }
-
   ctx.fillStyle = "#24314e";
   ctx.fillRect(0, 0, W, 50);
   ctx.fillStyle = "#2e6b4f";
-  for (let i = 0; i < 8; i += 1) {
-    const x = i * 44 - 10;
+  for (let index = 0; index < 8; index += 1) {
+    const x = index * 44 - 10;
     ctx.fillRect(x + 12, 24, 12, 26);
     ctx.fillRect(x + 4, 12, 28, 18);
     ctx.fillRect(x + 10, 4, 16, 12);
   }
-
   ctx.fillStyle = "#0c101b";
   ctx.fillRect(0, H - 26, W, 26);
 }
 
-function drawMenu() {
-  drawPanel(24, 104, 272, 238);
-  drawText("PIXEL MAGE", W / 2, 145, 22, "#ffd166", "center");
-  drawText("FIVE WAVES • ONE BOSS", W / 2, 177, 10, "#f3ead7", "center");
-  drawText("DRAG TO DODGE", W / 2, 211, 11, "#9bf6ff", "center");
-  drawText("SPELLS CAST AUTOMATICALLY", W / 2, 235, 9, "#aab1c7", "center");
-  drawText("Choose an upgrade after each wave", W / 2, 263, 9, "#aab1c7", "center");
-  drawText("TAP ARENA TO START", W / 2, 305, 12, "#ffd166", "center");
-  drawMage(W / 2, 382, false);
-}
-
 function drawPlayer() {
+  if (!state.player) return;
   const flicker = state.player.invincible > 0 && Math.floor(state.time / 5) % 2 === 0;
   const moving = pointerControl.active || keys.left || keys.right || keys.up || keys.down;
   if (!flicker) drawMage(state.player.x, state.player.y, moving);
@@ -796,7 +1673,6 @@ function drawPlayer() {
 
 function drawPointerTarget() {
   if (!pointerControl.active || state.mode !== "playing") return;
-
   ctx.save();
   ctx.globalAlpha = 0.65;
   ctx.strokeStyle = "#9bf6ff";
@@ -811,14 +1687,32 @@ function drawPointerTarget() {
   ctx.restore();
 }
 
+function drawTargetFeedback() {
+  const target = SpellSystem.targetById(state.targetId);
+  if (!target || state.mode !== "playing") return;
+  const radius = Math.max(target.w, target.h) * 0.68 + 7 + Math.sin(state.time / 5) * 1.5;
+  ctx.save();
+  ctx.globalAlpha = 0.72;
+  ctx.strokeStyle = SPELL_PARTS.essences[state.spell.essence].light;
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.arc(target.x, target.y, radius, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.globalAlpha = 0.16;
+  ctx.beginPath();
+  ctx.moveTo(state.player.x, state.player.y - 12);
+  ctx.lineTo(target.x, target.y);
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawMage(x, y, moving) {
   const bob = moving ? Math.sin(state.time / 5) * 2 : 0;
   const px = Math.round(x);
   const py = Math.round(y + bob);
-
   ctx.fillStyle = "#0a0d15";
   ctx.fillRect(px - 10, py + 10, 20, 5);
-
   ctx.fillStyle = "#24203b";
   ctx.fillRect(px - 8, py - 5, 16, 20);
   ctx.fillStyle = "#5b3d9a";
@@ -827,7 +1721,6 @@ function drawMage(x, y, moving) {
   ctx.fillRect(px - 4, py - 1, 8, 13);
   ctx.fillStyle = "#ffd166";
   ctx.fillRect(px - 1, py + 2, 2, 10);
-
   ctx.fillStyle = "#3a283e";
   ctx.fillRect(px - 6, py - 15, 12, 11);
   ctx.fillStyle = "#f4c38b";
@@ -839,108 +1732,170 @@ function drawMage(x, y, moving) {
   ctx.fillRect(px - 4, py - 27, 8, 10);
   ctx.fillStyle = "#5c4ba0";
   ctx.fillRect(px - 2, py - 25, 4, 7);
-
   ctx.fillStyle = "#253044";
   ctx.fillRect(px + 8, py - 9, 4, 20);
-  ctx.fillStyle = "#9bf6ff";
+  ctx.fillStyle = SPELL_PARTS.essences[state.spell.essence].color;
   ctx.fillRect(px + 7, py - 13, 6, 6);
-  ctx.fillStyle = Math.floor(state.time / 5) % 2 === 0 ? "#e0fbff" : "#9bf6ff";
+  ctx.fillStyle = SPELL_PARTS.essences[state.spell.essence].light;
   ctx.fillRect(px + 9, py - 12, 2, 2);
 }
 
 function drawEnemies() {
   for (const enemy of state.enemies) {
-    if (enemy.boss) {
-      drawBoss(enemy);
-    } else {
-      drawSlime(enemy);
+    if (enemy.boss) drawBoss(enemy);
+    else if (enemy.family === "caster") drawCaster(enemy);
+    else drawMote(enemy);
+    if (enemy.elite) drawEliteMarks(enemy);
+    const showBar = enemy.boss || enemy.elite || enemy.hp < enemy.maxHp || enemy.family === "caster";
+    if (showBar) {
+      const width = enemy.boss ? 54 : enemy.elite ? 42 : 27;
+      drawHealthBar(enemy.x - width / 2, enemy.y - enemy.h / 2 - 10, width, enemy.hp / enemy.maxHp);
     }
   }
 }
 
-function drawSlime(enemy) {
+function drawMote(enemy) {
   const x = Math.round(enemy.x);
   const y = Math.round(enemy.y);
-  const pulse = Math.sin(state.time / 8 + x) * 1.5;
-  const scaleX = enemy.w / 20;
-  const scaleY = enemy.h / 18;
-
+  const pulse = Math.sin(state.time / 8 + enemy.id) * 1.5;
+  const scaleX = enemy.w / 18;
+  const scaleY = enemy.h / 16;
   ctx.save();
   ctx.translate(x, y + pulse);
   ctx.scale(scaleX, scaleY);
   ctx.fillStyle = "#0a0d15";
-  ctx.fillRect(-11, 9, 22, 5);
-  ctx.fillStyle = enemy.bodyColor;
-  ctx.fillRect(-10, -5, 20, 16);
-  ctx.fillStyle = enemy.highlightColor;
-  ctx.fillRect(-5, -10, 10, 6);
+  ctx.fillRect(-10, 8, 20, 5);
+  ctx.fillStyle = enemy.hitFlash > 0 ? "#f4f0ff" : enemy.bodyColor;
+  ctx.fillRect(-9, -5, 18, 14);
+  ctx.fillStyle = enemy.lightColor;
+  ctx.fillRect(-4, -10, 8, 6);
   ctx.fillStyle = "#101420";
   ctx.fillRect(-5, 0, 3, 3);
   ctx.fillRect(3, 0, 3, 3);
-
-  if (enemy.variant === "swift") {
-    ctx.fillStyle = "#9bf6ff";
-    ctx.fillRect(-14, -3, 5, 2);
-    ctx.fillRect(9, 3, 5, 2);
-  } else if (enemy.variant === "iron") {
-    ctx.fillStyle = "#c6b7e5";
-    ctx.fillRect(-9, -3, 18, 3);
-    ctx.fillRect(-8, 5, 5, 4);
-    ctx.fillRect(3, 5, 5, 4);
-  } else {
-    ctx.fillStyle = "#b8f2a2";
-    ctx.fillRect(-2, -13, 4, 4);
-    ctx.fillRect(2, -16, 5, 3);
-  }
   ctx.restore();
-  const barWidth = Math.max(24, enemy.w + 4);
-  drawHealthBar(enemy.x - barWidth / 2, enemy.y - enemy.h - 4, barWidth, enemy.hp / enemy.maxHp);
 }
 
-function drawBoss(enemy) {
+function drawCaster(enemy) {
   const x = Math.round(enemy.x);
-  const y = Math.round(enemy.y);
-  const pulse = Math.sin(state.time / 10) * 2;
-
-  if (enemy.attackState === "telegraph") {
-    const warningPulse = 24 + Math.sin(state.time / 3) * 4;
+  const y = Math.round(enemy.y + Math.sin((state.time + enemy.id) / 9));
+  if (enemy.attackState === "aim") {
     ctx.save();
-    ctx.strokeStyle = "#ffd166";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(x, y, warningPulse, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = "#87d7ff";
+    ctx.globalAlpha = 0.7;
+    ctx.setLineDash([3, 5]);
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(enemy.targetX, enemy.targetY);
     ctx.stroke();
     ctx.restore();
   }
-
   ctx.fillStyle = "#0a0d15";
-  ctx.fillRect(x - 19, y + 16, 38, 7);
-  ctx.fillStyle = enemy.attackState === "dash" ? "#d95d39" : enemy.attackState === "telegraph" ? "#a74643" : "#7b2d43";
-  ctx.fillRect(x - 17, y - 10 + pulse, 34, 28);
-  ctx.fillStyle = "#c44569";
-  ctx.fillRect(x - 10, y - 18 + pulse, 20, 10);
-  ctx.fillStyle = "#ffd166";
-  ctx.fillRect(x - 16, y - 22 + pulse, 7, 7);
-  ctx.fillRect(x + 9, y - 22 + pulse, 7, 7);
+  ctx.fillRect(x - 11, y + 9, 22, 5);
+  ctx.fillStyle = enemy.hitFlash > 0 ? "#f4f0ff" : enemy.bodyColor;
+  ctx.fillRect(x - 9, y - 10, 18, 20);
+  ctx.fillStyle = enemy.lightColor;
+  ctx.fillRect(x - 5, y - 15, 10, 6);
+  ctx.fillRect(x + 9, y - 7, 3, 19);
   ctx.fillStyle = "#101420";
-  ctx.fillRect(x - 8, y + pulse, 4, 4);
-  ctx.fillRect(x + 5, y + pulse, 4, 4);
-  drawHealthBar(enemy.x - 24, enemy.y - 30, 48, enemy.hp / enemy.maxHp);
+  ctx.fillRect(x - 5, y - 4, 3, 3);
+  ctx.fillRect(x + 3, y - 4, 3, 3);
+  ctx.fillStyle = "#d9fbff";
+  ctx.fillRect(x + 8, y - 11, 5, 5);
 }
 
-function drawBolts() {
-  for (const bolt of state.bolts) {
-    ctx.fillStyle = "rgba(61, 160, 184, 0.55)";
-    ctx.fillRect(Math.round(bolt.x) - 3, Math.round(bolt.y) + 3, 6, 8);
-    ctx.fillStyle = "#9bf6ff";
-    ctx.fillRect(Math.round(bolt.x) - 2, Math.round(bolt.y) - 7, 4, 12);
-    ctx.fillStyle = "#e0fbff";
-    ctx.fillRect(Math.round(bolt.x) - 1, Math.round(bolt.y) - 10, 2, 3);
+function drawEliteMarks(enemy) {
+  const pulse = 20 + Math.sin(state.time / 5) * 2;
+  ctx.save();
+  ctx.strokeStyle = "#d8b5ff";
+  ctx.globalAlpha = enemy.attackState === "telegraph" ? 0.95 : 0.5;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(enemy.x, enemy.y, pulse, 0, Math.PI * 2);
+  ctx.stroke();
+  if (enemy.attackState === "telegraph") {
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(enemy.x, enemy.y);
+    ctx.lineTo(enemy.targetX, enemy.targetY);
+    ctx.stroke();
+  }
+  ctx.restore();
+  ctx.fillStyle = "#ffd166";
+  ctx.fillRect(Math.round(enemy.x) - 8, Math.round(enemy.y) - 23, 4, 5);
+  ctx.fillRect(Math.round(enemy.x) - 2, Math.round(enemy.y) - 26, 4, 8);
+  ctx.fillRect(Math.round(enemy.x) + 4, Math.round(enemy.y) - 23, 4, 5);
+}
+
+function drawBoss(enemy) {
+  const x = Math.round(enemy.x);
+  const y = Math.round(enemy.y);
+  const pulse = Math.sin(state.time / 10) * 2;
+  if (enemy.attackState === "volleyTell" || enemy.attackState === "dashTell") {
+    ctx.save();
+    ctx.strokeStyle = "#ffd166";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, 28 + Math.sin(state.time / 3) * 4, 0, Math.PI * 2);
+    ctx.stroke();
+    if (enemy.attackState === "dashTell") {
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(enemy.targetX, enemy.targetY);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  ctx.fillStyle = "#0a0d15";
+  ctx.fillRect(x - 22, y + 19, 44, 7);
+  ctx.fillStyle = enemy.hitFlash > 0 ? "#fff0d9" : enemy.attackState === "dash" ? "#d95d39" : enemy.bodyColor;
+  ctx.fillRect(x - 20, y - 12 + pulse, 40, 33);
+  ctx.fillStyle = enemy.lightColor;
+  ctx.fillRect(x - 12, y - 22 + pulse, 24, 12);
+  ctx.fillStyle = "#ffd166";
+  ctx.fillRect(x - 19, y - 27 + pulse, 8, 8);
+  ctx.fillRect(x + 11, y - 27 + pulse, 8, 8);
+  ctx.fillStyle = "#101420";
+  ctx.fillRect(x - 9, y + pulse, 5, 5);
+  ctx.fillRect(x + 5, y + pulse, 5, 5);
+}
+
+function drawProjectiles() {
+  for (const projectile of state.projectiles) {
+    const essence = SPELL_PARTS.essences[projectile.essence];
+    const x = Math.round(projectile.x);
+    const y = Math.round(projectile.y);
+    if (projectile.kind === "orbit") {
+      ctx.save();
+      ctx.globalAlpha = 0.22;
+      ctx.strokeStyle = essence.color;
+      ctx.beginPath();
+      ctx.arc(state.player.x, state.player.y, projectile.radius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = essence.color;
+      ctx.fillRect(x - 5, y - 5, 10, 10);
+      ctx.fillStyle = essence.light;
+      ctx.fillRect(x - 2, y - 2, 4, 4);
+    } else {
+      ctx.fillStyle = essence.color;
+      ctx.fillRect(x - 4, y - 4, 8, 8);
+      ctx.fillStyle = essence.light;
+      ctx.fillRect(x - 2, y - 2, 4, 4);
+    }
+  }
+}
+
+function drawEnemyProjectiles() {
+  for (const shot of state.enemyProjectiles) {
+    const x = Math.round(shot.x);
+    const y = Math.round(shot.y);
+    ctx.fillStyle = "rgba(10, 13, 21, 0.7)";
+    ctx.fillRect(x - 6, y - 6, 12, 12);
+    ctx.fillStyle = shot.color;
+    ctx.fillRect(x - 4, y - 4, 8, 8);
+    ctx.fillStyle = "#fff0be";
+    ctx.fillRect(x - 1, y - 1, 2, 2);
   }
 }
 
@@ -951,112 +1906,88 @@ function drawSparks() {
   }
 }
 
-function drawBanner() {
+function drawEndBanner() {
   if (state.mode === "win") {
-    drawPanel(32, 164, 256, 140);
-    drawText("RUN COMPLETE", W / 2, 205, 21, "#ffd166", "center");
-    drawText(`Score ${state.score}`, W / 2, 238, 13, "#f3ead7", "center");
-    drawText("Tap to begin another run", W / 2, 271, 10, "#9bf6ff", "center");
+    drawPanel(28, 154, 264, 156);
+    drawText("TRIAL COMPLETE", W / 2, 194, 20, "#ffd166", "center");
+    drawText("Time " + formatFrames(state.runElapsed) + " · Score " + state.score, W / 2, 229, 11, "#f3ead7", "center");
+    drawText("Spellbook " + persistent.profile.discovered.length + "/8", W / 2, 255, 11, "#9bf6ff", "center");
+    drawText("Tap to begin another Trial", W / 2, 285, 10, "#d9b8ff", "center");
   }
-
   if (state.mode === "lose") {
-    drawPanel(32, 164, 256, 140);
-    drawText("THE GROVE FALLS", W / 2, 205, 19, "#ff6b6b", "center");
-    drawText(`Reached Wave ${state.wave}`, W / 2, 238, 13, "#f3ead7", "center");
-    drawText("Tap to try another build", W / 2, 271, 10, "#9bf6ff", "center");
+    drawPanel(28, 164, 264, 140);
+    drawText("THE SPELL UNRAVELS", W / 2, 202, 17, "#ff6b6b", "center");
+    drawText("Reached Wave " + state.wave + " of " + TOTAL_WAVES, W / 2, 237, 12, "#f3ead7", "center");
+    drawText("Tap to try another rewrite", W / 2, 273, 10, "#9bf6ff", "center");
   }
 }
 
 function drawWaveAnnouncement() {
   if (state.waveBannerTimer <= 0 || state.mode !== "playing") return;
   const elapsed = WAVE_BANNER_DURATION - state.waveBannerTimer;
-  const alpha = Math.min(1, elapsed / 10, state.waveBannerTimer / 16);
+  const alpha = Math.min(1, elapsed / 10, state.waveBannerTimer / 18);
   ctx.save();
   ctx.globalAlpha = alpha;
-  drawPanel(88, 58, 144, 50);
-  drawText(state.waveBannerText, W / 2, 83, 16, state.wave === TOTAL_WAVES ? "#ff9d66" : "#ffd166", "center");
+  drawPanel(64, 58, 192, 58);
+  drawText(state.waveBannerText, W / 2, 80, 13, currentWaveDefinition().boss ? "#ff9d66" : "#ffd166", "center");
+  drawText(currentWaveDefinition().title.toUpperCase(), W / 2, 99, 9, "#aab1c7", "center");
   ctx.restore();
 }
 
-function drawPanel(x, y, w, h) {
+function drawPanel(x, y, width, height) {
   ctx.fillStyle = "#0c101b";
-  ctx.fillRect(x, y, w, h);
+  ctx.fillRect(x, y, width, height);
   ctx.fillStyle = "#27314a";
-  ctx.fillRect(x + 4, y + 4, w - 8, h - 8);
+  ctx.fillRect(x + 4, y + 4, width - 8, height - 8);
   ctx.fillStyle = "#1b2233";
-  ctx.fillRect(x + 8, y + 8, w - 16, h - 16);
+  ctx.fillRect(x + 8, y + 8, width - 16, height - 16);
   ctx.fillStyle = "#53618a";
-  ctx.fillRect(x + 8, y + 8, w - 16, 2);
+  ctx.fillRect(x + 8, y + 8, width - 16, 2);
   ctx.fillStyle = "#ffd166";
   ctx.fillRect(x + 4, y + 4, 6, 6);
-  ctx.fillRect(x + w - 10, y + 4, 6, 6);
+  ctx.fillRect(x + width - 10, y + 4, 6, 6);
 }
 
-function drawText(text, x, y, size, color, align = "left") {
+function drawText(text, x, y, size, color, align) {
   ctx.fillStyle = color;
-  ctx.font = `bold ${size}px monospace`;
-  ctx.textAlign = align;
+  ctx.font = "bold " + size + "px monospace";
+  ctx.textAlign = align || "left";
   ctx.textBaseline = "middle";
   ctx.fillText(text, x, y);
 }
 
-function drawHealthBar(x, y, w, percent) {
+function drawHealthBar(x, y, width, percent) {
   ctx.fillStyle = "#0a0d15";
-  ctx.fillRect(Math.round(x), Math.round(y), w, 5);
+  ctx.fillRect(Math.round(x), Math.round(y), width, 5);
   ctx.fillStyle = "#ff6b6b";
-  ctx.fillRect(Math.round(x + 1), Math.round(y + 1), Math.max(0, Math.round((w - 2) * percent)), 3);
+  ctx.fillRect(Math.round(x + 1), Math.round(y + 1), Math.max(0, Math.round((width - 2) * percent)), 3);
 }
 
-function updateHud() {
-  const player = state.player;
+function pauseForInterruption() {
+  if (state.mode === "playing" && !state.menuOpen) UISystem.openMenu("interruption");
+  else clearInput();
+}
 
-  menuButton.textContent = state.menuOpen ? "Resume" : state.mode === "playing" ? "Pause" : "Options";
-  menuButton.setAttribute("aria-label", state.menuOpen ? "Resume game" : state.mode === "playing" ? "Pause game" : "Open options");
-
-  healthText.textContent = player ? `HP ${Math.max(0, player.hp)}/${player.maxHp}` : "HP 3/3";
-
-  if (state.mode === "menu") {
-    waveText.textContent = `${TOTAL_WAVES} Waves`;
-    scoreText.textContent = `Best ${state.bestScore}`;
-  } else if (state.mode === "win") {
-    waveText.textContent = "Complete";
-    scoreText.textContent = `Score ${state.score}`;
-  } else if (state.mode === "lose") {
-    waveText.textContent = `Wave ${state.wave}/${TOTAL_WAVES}`;
-    scoreText.textContent = `Score ${state.score}`;
-  } else if (state.mode === "upgrade") {
-    waveText.textContent = "Upgrade";
-    scoreText.textContent = `Score ${state.score}`;
-  } else {
-    waveText.textContent = `Wave ${state.wave}/${TOTAL_WAVES}`;
-    scoreText.textContent = `Score ${state.score}`;
+function handleNativeBackButton() {
+  clearInput();
+  if (state.menuOpen) return false;
+  if (state.mode === "playing" || state.mode === "upgrade") {
+    UISystem.openMenu("back");
+    return true;
   }
-}
-
-function overlap(a, b) {
-  return (
-    Math.abs(a.x - b.x) * 2 < a.w + b.w &&
-    Math.abs(a.y - b.y) * 2 < a.h + b.h
-  );
-}
-
-function rectCircle(rect, circle) {
-  const nearestX = clamp(circle.x, rect.x - rect.w / 2, rect.x + rect.w / 2);
-  const nearestY = clamp(circle.y, rect.y - rect.h / 2, rect.y + rect.h / 2);
-  const dx = circle.x - nearestX;
-  const dy = circle.y - nearestY;
-  return dx * dx + dy * dy < circle.r * circle.r;
-}
-
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
+  return false;
 }
 
 function handleStartAction() {
-  if (state.mode === "menu" || state.mode === "win" || state.mode === "lose") {
+  if (state.mode === "menu") {
     playSound("wave");
     triggerHaptic(18);
-    resetGame();
+    if (persistent.checkpoint) RunSystem.resume();
+    else RunSystem.startNew();
+  } else if (state.mode === "win" || state.mode === "lose") {
+    playSound("wave");
+    triggerHaptic(18);
+    RunSystem.startNew();
   }
 }
 
@@ -1071,31 +2002,27 @@ const keyboardMap = {
   KeyS: "down",
 };
 
-window.addEventListener("keydown", (event) => {
+window.addEventListener("keydown", function (event) {
   const key = keyboardMap[event.code];
-
   unlockAudio();
-
   if (event.code === "Escape" || event.code === "KeyP") {
     event.preventDefault();
     playSound("click");
-    if (state.menuOpen) closeMenu();
-    else openMenu();
+    if (state.menuOpen) UISystem.closeMenu();
+    else UISystem.openMenu("manual");
     return;
   }
-
   if (key) {
     event.preventDefault();
     keys[key] = true;
   }
-
   if (event.code === "Space" || event.code === "Enter") {
     event.preventDefault();
     if (!state.menuOpen) handleStartAction();
   }
 });
 
-window.addEventListener("keyup", (event) => {
+window.addEventListener("keyup", function (event) {
   const key = keyboardMap[event.code];
   if (key) keys[key] = false;
 });
@@ -1110,13 +2037,12 @@ function startPointerControl(event) {
   event.preventDefault();
   unlockAudio();
   if (state.menuOpen) return;
-  handleStartAction();
+  if (state.mode === "win" || state.mode === "lose") handleStartAction();
   if (state.mode !== "playing") return;
-
   pointerControl.active = true;
   pointerControl.pointerId = event.pointerId;
   updatePointerTarget(event);
-  canvas.setPointerCapture?.(event.pointerId);
+  if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
 }
 
 function movePointerControl(event) {
@@ -1127,7 +2053,7 @@ function movePointerControl(event) {
 
 function stopPointerControl(event) {
   if (event.pointerId !== pointerControl.pointerId) return;
-  if (canvas.hasPointerCapture?.(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+  if (canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
   pointerControl.active = false;
   pointerControl.pointerId = null;
 }
@@ -1137,48 +2063,62 @@ canvas.addEventListener("pointermove", movePointerControl);
 canvas.addEventListener("pointerup", stopPointerControl);
 canvas.addEventListener("pointercancel", stopPointerControl);
 
-menuButton.addEventListener("click", () => {
+startRunButton.addEventListener("click", function () {
   unlockAudio();
-  playSound("click");
-  if (state.menuOpen) closeMenu();
-  else openMenu();
+  playSound("wave");
+  triggerHaptic(18);
+  RunSystem.startNew();
 });
 
-resumeButton.addEventListener("click", () => {
+resumeRunButton.addEventListener("click", function () {
   unlockAudio();
-  playSound("click");
-  closeMenu();
+  playSound("wave");
+  triggerHaptic(18);
+  RunSystem.resume();
 });
 
-soundButton.addEventListener("click", () => {
+menuButton.addEventListener("click", function () {
+  unlockAudio();
+  playSound("click");
+  if (state.menuOpen) UISystem.closeMenu();
+  else UISystem.openMenu("manual");
+});
+
+resumeButton.addEventListener("click", function () {
+  unlockAudio();
+  playSound("click");
+  UISystem.closeMenu();
+});
+
+soundButton.addEventListener("click", function () {
   if (settings.sound) playSound("click");
   settings.sound = !settings.sound;
-  saveSettings();
-  syncSettingsUi();
+  SaveSystem.write();
+  UISystem.syncSettings();
   if (settings.sound) {
     unlockAudio();
     playSound("click");
   }
 });
 
-hapticsButton.addEventListener("click", () => {
+hapticsButton.addEventListener("click", function () {
   settings.haptics = !settings.haptics;
-  saveSettings();
-  syncSettingsUi();
+  SaveSystem.write();
+  UISystem.syncSettings();
   if (settings.haptics) triggerHaptic(24);
   playSound("click");
 });
 
-newRunButton.addEventListener("click", () => {
+newRunButton.addEventListener("click", function () {
   unlockAudio();
   playSound("wave");
   triggerHaptic(24);
-  closeMenu();
-  resetGame();
+  UISystem.closeMenu();
+  RunSystem.startNew();
 });
 
 window.addEventListener("blur", pauseForInterruption);
-document.addEventListener("visibilitychange", () => {
+document.addEventListener("visibilitychange", function () {
   if (document.hidden) pauseForInterruption();
 });
 
@@ -1187,7 +2127,9 @@ window.PixelMageNative = Object.freeze({
   pauseForInterruption,
 });
 
-syncSettingsUi();
+UISystem.syncSettings();
+UISystem.syncStartPanel();
+UISystem.updateHud();
 
 function loop() {
   update();

@@ -13,7 +13,7 @@
       <section class="game-card">
         <header class="top-bar">
           <div>
-            <p class="eyebrow">Release Run</p>
+            <p class="eyebrow">Living Spell Trial</p>
             <h1>Pixel Mage</h1>
           </div>
           <button
@@ -33,10 +33,21 @@
             aria-label="Pixel Mage game canvas"
             aria-describedby="controlHint"
           ></canvas>
+          <section id="startPanel" class="start-panel" aria-labelledby="startTitle">
+            <p class="eyebrow">Representative Trial</p>
+            <h2 id="startTitle">Rewrite one living spell</h2>
+            <p class="axis-guide"><strong>Form</strong> is its path · <strong>Essence</strong> is its effect · <strong>Law</strong> is its pattern</p>
+            <p id="startStatus" class="start-status">Survive three acts and twelve scheduled waves.</p>
+            <div class="start-actions">
+              <button id="resumeRunButton" class="menu-primary" type="button" hidden>Resume Trial</button>
+              <button id="startRunButton" class="menu-secondary" type="button">Start New Trial</button>
+            </div>
+            <p id="spellbookText" class="spellbook-text">Spellbook 0/8</p>
+          </section>
           <section id="upgradePanel" class="upgrade-panel" aria-labelledby="upgradeTitle" hidden>
             <p class="eyebrow">Wave Cleared</p>
-            <h2 id="upgradeTitle">Choose one spell upgrade</h2>
-            <p class="upgrade-help">The choice lasts for this run.</p>
+            <h2 id="upgradeTitle">Rewrite one word</h2>
+            <p class="upgrade-help">Change Form, Essence, or Law—or take support.</p>
             <div id="upgradeChoices" class="upgrade-choices"></div>
           </section>
           <section
@@ -61,9 +72,11 @@
           </section>
         </div>
 
+        <section id="spellText" class="spell-readout" aria-live="polite">Bolt · Ember · Split</section>
+
         <section class="hud" aria-live="polite">
-          <span id="healthText">HP 3</span>
-          <span id="waveText">5 Waves</span>
+          <span id="healthText">HP 5/5</span>
+          <span id="waveText">12 Waves</span>
           <span id="scoreText">Best 0</span>
         </section>
 

@@ -1,8 +1,8 @@
 {
   "name": "pixel-mage",
-  "version": "0.1.0-rc.1",
+  "version": "0.2.0-representative.1",
   "private": true,
-  "description": "A tiny mobile-first five-wave pixel-action game.",
+  "description": "A mobile-first one-thumb action game about rewriting one living spell.",
   "engines": {
     "node": ">=22.0.0"
   },

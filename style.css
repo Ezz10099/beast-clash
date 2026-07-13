@@ -101,6 +101,7 @@ h1 {
   cursor: crosshair;
 }
 
+.start-panel,
 .upgrade-panel {
   position: absolute;
   inset: 4px;
@@ -114,6 +115,52 @@ h1 {
     radial-gradient(circle at top, rgba(92, 73, 151, 0.35), transparent 42%),
     rgba(8, 11, 18, 0.96);
   text-align: center;
+}
+
+.start-panel {
+  z-index: 2;
+  gap: 12px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 145, 77, 0.16), transparent 34%),
+    radial-gradient(circle at 50% 74%, rgba(125, 91, 214, 0.22), transparent 45%),
+    rgba(8, 11, 18, 0.95);
+}
+
+.start-panel[hidden] {
+  display: none;
+}
+
+.start-panel h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.3rem;
+}
+
+.axis-guide,
+.start-status,
+.spellbook-text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.axis-guide strong {
+  color: var(--accent);
+}
+
+.start-status {
+  min-height: 36px;
+}
+
+.start-actions {
+  display: grid;
+  gap: 9px;
+}
+
+.spellbook-text {
+  color: #9bf6ff;
+  font-weight: 800;
 }
 
 .menu-panel {
@@ -207,6 +254,19 @@ h1 {
   font-size: 1.25rem;
 }
 
+.spell-readout {
+  min-height: 30px;
+  padding: 6px 10px;
+  border: 1px solid #4f5e87;
+  border-radius: 9px;
+  background: rgba(21, 28, 45, 0.92);
+  color: #ffe7ae;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
 .upgrade-help {
   margin: 0 0 6px;
   color: var(--muted);
@@ -231,6 +291,18 @@ h1 {
 .upgrade-choice strong,
 .upgrade-choice span {
   display: block;
+}
+
+.upgrade-choice[data-axis="form"] strong {
+  color: #9bf6ff;
+}
+
+.upgrade-choice[data-axis="essence"] strong {
+  color: #ffab76;
+}
+
+.upgrade-choice[data-axis="law"] strong {
+  color: #d9b8ff;
 }
 
 .upgrade-choice strong {
@@ -324,6 +396,21 @@ h1 {
     padding: 16px;
   }
 
+  .start-panel {
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .start-panel h2 {
+    font-size: 1.12rem;
+  }
+
+  .axis-guide,
+  .start-status,
+  .spellbook-text {
+    font-size: 0.7rem;
+  }
+
   .option-button,
   .menu-primary,
   .menu-secondary {
@@ -336,7 +423,14 @@ h1 {
   }
 
   .upgrade-choice {
-    min-height: 54px;
+    min-height: 50px;
+    padding: 7px 10px;
+  }
+
+  .spell-readout {
+    min-height: 26px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
   }
 }
 
@@ -367,5 +461,21 @@ h1 {
   .control-hint {
     min-height: 16px;
     margin-top: 0;
+  }
+
+  .spell-readout {
+    min-height: 22px;
+    padding: 3px 6px;
+    font-size: 0.64rem;
+  }
+
+  .start-panel {
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .axis-guide,
+  .start-status {
+    line-height: 1.25;
   }
 }

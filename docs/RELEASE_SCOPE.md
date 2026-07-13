@@ -86,6 +86,8 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 
 ## First Approved Implementation Batch — Representative Slice
 
+**Implementation status:** Complete on `main` on July 13, 2026; automated gates pass. Consolidated SPCK phone acceptance and the second owner go/no-go are pending.
+
 Build this as one substantial related batch before producing the full launch content:
 
 1. Separate data-driven run, spawn, enemy, spell, save, and UI responsibilities while preserving the accepted runtime and controls.

@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Lock the owner's Option B selection into the permanent project record and define the representative-slice implementation batch.
+Implement, verify, and publish the complete Living Spell Trials representative slice, then request one consolidated SPCK phone test.
 
 ## Completed This Session
 
@@ -77,22 +77,37 @@ Lock the owner's Option B selection into the permanent project record and define
 - The owner explicitly selected Option B — Living Spell Trials — as written on July 13, 2026.
 - Locked the core loop, launch cap, progression, light-framing level, exclusions, and representative-slice gate in `docs/RELEASE_SCOPE.md` and D-011.
 - Defined the next substantial batch: one 12-wave timed run, 2×2×2 spell prototype, limited enemy set and boss, automatic threat targeting, versioned checkpoint/resume, and expanded deterministic/stress tests.
+- Replaced fixed one-time groups with one data-driven, three-act, 12-wave Trial using scheduled arrivals and a 349-second minimum combat schedule before player choice time.
+- Separated run/spawn, enemy, spell, save, and UI responsibilities inside the accepted three-file runtime without changing the engine or controls.
+- Implemented Bolt and Orbit Forms, Ember and Frost Essences, and Split and Echo Laws for eight named, visually coherent prototype combinations.
+- Added rewrite-one-word choices after each wave plus one deterministic universal support choice.
+- Added deterministic automatic threat selection, a visible target reticle/guide, and modest Bolt aim correction.
+- Added two normal behavior families: contact-chasing Motes and distance-managing Glyph Casters with telegraphed shots.
+- Added one reusable guardian charge behavior at the ends of Acts I and II and one Redactor boss with alternating radial-volley and charge patterns.
+- Added version-2 local save migration, Spellbook discovery, records, and recoverable combat-wave and rewrite-boundary checkpoints.
+- Added explicit Resume Trial UI while preserving pause, settings, safe areas, offline play, Android Back/app switching, package identity, and the deterministic release bundle.
+- Expanded automation across all eight combinations, legacy migration, corrupted-save rejection, deterministic spawn seeds, wave/rewrite recovery, enemy behaviors, and projectile/particle/pending-cast stress ceilings.
+- Completed three mechanically different seeded 12-wave automated clears.
+- Updated the representative build version to `0.2.0-representative.1`.
+- Ran `npm run check`: gameplay checks, the 61,745-byte offline release bundle, Android artwork generation, and Android configuration all passed.
 
 ## Phone Validation Result
 
-The user accepted the gameplay/control, release-experience, and web-release-candidate batches through SPCK. On July 13, 2026, the user also installed and accepted the native APK with no reported bugs. Milestone 7 is complete.
+The user accepted the earlier gameplay/control, release-experience, web-release-candidate, and native APK batches with no reported bugs. Milestone 7 remains complete.
+
+The new Living Spell Trials representative slice has passed automation but has not yet been tested on the target phone. Its layout, control feel, performance, readability, pacing, checkpoint recovery, successful-run time, and replay desire must not be called accepted yet.
 
 ## Current Development Objective
 
-Build the approved Living Spell Trials representative slice as one substantial batch. Do not scale to the remaining 27-combination/9-Trial content or final assets yet.
+Complete one consolidated SPCK phone test of the implemented representative slice and obtain the second explicit go/no-go. Do not scale to the remaining 27-combination/9-Trial content or final assets yet.
 
-The batch includes one arena, one timed three-act 12-wave run, 2×2×2 spell parts, two normal enemy families, one elite behavior, one boss, deterministic automatic targeting, wave-boundary checkpoint/resume with migration, and expanded seeded/stress automation.
+The phone test must cover one complete winning run and its measured time; all three rewrite axes; both enemy families; both guardians and the boss; pause/resume; close/reopen recovery during a wave and at a rewrite boundary; small-screen fit; stress readability; and whether another build feels worth trying.
 
 ## Next Session Entry Point
 
 Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 in `docs/DECISIONS.md`, and this handoff. Option B is locked.
 
-Implement the complete representative-slice batch, run `npm run check`, push the stable result to `main`, update the handoff and roadmap, then request one consolidated SPCK phone test. Do not build the remaining launch content or final assets before the second go/no-go.
+Review the owner's consolidated SPCK result, separate blockers from balance/preferences, record the measured run, and make the second go/no-go. Do not build the remaining launch content or final assets before that decision.
 
 ## Verification
 
@@ -102,8 +117,8 @@ Run:
 
 Current expected result:
 
-`Pixel Mage checks passed: 10 complete runs.`
+`Pixel Mage checks passed: 3 seeded 12-wave runs, 8 spell combinations, save migration, and stress limits.`
 
-`Release bundle checks passed (... runtime bytes).`
+`Release bundle checks passed (61745 runtime bytes).`
 
 `Android configuration checks passed.`

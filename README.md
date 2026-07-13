@@ -17,7 +17,8 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The deterministic web release candidate is frozen on `web-rc-0.1.0`.
 - Capacitor 8 and the Android project are configured.
 - The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
-- The complete current five-wave run takes roughly one minute.
+- The accepted five-wave APK remains the stable native foundation and takes roughly one minute.
+- The Living Spell Trials representative slice is implemented on `main` and awaits its consolidated SPCK phone gate.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -33,7 +34,7 @@ The locked launch direction uses:
 - a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
 - light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
 
-Development starts with a smaller representative slice: one arena, one 12-wave run, 2×2×2 spell parts, limited enemies, one boss, checkpoint/resume, and stress tests. Full content and final assets wait until that slice passes a phone test.
+The representative slice now provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. Full content and final assets still wait until this slice passes its phone gate and receives the second go/no-go.
 
 The proposed 7–9-minute clear remains a measurement target, not a promise. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
 
@@ -45,7 +46,7 @@ The proposed 7–9-minute clear remains a measurement target, not a promise. `Pi
 
 ## Verification and Android
 
-- `npm run check` runs ten complete automated flows and verifies the offline release bundle and Android configuration.
+- `npm run check` verifies all eight spell combinations, save migration/checkpointing, runtime stress limits, three seeded 12-wave clears, the offline release bundle, and Android configuration.
 - `npm run preview` serves the exact generated `dist/` bundle.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts.
@@ -81,4 +82,4 @@ Start every new development session with:
 7. `docs/ROADMAP.md`
 8. `docs/SESSION_HANDOFF.md`
 
-Implement only the locked Living Spell Trials scope. Complete and phone-test the representative slice before scaling to the remaining launch content.
+Implement only the locked Living Spell Trials scope. Phone-test and explicitly accept the representative slice before scaling to the remaining launch content.

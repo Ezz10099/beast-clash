@@ -16,11 +16,11 @@ GitHub Actions is only the cloud computer that performs builds. It replaces rout
 
 ## Current Position
 
-- Technical vertical slice and web release candidate: complete and SPCK-accepted; commercial gameplay scope is still under research.
+- Technical vertical slice and web release candidate: complete and SPCK-accepted.
 - Capacitor Android project: complete.
 - First cloud debug APK: built successfully.
 - Native APK acceptance: complete on July 13, 2026; the current build is now treated as a validated vertical slice.
-- Commercial launch scope: under review because the current run takes roughly one minute and does not yet provide enough proven depth for a profit-focused release.
+- Commercial launch scope: Living Spell Trials is locked. Its automated representative slice is complete; consolidated phone acceptance and the second go/no-go are pending.
 - Monetization and privacy decisions: pending.
 - Release signing and AAB: pending.
 - Play Console setup, store listing, and testing: pending.

@@ -36,28 +36,29 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The browser release candidate is frozen on `web-rc-0.1.0`.
 - Capacitor and the Android project are configured.
 - The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
-- The complete current five-wave run lasts roughly one minute.
+- The accepted five-wave APK lasts roughly one minute and remains the stable native foundation.
 - That build is a validated native vertical slice, not the approved commercial launch game.
 - The old tiny release contract has been superseded as a commercial target.
 - The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
 - Option B — Living Spell Trials — and its capped launch direction were owner-approved on July 13, 2026.
-- The representative slice is the next implementation gate; full launch content and final assets remain blocked until it passes.
+- The complete Living Spell Trials representative slice is implemented on `main` and passes automation.
+- Its consolidated SPCK phone test and second go/no-go are now the active gate; full launch content and final assets remain blocked until it passes.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
 The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
-## Current Implementation Gate
+## Current Phone Gate
 
-Build the approved representative slice before scaling content:
+The approved representative slice is implemented. Before scaling content:
 
-1. Refactor the monolithic prototype into data-driven run, enemy, spell, save, and UI responsibilities without changing the engine.
-2. Implement one three-act, 12-wave timed run with scheduled spawning and deterministic automatic threat targeting.
-3. Implement only 2 Forms × 2 Essences × 2 Laws: 8 readable spell combinations.
-4. Use one arena, two normal enemy families, one elite behavior, and one boss.
-5. Add versioned wave-boundary checkpoint/resume, save migration, seeded run checks, and projectile/particle stress checks.
-6. Run all automated checks and request one consolidated SPCK phone test.
-7. Use the measured run and replay result for a second go/no-go before building the remaining 27-combination/9-Trial launch content.
+1. Pull current `main` into SPCK and start one new Trial.
+2. Complete one winning 12-wave run and record its phone-measured time.
+3. During that run, test Form, Essence, and Law rewrites, both normal enemy families, guardians, the boss, pause/resume, and target feedback.
+4. Close/reopen once during a combat wave and once at a rewrite boundary to verify checkpoint recovery.
+5. Check the complete run for control, layout, readability, performance, save, or pacing blockers.
+6. Decide whether the spell words are predictable and whether another build feels worth trying.
+7. Give the second explicit go/no-go before building the remaining 27-combination/9-Trial launch content.
 
 ## Mandatory Session Protocol
 
