@@ -20,7 +20,8 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The accepted five-wave APK remains the stable native foundation and takes roughly one minute.
 - The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
 - The correction was later reported as highly entertaining, with roughly 15 minutes of representative experimentation; fresh-player choice comprehension remains open.
-- Evidence build `0.2.0-representative.3` adds a green 200-run automated matrix and CI report without changing gameplay.
+- Evidence build `0.2.0-representative.3` added the green 200-run automated matrix and CI report.
+- Choice build `0.2.0-representative.4` makes every rewrite state its exact change, practical effect, unchanged words, and complete result before selection; its strengthened local evidence gate is green and a fresh-player phone cell is next.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -36,7 +37,7 @@ The locked launch direction uses:
 - a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
 - light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
 
-The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, previews complete rewrite results with `NEW`/`KNOWN` status, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. Full content and final assets still wait until this slice passes its phone gate and receives the second go/no-go.
+The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The choice build makes each pre-tap result explicit. Full content and final assets still wait until a fresh-player cell passes and the owner gives the second go/no-go.
 
 The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypothesis: engagement and clarity now decide the duration. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
 

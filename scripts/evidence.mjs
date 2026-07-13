@@ -295,10 +295,23 @@ const raw = JSON.parse(evaluate(`
       const readout = spellReadout(build);
       const rewriteChoices = upgradeChoices.children.slice(0, 3);
       const rewriteChoicesComplete = rewriteChoices.length === 3 && rewriteChoices.every(function (button) {
-        const detail = button.children[1] ? button.children[1].textContent : '';
+        const axis = button.dataset.axis;
+        const nextSpell = {
+          form: axis === 'form' ? (build.form === 'bolt' ? 'orbit' : 'bolt') : build.form,
+          essence: axis === 'essence' ? (build.essence === 'ember' ? 'frost' : 'ember') : build.essence,
+          law: axis === 'law' ? (build.law === 'split' ? 'echo' : 'split') : build.law,
+        };
+        const title = button.children[0] ? button.children[0].textContent : '';
+        const effect = button.children[1] ? button.children[1].textContent : '';
+        const keeps = button.children[2] ? button.children[2].textContent : '';
+        const result = button.children[3] ? button.children[3].textContent : '';
         return ['form', 'essence', 'law'].includes(button.dataset.axis) &&
           ['new', 'known'].includes(button.dataset.discovery) &&
-          /^(NEW SPELL|KNOWN) · /.test(detail) && detail.includes(' — ') && detail.split(' — ')[0].split(' · ').length >= 3;
+          title.startsWith('CHANGE ' + axis.toUpperCase() + ' · ') && title.includes(' → ') &&
+          effect.startsWith('GETS · ') && effect.length > 18 &&
+          keeps === 'KEEPS · ' + keptSpellText(axis, build) &&
+          /^(NEW SPELL|KNOWN SPELL) · /.test(result) && result.endsWith(spellName(nextSpell)) &&
+          button.attributes['aria-label'].includes(title) && button.attributes['aria-label'].includes(keeps);
       });
       return {
         build: build.form + '|' + build.essence + '|' + build.law,
@@ -456,7 +469,7 @@ const gates = [
     id: 'choice-contract',
     title: 'Choice clarity contract',
     status: counts.choiceContracts === builds.length ? 'pass' : 'fail',
-    evidence: `${counts.choiceContracts}/${builds.length} builds expose Form, Essence, Law, full name, and role text`,
+    evidence: `${counts.choiceContracts}/${builds.length} builds expose exact change, effect, kept words, and full resulting spell`,
   },
 ];
 
@@ -484,7 +497,7 @@ const report = {
     'seeded replay determinism',
     'relative build outcomes under one fixed bot policy',
     'empty-arena pacing and clear-time proxies',
-    'complete Form, Essence, Law, spell-name, and role-text schema',
+    'complete rewrite change, effect, kept-words, and resulting-spell schema',
   ],
   humanOnlyClaims: [
     'fun, boredom, delight, and desire to replay',

@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Make the agreed feedback system permanent: build the full automated evidence lane, record exactly what bots can and cannot prove, integrate it into CI, and preserve the latest correction feedback without scaling beyond the representative slice.
+Complete the bounded representative choice-comprehension batch, strengthen its automated contract, publish it without expanding content, and open one consolidated fresh-player commercial cell.
 
 ## Completed This Session
 
@@ -109,6 +109,13 @@ Make the agreed feedback system permanent: build the full automated evidence lan
 - Integrated the 200-run gate and `pixel-mage-evidence` report artifact into the Android GitHub Actions workflow.
 - Updated the representative build version to `0.2.0-representative.3` without changing gameplay.
 - Ran the full local evidence gate: 200/200 wins, 8/8 deterministic replays, 0 runtime violations, 9.7% build spread, 4.9% Form gap, 0 seconds post-schedule waiting, and a 7-second boss arrival. Result: GREEN.
+- Completed targeted choice-comprehension research using official Xbox accessibility guidance, the Game Accessibility Guidelines, and comparable-player reports; rejected a longer tutorial or another hidden recipe as the response.
+- Rebuilt every rewrite card around four pre-tap facts: exact `CHANGE`, practical `GETS`, explicit `KEEPS`, and complete `NEW/KNOWN SPELL`; Support now clearly states that all three spell words stay.
+- Added redundant axis-colored card rails while preserving text labels, readable descriptor hierarchy, short-screen scrolling, and accessible full-card labels.
+- Strengthened fast and full automation to verify the exact choice contract across all eight representative builds.
+- Updated the representative build version to `0.2.0-representative.4` without changing gameplay balance or content.
+- Ran `npm run check`: three active 12-wave clears, all eight combinations, choice semantics, Form balance, save migration, stress limits, the 67,588-byte offline release bundle, Android artwork generation, and Android configuration all passed.
+- Ran `npm run evidence`: 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 exact change/effect/kept/result contracts. Result: GREEN.
 
 ## Phone Validation Result
 
@@ -116,17 +123,17 @@ The user accepted the earlier gameplay/control, release-experience, web-release-
 
 The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. The core direction is promising; fresh-player comprehension and commercial content depth remain open. No player-facing behavior changed in `0.2.0-representative.3`, so this evidence-only batch does not require another owner micro-test.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. `0.2.0-representative.4` directly addresses that concern and is player-facing, so one fresh-player cell is now required. No new human result has been claimed yet.
 
 ## Current Development Objective
 
-Use the green evidence baseline to design one bounded representative choice-comprehension batch. Keep the 27-combination/9-Trial production and final assets blocked. After that player-facing batch passes `npm run check` and `npm run evidence`, request one short fresh-player commercial cell that can decide the second explicit go/no-go.
+Run one consolidated fresh-player commercial cell on `0.2.0-representative.4`. Keep the 27-combination/9-Trial production and final assets blocked until the evidence is recorded and the owner gives the second explicit go/no-go.
 
 ## Next Session Entry Point
 
 Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 and D-012 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, and this handoff. Option B and the evidence workflow are locked.
 
-Implement one bounded choice-comprehension solution inside the representative slice, using targeted review mining only where it informs that concrete mechanic. Run both suites before asking the owner to coordinate the next major human gate. Do not build the remaining launch content or final assets before the second go/no-go.
+Collect the fresh-player cell without coaching: at the first rewrite, ask each player to state what their chosen card changes, what behavior it adds, and what stays before tapping; after observing it, record whether the behavior matched. Consolidate the number tested, correct predictions, confusions, replay desire, boredom, and any touch/layout/runtime blocker. Then record the result and ask the owner for the second explicit go/no-go. Do not build the remaining launch content or final assets before that decision.
 
 ## Verification
 
@@ -140,7 +147,7 @@ Current expected result:
 
 `Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (65780 runtime bytes).`
+`Release bundle checks passed (67588 runtime bytes).`
 
 `Android configuration checks passed.`
 

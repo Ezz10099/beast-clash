@@ -274,6 +274,19 @@ h1 {
   font-size: 1.25rem;
 }
 
+.upgrade-panel {
+  align-content: start;
+  overflow-y: auto;
+  text-align: left;
+  touch-action: pan-y;
+}
+
+.upgrade-panel > .eyebrow,
+.upgrade-panel > h2,
+.upgrade-help {
+  text-align: center;
+}
+
 .spell-readout {
   min-height: 30px;
   padding: 6px 10px;
@@ -299,9 +312,11 @@ h1 {
 }
 
 .upgrade-choice {
-  min-height: 64px;
+  --axis-color: var(--accent);
+  min-height: 82px;
   padding: 9px 12px;
   border: 2px solid #59658c;
+  border-left: 5px solid var(--axis-color);
   border-radius: 12px;
   background: linear-gradient(180deg, #313b5c, #242c45);
   box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.24);
@@ -310,6 +325,7 @@ h1 {
 
 .upgrade-choice[data-discovery="new"] {
   border-color: #b88735;
+  border-left-color: var(--axis-color);
   background:
     linear-gradient(90deg, rgba(255, 209, 102, 0.12), transparent 42%),
     linear-gradient(180deg, #3b405c, #292c45);
@@ -320,20 +336,20 @@ h1 {
   display: block;
 }
 
-.upgrade-choice[data-axis="form"] strong {
-  color: #9bf6ff;
+.upgrade-choice[data-axis="form"] {
+  --axis-color: #9bf6ff;
 }
 
-.upgrade-choice[data-axis="essence"] strong {
-  color: #ffab76;
+.upgrade-choice[data-axis="essence"] {
+  --axis-color: #ffab76;
 }
 
-.upgrade-choice[data-axis="law"] strong {
-  color: #d9b8ff;
+.upgrade-choice[data-axis="law"] {
+  --axis-color: #d9b8ff;
 }
 
 .upgrade-choice strong {
-  color: var(--accent);
+  color: var(--axis-color);
   font-size: 0.9rem;
 }
 
@@ -344,7 +360,24 @@ h1 {
   line-height: 1.3;
 }
 
-.upgrade-choice[data-discovery="new"] span {
+.upgrade-choice .choice-effect {
+  color: var(--text);
+  font-weight: 750;
+}
+
+.upgrade-choice .choice-keeps {
+  color: #b7c2db;
+  font-size: 0.7rem;
+}
+
+.upgrade-choice .choice-result {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.025em;
+}
+
+.upgrade-choice[data-discovery="new"] .choice-result {
   color: #ffe7ae;
 }
 
@@ -461,8 +494,21 @@ h1 {
   }
 
   .upgrade-choice {
-    min-height: 50px;
+    min-height: 68px;
     padding: 7px 10px;
+  }
+
+  .upgrade-choice strong {
+    font-size: 0.8rem;
+  }
+
+  .upgrade-choice span {
+    font-size: 0.68rem;
+  }
+
+  .upgrade-choice .choice-keeps,
+  .upgrade-choice .choice-result {
+    font-size: 0.62rem;
   }
 
   .spell-readout {
@@ -499,6 +545,15 @@ h1 {
   .control-hint {
     min-height: 16px;
     margin-top: 0;
+  }
+
+  .upgrade-panel {
+    gap: 5px;
+    padding: 9px;
+  }
+
+  .upgrade-choices {
+    gap: 6px;
   }
 
   .spell-readout {

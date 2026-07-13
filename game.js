@@ -48,19 +48,19 @@ const SPELL_PARTS = Object.freeze({
   forms: Object.freeze({
     bolt: Object.freeze({
       title: "Bolt",
-      description: "Marked-target shot; strongest against one threat.",
+      description: "Fires at the marked enemy; best against one threat.",
       cooldown: 20,
     }),
     orbit: Object.freeze({
       title: "Orbit",
-      description: "Close-range crowd shield; repeatedly hits and blocks shots.",
+      description: "Circles you; hits nearby crowds and blocks enemy shots.",
       cooldown: 36,
     }),
   }),
   essences: Object.freeze({
     ember: Object.freeze({
       title: "Ember",
-      description: "Burns its target and splashes nearby enemies.",
+      description: "Burns what it hits and splashes damage nearby.",
       color: "#ff8c42",
       light: "#ffd08a",
     }),
@@ -74,7 +74,7 @@ const SPELL_PARTS = Object.freeze({
   laws: Object.freeze({
     split: Object.freeze({
       title: "Split",
-      description: "Creates three smaller copies at once.",
+      description: "Casts three smaller copies immediately.",
     }),
     echo: Object.freeze({
       title: "Echo",
@@ -697,6 +697,26 @@ function spellRole(spell) {
   const essence = spell.essence === "ember" ? "burn splash" : "slow";
   const law = spell.law === "split" ? "3 now" : "repeat later";
   return form + " · " + essence + " · " + law;
+}
+
+function spellPart(axis, value) {
+  const group = axis === "form" ? "forms" : axis === "essence" ? "essences" : "laws";
+  return SPELL_PARTS[group][value];
+}
+
+function spellPartPromise(axis, value) {
+  if (axis === "form") return value === "bolt" ? "hunts the mark" : "guards nearby";
+  if (axis === "essence") return value === "ember" ? "burns" : "slows";
+  return value === "split" ? "casts 3 now" : "repeats later";
+}
+
+function keptSpellText(changedAxis, spell) {
+  return ["form", "essence", "law"]
+    .filter(function (axis) { return axis !== changedAxis; })
+    .map(function (axis) {
+      return axis.toUpperCase() + " " + spellPart(axis, spell[axis]).title + ": " + spellPartPromise(axis, spell[axis]);
+    })
+    .join(" · ");
 }
 
 function rewrittenSpell(axis, value) {
@@ -1483,11 +1503,12 @@ const UISystem = Object.freeze({
       ? "New Spell Proven · " + persistent.profile.discovered.length + "/8"
       : "Wave Cleared";
     upgradeTitle.textContent = state.wave === 4
-      ? "Act I cleared · Rewrite"
+      ? "Act I cleared · Choose one"
       : state.wave === 8
-        ? "Act II cleared · Rewrite"
-        : "Rewrite one word";
-    upgradeHelp.textContent = "CURRENT · " + spellName(state.spell) + " — " + spellRole(state.spell);
+        ? "Act II cleared · Choose one"
+        : "Choose one";
+    upgradeHelp.textContent = "CURRENT SPELL · " + spellName(state.spell) +
+      " · Rewrite changes one word; Support keeps all three.";
 
     const nextForm = state.spell.form === "bolt" ? "orbit" : "bolt";
     const nextEssence = state.spell.essence === "ember" ? "frost" : "ember";
@@ -1500,25 +1521,33 @@ const UISystem = Object.freeze({
       {
         axis: "form",
         spell: formSpell,
-        title: "FORM · " + SPELL_PARTS.forms[state.spell.form].title + " → " + SPELL_PARTS.forms[nextForm].title,
+        title: "CHANGE FORM · " + SPELL_PARTS.forms[state.spell.form].title + " → " + SPELL_PARTS.forms[nextForm].title,
+        effect: "GETS · " + SPELL_PARTS.forms[nextForm].description,
+        keeps: "KEEPS · " + keptSpellText("form", state.spell),
         apply: function () { state.spell.form = nextForm; },
       },
       {
         axis: "essence",
         spell: essenceSpell,
-        title: "ESSENCE · " + SPELL_PARTS.essences[state.spell.essence].title + " → " + SPELL_PARTS.essences[nextEssence].title,
+        title: "CHANGE ESSENCE · " + SPELL_PARTS.essences[state.spell.essence].title + " → " + SPELL_PARTS.essences[nextEssence].title,
+        effect: "GETS · " + SPELL_PARTS.essences[nextEssence].description,
+        keeps: "KEEPS · " + keptSpellText("essence", state.spell),
         apply: function () { state.spell.essence = nextEssence; },
       },
       {
         axis: "law",
         spell: lawSpell,
-        title: "LAW · " + SPELL_PARTS.laws[state.spell.law].title + " → " + SPELL_PARTS.laws[nextLaw].title,
+        title: "CHANGE LAW · " + SPELL_PARTS.laws[state.spell.law].title + " → " + SPELL_PARTS.laws[nextLaw].title,
+        effect: "GETS · " + SPELL_PARTS.laws[nextLaw].description,
+        keeps: "KEEPS · " + keptSpellText("law", state.spell),
         apply: function () { state.spell.law = nextLaw; },
       },
       {
         axis: "support",
-        title: "SUPPORT · " + support.title,
-        detail: "KEEP CURRENT SPELL · " + support.describe(state.player),
+        title: "KEEP SPELL · " + support.title,
+        effect: "GETS · " + support.describe(state.player),
+        keeps: "SPELL STAYS · " + spellName(state.spell),
+        result: "SUPPORT · No spell word changes.",
         apply: function () { support.apply(state.player, state.supports); },
       },
     ];
@@ -1526,20 +1555,29 @@ const UISystem = Object.freeze({
     for (const option of options) {
       const button = document.createElement("button");
       const title = document.createElement("strong");
-      const detail = document.createElement("span");
+      const effect = document.createElement("span");
+      const keeps = document.createElement("span");
+      const result = document.createElement("span");
       button.className = "upgrade-choice";
       button.type = "button";
       button.dataset.axis = option.axis;
       if (option.spell) {
         const isNew = !persistent.profile.discovered.includes(spellKey(option.spell));
         button.dataset.discovery = isNew ? "new" : "known";
-        option.detail = (isNew ? "NEW SPELL · " : "KNOWN · ") + spellName(option.spell) + " — " + spellRole(option.spell);
+        option.result = (isNew ? "NEW SPELL · " : "KNOWN SPELL · ") + spellName(option.spell);
       } else {
         button.dataset.discovery = "support";
       }
+      title.className = "choice-change";
+      effect.className = "choice-effect";
+      keeps.className = "choice-keeps";
+      result.className = "choice-result";
       title.textContent = option.title;
-      detail.textContent = option.detail;
-      button.append(title, detail);
+      effect.textContent = option.effect;
+      keeps.textContent = option.keeps;
+      result.textContent = option.result;
+      button.setAttribute("aria-label", [option.title, option.effect, option.keeps, option.result].join(" "));
+      button.append(title, effect, keeps, result);
       button.addEventListener("click", function () {
         unlockAudio();
         RunSystem.chooseRewrite(option.apply);

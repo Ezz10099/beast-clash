@@ -183,6 +183,20 @@ The permanent feedback model is now three-lane: CI bot evidence for reliability/
 
 The first full automated baseline ran 200 real-damage trials across all 8 representative builds. Every run won, all deterministic replays matched, the build median clear-time spread was 9.7%, the Bolt/Orbit median gap was 4.9%, and no forced post-schedule wait appeared. These results support runtime and relative-balance confidence under the bot policy; they do not resolve human choice comprehension.
 
+## Targeted Choice-Comprehension Batch — July 13, 2026
+
+The remaining player concern was concrete: a rewrite card named the resulting spell and compressed role, but still asked a new player to mentally compare it with the current spell. Targeted external evidence supports solving that at the decision itself:
+
+- [Xbox Accessibility Guideline 114](https://learn.microsoft.com/en-us/gaming/accessibility/xbox-accessibility-guidelines/114) says players should have enough context to know what to expect before activating a UI element, including new players and players with limited short-term memory.
+- [Xbox Accessibility Guideline 101](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101) treats labels, sub-labels, and descriptor text in menus as information that must remain readable.
+- The [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/) recommend simple, clear language, emphasis of important words, and contextual in-game guidance rather than relying on text alone.
+- A [Vampire Survivors beginner report](https://www.reddit.com/r/VampireSurvivors/comments/wvbb0n/the_absolute_beginnerjust_installed_guide_to/) describes completing a full run without realizing its evolution system existed. Discovery logs can reward experimentation, but cannot carry first-decision comprehension by themselves.
+- A [20 Minutes Till Dawn pacing discussion](https://www.reddit.com/r/20MinutesTillDawn/comments/zcv8ci/this_game_feels_deeply_flawed/) criticizes an opening dominated by accumulating interdependent upgrades. That argues against answering confusion with a longer tutorial or more simultaneous systems.
+
+The bounded response in `0.2.0-representative.4` is contextual and repeatable. Every rewrite card now exposes four separate facts before the tap: `CHANGE` names the exact old and new word, `GETS` states its practical behavior, `KEEPS` names the two unchanged words and their jobs, and `NEW/KNOWN SPELL` shows the complete result. Support uses the parallel `KEEP SPELL`, `GETS`, and `SPELL STAYS` structure. Axis names plus colored rails provide redundant cues without making color essential.
+
+The automated evidence contract now verifies this exact structure across all eight starting builds. That proves the information is present and internally consistent; only the pending fresh-player cell can show whether people actually understand it quickly.
+
 ## Research Stop Rule
 
 The required broad research round and owner choice are complete. Stop broad ideation. Continue only targeted review mining tied to a concrete mechanic or commercial gate, and use the evidence protocol before later content estimates or the second go/no-go.

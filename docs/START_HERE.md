@@ -44,8 +44,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - Option B — Living Spell Trials — and its capped launch direction were owner-approved on July 13, 2026.
 - The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, with no reported layout or runtime blocker, but the gate failed because onboarding remained unclear, the late pre-boss stretch became boring, and Orbit felt much weaker than Bolt.
 - Correction build `0.2.0-representative.2` made the owner “really happy” and was reported as entertaining, with roughly 15 minutes of available representative experimentation. Choice outcomes may still be unclear to some players.
-- Evidence build `0.2.0-representative.3` adds a required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact. Its local baseline is green.
-- The automated lane is ready. Full launch content and final assets remain blocked on fresh-player choice comprehension and the second explicit go/no-go.
+- Evidence build `0.2.0-representative.3` added the required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact.
+- Choice build `0.2.0-representative.4` now separates every decision into exact `CHANGE`, practical `GETS`, explicit `KEEPS`, and complete `NEW/KNOWN SPELL` information; the strengthened local evidence gate is green.
+- The representative player-facing batch is ready for one fresh-player phone cell. Full launch content and final assets remain blocked on its comprehension result and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -53,7 +54,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-No phone retest is required for the evidence-only `0.2.0-representative.3` batch because it does not change player-facing behavior. Before scaling launch content, one fresh-player cell must use only in-game guidance and determine whether players can predict Form, Essence, and Law rewrite outcomes, while also recording replay desire, boredom, touch/layout blockers, and an explicit go/no-go. Request it only after the next complete player-facing batch and green automation.
+Choice build `0.2.0-representative.4` is player-facing and has green automation, so request one consolidated fresh-player cell now. Without outside explanation, fresh players must predict what a selected rewrite changes, what behavior it adds, and what remains; then report whether observed play matched that prediction. Also record replay desire, boredom, touch/layout blockers, and the owner's explicit go/no-go. Do not scale content before this gate closes.
 
 ## Mandatory Session Protocol
 

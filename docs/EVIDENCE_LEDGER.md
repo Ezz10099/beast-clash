@@ -28,3 +28,12 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Choice schema: 8/8 builds exposed Form, Essence, Law, complete spell name, and role text.
 - Boundary: this proves the automated representative contract, not fun or human comprehension.
 - Decision: the automated evidence lane is ready for continuing bounded development. The representative commercial gate remains open on fresh-player choice comprehension and the owner's explicit go/no-go.
+
+## July 13, 2026 — Choice-Comprehension Batch
+
+- Build: `0.2.0-representative.4`
+- Targeted evidence: official accessibility guidance favors enough pre-activation context to predict UI results, readable descriptor text, clear language, and contextual guidance; comparable-player reports warn that discovery systems can remain hidden and that early upgrade complexity can feel like accumulation rather than understanding.
+- Implemented contract: every rewrite separately shows the exact word changed, the practical effect gained, the two words and behaviors kept, and the complete `NEW`/`KNOWN` resulting spell. Support explicitly states that the spell stays unchanged.
+- Local automation: `npm run check` passed; `npm run evidence` remained **GREEN** with 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 strengthened choice contracts.
+- Boundary: automated checks prove presence and consistency, not fresh-player comprehension.
+- Decision: the player-facing batch is ready for one consolidated fresh-player phone cell. Full content remains blocked until that result and the owner's second explicit go/no-go.

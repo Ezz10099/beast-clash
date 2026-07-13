@@ -166,7 +166,8 @@ assert.equal(
 assert.equal(evaluate('persistent.checkpoint.phase'), 'upgrade');
 assert.equal(evaluate('persistent.profile.discovered.length'), 1);
 assert.match(elements.get('#upgradeEyebrow').textContent, /New Spell Proven/);
-assert.match(elements.get('#upgradeHelp').textContent, /CURRENT · Bolt · Ember · Split/);
+assert.match(elements.get('#upgradeHelp').textContent, /CURRENT SPELL · Bolt · Ember · Split/);
+assert.match(elements.get('#upgradeHelp').textContent, /Rewrite changes one word; Support keeps all three/);
 assert.equal(
   JSON.stringify(elements.get('#upgradeChoices').children.slice(0, 3).map((button) => button.dataset.discovery)),
   '["new","new","new"]',
@@ -174,7 +175,27 @@ assert.equal(
 );
 
 const formChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'form');
-assert.match(formChoice.children[1].textContent, /NEW SPELL · Orbit · Ember · Split/);
+assert.match(formChoice.children[0].textContent, /CHANGE FORM · Bolt → Orbit/);
+assert.match(formChoice.children[1].textContent, /GETS · Circles you; hits nearby crowds and blocks enemy shots/);
+assert.match(formChoice.children[2].textContent, /KEEPS · ESSENCE Ember: burns · LAW Split: casts 3 now/);
+assert.match(formChoice.children[3].textContent, /NEW SPELL · Orbit · Ember · Split/);
+assert.match(formChoice.attributes['aria-label'], /CHANGE FORM.*GETS.*KEEPS.*NEW SPELL/);
+
+const essenceChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'essence');
+assert.match(essenceChoice.children[0].textContent, /CHANGE ESSENCE · Ember → Frost/);
+assert.match(essenceChoice.children[1].textContent, /GETS · Slows every enemy the spell touches/);
+assert.match(essenceChoice.children[2].textContent, /KEEPS · FORM Bolt: hunts the mark · LAW Split: casts 3 now/);
+
+const lawChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'law');
+assert.match(lawChoice.children[0].textContent, /CHANGE LAW · Split → Echo/);
+assert.match(lawChoice.children[1].textContent, /GETS · Repeats the spell a moment later/);
+assert.match(lawChoice.children[2].textContent, /KEEPS · FORM Bolt: hunts the mark · ESSENCE Ember: burns/);
+
+const supportChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'support');
+assert.match(supportChoice.children[0].textContent, /KEEP SPELL · /);
+assert.match(supportChoice.children[1].textContent, /GETS · /);
+assert.match(supportChoice.children[2].textContent, /SPELL STAYS · Bolt · Ember · Split/);
+assert.match(supportChoice.children[3].textContent, /No spell word changes/);
 formChoice.handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 2);

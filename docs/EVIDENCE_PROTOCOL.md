@@ -32,7 +32,7 @@ The full gate runs all 8 representative spell combinations across the same 25 se
 | Bot survivability | Every build wins at least 80% | 60–79.9% weakest build | Below 60% |
 | Dominance proxy | Build median spread ≤20% and Form gap ≤15% | Spread ≤35% and Form gap ≤25% | Worse |
 | Pacing proxy | Empty stretch stays inside authored arrival gap, no post-schedule wait, boss arrives within 9 seconds | At most 2 seconds over the authored gap, ≤0.5-second post-schedule wait, or ≤1-second boss overrun | Worse |
-| Choice contract | 8/8 builds expose Form, Essence, Law, full result, and role text | — | Missing schema |
+| Choice contract | 8/8 builds expose exact change, gained effect, kept words/behaviors, and full result | — | Missing or inconsistent schema |
 
 A red result fails CI. Yellow preserves the report and permits diagnosis, but cannot support a commercial gate recommendation by itself. Threshold changes require a reason in the evidence ledger; do not move them merely to turn a regression green.
 
