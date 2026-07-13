@@ -19,29 +19,32 @@ The final goal is to **finish and publish a worthwhile Android game**, not to ke
 
 Player promise: **One thumb. One living spell. Rewrite its Form, Essence, and Law into genuinely different play styles while escalating Trials test the result.** Every rewrite should create a visible tradeoff, every run should build toward a climax, and discovery should open new ways to play rather than a rote checklist.
 
+`docs/OWNER_MANDATE.md` is the binding interpretation of how to pursue this compass. Pixel Mage remains the project; fun and engagement potential are primary design priorities; and finishability, evidence, scope, documentation, and release safety must support a worthwhile game rather than replace it. Do not casually reopen project selection or propose another core game.
+
 The content cap is a production fence, not the whole design. For every material improvement, Codex must trace the player's logic—what the player sees, expects, chooses, observes, and wants next—then generate and compare solutions using source inspection, automated evidence, targeted comparable research, and bounded prototypes. Owner feedback remains decisive human evidence, but must not be treated as the only source of ideas.
 
 **Goal-to-code rule:** the Product Compass must remain active throughout implementation, not merely be quoted during planning or review. Use `docs/DEVELOPMENT_MODEL.md` for the permanent chain: **final goal → intended player experience → feature purpose → alternatives and tradeoffs → code → evidence → updated understanding**. Public-human evidence, creative sources, synthetic play, fresh-context criticism, and calibrated rare human gates jointly reduce dependence on owner creativity without pretending that automation can feel fun.
 
-**Authority boundary, July 13, 2026:** the final goal and player promise above are binding. Every earlier scope, mechanic, content count, process rule, and design decision may be revised when Codex can show that another route better serves that goal. Codex owns finding the problem, generating alternatives, selecting and implementing the next step, and proving it; the owner supplies resources when genuinely needed and judges major commercial gates.
+**Authority boundary, July 13, 2026:** the final goal, player promise, and fun-first continuity mandate are binding. Earlier scope, mechanic, content count, process rule, and design decisions may be revised when Codex can show that another route inside Pixel Mage better serves that goal. Codex owns finding the problem, generating alternatives, selecting and implementing the next step, and proving it; the owner supplies resources when genuinely needed and judges major commercial gates.
 
 ## Authority Order
 
 Read these files in order:
 
 1. `AGENTS.md`
-2. `docs/START_HERE.md`
-3. `docs/DEVELOPMENT_MODEL.md`
-4. `docs/RELEASE_SCOPE.md`
-5. `docs/DECISIONS.md`
-6. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
-7. `docs/FRESH_PLAYER_CELL.md`
-8. `docs/DESIGN_RESEARCH.md`
-9. `docs/SCOPE_OPTIONS.md`
-10. `docs/ROADMAP.md`
-11. `docs/SESSION_HANDOFF.md`
-12. `docs/GOOGLE_PLAY.md`
-13. `docs/BUILD.md` and `docs/ANDROID.md`
+2. `docs/OWNER_MANDATE.md`
+3. `docs/START_HERE.md`
+4. `docs/DEVELOPMENT_MODEL.md`
+5. `docs/RELEASE_SCOPE.md`
+6. `docs/DECISIONS.md`
+7. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
+8. `docs/FRESH_PLAYER_CELL.md`
+9. `docs/DESIGN_RESEARCH.md`
+10. `docs/SCOPE_OPTIONS.md`
+11. `docs/ROADMAP.md`
+12. `docs/SESSION_HANDOFF.md`
+13. `docs/GOOGLE_PLAY.md`
+14. `docs/BUILD.md` and `docs/ANDROID.md`
 
 If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
@@ -68,7 +71,8 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The owner passed `.8` in SPCK: the red rune was accepted and a proven spell successfully became the next Trial's selected starting build.
 - Gate-preparation build `0.2.0-representative.9` adds token-isolated clean saves for reproducible fresh-player sessions without changing normal gameplay or the owner's save.
 - The exact non-leading cell, predictions, result record, and stop conditions are ready in `docs/FRESH_PLAYER_CELL.md`.
-- Full launch content and final assets remain blocked on one consolidated fresh-player cell and the second explicit go/no-go.
+- The owner has identified a real testing constraint: available friends are Arabic-speaking and may not understand English genre terminology. Solve this through visual-first clarity, simple language, Arabic localization or meaning-preserving translation—not by treating them as invalid testers or casually replacing the game.
+- Full launch content and final assets remain blocked on the next valid commercial evidence step and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -76,16 +80,17 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-Run the prepared cell in `docs/FRESH_PLAYER_CELL.md`, record the result against its pre-registered predictions, then obtain the second explicit go/no-go. Do not scale launch content before the decision.
+Preserve the `.8` accepted gameplay and `.9` clean-save foundation. First make the representative test understandable without requiring English genre vocabulary, using visual clarity and an Arabic-capable or meaning-preserving test path. Then run one genuinely fresh participant through the non-leading cell, record the result against its pre-registered predictions, and obtain the second explicit go/no-go. Do not scale launch content or replace the project before that decision.
 
 ## Mandatory Session Protocol
 
 At the start:
 
-1. Read the authority files.
+1. Read the authority files, beginning with `docs/OWNER_MANDATE.md`.
 2. Check the latest `main`.
-3. Report the current milestone, latest accepted phone test, and one meaningful session goal.
-4. Distinguish the binding final goal from revisable working hypotheses.
+3. Report the current milestone, latest accepted phone test, strongest current fun/engagement limitation, and one meaningful session goal.
+4. Distinguish the binding final goal and continuity mandate from revisable working hypotheses.
+5. Do not propose another project or casual core replacement unless the owner explicitly asks or strong evidence shows Pixel Mage cannot satisfy the Product Compass.
 
 During work:
 
@@ -94,7 +99,8 @@ During work:
 3. Stay inside the current approval boundary.
 4. Run `npm run check` before publishing code.
 5. Run `npm run evidence` before gameplay gates or commercial recommendations.
-6. Ask for one consolidated asynchronous human cell only at a major commercial gate.
+6. Ask for one consolidated human cell only at a major commercial gate.
+7. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
@@ -103,6 +109,7 @@ Before ending:
 3. Update decisions only for durable decisions.
 4. Update design research when evidence changes the recommendation.
 5. Never call untested behavior or provisional scope accepted.
+6. Confirm that the next step is the strongest finishable response to the current fun/engagement problem.
 
 ## Decision Authority
 
@@ -114,4 +121,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/DEVELOPMENT_MODEL.md`, then the evidence protocol, ledger, fresh-player cell, roadmap, and handoff. The final Product Compass and goal-to-code model are binding; all implementation details are revisable. `.8` passed SPCK and `.9` prepared a clean fresh-player gate. Record the cell result and obtain the second explicit go/no-go before scaling content. Ask the owner only for genuinely needed resources or a major commercial gate.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, and `docs/DEVELOPMENT_MODEL.md`, then the latest roadmap, evidence, decisions, and handoff. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
