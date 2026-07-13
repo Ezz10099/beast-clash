@@ -1,111 +1,82 @@
 # Pixel Mage
 
-A tiny mobile-first pixel-action game being finished as the owner's first Google Play release candidate.
+Pixel Mage is a mobile-first, one-thumb action roguelite being developed as the owner's first commercially credible Google Play release.
 
-This repo is intentionally simple for SPCK Editor on Android.
+The repository remains simple enough for the owner's normal workflow: ChatGPT/Codex edits GitHub, the owner pulls in SPCK Editor, and testing happens on an Android phone.
 
 ## Goal
 
-Finish, test, package, and publish one small game on Google Play before returning to a larger project.
+Finish, test, package, and publish one polished, time-bounded game on Google Play before returning to another game project.
 
-For any new ChatGPT or Codex session, begin with `docs/START_HERE.md` and continue from `docs/SESSION_HANDOFF.md`.
+The goal is not merely to upload a technically valid APK. The launch version must provide a complete, engaging reason to play and replay while remaining realistic for the available coding, art, animation, and mobile-first workflow.
 
-## Current Scope
+## Current State
 
-Locked launch scope:
+- The custom HTML/CSS/JavaScript runtime is stable.
+- Drag movement, automatic casting, upgrades, boss behavior, pause, settings, sound, haptics, persistence, win, loss, and replay are implemented.
+- The deterministic web release candidate is frozen on `web-rc-0.1.0`.
+- Capacitor 8 and the Android project are configured.
+- The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
+- The complete current five-wave run takes roughly one minute.
 
-- One five-wave run lasting roughly five minutes.
-- One player mage.
-- Reused slime enemies with escalating health and speed.
-- One final slime boss.
-- One upgrade choice between waves.
-- Score and locally saved best score.
-- Touch controls.
-- Keyboard controls.
-- Pause/options menu with persistent sound and haptic toggles.
-- Automatic safe pause when the game loses focus.
-- Original synthesized sound effects with no external audio files.
-- Win state.
-- Lose state.
-- Pixel-art visuals drawn in code.
+That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
-Explicitly excluded:
+## Commercial Scope Status
 
-- Shop.
-- Gacha.
-- Level map.
-- Multiple characters.
-- Big story.
-- Asset pipeline.
-- Equipment, inventory, quests, or multiple worlds.
+The exact commercial scope is under focused research and requires explicit owner approval.
 
-## How to run in SPCK Editor
+Research currently supports exploring:
 
-1. Clone this repo in SPCK:
+- short timed waves inside a complete replayable run;
+- meaningful build combinations rather than many tiny linear stages;
+- the accepted one-thumb drag-and-auto-cast controls;
+- difficulty, challenges, and/or endless continuation for replay;
+- a distinctive, asset-efficient magic system;
+- minimal story unless it materially strengthens the game.
 
-   `https://github.com/Ezz10099/beast-clash.git`
+These are provisional findings, not locked feature counts. See `docs/DESIGN_RESEARCH.md` and `docs/RELEASE_SCOPE.md`.
 
-2. Open:
+## Run in SPCK Editor
 
-   `index.html`
+1. Clone or pull `https://github.com/Ezz10099/beast-clash.git`.
+2. Open `index.html`.
+3. Start SPCK preview/local server.
 
-3. Start the SPCK preview / local server.
+## Verification and Android
 
-No Phaser file is needed anymore.
+- `npm run check` runs ten complete automated flows and verifies the offline release bundle and Android configuration.
+- `npm run preview` serves the exact generated `dist/` bundle.
+- Capacitor uses package ID `com.ezz10099.pixelmage`.
+- Debug APKs are direct-install testing artifacts.
+- The future Google Play upload is a securely signed release AAB.
 
-## Release build
-
-Run `npm run check` to execute ten complete automated runs, create the offline release bundle, and verify its contents and checksums.
-
-Run `npm run preview` to serve the exact generated `dist/` bundle intended for Capacitor. Legacy Beast Clash files remain available in the repository but are excluded from that bundle.
-
-## Android build
-
-The Capacitor 8 project uses the locked package ID `com.ezz10099.pixelmage`. A GitHub Actions workflow successfully builds an installable debug APK in the cloud, so Android Studio is not required for routine milestone builds.
-
-See `docs/ANDROID.md` for the build and installation workflow.
-
-The debug APK is a phone-testing artifact, not the Google Play upload. Google Play preparation and the future signed AAB are tracked in `docs/GOOGLE_PLAY.md`.
+See `docs/ANDROID.md`, `docs/BUILD.md`, and `docs/GOOGLE_PLAY.md`.
 
 ## Controls
 
 Mobile:
 
-- Drag anywhere in the arena: move toward your finger.
+- Drag inside the arena to move toward the finger.
 - Spells cast automatically.
-- Pause button: pause, change feedback settings, or restart.
+- Pause opens the compact options, resume, and restart panel.
 
 Laptop:
 
-- WASD / Arrow keys: move.
+- WASD or Arrow keys move.
 - Spells cast automatically.
-- Space / Enter: start.
-- P / Escape: pause or resume.
+- Space or Enter starts.
+- P or Escape pauses or resumes.
 
-## Definition of Done
+## Project Authority
 
-The first release is considered finished when:
+Start every new development session with:
 
-- The player can start the game.
-- The player can move and cast spells.
-- Five escalating waves and the boss can be completed.
-- Upgrade choices noticeably change the run.
-- The player can win or lose.
-- Score and best score work reliably.
-- Sound, haptics, pause, and settings are present.
-- The game is packaged, device-tested, and accepted into Google Play testing.
+1. `AGENTS.md`
+2. `docs/START_HERE.md`
+3. `docs/RELEASE_SCOPE.md`
+4. `docs/DECISIONS.md`
+5. `docs/DESIGN_RESEARCH.md`
+6. `docs/ROADMAP.md`
+7. `docs/SESSION_HANDOFF.md`
 
-## Rule
-
-Do not add a new character, mode, world, story, or progression system before this release is published.
-
-Project authority:
-
-- `docs/START_HERE.md` — permanent cross-session entry point and working protocol.
-- `docs/RELEASE_SCOPE.md` — locked completion contract.
-- `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
-- `docs/ROADMAP.md` — roadmap through Google Play testing.
-- `docs/SESSION_HANDOFF.md` — current status and next-session entry point.
-- `docs/GOOGLE_PLAY.md` — publishing path, terminology, and release gates.
-- `docs/BUILD.md` — deterministic offline release-build contract.
-- `docs/ANDROID.md` — Capacitor, cloud APK, and signing-safety contract.
+Do not implement a speculative scope expansion. Research first, obtain explicit approval for the capped commercial scope, then update the authority documents before gameplay expansion.

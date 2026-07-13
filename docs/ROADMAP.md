@@ -2,31 +2,33 @@
 
 ## Ultimate Goal
 
-Finish Pixel Mage as a small, stable Android game and take it through the complete Google Play publishing pipeline. The production candidate must run reliably on the target POCO X2-class phone, preserve local data, fit a 20:9 portrait display, and complete repeated five-wave runs without critical errors.
+Finish Pixel Mage as a stable, commercially credible Android game and take it through the complete Google Play publishing pipeline. The production candidate must be engaging enough to justify replay, realistic for the mobile-first AI-assisted workflow, responsive across portrait phones, and reliable on the target POCO X2-class device.
 
-Google Play publishing uses an Android App Bundle (AAB), not the debug APK. The first APK is a device-validation gate, not the project endpoint.
+The current debug APK proves the technical route. It is not the project endpoint or the approved commercial product.
 
 ## Product Objectives
 
-- Deliver a complete run with a beginning, four upgrade decisions, a final boss, and a clear ending.
-- Keep an average successful run approximately 3–6 minutes.
-- Make touch movement, casting, damage, upgrades, and results immediately understandable.
-- Provide enough build variation to make replaying meaningful without adding new characters or worlds.
-- Maintain stable phone performance, safe-area fit, offline play, and reliable local progress.
-- Reach the APK gate without engine changes or scope expansion.
+- Preserve the accepted one-thumb drag-and-auto-cast controls.
+- Build depth from meaningful spell behavior and enemy patterns rather than a large animated roster.
+- Make each run develop toward a satisfying power build and clear climax.
+- Provide replay through combinations, challenges, difficulty, and/or endless continuation without grind-heavy padding.
+- Keep story optional and light unless research proves it materially strengthens the game.
+- Measure a representative full run on the target phone before setting duration or total-playtime claims.
+- Maintain responsive portrait layout, safe-area fit, offline play, local persistence, stable performance, and secure Android delivery.
 
 ## Time Boundary and Batch Rule
 
-From the validated five-wave foundation, complete the APK in no more than four major development batches:
+Milestones 0–7 completed the technical vertical slice and Android acceptance route.
 
-1. Gameplay completion: phone validation, enemy variety, boss behavior, feedback, upgrades, and balance.
-2. Release experience: tutorial, pause, settings, audio, haptics, and visual polish.
-3. Web release candidate: automated checks, device QA, performance, and blocker fixes.
-4. Android delivery: Capacitor setup, APK build, installation, and acceptance fixes.
+The commercial expansion now uses a bounded discovery gate:
 
-Related small changes must be grouped into these batches. Each batch receives one consolidated phone test. Perfection work that does not materially improve release readiness is excluded.
+1. One final focused internet/player-review research round.
+2. Two or three capped scope options with implementation and asset costs.
+3. One explicit owner-approved commercial scope.
+4. One representative full-run implementation and phone timing.
+5. A revised batch count based on that measured unit.
 
-After APK acceptance, finish Google Play preparation in no more than three additional major batches: release/business decisions, signed AAB plus store preparation, and closed-test fixes. Any Google-mandated testing period is calendar waiting time, not extra development scope.
+Do not conduct indefinite research and do not start speculative content before the scope lock. After approval, group related work into substantial batches with automated checks and one consolidated phone test per batch.
 
 ## Milestone 0 — Foundation
 
@@ -70,7 +72,7 @@ Objectives:
 - Ensure every offered upgrade is useful and understandable.
 - Give the final boss one clear code-driven behavior beyond ordinary slime movement.
 - Improve hit, damage, wave-clear, upgrade, victory, and defeat feedback.
-- Keep the successful run within the 3–6 minute target.
+- Measure the successful vertical-slice run and record the result; do not treat that measurement as the future commercial target.
 
 Exit criteria:
 
@@ -173,24 +175,27 @@ Exit criteria:
 
 - The user accepts the installed APK as stable enough for the next release phase. Complete: no bugs were reported and all tested behavior worked.
 
-## Milestone 8 — Release and Business Readiness
+## Milestone 8 — Research and Commercial Scope Lock
 
-**Status:** In planning. The exact medium commercial launch scope requires explicit approval before implementation.
+**Status:** In progress. The old tiny scope is superseded as a commercial target; no replacement counts are approved.
 
-**Goal:** confirm that the locked small game is genuinely complete and decide only the business details required for launch.
+**Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
 Objectives:
 
-- Audit the installed game against `docs/RELEASE_SCOPE.md` and fix release blockers as one batch.
-- Explicitly accept the game as complete within the locked scope.
-- Confirm the Play Console publisher and account type.
-- Decide the launch monetization model, including whether the optional rewarded revive is justified.
-- Define accurate privacy and data behavior before adding any external SDK.
+- Preserve the findings and sources in `docs/DESIGN_RESEARCH.md`.
+- Complete one final focused comparison of feasible games, player feedback, original hooks, run structures, and early commercial content.
+- Separate reusable genre patterns from Pixel Mage's original identity.
+- Produce two or three capped options with code, art, animation, testing, and schedule implications.
+- Obtain explicit approval for the core loop, original hook, run structure, content caps, progression/replay, story level, and exclusions.
+- Update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` before gameplay expansion.
+- Build and phone-time one representative full run before locking duration and total-content estimates.
 
 Exit criteria:
 
-- No unfinished locked-scope feature remains.
-- Publisher, monetization, data, and SDK decisions are recorded in `docs/DECISIONS.md`.
+- One commercially credible scope is explicitly approved.
+- Provisional ideas are clearly separated from locked requirements.
+- The first implementation batch and its phone acceptance test are precisely defined.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -231,12 +236,12 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Gameplay completion — complete and phone-accepted.
-2. Release experience and polish — complete and phone-accepted.
-3. Web release-candidate QA — complete and frozen.
-4. Capacitor build and APK acceptance — complete.
-5. Release and business readiness — scope planning in progress.
-6. Play-ready signed AAB and store preparation — pending.
-7. Closed test, blocker fixes, and production access — pending.
+1. Final focused research and commercial scope lock — in progress.
+2. Representative full-run system and phone timing — pending scope approval.
+3. Remaining commercial gameplay/content batches — count set only after the representative run.
+4. External playtest, balance, and release QA — pending.
+5. Publisher, monetization, privacy, and SDK decisions — pending.
+6. Signed AAB and store preparation — pending.
+7. Google Play testing, blocker fixes, production access, and rollout — pending.
 
-One correction batch per gate may be used only for verified release blockers. Scope expansion is never a valid use of that reserve.
+One correction batch per gate may be used for verified blockers. New scope requires a new explicit decision.

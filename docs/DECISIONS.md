@@ -10,13 +10,14 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Reason: The owner has many unfinished projects and needs one completed publishing cycle.
 - Change rule: Requires an explicit cancellation decision, not temporary frustration or a new idea.
 
-## D-002 — Small Release Scope
+## D-002 — Original Small Release Scope
 
 - Date: July 11, 2026
-- Status: Locked
-- Decision: Ship one mage, five waves, slime variants, one boss, four upgrade choices, score, replay, settings, and the existing release UX.
-- Reason: A small polished release is realistically finishable with the mobile-first, AI-assisted workflow.
-- Change rule: New characters, worlds, story, shops, equipment, quests, currencies, maps, gacha, or genre redesign wait until after Google Play testing.
+- Status: Superseded as the commercial launch scope on July 13, 2026; retained as the validated vertical-slice contract
+- Original decision: Build one mage, five waves, slime variants, one boss, between-wave upgrades, score, replay, settings, and the existing release UX.
+- Outcome: The scope was completed, packaged, installed, and accepted without reported bugs, but the owner completed the entire game in roughly one minute.
+- Reason for supersession: It proved the development-to-APK pipeline but does not provide sufficient demonstrated depth for the profit-focused launch goal.
+- Change rule: Do not discard the stable baseline. Expand only after a new capped commercial scope receives explicit owner approval.
 
 ## D-003 — Web-First Technical Route
 
@@ -65,4 +66,19 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Decision: GitHub documentation, not chat memory, is the permanent project record. Every meaningful session must close by updating the handoff and roadmap.
 - Reason: Different sessions may have incomplete conversation context.
 - Change rule: None; only the specific document structure may be improved.
+## D-009 — Native Build Is a Vertical Slice
+
+- Date: July 13, 2026
+- Status: Locked
+- Decision: The accepted one-minute APK is a validated native vertical slice, not the commercially complete Pixel Mage release.
+- Reason: Technical stability and Google Play eligibility are different from sufficient player value, engagement, and replayability.
+- Change rule: It may become the foundation of the launch game, but it must not be represented as the intended finished commercial product.
+
+## D-010 — Evidence Before Commercial Scope Lock
+
+- Date: July 13, 2026
+- Status: Active planning rule
+- Decision: Complete one final focused research round, compare feasible capped options, and phone-time a representative full run before locking content-count or playtime claims.
+- Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
+- Change rule: Research must end in a decision; it may not become an indefinite substitute for development. Exact gameplay scope still requires explicit owner approval.
 

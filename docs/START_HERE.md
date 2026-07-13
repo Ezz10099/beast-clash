@@ -1,81 +1,91 @@
 # Pixel Mage — Start Here
 
-This file is the permanent entry point for every future ChatGPT or Codex session. Chat memory is helpful, but the repository is the source of truth.
+This is the permanent entry point for every future ChatGPT or Codex session. Chat memory is helpful; the repository is the source of truth.
 
 ## Fixed Project Context
 
 - Product: Pixel Mage
 - Repository: `Ezz10099/beast-clash`
 - Working branch: `main`
-- Target: a small, finished, profitable-capable Google Play release
-- Primary test device: POCO X2-class Android phone in 20:9 portrait
-- Daily workflow: ChatGPT/Codex edits GitHub, the owner pulls in SPCK, then tests on the phone
-- Product rule: Pixel Mage is the only active game until it enters Google Play testing or is formally cancelled
+- Goal: a commercially credible, engaging, time-bounded Google Play release
+- Primary validation device: POCO X2-class Android phone in 20:9 portrait
+- Layout requirement: responsive across portrait screens, with safe-area support
+- Workflow: ChatGPT/Codex edits GitHub; the owner pulls in SPCK and tests on the phone
+- Focus rule: Pixel Mage remains the only active game until Google Play testing or formal cancellation
 
 ## Authority Order
 
-Read these files in order before changing the project:
+Read these files in order:
 
-1. `AGENTS.md` — mandatory working rules.
-2. `docs/START_HERE.md` — project map and session protocol.
-3. `docs/RELEASE_SCOPE.md` — locked product boundaries.
-4. `docs/DECISIONS.md` — decisions that must not be repeatedly reopened.
-5. `docs/ROADMAP.md` — milestones through Google Play testing.
-6. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-7. `docs/GOOGLE_PLAY.md` — publishing path and release checklist.
-8. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+1. `AGENTS.md`
+2. `docs/START_HERE.md`
+3. `docs/RELEASE_SCOPE.md`
+4. `docs/DECISIONS.md`
+5. `docs/DESIGN_RESEARCH.md`
+6. `docs/ROADMAP.md`
+7. `docs/SESSION_HANDOFF.md`
+8. `docs/GOOGLE_PLAY.md`
+9. `docs/BUILD.md` and `docs/ANDROID.md`
 
-If two files conflict, stop and reconcile them in the same change. A new explicit user decision may override an older document, but the affected documents must then be updated immediately.
+If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
 ## Current High-Level State
 
-- The locked five-wave game, release UX, controls, persistence, visual/audio polish, and deterministic web bundle were accepted through SPCK phone testing.
-- The accepted browser release candidate is frozen on branch `web-rc-0.1.0`.
+- The gameplay foundation, controls, release UX, persistence, code-drawn polish, sound, haptics, and deterministic web bundle passed SPCK phone testing.
+- The browser release candidate is frozen on `web-rc-0.1.0`.
 - Capacitor and the Android project are configured.
-- The first cloud debug APK build succeeded on July 12, 2026.
-- The first debug APK was installed and accepted on the target phone on July 13, 2026; the owner reported no bugs and all tested behavior worked.
-- The current one-minute five-wave build is a validated native vertical slice, not yet the approved commercial launch scope.
-- A Play-ready signed AAB, store listing, policy declarations, monetization integration, and Google Play testing are not complete.
+- The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
+- The complete current five-wave run lasts roughly one minute.
+- That build is a validated native vertical slice, not the approved commercial launch game.
+- The old tiny release contract has been superseded as a commercial target.
+- Focused design research is in progress; no replacement feature counts or duration promises are locked.
+- Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
-The exact current status always belongs in `docs/SESSION_HANDOFF.md`.
+The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
+
+## Current Decision Gate
+
+Before commercial gameplay expansion:
+
+1. Complete one final focused research round.
+2. Present two or three capped, feasible scope options with costs and risks.
+3. Obtain explicit owner approval for the core loop, original hook, run structure, launch content cap, story level, progression/replay systems, and exclusions.
+4. Update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`.
+5. Build one representative full run and phone-time it before locking playtime claims.
 
 ## Mandatory Session Protocol
 
-### At the start
+At the start:
 
-1. Read the authority files above.
-2. Check the latest `main` state before editing.
-3. State one meaningful session goal and its acceptance test.
-4. Do not reopen a locked decision unless new evidence makes it unsafe or impossible.
+1. Read the authority files.
+2. Check the latest `main`.
+3. Report the current milestone, latest accepted phone test, and one meaningful session goal.
+4. Distinguish locked decisions from research candidates.
 
-### During work
+During work:
 
-1. Work in substantial related batches, not isolated cosmetic micro-edits.
-2. Stay inside `docs/RELEASE_SCOPE.md`.
-3. Preserve the SPCK and 20:9 portrait workflow.
-4. Run `npm run check` before publishing a stable batch.
-5. Ask for one consolidated phone test after the complete batch.
+1. Work in substantial related batches.
+2. Preserve the SPCK and responsive portrait workflow.
+3. Stay inside the current approval boundary.
+4. Run `npm run check` before publishing code.
+5. Ask for one consolidated phone test after each complete implementation batch.
 
-### Before ending
+Before ending:
 
-1. Push the intended changes to `main`.
-2. Update `docs/SESSION_HANDOFF.md` with the date, completed work, test status, blockers, and one exact next step.
-3. Update milestone statuses in `docs/ROADMAP.md`.
-4. Append to `docs/DECISIONS.md` only when a durable decision changed or was added.
-5. Never describe untested phone behavior as accepted.
+1. Push intended stable changes to `main`.
+2. Update the handoff and roadmap.
+3. Update decisions only for durable decisions.
+4. Update design research when evidence changes the recommendation.
+5. Never call untested behavior or provisional scope accepted.
 
 ## Decision Authority
 
-- ChatGPT/Codex should lead routine technical, architecture, testing, and workflow decisions.
-- The owner remains the creative director and final product authority.
-- Obtain explicit approval before a scope expansion, engine change, monetization choice, data collection, external SDK, package identity change, signing-key creation, publisher-account decision, destructive removal, or Google Play submission.
+ChatGPT/Codex leads routine technical, research, architecture, testing, and workflow choices. The owner remains creative director and approves major or irreversible decisions.
 
 ## Asset Safety
 
-Any external or generated release asset must retain its source, generation prompt or license, creation date, and commercial-use evidence. Do not add an asset with unclear publishing rights.
+For every external or generated release asset, preserve its source, prompt or license, creation date, and commercial-use evidence.
 
 ## New-Session Prompt
 
-Use this short prompt in a new conversation:
-
-> Work on `Ezz10099/beast-clash`, branch `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then continue from `docs/SESSION_HANDOFF.md`. Keep the locked release scope, run the required checks, push the completed batch, and update the handoff.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow the linked authority documents. Report the current milestone and propose one substantial session goal before editing. Do not treat the accepted vertical slice or provisional research as the locked commercial scope. Complete and verify the approved batch, push it to `main`, and update the handoff and roadmap.

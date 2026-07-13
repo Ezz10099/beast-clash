@@ -16,7 +16,7 @@ GitHub Actions is only the cloud computer that performs builds. It replaces rout
 
 ## Current Position
 
-- Game and web release candidate: complete within the locked scope and SPCK-accepted.
+- Technical vertical slice and web release candidate: complete and SPCK-accepted; commercial gameplay scope is still under research.
 - Capacitor Android project: complete.
 - First cloud debug APK: built successfully.
 - Native APK acceptance: complete on July 13, 2026; the current build is now treated as a validated vertical slice.
@@ -26,13 +26,13 @@ GitHub Actions is only the cloud computer that performs builds. It replaces rout
 - Play Console setup, store listing, and testing: pending.
 - Production publication: pending.
 
-## Gate 1 — Finished Product
+## Gate 1 — Commercially Finished Product
 
-- Locked gameplay loop is complete and understandable.
+- The explicitly approved commercial gameplay loop is complete and understandable.
 - Tutorial, controls, pause, settings, persistence, win, loss, and replay work.
 - Visuals and audio have no visible placeholders.
 - Multiple full runs complete without a critical problem.
-- The owner explicitly accepts the game as complete within `docs/RELEASE_SCOPE.md`.
+- The owner and external target-player tests provide evidence that the approved scope is complete, understandable, stable, and worth replaying.
 
 ## Gate 2 — Native Android Acceptance
 

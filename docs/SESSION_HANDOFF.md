@@ -8,12 +8,13 @@
 - Permanent entry point: `docs/START_HERE.md`
 - Release contract: `docs/RELEASE_SCOPE.md`
 - Durable decisions: `docs/DECISIONS.md`
+- Design evidence: `docs/DESIGN_RESEARCH.md`
 - Roadmap: `docs/ROADMAP.md`
 - Publishing path: `docs/GOOGLE_PLAY.md`
 
 ## Current Session Goal
 
-Record native APK acceptance and define a commercially credible medium launch scope before expanding the game.
+Preserve the accepted native vertical slice, use outside evidence to correct the commercial-scope assumptions, and define the bounded research gate required before scope lock.
 
 ## Completed This Session
 
@@ -56,6 +57,14 @@ Record native APK acceptance and define a commercially credible medium launch sc
 - The owner installed the first debug APK and confirmed that it passed: no bugs were observed and everything tested worked.
 - The owner reported that the complete current run lasts roughly one minute.
 - Reclassified the current native build as a validated vertical slice while the commercial launch scope is reconsidered.
+- Compared the current drag-and-auto-cast game with Magic Survival, Brotato, 20 Minutes Till Dawn, Vampire Survivors, Halls of Torment, Bounty of One, Slice & Dice, and Hoplite.
+- Found that replayable runs, short internal waves, meaningful build combinations, simple controls, and rule-driven variety are more useful scope measures than a guessed count of linear stages.
+- Recorded player-feedback risks: currency grind, intrusive monetization, touch precision, repetitive convergent builds, and ending a run before the build becomes satisfying.
+- Withdrew the unsupported 15-stage, 60-stage, and fixed campaign-hour estimates.
+- Identified the “living spell” concept as a candidate original hook, not an approved feature.
+- Added `docs/DESIGN_RESEARCH.md` and reconciled the scope, decisions, roadmap, start guide, README, and Google Play documents.
+- Confirmed `npm run check` still passes: ten complete runs, release bundle verification, and Android configuration checks.
+
 
 ## Phone Validation Result
 
@@ -63,13 +72,21 @@ The user accepted the gameplay/control, release-experience, and web-release-cand
 
 ## Current Development Objective
 
-The Android route is validated. Do not proceed directly to store preparation and do not treat the one-minute build as commercially complete. The next major decision is to approve a capped medium launch scope between the tiny vertical slice and a large multi-world RPG.
+Do not lock the first attractive idea and do not research indefinitely. Complete exactly one more focused discovery round, then present two or three capped commercial-scope options with a clear recommendation.
+
+The next research must answer:
+
+1. What original hook is both marketable and feasible with code-driven visuals?
+2. What run structure keeps one-thumb play engaging without artificial health padding?
+3. What minimum launch content creates meaningful replay without a large roster or story burden?
+4. Which progression and difficulty systems create variety without grind?
+5. What should be explicitly excluded from version 1?
 
 ## Next Session Entry Point
 
-Start by reading `AGENTS.md` and `docs/START_HERE.md`. Review the proposed medium commercial scope with the owner and obtain explicit approval for exact limits on heroes, worlds, story, progression systems, run duration, and total launch depth. Then update the release scope and durable decisions before implementing one substantial expansion batch.
+Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/DESIGN_RESEARCH.md`. Conduct the final focused research round. Produce two or three capped options comparing originality, player appeal, code complexity, asset burden, testing burden, estimated implementation batches, and key risks. Recommend one option, but obtain explicit owner approval before changing the commercial gameplay scope.
 
-At the end of the next meaningful session, update this file with the new commit, phone-test result, blockers, and one exact continuation step.
+Do not start gameplay expansion, monetization, store preparation, or asset production during that research step.
 
 ## Verification
 
