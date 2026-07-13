@@ -15,7 +15,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 9. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
 10. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
-The accepted technical foundation and the owner-approved Living Spell Trials commercial scope are authoritative. Exact duration, balance, component behavior, final title, and monetization remain gated.
+The accepted technical foundation, the Product Compass in `docs/START_HERE.md`, and the owner-approved Living Spell Trials commercial scope are authoritative. Exact duration, balance, component behavior, final title, and monetization remain gated. Do not reduce the goal to a feature checklist or wait for the owner to invent every improvement; trace the player's logic and independently compare bounded solutions inside the approved scope.
 
 ## User Workflow
 

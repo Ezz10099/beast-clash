@@ -294,6 +294,9 @@ const raw = JSON.parse(evaluate(`
       const role = spellRole(build);
       const readout = spellReadout(build);
       const rewriteChoices = upgradeChoices.children.slice(0, 3);
+      const threatPreviewComplete = nextWaveTitle.textContent.includes('NEXT · WAVE 2 · Crossfire') &&
+        nextWaveDetail.textContent.includes('Motes ×6') && nextWaveDetail.textContent.includes('Casters ×2') &&
+        nextWaveIcons.children.length === 2 && nextWavePreview.attributes['aria-label'].includes('Crossfire');
       const rewriteChoicesComplete = rewriteChoices.length === 3 && rewriteChoices.every(function (button) {
         const axis = button.dataset.axis;
         const nextSpell = {
@@ -314,12 +317,22 @@ const raw = JSON.parse(evaluate(`
           /^(NEW|KNOWN)$/.test(badge.textContent) && button.dataset.result === spellKey(nextSpell) &&
           button.attributes['aria-label'].includes('Result: ' + spellName(nextSpell));
       });
+      const changedForm = build.form === 'bolt' ? 'orbit' : 'bolt';
+      const formChoice = rewriteChoices.find(function (button) { return button.dataset.axis === 'form'; });
+      formChoice.handlers.click();
+      UISystem.updateHud();
+      const transformationComplete = state.mode === 'playing' && state.wave === 2 && state.spell.form === changedForm &&
+        state.rewriteNoticeTimer > 0 && state.rewriteNotice.axis === 'form' &&
+        controlHint.textContent.includes('FORM → ' + SPELL_PARTS.forms[changedForm].title);
       return {
         build: build.form + '|' + build.essence + '|' + build.law,
         name,
         role,
         readout,
+        threatPreviewComplete,
+        transformationComplete,
         complete: name.split(' · ').length === 3 && role.split(' · ').length === 3 && rewriteChoicesComplete &&
+          threatPreviewComplete && transformationComplete &&
           readout.includes('FORM ') && readout.includes('ESSENCE ') && readout.includes('LAW '),
       };
     });
@@ -468,9 +481,9 @@ const gates = [
   },
   {
     id: 'choice-contract',
-    title: 'Choice clarity contract',
+    title: 'Choice feedback loop',
     status: counts.choiceContracts === builds.length ? 'pass' : 'fail',
-    evidence: `${counts.choiceContracts}/${builds.length} builds expose a compact resulting-spell visual, axis label, short effect, and discovery state`,
+    evidence: `${counts.choiceContracts}/${builds.length} builds expose a compact result, next-threat context, and post-tap transformation feedback`,
   },
 ];
 
@@ -498,7 +511,7 @@ const report = {
     'seeded replay determinism',
     'relative build outcomes under one fixed bot policy',
     'empty-arena pacing and clear-time proxies',
-    'compact resulting-spell visual, axis label, short-effect, and discovery-state schema',
+    'compact resulting-spell visual, next-threat context, and post-tap transformation-feedback schema',
   ],
   humanOnlyClaims: [
     'fun, boredom, delight, and desire to replay',

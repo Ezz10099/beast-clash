@@ -21,7 +21,8 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
 - The correction was later reported as highly entertaining, with roughly 15 minutes of representative experimentation; fresh-player choice comprehension remains open.
 - Evidence build `0.2.0-representative.3` added the green 200-run automated matrix and CI report.
-- Text-heavy choice build `.4` failed immediate visual review. `0.2.0-representative.5` replaces it with compact miniature spell previews—Form shape, Essence color, Law pattern—plus two small text lines and a discovery badge.
+- Text-heavy choice build `.4` failed immediate visual review. Compact visual `.5` passed the owner's SPCK review.
+- `0.2.0-representative.6` adds next-wave threat context, in-arena transformation confirmation, persistent three-part spell feedback, and clearer status/Law visuals; its owner phone result is pending.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -37,7 +38,7 @@ The locked launch direction uses:
 - a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
 - light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
 
-The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The choice build makes each pre-tap result explicit. Full content and final assets still wait until a fresh-player cell passes and the owner gives the second go/no-go.
+The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The current choice loop shows the resulting spell, coming threat, transformation, and combat effect. Full content and final assets still wait for the `.6` phone result, progression/replay judgment, a later fresh-player cell, and the owner's second go/no-go.
 
 The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypothesis: engagement and clarity now decide the duration. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
 
@@ -50,7 +51,7 @@ The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypoth
 ## Verification and Android
 
 - `npm run check` verifies all eight readable spell combinations, Bolt/Orbit role balance, active wave pacing, save migration/checkpointing, runtime stress limits, three seeded 12-wave clears, the offline release bundle, and Android configuration.
-- `npm run evidence` runs 200 real-damage bot trials across every representative build, deterministic replays, regression gates, and balance/pacing/choice-schema reports.
+- `npm run evidence` runs 200 real-damage bot trials across every representative build, deterministic replays, regression gates, and balance/pacing/choice-feedback reports.
 - `npm run preview` serves the exact generated `dist/` bundle.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts.

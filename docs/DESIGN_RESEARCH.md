@@ -199,6 +199,27 @@ The remaining player concern was concrete: a rewrite card named the resulting sp
 
 The lesson is broader than this screen: automated evidence should protect a compact visual contract, not reward adding explanatory text. Human visual judgment can invalidate an automation-green interface immediately.
 
+## Player-Logic Audit and Closed-Loop Correction — July 13, 2026
+
+After `.5` passed the owner's SPCK visual check, the next inspection traced every information handoff from opening → combat → rewrite → next wave → result. The same flow was read from four motives: a newcomer trying to survive, an experimenter trying to notice change, an optimizer seeking a reason for the choice, and a collector trying to understand Spellbook progress.
+
+The audit found four design problems, not runtime bugs:
+
+1. **The decision lacked a situation.** Cards described a result, but the next enemy mix was hidden until after the tap, so choosing was often experimentation without a strategic reason.
+2. **The feedback loop broke after the tap.** The next wave began immediately; Form was legible, while Frost's slow and Echo's delayed cast were comparatively easy to miss.
+3. **The opening front-loaded taxonomy.** Three definitions appeared before the player had seen one rewrite, while the actual starting spell could teach the same structure visually.
+4. **Progression and replay payoff remain underdeveloped.** The Spellbook is still mostly a count and the run ending offers little build analysis or longer-term motivation. `.6` does not pretend to solve this; it remains the highest-ranked open product issue after comprehension.
+
+Targeted comparison was used only to test the first three hypotheses:
+
+- [Xbox Accessibility Guideline 114](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/114) asks interfaces to preserve context for new players and recommends realistic visual previews of a choice's effect.
+- The [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/) recommend reinforcing essential instructions with visuals, keeping current objectives available, and using contextual guidance.
+- [Subset Games' description of Into the Breach](https://subsetgames.com/itb.html) ties telegraphed threats to the ability to analyze and counter them. Pixel Mage is real-time, so using a compact next-wave preview is an inference from that principle, not an attempt to copy its turn structure.
+
+`0.2.0-representative.6` therefore implements one bounded loop rather than more prose: the start shows the actual starting spell; each rewrite shows the authored next-wave mix; the selected change receives a code-drawn transformation confirmation; the live hint names all three current effects; Ember/Frost statuses and delayed Echo casts are visually distinct; and the Spellbook line states that clearing a wave proves a `NEW` spell.
+
+The automated matrix remains green and now verifies the pre-choice threat preview and post-tap confirmation for all eight builds. That proves the loop is present and consistent, not that a person understands or enjoys it. The owner phone result remains required before a later fresh-player cell.
+
 ## Research Stop Rule
 
 The required broad research round and owner choice are complete. Stop broad ideation. Continue only targeted review mining tied to a concrete mechanic or commercial gate, and use the evidence protocol before later content estimates or the second go/no-go.

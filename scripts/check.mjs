@@ -22,6 +22,10 @@ for (const id of [
   'upgradeEyebrow',
   'upgradeTitle',
   'upgradeHelp',
+  'nextWavePreview',
+  'nextWaveTitle',
+  'nextWaveDetail',
+  'nextWaveIcons',
   'upgradeChoices',
   'menuPanel',
   'menuEyebrow',
@@ -35,15 +39,17 @@ for (const id of [
 ]) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `index.html is missing #${id}`);
 }
-assert.match(html, /<strong>FORM<\/strong> — Bolt hunts the mark/);
-assert.match(html, /<strong>ESSENCE<\/strong> — Ember burns/);
-assert.match(html, /<strong>LAW<\/strong> — Split casts three/);
-assert.match(html, /Unseen rewrites are marked NEW/);
+assert.match(html, /class="choice-spell-icon opening-spell-icon"/);
+assert.match(html, /data-form="bolt"[\s\S]*data-essence="ember"[\s\S]*data-law="split"/);
+assert.match(html, /Bolt · Ember · Split/);
+assert.match(html, /Clear a wave with a NEW spell to prove it/);
 assert.match(html, /Drag to move and dodge\. Your spell casts itself/);
 assert.doesNotMatch(html, /data-key=/, 'legacy touch buttons should not return');
 assert.match(css, /\.upgrade-choice\s*\{[\s\S]*?min-height: 58px/, 'choice cards should remain compact');
 assert.match(css, /\.choice-name\s*\{[\s\S]*?font-size: 0\.78rem/);
 assert.match(css, /\.choice-detail\s*\{[\s\S]*?font-size: 0\.64rem/);
+assert.match(css, /\.next-wave-preview\s*\{/);
+assert.match(css, /\.threat-icon\[data-kind="boss"\]/);
 for (const selector of [
   'data-form="bolt"',
   'data-form="orbit"',
@@ -81,7 +87,7 @@ assert.equal(evaluate('persistent.profile.bestScore'), 321, 'legacy best score s
 assert.equal(evaluate('JSON.stringify(persistent.settings)'), '{"sound":true,"haptics":true}');
 assert.equal(JSON.parse(storage.get('pixel_mage_save_v2')).version, 2);
 assert.match(elements.get('#startStatus').textContent, /three acts, twelve waves/i);
-assert.match(elements.get('#spellbookText').textContent, /marked NEW/);
+assert.match(elements.get('#spellbookText').textContent, /Clear a wave with a NEW spell/);
 
 elements.get('#startRunButton').handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
@@ -98,7 +104,7 @@ evaluate('update()');
 assert.ok(evaluate('state.player.x') < startingX, 'dragging in the arena should move the mage');
 assert.ok(evaluate('state.projectiles.length') > 0, 'the living spell should cast automatically');
 assert.ok(evaluate('state.targetId !== null'), 'automatic casting should mark a deterministic threat');
-assert.match(elements.get('#controlHint').textContent, /BOLT hunts the marked enemy/);
+assert.match(elements.get('#controlHint').textContent, /BOLT hunts the mark.*EMBER burns \+ splashes.*SPLIT casts 3 now/);
 assert.ok(evaluate('audioContext !== null'), 'the first gesture should unlock synthesized audio');
 assert.ok(vibrations.length > 0, 'the first action should provide haptic feedback');
 canvas.handlers.pointerup({ pointerId: 1 });
@@ -161,6 +167,8 @@ assert.equal(evaluate('RUN_DEFINITION[8].events.every((event) => event.family ==
 assert.ok(evaluate('RUN_DEFINITION[9].events.filter((event) => event.family === "caster").length') >= 4, 'Wave 10 should emphasize crossfire');
 assert.equal(evaluate('RUN_DEFINITION[10].events.filter((event) => event.elite).length'), 2, 'Wave 11 should be a twin-guardian test');
 assert.ok(evaluate('RUN_DEFINITION[11].events.find((event) => event.boss).at <= 9 * FPS'), 'the boss should arrive without a long prelude');
+assert.match(evaluate('waveThreatSummary(RUN_DEFINITION[10]).detail'), /Guardians ×2/);
+assert.match(evaluate('waveThreatSummary(RUN_DEFINITION[11]).heading'), /NEXT · BOSS · The Redactor/);
 
 evaluate(`
   state.waveFrame = 1;
@@ -181,6 +189,14 @@ assert.equal(evaluate('persistent.checkpoint.phase'), 'upgrade');
 assert.equal(evaluate('persistent.profile.discovered.length'), 1);
 assert.match(elements.get('#upgradeEyebrow').textContent, /New Spell Proven/);
 assert.equal(elements.get('#upgradeHelp').textContent, 'CURRENT · Bolt · Ember · Split');
+assert.equal(elements.get('#nextWaveTitle').textContent, 'NEXT · WAVE 2 · Crossfire');
+assert.equal(elements.get('#nextWaveDetail').textContent, 'Motes ×6 · Casters ×2');
+assert.equal(
+  JSON.stringify(elements.get('#nextWaveIcons').children.map((icon) => [icon.dataset.kind, icon.children[0].textContent])),
+  '[["chaser","×6"],["caster","×2"]]',
+  'rewrite decisions should show the authored threat that follows them',
+);
+assert.match(elements.get('#nextWavePreview').attributes['aria-label'], /Crossfire.*Motes ×6.*Casters ×2/);
 assert.equal(
   JSON.stringify(elements.get('#upgradeChoices').children.slice(0, 3).map((button) => button.dataset.discovery)),
   '["new","new","new"]',
@@ -217,7 +233,12 @@ assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 2);
 assert.equal(evaluate('state.spell.form'), 'orbit');
 evaluate('UISystem.updateHud()');
-assert.match(elements.get('#controlHint').textContent, /ORBIT hits nearby crowds and blocks shots/);
+assert.ok(evaluate('state.rewriteNoticeTimer > 0'), 'the chosen rewrite should receive a visible in-arena confirmation window');
+assert.equal(evaluate('state.rewriteNotice.title'), 'FORM → Orbit');
+assert.equal(evaluate('state.rewriteNotice.detail'), 'guards nearby');
+assert.match(elements.get('#controlHint').textContent, /FORM → Orbit · guards nearby/);
+evaluate('state.rewriteNoticeTimer = 0; UISystem.updateHud()');
+assert.match(elements.get('#controlHint').textContent, /ORBIT guards nearby.*EMBER burns \+ splashes.*SPLIT casts 3 now/);
 assert.equal(evaluate('persistent.checkpoint.wave'), 2);
 assert.equal(evaluate('persistent.checkpoint.phase'), 'wave');
 
@@ -285,14 +306,19 @@ for (const form of ['bolt', 'orbit']) {
       `);
       assert.equal(evaluate('state.projectiles[0].kind'), form, `${form}/${essence}/${law} should use its Form`);
       assert.equal(evaluate('state.projectiles[0].essence'), essence);
+      assert.equal(evaluate('state.projectiles[0].law'), law);
       if (law === 'split') {
         assert.equal(evaluate('state.projectiles.length'), 3, 'Split should create three copies');
+        assert.equal(evaluate('JSON.stringify(state.projectiles.map((projectile) => projectile.copyIndex))'), '[0,1,2]');
+        assert.equal(evaluate('state.projectiles.some((projectile) => projectile.echoed)'), false);
         assert.equal(evaluate('state.pendingCasts.length'), 0);
       } else {
         assert.equal(evaluate('state.projectiles.length'), 1);
+        assert.equal(evaluate('state.projectiles[0].echoed'), false);
         assert.equal(evaluate('state.pendingCasts.length'), 1, 'Echo should schedule a repeat');
         evaluate('state.time += 12; SpellSystem.processPending()');
         assert.equal(evaluate('state.projectiles.length'), 2);
+        assert.equal(evaluate('state.projectiles[1].echoed'), true, 'the delayed Echo should carry a distinct visual state');
       }
       assert.match(evaluate('spellName(state.spell)'), / · /);
       evaluate('draw()');

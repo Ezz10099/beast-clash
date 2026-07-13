@@ -14,6 +14,10 @@ const upgradePanel = document.querySelector("#upgradePanel");
 const upgradeEyebrow = document.querySelector("#upgradeEyebrow");
 const upgradeTitle = document.querySelector("#upgradeTitle");
 const upgradeHelp = document.querySelector("#upgradeHelp");
+const nextWavePreview = document.querySelector("#nextWavePreview");
+const nextWaveTitle = document.querySelector("#nextWaveTitle");
+const nextWaveDetail = document.querySelector("#nextWaveDetail");
+const nextWaveIcons = document.querySelector("#nextWaveIcons");
 const upgradeChoices = document.querySelector("#upgradeChoices");
 const menuPanel = document.querySelector("#menuPanel");
 const menuEyebrow = document.querySelector("#menuEyebrow");
@@ -35,6 +39,7 @@ const SAVE_KEY = "pixel_mage_save_v2";
 const LEGACY_BEST_SCORE_KEY = "pixel_mage_best_score_v1";
 const LEGACY_SETTINGS_KEY = "pixel_mage_settings_v1";
 const WAVE_BANNER_DURATION = 78;
+const REWRITE_NOTICE_DURATION = 105;
 const MAX_PROJECTILES = 96;
 const MAX_ENEMY_PROJECTILES = 72;
 const MAX_PENDING_CASTS = 24;
@@ -586,6 +591,8 @@ const state = {
   sparks: [],
   waveBannerTimer: 0,
   waveBannerText: "",
+  rewriteNoticeTimer: 0,
+  rewriteNotice: null,
   lastDiscovery: "",
   screenShake: 0,
   damageFlash: 0,
@@ -705,6 +712,12 @@ function spellPartPromise(axis, value) {
   return value === "split" ? "casts 3 now" : "repeats later";
 }
 
+function spellCombatHint(spell) {
+  return SPELL_PARTS.forms[spell.form].title.toUpperCase() + " " + spellPartPromise("form", spell.form) + " · " +
+    SPELL_PARTS.essences[spell.essence].title.toUpperCase() + " " + spellPartPromise("essence", spell.essence) + " · " +
+    SPELL_PARTS.laws[spell.law].title.toUpperCase() + " " + spellPartPromise("law", spell.law);
+}
+
 function rewrittenSpell(axis, value) {
   return {
     form: axis === "form" ? value : state.spell.form,
@@ -715,6 +728,32 @@ function rewrittenSpell(axis, value) {
 
 function currentWaveDefinition() {
   return RUN_DEFINITION[state.wave - 1] || RUN_DEFINITION[0];
+}
+
+function waveThreatSummary(definition) {
+  const counts = { chaser: 0, caster: 0, guardian: 0, boss: 0 };
+  for (const event of definition.events) {
+    const count = Math.max(1, event.count || 1);
+    if (event.boss) counts.boss += count;
+    else if (event.elite) counts.guardian += count;
+    else if (event.family === "caster") counts.caster += count;
+    else counts.chaser += count;
+  }
+  const labels = {
+    chaser: "Motes",
+    caster: "Casters",
+    guardian: "Guardians",
+    boss: "Boss",
+  };
+  const entries = ["chaser", "caster", "guardian", "boss"]
+    .filter(function (kind) { return counts[kind] > 0; })
+    .map(function (kind) { return { kind, count: counts[kind], label: labels[kind] }; });
+  return {
+    heading: "NEXT · " + (definition.boss ? "BOSS" : definition.guardian ? "GUARDIAN" : "WAVE " + definition.wave) +
+      " · " + definition.title,
+    detail: entries.map(function (entry) { return entry.label + " ×" + entry.count; }).join(" · "),
+    entries,
+  };
 }
 
 function checkpointFromState(phase) {
@@ -1139,7 +1178,7 @@ const SpellSystem = Object.freeze({
       player.cooldown = Math.max(8, Math.round(baseCooldown * (1 - player.haste)));
     }
     const castMultiplier = multiplier === undefined ? 1 : multiplier;
-    this.spawnCast(target, castMultiplier);
+    this.spawnCast(target, castMultiplier, multiplier !== undefined);
     if (law === "echo" && multiplier === undefined) {
       state.pendingCasts.push({
         at: state.time + 12,
@@ -1155,7 +1194,7 @@ const SpellSystem = Object.freeze({
     return true;
   },
 
-  spawnCast: function (target, castMultiplier) {
+  spawnCast: function (target, castMultiplier, echoed) {
     const player = state.player;
     const essence = state.spell.essence;
     const split = state.spell.law === "split";
@@ -1172,6 +1211,9 @@ const SpellSystem = Object.freeze({
         state.projectiles.push({
           kind: "bolt",
           essence,
+          law: state.spell.law,
+          copyIndex: index,
+          echoed: echoed === true,
           x: player.x,
           y: player.y - 13,
           vx: Math.cos(baseAngle + offset) * speed,
@@ -1189,6 +1231,9 @@ const SpellSystem = Object.freeze({
         state.projectiles.push({
           kind: "orbit",
           essence,
+          law: state.spell.law,
+          copyIndex: index,
+          echoed: echoed === true,
           x: player.x,
           y: player.y,
           r: 12,
@@ -1315,6 +1360,8 @@ const RunSystem = Object.freeze({
     state.sparks = [];
     state.waveBannerTimer = 0;
     state.waveBannerText = "";
+    state.rewriteNoticeTimer = 0;
+    state.rewriteNotice = null;
     state.lastDiscovery = "";
     state.screenShake = 0;
     state.damageFlash = 0;
@@ -1419,9 +1466,19 @@ const RunSystem = Object.freeze({
     triggerHaptic([24, 45, 24]);
   },
 
-  chooseRewrite: function (apply) {
+  chooseRewrite: function (option) {
     if (state.mode !== "upgrade") return;
-    apply();
+    option.apply();
+    const changedValue = option.spell
+      ? SPELL_PARTS[option.axis === "form" ? "forms" : option.axis === "essence" ? "essences" : "laws"][state.spell[option.axis]].title
+      : option.title.replace("SUPPORT · ", "");
+    state.rewriteNotice = {
+      axis: option.axis,
+      title: option.axis.toUpperCase() + " → " + changedValue,
+      detail: option.detail,
+      spell: { form: state.spell.form, essence: state.spell.essence, law: state.spell.law },
+    };
+    state.rewriteNoticeTimer = REWRITE_NOTICE_DURATION;
     state.lastDiscovery = "";
     playSound("upgrade");
     triggerHaptic(28);
@@ -1479,7 +1536,8 @@ const UISystem = Object.freeze({
     } else {
       startStatus.textContent = "Three acts, twelve waves. Rewrite for a new play style or take Support.";
     }
-    spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length + "/8 · Unseen rewrites are marked NEW";
+    spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length +
+      "/8 · Clear a wave with a NEW spell to prove it";
   },
 
   showRewrite: function (saveBoundary) {
@@ -1494,6 +1552,22 @@ const UISystem = Object.freeze({
         ? "Act II cleared · Choose one"
         : "Choose one";
     upgradeHelp.textContent = "CURRENT · " + spellName(state.spell);
+
+    const threat = waveThreatSummary(RUN_DEFINITION[state.wave]);
+    nextWaveTitle.textContent = threat.heading;
+    nextWaveDetail.textContent = threat.detail;
+    nextWaveIcons.replaceChildren();
+    for (const entry of threat.entries) {
+      const icon = document.createElement("span");
+      const count = document.createElement("i");
+      icon.className = "threat-icon";
+      icon.dataset.kind = entry.kind;
+      count.className = "threat-count";
+      count.textContent = "×" + entry.count;
+      icon.append(count);
+      nextWaveIcons.append(icon);
+    }
+    nextWavePreview.setAttribute("aria-label", threat.heading + ". " + threat.detail + ".");
 
     const nextForm = state.spell.form === "bolt" ? "orbit" : "bolt";
     const nextEssence = state.spell.essence === "ember" ? "frost" : "ember";
@@ -1590,7 +1664,7 @@ const UISystem = Object.freeze({
       button.append(icon, copy, badge);
       button.addEventListener("click", function () {
         unlockAudio();
-        RunSystem.chooseRewrite(option.apply);
+        RunSystem.chooseRewrite(option);
       }, { once: true });
       upgradeChoices.append(button);
     }
@@ -1650,9 +1724,9 @@ const UISystem = Object.freeze({
     menuButton.setAttribute("aria-label", state.menuOpen ? "Resume game" : state.mode === "playing" ? "Pause game" : "Open options");
     healthText.textContent = player ? "HP " + Math.max(0, Math.ceil(player.hp)) + "/" + player.maxHp : "HP 5/5";
     spellText.textContent = spellReadout(state.spell);
-    controlHint.textContent = state.spell.form === "orbit"
-      ? "ORBIT hits nearby crowds and blocks shots · Drag close, then dodge"
-      : "BOLT hunts the marked enemy · Drag to dodge";
+    controlHint.textContent = state.rewriteNoticeTimer > 0 && state.rewriteNotice
+      ? state.rewriteNotice.title + " · " + state.rewriteNotice.detail
+      : spellCombatHint(state.spell);
     if (state.mode === "menu") {
       waveText.textContent = TOTAL_WAVES + " Waves";
       scoreText.textContent = "Best " + state.bestScore;
@@ -1713,6 +1787,7 @@ function update() {
   if (state.menuOpen) return;
   state.time += 1;
   state.waveBannerTimer = Math.max(0, state.waveBannerTimer - 1);
+  state.rewriteNoticeTimer = Math.max(0, state.rewriteNoticeTimer - 1);
   state.screenShake = Math.max(0, state.screenShake - 1);
   state.damageFlash = Math.max(0, state.damageFlash - 1);
   if (state.mode === "playing") {
@@ -1744,6 +1819,7 @@ function draw() {
     drawEnemies();
     drawTargetFeedback();
     drawPlayer();
+    drawRewriteNotice();
     drawPointerTarget();
     drawSparks();
     drawEndBanner();
@@ -1892,12 +1968,100 @@ function drawEnemies() {
     else if (enemy.family === "caster") drawCaster(enemy);
     else drawMote(enemy);
     if (enemy.elite) drawEliteMarks(enemy);
+    drawEnemyStatus(enemy);
     const showBar = enemy.boss || enemy.elite || enemy.hp < enemy.maxHp || enemy.family === "caster";
     if (showBar) {
       const width = enemy.boss ? 54 : enemy.elite ? 42 : 27;
       drawHealthBar(enemy.x - width / 2, enemy.y - enemy.h / 2 - 10, width, enemy.hp / enemy.maxHp);
     }
   }
+}
+
+function drawEnemyStatus(enemy) {
+  const x = Math.round(enemy.x);
+  const y = Math.round(enemy.y);
+  if (enemy.burnUntil > state.time) {
+    const flicker = Math.floor(state.time / 5 + enemy.id) % 2;
+    ctx.save();
+    ctx.fillStyle = "#ff8c42";
+    ctx.fillRect(x - 8, y - enemy.h / 2 - 8 - flicker, 3, 6);
+    ctx.fillRect(x + 5, y - enemy.h / 2 - 6 + flicker, 3, 5);
+    ctx.fillStyle = "#ffd08a";
+    ctx.fillRect(x - 7, y - enemy.h / 2 - 10 - flicker, 1, 3);
+    ctx.fillRect(x + 6, y - enemy.h / 2 - 8 + flicker, 1, 3);
+    ctx.restore();
+  }
+  if (enemy.slowUntil > state.time) {
+    const radius = Math.max(enemy.w, enemy.h) / 2 + 5;
+    ctx.save();
+    ctx.strokeStyle = "#61d4e8";
+    ctx.globalAlpha = 0.82;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x - radius, y - 3);
+    ctx.lineTo(x - radius, y + 3);
+    ctx.moveTo(x + radius, y - 3);
+    ctx.lineTo(x + radius, y + 3);
+    ctx.moveTo(x - 3, y - radius);
+    ctx.lineTo(x + 3, y - radius);
+    ctx.stroke();
+    ctx.fillStyle = "#d9fbff";
+    ctx.fillRect(x - 1, Math.round(y - radius - 4), 2, 4);
+    ctx.restore();
+  }
+}
+
+function drawRewriteNotice() {
+  if (state.mode !== "playing" || state.rewriteNoticeTimer <= 0 || !state.rewriteNotice || !state.player) return;
+  const notice = state.rewriteNotice;
+  const elapsed = REWRITE_NOTICE_DURATION - state.rewriteNoticeTimer;
+  const alpha = Math.min(0.92, elapsed / 10, state.rewriteNoticeTimer / 24);
+  const x = state.player.x;
+  const y = state.player.y;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  if (notice.axis === "support") {
+    ctx.fillStyle = "#ffd166";
+    ctx.fillRect(Math.round(x - 18), Math.round(y - 2), 36, 4);
+    ctx.fillRect(Math.round(x - 2), Math.round(y - 18), 4, 36);
+  } else {
+    const spell = notice.spell;
+    const essence = SPELL_PARTS.essences[spell.essence];
+    ctx.strokeStyle = essence.light;
+    ctx.fillStyle = essence.color;
+    ctx.lineWidth = 2;
+    if (spell.form === "orbit") {
+      const ringCount = spell.law === "split" ? 3 : 2;
+      for (let index = 0; index < ringCount; index += 1) {
+        ctx.globalAlpha = alpha * (spell.law === "echo" && index === 1 ? 0.34 : 0.78);
+        ctx.beginPath();
+        ctx.arc(x, y, 27 + index * 8, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    } else {
+      const rayCount = spell.law === "split" ? 3 : 2;
+      for (let index = 0; index < rayCount; index += 1) {
+        const offset = rayCount === 3 ? (index - 1) * 0.26 : index * 0.12;
+        const ghost = spell.law === "echo" && index === 1;
+        ctx.globalAlpha = alpha * (ghost ? 0.3 : 0.82);
+        const endX = x + Math.sin(offset) * 38 + (ghost ? 7 : 0);
+        const endY = y - Math.cos(offset) * 38 + (ghost ? 4 : 0);
+        ctx.beginPath();
+        ctx.moveTo(x, y - 12);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+        ctx.fillRect(Math.round(endX - 2), Math.round(endY - 3), 5, 6);
+      }
+    }
+  }
+
+  const labelY = clamp(y - 58, 142, H - 58);
+  ctx.globalAlpha = alpha * 0.92;
+  ctx.fillStyle = "rgba(8, 11, 18, 0.86)";
+  ctx.fillRect(Math.round(x - 66), Math.round(labelY - 10), 132, 20);
+  drawText(notice.title, x, labelY, 9, "#ffe7ae", "center");
+  ctx.restore();
 }
 
 function drawMote(enemy) {
@@ -2011,6 +2175,8 @@ function drawProjectiles() {
     const essence = SPELL_PARTS.essences[projectile.essence];
     const x = Math.round(projectile.x);
     const y = Math.round(projectile.y);
+    ctx.save();
+    if (projectile.echoed) ctx.globalAlpha = 0.58;
     if (projectile.kind === "orbit") {
       ctx.fillStyle = essence.color;
       ctx.fillRect(x - 6, y - 6, 12, 12);
@@ -2022,6 +2188,13 @@ function drawProjectiles() {
       ctx.fillStyle = essence.light;
       ctx.fillRect(x - 2, y - 2, 4, 4);
     }
+    if (projectile.echoed) {
+      ctx.globalAlpha = 0.3;
+      ctx.strokeStyle = essence.light;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x - 8, y - 8, 16, 16);
+    }
+    ctx.restore();
   }
 }
 

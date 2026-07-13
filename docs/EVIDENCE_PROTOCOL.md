@@ -32,13 +32,13 @@ The full gate runs all 8 representative spell combinations across the same 25 se
 | Bot survivability | Every build wins at least 80% | 60–79.9% weakest build | Below 60% |
 | Dominance proxy | Build median spread ≤20% and Form gap ≤15% | Spread ≤35% and Form gap ≤25% | Worse |
 | Pacing proxy | Empty stretch stays inside authored arrival gap, no post-schedule wait, boss arrives within 9 seconds | At most 2 seconds over the authored gap, ≤0.5-second post-schedule wait, or ≤1-second boss overrun | Worse |
-| Choice contract | 8/8 builds expose a compact resulting-spell visual, axis label, short effect, and discovery state | — | Missing, verbose, or inconsistent schema |
+| Choice feedback loop | 8/8 builds expose a compact resulting-spell visual, next-wave threat context, and post-tap transformation confirmation | — | Missing, verbose, or inconsistent loop |
 
 A red result fails CI. Yellow preserves the report and permits diagnosis, but cannot support a commercial gate recommendation by itself. Threshold changes require a reason in the evidence ledger; do not move them merely to turn a regression green.
 
 ## Interpretation Boundary
 
-Automation can support claims about termination, finite state, caps, deterministic outcomes, relative outcomes under its fixed policy, authored empty intervals, and whether required explanatory text exists.
+Automation can support claims about termination, finite state, caps, deterministic outcomes, relative outcomes under its fixed policy, authored empty intervals, and whether the required visual/context/confirmation states exist.
 
 Automation cannot establish that a human understood the text, enjoyed the run, felt a choice was fair, wanted to replay, or received enough entertainment for the price. Those claims require human evidence and must remain labeled pending until collected.
 

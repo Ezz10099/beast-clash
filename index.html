@@ -37,22 +37,44 @@
             <p class="eyebrow">Representative Trial</p>
             <h2 id="startTitle">Move. Watch. Rewrite.</h2>
             <p class="opening-guide">Drag to move and dodge. Your spell casts itself.</p>
-            <div class="axis-guide" aria-label="How spell words work">
-              <p><strong>FORM</strong> — Bolt hunts the mark; Orbit guards nearby.</p>
-              <p><strong>ESSENCE</strong> — Ember burns; Frost slows.</p>
-              <p><strong>LAW</strong> — Split casts three; Echo repeats later.</p>
+            <div
+              class="opening-spell"
+              aria-label="Starting spell: Form Bolt hunts the marked enemy. Essence Ember burns. Law Split casts three copies."
+            >
+              <span
+                class="choice-spell-icon opening-spell-icon"
+                data-form="bolt"
+                data-essence="ember"
+                data-law="split"
+                aria-hidden="true"
+              >
+                <i class="spell-shape"></i>
+                <i class="spell-shape"></i>
+                <i class="spell-shape"></i>
+              </span>
+              <span class="opening-spell-copy">
+                <strong>Bolt · Ember · Split</strong>
+                <span>hunts · burns · casts 3</span>
+              </span>
             </div>
             <p id="startStatus" class="start-status">After each wave, rewrite one word or strengthen the current build.</p>
             <div class="start-actions">
               <button id="resumeRunButton" class="menu-primary" type="button" hidden>Resume Trial</button>
               <button id="startRunButton" class="menu-secondary" type="button">Start New Trial</button>
             </div>
-            <p id="spellbookText" class="spellbook-text">Spellbook 0/8 · Unseen rewrites are marked NEW</p>
+            <p id="spellbookText" class="spellbook-text">Spellbook 0/8 · Clear a wave with a NEW spell to prove it</p>
           </section>
           <section id="upgradePanel" class="upgrade-panel" aria-labelledby="upgradeTitle" hidden>
             <p id="upgradeEyebrow" class="eyebrow">Wave Cleared</p>
             <h2 id="upgradeTitle">Choose one</h2>
             <p id="upgradeHelp" class="upgrade-help">CURRENT · Bolt · Ember · Split</p>
+            <section id="nextWavePreview" class="next-wave-preview" aria-label="Next wave preview">
+              <span class="next-wave-copy">
+                <strong id="nextWaveTitle">NEXT · WAVE 2 · Crossfire</strong>
+                <span id="nextWaveDetail">Motes ×6 · Casters ×2</span>
+              </span>
+              <span id="nextWaveIcons" class="next-wave-icons" aria-hidden="true"></span>
+            </section>
             <div id="upgradeChoices" class="upgrade-choices"></div>
           </section>
           <section

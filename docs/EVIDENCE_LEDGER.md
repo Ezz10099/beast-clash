@@ -46,4 +46,16 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Accessibility: exact change, complete result, unchanged words, and full behavior remain in the button's screen-reader label without crowding the visible card.
 - Local automation: `npm run check` passed; `npm run evidence` remained **GREEN** with 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 compact visual-choice contracts.
 - Automated boundary: the gate now checks visual encoding, brevity, result consistency, and discovery state—not text volume. Fresh-player understanding remains pending.
-- Decision: request the consolidated phone cell only after the corrected build is green and published.
+- Phone result: the owner approved `.5` in SPCK.
+- Decision: preserve the compact cards, but pause the fresh-player cell while a deeper player-logic audit addresses whether the choice has context and whether its result is observable in play.
+
+## July 13, 2026 — Closed Choice-Feedback Loop
+
+- Build: `0.2.0-representative.6`
+- Independent audit: source-state tracing from newcomer, experimenter, optimizer, and collector motives found that the game described a rewrite without showing the coming situation, immediately changed contexts after the tap, made Frost/Echo comparatively hard to observe, and did not state how a `NEW` spell becomes proven.
+- Targeted evidence: Xbox UI-context guidance supports contextual, realistic previews; Game Accessibility Guidelines support visual reinforcement and contextual guidance; Into the Breach demonstrates the broader value of seeing a threat before selecting a counter. Applying those principles to this real-time game is explicitly an inference.
+- Implemented loop: visual starting spell; authored next-wave enemy preview; in-arena rewrite confirmation; persistent three-part combat hint; distinct burn/slow and Echo feedback; explicit one-wave Spellbook proof rule.
+- Local automation: `npm run check` passed with a 79,217-byte offline bundle. `npm run evidence` remained **GREEN** with 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 choice-feedback loops.
+- Boundary: automation proves the states are present and consistent. It does not prove that the owner or a fresh player reads the loop naturally.
+- Open product issue: the Spellbook/reward/replay structure still offers weak long-term motivation and must not be hidden by passing comprehension checks.
+- Decision: request one owner SPCK pass on `.6`; do not recruit friends or scale launch content yet.

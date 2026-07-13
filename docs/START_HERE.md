@@ -13,6 +13,14 @@ This is the permanent entry point for every future ChatGPT or Codex session. Cha
 - Workflow: ChatGPT/Codex edits GitHub; the owner pulls in SPCK and tests on the phone
 - Focus rule: Pixel Mage remains the only active game until Google Play testing or formal cancellation
 
+## Product Compass
+
+The final goal is to **finish and publish a worthwhile Android game**, not to keep polishing a prototype forever. Pixel Mage should be immediately understandable, entertaining moment to moment, visibly transformed by meaningful spell choices, paced toward satisfying guardians and bosses, and replayable without permanent-power grinding. It needs a recognizable identity, enough honest value for a commercial release, responsive one-thumb portrait play, stable offline behavior, and a finishable path through this GitHub–SPCK workflow to Google Play.
+
+Player promise: **One thumb. One living spell. Rewrite its Form, Essence, and Law into genuinely different play styles while escalating Trials test the result.** Every rewrite should create a visible tradeoff, every run should build toward a climax, and discovery should open new ways to play rather than a rote checklist.
+
+The content cap is a production fence, not the whole design. For every material improvement, Codex must trace the player's logic—what the player sees, expects, chooses, observes, and wants next—then generate and compare solutions using source inspection, automated evidence, targeted comparable research, and bounded prototypes. Owner feedback remains decisive human evidence, but must not be treated as the only source of ideas.
+
 ## Authority Order
 
 Read these files in order:
@@ -46,8 +54,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - Correction build `0.2.0-representative.2` made the owner “really happy” and was reported as entertaining, with roughly 15 minutes of available representative experimentation. Choice outcomes may still be unclear to some players.
 - Evidence build `0.2.0-representative.3` added the required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact.
 - Text-heavy choice build `0.2.0-representative.4` passed automation but failed the owner's immediate visual review.
-- Compact visual build `0.2.0-representative.5` replaces the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge.
-- Full launch content and final assets remain blocked on a fresh-player test of the corrected visual interface and the second explicit go/no-go.
+- Compact visual build `0.2.0-representative.5` replaced the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge; the owner approved it in SPCK.
+- Player-logic build `0.2.0-representative.6` closes more of the choice loop: a visual starting spell, next-wave threat context before choosing, immediate transformation confirmation, persistent three-part combat feedback, clearer status/Law effects, and an explicit Spellbook proof rule.
+- Full launch content and final assets remain blocked on the `.6` phone result, unresolved progression/replay issues, a later fresh-player cell, and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -55,7 +64,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-After `0.2.0-representative.5` is green and published, the owner first checks that the compact visual cards actually fit and feel better on the target phone. If they do, run one consolidated fresh-player cell without outside explanation. Record prediction accuracy, replay desire, boredom, touch/layout blockers, and the owner's explicit go/no-go. Do not scale content before this gate closes.
+Run one owner SPCK pass on `0.2.0-representative.6`: start fresh, make several rewrites, and judge whether the loop now reads naturally from **incoming threat → choice → visible transformation → combat result**. Do not recruit friends yet. After remaining fundamental player-logic issues are resolved, open one consolidated fresh-player cell and then the second explicit go/no-go. Do not scale content before that gate closes.
 
 ## Mandatory Session Protocol
 

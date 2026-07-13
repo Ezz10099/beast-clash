@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Complete the bounded representative choice-comprehension batch, strengthen its automated contract, publish it without expanding content, and open one consolidated fresh-player commercial cell.
+Complete a bounded player-logic audit, close the visible choice-feedback loop without expanding content, strengthen its automated contract, and leave one exact owner phone judgment before any fresh-player cell.
 
 ## Completed This Session
 
@@ -123,6 +123,19 @@ Complete the bounded representative choice-comprehension batch, strengthen its a
 - Updated the representative build version to `0.2.0-representative.5` without changing gameplay balance or content.
 - Ran `npm run check`: all gameplay, compact-choice, bundle, artwork, and Android checks passed; the release bundle is 71,069 runtime bytes.
 - Ran `npm run evidence`: 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 compact visual-choice contracts. Result: GREEN.
+- Recorded the owner's SPCK approval of compact visual `.5`; preserved that direction and paused the fresh-player cell while deeper player logic was audited.
+- Added the detailed final Product Compass to `docs/START_HERE.md` so new sessions recover the intended player experience and commercial outcome, not only the content fence.
+- Traced the complete opening → combat → rewrite → next-wave → result flow from newcomer, experimenter, optimizer, and collector motives.
+- Found that choices lacked next-threat context, the tap-to-combat transition lacked confirmation, Frost/Echo feedback was comparatively weak, and the Spellbook proof rule was unstated. Kept weak progression/replay payoff recorded as an unresolved higher-level issue.
+- Replaced the opening definition block with a visual starting-spell example.
+- Added a compact, data-driven preview of the actual next wave's Motes, Casters, Guardians, or boss before every rewrite.
+- Added in-arena Form/Essence/Law transformation feedback and a persistent compact hint for all three current effects.
+- Added distinct code-drawn Ember burn, Frost slow, and delayed Echo feedback without new assets or content.
+- Changed the Spellbook prompt to state that clearing a wave with a `NEW` spell proves it.
+- Strengthened the automated choice gate to require compact result, next-threat context, and post-tap confirmation across all eight builds.
+- Updated the representative build version to `0.2.0-representative.6`.
+- Ran `npm run check`: gameplay, choice-loop, bundle, artwork, and Android checks passed; the release bundle is 79,217 runtime bytes.
+- Ran `npm run evidence`: 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 closed choice-feedback loops. Result: GREEN.
 
 ## Phone Validation Result
 
@@ -130,17 +143,17 @@ The user accepted the earlier gameplay/control, release-experience, web-release-
 
 The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5` now needs the owner's target-phone fit check before any fresh-player cell. No new comprehension result has been claimed.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5` passed the owner's SPCK review. Closed-loop `.6` has no phone result yet, so no new comprehension claim has been made.
 
 ## Current Development Objective
 
-First verify `0.2.0-representative.5` visually in SPCK on the target phone. If the compact spell previews fit and feel clearer, run one consolidated fresh-player commercial cell. Keep the 27-combination/9-Trial production and final assets blocked until that evidence and the second explicit go/no-go.
+Verify `0.2.0-representative.6` in one fresh-start SPCK run. Judge whether incoming threat → rewrite → transformation → combat result now reads naturally, and report any remaining basic logic problem. Keep friends, the 27-combination/9-Trial production, and final assets blocked; progression/replay motivation remains open even if comprehension improves.
 
 ## Next Session Entry Point
 
 Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 and D-012 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, and this handoff. Option B and the evidence workflow are locked.
 
-Pull `.5` in SPCK and inspect the first rewrite screen. If the compact visual direction is accepted, collect the fresh-player cell without coaching: at the first rewrite, ask what the chosen card is expected to do; after observing it, record whether it matched. Consolidate predictions, confusions, replay desire, boredom, and any touch/layout/runtime blocker. Do not build remaining launch content or final assets before the second go/no-go.
+Pull `.6` in SPCK and start a new Trial. Make several different rewrites and observe the incoming-threat strip, transformation moment, live three-part hint, and battlefield status/Echo feedback. The owner reports only what still feels illogical, unclear, weak, or boring. Do not recruit friends or build remaining launch content yet.
 
 ## Verification
 
@@ -154,7 +167,7 @@ Current expected result:
 
 `Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (71069 runtime bytes).`
+`Release bundle checks passed (79217 runtime bytes).`
 
 `Android configuration checks passed.`
 
