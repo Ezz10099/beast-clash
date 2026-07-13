@@ -33,7 +33,8 @@ If two files conflict, stop and reconcile them in the same change. A new explici
 - The accepted browser release candidate is frozen on branch `web-rc-0.1.0`.
 - Capacitor and the Android project are configured.
 - The first cloud debug APK build succeeded on July 12, 2026.
-- The debug APK has not yet been accepted through installation and full native phone testing.
+- The first debug APK was installed and accepted on the target phone on July 13, 2026; the owner reported no bugs and all tested behavior worked.
+- The current one-minute five-wave build is a validated native vertical slice, not yet the approved commercial launch scope.
 - A Play-ready signed AAB, store listing, policy declarations, monetization integration, and Google Play testing are not complete.
 
 The exact current status always belongs in `docs/SESSION_HANDOFF.md`.
@@ -78,4 +79,3 @@ Any external or generated release asset must retain its source, generation promp
 Use this short prompt in a new conversation:
 
 > Work on `Ezz10099/beast-clash`, branch `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then continue from `docs/SESSION_HANDOFF.md`. Keep the locked release scope, run the required checks, push the completed batch, and update the handoff.
-

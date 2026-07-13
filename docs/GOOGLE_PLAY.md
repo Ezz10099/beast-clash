@@ -19,7 +19,8 @@ GitHub Actions is only the cloud computer that performs builds. It replaces rout
 - Game and web release candidate: complete within the locked scope and SPCK-accepted.
 - Capacitor Android project: complete.
 - First cloud debug APK: built successfully.
-- Native APK acceptance: pending.
+- Native APK acceptance: complete on July 13, 2026; the current build is now treated as a validated vertical slice.
+- Commercial launch scope: under review because the current run takes roughly one minute and does not yet provide enough proven depth for a profit-focused release.
 - Monetization and privacy decisions: pending.
 - Release signing and AAB: pending.
 - Play Console setup, store listing, and testing: pending.
@@ -87,4 +88,3 @@ Google Play requirements can change, so verify the official rules again at submi
 ## Definition of Published
 
 Pixel Mage reaches the project goal when the production version is available to real Google Play users, its store and privacy information are accurate, its release identity and signing are secure, and the owner can safely produce an update.
-

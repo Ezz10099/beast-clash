@@ -23,6 +23,8 @@ The workflow can read repository contents and report its status on the triggerin
 
 The first cloud build succeeded on July 12, 2026. Build run: `29180335240`.
 
+The owner installed and accepted this APK on July 13, 2026. It launched successfully, exposed no reported bugs, and all tested controls and native behaviors worked.
+
 ## Local Commands
 
 - `npm run android:sync` — verify everything and synchronize the native project.

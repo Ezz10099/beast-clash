@@ -13,7 +13,7 @@
 
 ## Current Session Goal
 
-Preserve the complete project state across future sessions and make the full path—not only the APK path—to Google Play explicit.
+Record native APK acceptance and define a commercially credible medium launch scope before expanding the game.
 
 ## Completed This Session
 
@@ -53,24 +53,21 @@ Preserve the complete project state across future sessions and make the full pat
 - Added `docs/GOOGLE_PLAY.md` to preserve the beginner-friendly APK, Capacitor, AAB, testing, and publication path.
 - Extended the roadmap beyond the APK through release readiness, signing, AAB, Play testing, and production.
 - Added a mandatory session-closing protocol to keep the handoff and roadmap current.
+- The owner installed the first debug APK and confirmed that it passed: no bugs were observed and everything tested worked.
+- The owner reported that the complete current run lasts roughly one minute.
+- Reclassified the current native build as a validated vertical slice while the commercial launch scope is reconsidered.
 
 ## Phone Validation Result
 
-The user pulled and tested the gameplay/control, release-experience, and web-release-candidate batches through SPCK. Those web batches are accepted. The native APK itself has not yet been installed and accepted on the target phone.
+The user accepted the gameplay/control, release-experience, and web-release-candidate batches through SPCK. On July 13, 2026, the user also installed and accepted the native APK with no reported bugs. Milestone 7 is complete.
 
 ## Current Development Objective
 
-The Android project and cloud build are complete. The next development gate is native APK acceptance on the target phone. This is a milestone test of the current game, not a substitute for development and not the Google Play upload.
-
-Request one consolidated phone test after the batch is pushed. Ask only:
-
-1. Does the APK install and launch offline?
-2. Do drag, pause, app switching, Android Back, sound, haptics, upgrades, win, and lose work?
-3. Do settings and best score persist after fully closing and reopening the APK?
+The Android route is validated. Do not proceed directly to store preparation and do not treat the one-minute build as commercially complete. The next major decision is to approve a capped medium launch scope between the tiny vertical slice and a large multi-world RPG.
 
 ## Next Session Entry Point
 
-Start by reading `AGENTS.md` and `docs/START_HERE.md`. Install and test the existing debug APK using the three questions above. If it passes, mark Milestone 7 complete and begin Milestone 8's release-readiness audit. If it fails, fix all verified APK blockers together and produce one replacement build. Do not add unrelated features during either path.
+Start by reading `AGENTS.md` and `docs/START_HERE.md`. Review the proposed medium commercial scope with the owner and obtain explicit approval for exact limits on heroes, worlds, story, progression systems, run duration, and total launch depth. Then update the release scope and durable decisions before implementing one substantial expansion batch.
 
 At the end of the next meaningful session, update this file with the new commit, phone-test result, blockers, and one exact continuation step.
 

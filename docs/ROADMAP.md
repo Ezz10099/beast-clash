@@ -158,7 +158,7 @@ Exit criteria:
 
 ## Milestone 7 — APK Acceptance
 
-**Status:** Pending owner installation and native phone testing.
+**Status:** Complete and owner-accepted on July 13, 2026.
 
 **Goal:** approve the first Android build before Google Play work.
 
@@ -171,11 +171,11 @@ Objectives:
 
 Exit criteria:
 
-- The user accepts the installed APK as stable enough for the next release phase.
+- The user accepts the installed APK as stable enough for the next release phase. Complete: no bugs were reported and all tested behavior worked.
 
 ## Milestone 8 — Release and Business Readiness
 
-**Status:** Pending APK acceptance.
+**Status:** In planning. The exact medium commercial launch scope requires explicit approval before implementation.
 
 **Goal:** confirm that the locked small game is genuinely complete and decide only the business details required for launch.
 
@@ -234,8 +234,8 @@ Exit criteria:
 1. Gameplay completion — complete and phone-accepted.
 2. Release experience and polish — complete and phone-accepted.
 3. Web release-candidate QA — complete and frozen.
-4. Capacitor build — complete; APK acceptance pending.
-5. Release and business readiness — pending.
+4. Capacitor build and APK acceptance — complete.
+5. Release and business readiness — scope planning in progress.
 6. Play-ready signed AAB and store preparation — pending.
 7. Closed test, blocker fixes, and production access — pending.
 
