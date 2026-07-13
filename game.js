@@ -699,24 +699,10 @@ function spellRole(spell) {
   return form + " · " + essence + " · " + law;
 }
 
-function spellPart(axis, value) {
-  const group = axis === "form" ? "forms" : axis === "essence" ? "essences" : "laws";
-  return SPELL_PARTS[group][value];
-}
-
 function spellPartPromise(axis, value) {
   if (axis === "form") return value === "bolt" ? "hunts the mark" : "guards nearby";
-  if (axis === "essence") return value === "ember" ? "burns" : "slows";
+  if (axis === "essence") return value === "ember" ? "burns + splashes" : "slows";
   return value === "split" ? "casts 3 now" : "repeats later";
-}
-
-function keptSpellText(changedAxis, spell) {
-  return ["form", "essence", "law"]
-    .filter(function (axis) { return axis !== changedAxis; })
-    .map(function (axis) {
-      return axis.toUpperCase() + " " + spellPart(axis, spell[axis]).title + ": " + spellPartPromise(axis, spell[axis]);
-    })
-    .join(" · ");
 }
 
 function rewrittenSpell(axis, value) {
@@ -1507,8 +1493,7 @@ const UISystem = Object.freeze({
       : state.wave === 8
         ? "Act II cleared · Choose one"
         : "Choose one";
-    upgradeHelp.textContent = "CURRENT SPELL · " + spellName(state.spell) +
-      " · Rewrite changes one word; Support keeps all three.";
+    upgradeHelp.textContent = "CURRENT · " + spellName(state.spell);
 
     const nextForm = state.spell.form === "bolt" ? "orbit" : "bolt";
     const nextEssence = state.spell.essence === "ember" ? "frost" : "ember";
@@ -1521,63 +1506,88 @@ const UISystem = Object.freeze({
       {
         axis: "form",
         spell: formSpell,
-        title: "CHANGE FORM · " + SPELL_PARTS.forms[state.spell.form].title + " → " + SPELL_PARTS.forms[nextForm].title,
-        effect: "GETS · " + SPELL_PARTS.forms[nextForm].description,
-        keeps: "KEEPS · " + keptSpellText("form", state.spell),
+        title: "FORM · " + SPELL_PARTS.forms[nextForm].title,
+        detail: spellPartPromise("form", nextForm),
+        description: SPELL_PARTS.forms[nextForm].description,
         apply: function () { state.spell.form = nextForm; },
       },
       {
         axis: "essence",
         spell: essenceSpell,
-        title: "CHANGE ESSENCE · " + SPELL_PARTS.essences[state.spell.essence].title + " → " + SPELL_PARTS.essences[nextEssence].title,
-        effect: "GETS · " + SPELL_PARTS.essences[nextEssence].description,
-        keeps: "KEEPS · " + keptSpellText("essence", state.spell),
+        title: "ESSENCE · " + SPELL_PARTS.essences[nextEssence].title,
+        detail: spellPartPromise("essence", nextEssence),
+        description: SPELL_PARTS.essences[nextEssence].description,
         apply: function () { state.spell.essence = nextEssence; },
       },
       {
         axis: "law",
         spell: lawSpell,
-        title: "CHANGE LAW · " + SPELL_PARTS.laws[state.spell.law].title + " → " + SPELL_PARTS.laws[nextLaw].title,
-        effect: "GETS · " + SPELL_PARTS.laws[nextLaw].description,
-        keeps: "KEEPS · " + keptSpellText("law", state.spell),
+        title: "LAW · " + SPELL_PARTS.laws[nextLaw].title,
+        detail: spellPartPromise("law", nextLaw),
+        description: SPELL_PARTS.laws[nextLaw].description,
         apply: function () { state.spell.law = nextLaw; },
       },
       {
         axis: "support",
-        title: "KEEP SPELL · " + support.title,
-        effect: "GETS · " + support.describe(state.player),
-        keeps: "SPELL STAYS · " + spellName(state.spell),
-        result: "SUPPORT · No spell word changes.",
+        title: "SUPPORT · " + support.title,
+        detail: support.describe(state.player),
         apply: function () { support.apply(state.player, state.supports); },
       },
     ];
 
     for (const option of options) {
       const button = document.createElement("button");
+      const icon = document.createElement("span");
+      const copy = document.createElement("span");
       const title = document.createElement("strong");
-      const effect = document.createElement("span");
-      const keeps = document.createElement("span");
-      const result = document.createElement("span");
+      const detail = document.createElement("span");
+      const badge = document.createElement("span");
       button.className = "upgrade-choice";
       button.type = "button";
       button.dataset.axis = option.axis;
       if (option.spell) {
         const isNew = !persistent.profile.discovered.includes(spellKey(option.spell));
         button.dataset.discovery = isNew ? "new" : "known";
-        option.result = (isNew ? "NEW SPELL · " : "KNOWN SPELL · ") + spellName(option.spell);
+        button.dataset.result = spellKey(option.spell);
+        icon.dataset.form = option.spell.form;
+        icon.dataset.essence = option.spell.essence;
+        icon.dataset.law = option.spell.law;
+        badge.textContent = isNew ? "NEW" : "KNOWN";
+        const currentValue = option.axis === "form" ? state.spell.form
+          : option.axis === "essence" ? state.spell.essence : state.spell.law;
+        const nextValue = option.spell[option.axis];
+        const kept = ["form", "essence", "law"]
+          .filter(function (axis) { return axis !== option.axis; })
+          .map(function (axis) {
+            const group = axis === "form" ? "forms" : axis === "essence" ? "essences" : "laws";
+            return SPELL_PARTS[group][state.spell[axis]].title;
+          })
+          .join(" and ");
+        const group = option.axis === "form" ? "forms" : option.axis === "essence" ? "essences" : "laws";
+        button.setAttribute("aria-label", "Change " + option.axis + " from " + SPELL_PARTS[group][currentValue].title +
+          " to " + SPELL_PARTS[group][nextValue].title + ". " + option.description + " " + kept +
+          " stay. Result: " + spellName(option.spell) + ". " + badge.textContent + " spell.");
       } else {
         button.dataset.discovery = "support";
+        icon.dataset.form = "support";
+        badge.textContent = "KEEP SPELL";
+        button.setAttribute("aria-label", option.title + ". " + option.detail +
+          " Current spell stays " + spellName(state.spell) + ".");
       }
-      title.className = "choice-change";
-      effect.className = "choice-effect";
-      keeps.className = "choice-keeps";
-      result.className = "choice-result";
+      icon.className = "choice-spell-icon";
+      for (let markIndex = 0; markIndex < 3; markIndex += 1) {
+        const mark = document.createElement("i");
+        mark.className = "spell-shape";
+        icon.append(mark);
+      }
+      copy.className = "choice-copy";
+      title.className = "choice-name";
+      detail.className = "choice-detail";
+      badge.className = "choice-badge";
       title.textContent = option.title;
-      effect.textContent = option.effect;
-      keeps.textContent = option.keeps;
-      result.textContent = option.result;
-      button.setAttribute("aria-label", [option.title, option.effect, option.keeps, option.result].join(" "));
-      button.append(title, effect, keeps, result);
+      detail.textContent = option.detail;
+      copy.append(title, detail);
+      button.append(icon, copy, badge);
       button.addEventListener("click", function () {
         unlockAudio();
         RunSystem.chooseRewrite(option.apply);

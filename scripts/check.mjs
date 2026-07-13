@@ -4,6 +4,7 @@ import { createHeadlessGame } from './headless-game.mjs';
 
 const root = new URL('../', import.meta.url);
 const html = await readFile(new URL('index.html', root), 'utf8');
+const css = await readFile(new URL('style.css', root), 'utf8');
 
 for (const id of [
   'game',
@@ -40,6 +41,19 @@ assert.match(html, /<strong>LAW<\/strong> — Split casts three/);
 assert.match(html, /Unseen rewrites are marked NEW/);
 assert.match(html, /Drag to move and dodge\. Your spell casts itself/);
 assert.doesNotMatch(html, /data-key=/, 'legacy touch buttons should not return');
+assert.match(css, /\.upgrade-choice\s*\{[\s\S]*?min-height: 58px/, 'choice cards should remain compact');
+assert.match(css, /\.choice-name\s*\{[\s\S]*?font-size: 0\.78rem/);
+assert.match(css, /\.choice-detail\s*\{[\s\S]*?font-size: 0\.64rem/);
+for (const selector of [
+  'data-form="bolt"',
+  'data-form="orbit"',
+  'data-essence="ember"',
+  'data-essence="frost"',
+  'data-law="split"',
+  'data-law="echo"',
+]) {
+  assert.match(css, new RegExp(selector), `style.css is missing the ${selector} spell visual`);
+}
 
 const {
   canvas,
@@ -166,8 +180,7 @@ assert.equal(
 assert.equal(evaluate('persistent.checkpoint.phase'), 'upgrade');
 assert.equal(evaluate('persistent.profile.discovered.length'), 1);
 assert.match(elements.get('#upgradeEyebrow').textContent, /New Spell Proven/);
-assert.match(elements.get('#upgradeHelp').textContent, /CURRENT SPELL · Bolt · Ember · Split/);
-assert.match(elements.get('#upgradeHelp').textContent, /Rewrite changes one word; Support keeps all three/);
+assert.equal(elements.get('#upgradeHelp').textContent, 'CURRENT · Bolt · Ember · Split');
 assert.equal(
   JSON.stringify(elements.get('#upgradeChoices').children.slice(0, 3).map((button) => button.dataset.discovery)),
   '["new","new","new"]',
@@ -175,27 +188,30 @@ assert.equal(
 );
 
 const formChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'form');
-assert.match(formChoice.children[0].textContent, /CHANGE FORM · Bolt → Orbit/);
-assert.match(formChoice.children[1].textContent, /GETS · Circles you; hits nearby crowds and blocks enemy shots/);
-assert.match(formChoice.children[2].textContent, /KEEPS · ESSENCE Ember: burns · LAW Split: casts 3 now/);
-assert.match(formChoice.children[3].textContent, /NEW SPELL · Orbit · Ember · Split/);
-assert.match(formChoice.attributes['aria-label'], /CHANGE FORM.*GETS.*KEEPS.*NEW SPELL/);
+assert.equal(formChoice.children.length, 3, 'rewrite cards should stay visually compact');
+assert.equal(formChoice.children[0].className, 'choice-spell-icon');
+assert.deepEqual(formChoice.children[0].dataset, { form: 'orbit', essence: 'ember', law: 'split' });
+assert.equal(formChoice.children[0].children.length, 3, 'the visual should encode Split with three shapes');
+assert.equal(formChoice.children[1].children[0].textContent, 'FORM · Orbit');
+assert.equal(formChoice.children[1].children[1].textContent, 'guards nearby');
+assert.equal(formChoice.children[2].textContent, 'NEW');
+assert.match(formChoice.attributes['aria-label'], /Change form from Bolt to Orbit.*Result: Orbit · Ember · Split/);
 
 const essenceChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'essence');
-assert.match(essenceChoice.children[0].textContent, /CHANGE ESSENCE · Ember → Frost/);
-assert.match(essenceChoice.children[1].textContent, /GETS · Slows every enemy the spell touches/);
-assert.match(essenceChoice.children[2].textContent, /KEEPS · FORM Bolt: hunts the mark · LAW Split: casts 3 now/);
+assert.deepEqual(essenceChoice.children[0].dataset, { form: 'bolt', essence: 'frost', law: 'split' });
+assert.equal(essenceChoice.children[1].children[0].textContent, 'ESSENCE · Frost');
+assert.equal(essenceChoice.children[1].children[1].textContent, 'slows');
 
 const lawChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'law');
-assert.match(lawChoice.children[0].textContent, /CHANGE LAW · Split → Echo/);
-assert.match(lawChoice.children[1].textContent, /GETS · Repeats the spell a moment later/);
-assert.match(lawChoice.children[2].textContent, /KEEPS · FORM Bolt: hunts the mark · ESSENCE Ember: burns/);
+assert.deepEqual(lawChoice.children[0].dataset, { form: 'bolt', essence: 'ember', law: 'echo' });
+assert.equal(lawChoice.children[1].children[0].textContent, 'LAW · Echo');
+assert.equal(lawChoice.children[1].children[1].textContent, 'repeats later');
 
 const supportChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'support');
-assert.match(supportChoice.children[0].textContent, /KEEP SPELL · /);
-assert.match(supportChoice.children[1].textContent, /GETS · /);
-assert.match(supportChoice.children[2].textContent, /SPELL STAYS · Bolt · Ember · Split/);
-assert.match(supportChoice.children[3].textContent, /No spell word changes/);
+assert.equal(supportChoice.children[0].dataset.form, 'support');
+assert.match(supportChoice.children[1].children[0].textContent, /SUPPORT · /);
+assert.ok(supportChoice.children[1].children[1].textContent.length < 42, 'support detail should remain brief');
+assert.equal(supportChoice.children[2].textContent, 'KEEP SPELL');
 formChoice.handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 2);

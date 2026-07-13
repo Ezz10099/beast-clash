@@ -275,10 +275,9 @@ h1 {
 }
 
 .upgrade-panel {
-  align-content: start;
-  overflow-y: auto;
+  align-content: center;
+  overflow: hidden;
   text-align: left;
-  touch-action: pan-y;
 }
 
 .upgrade-panel > .eyebrow,
@@ -301,22 +300,27 @@ h1 {
 }
 
 .upgrade-help {
-  margin: 0 0 6px;
+  margin: 0 0 2px;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.68rem;
+  font-weight: 750;
 }
 
 .upgrade-choices {
   display: grid;
-  gap: 9px;
+  gap: 7px;
 }
 
 .upgrade-choice {
   --axis-color: var(--accent);
-  min-height: 82px;
-  padding: 9px 12px;
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px;
   border: 2px solid #59658c;
-  border-left: 5px solid var(--axis-color);
+  border-left: 3px solid var(--axis-color);
   border-radius: 12px;
   background: linear-gradient(180deg, #313b5c, #242c45);
   box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.24);
@@ -331,11 +335,6 @@ h1 {
     linear-gradient(180deg, #3b405c, #292c45);
 }
 
-.upgrade-choice strong,
-.upgrade-choice span {
-  display: block;
-}
-
 .upgrade-choice[data-axis="form"] {
   --axis-color: #9bf6ff;
 }
@@ -348,37 +347,183 @@ h1 {
   --axis-color: #d9b8ff;
 }
 
-.upgrade-choice strong {
+.choice-copy,
+.choice-name,
+.choice-detail,
+.choice-badge {
+  display: block;
+}
+
+.choice-name {
   color: var(--axis-color);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  line-height: 1.1;
 }
 
-.upgrade-choice span {
-  margin-top: 3px;
+.choice-detail {
+  margin-top: 2px;
   color: var(--muted);
-  font-size: 0.76rem;
-  line-height: 1.3;
+  font-size: 0.64rem;
+  line-height: 1.15;
 }
 
-.upgrade-choice .choice-effect {
-  color: var(--text);
-  font-weight: 750;
-}
-
-.upgrade-choice .choice-keeps {
-  color: #b7c2db;
-  font-size: 0.7rem;
-}
-
-.upgrade-choice .choice-result {
+.choice-badge {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.56rem;
   font-weight: 850;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.04em;
+  text-align: right;
 }
 
-.upgrade-choice[data-discovery="new"] .choice-result {
+.upgrade-choice[data-discovery="new"] .choice-badge {
   color: #ffe7ae;
+}
+
+.choice-spell-icon {
+  --spell-color: #ffd166;
+  --spell-light: #fff0be;
+  position: relative;
+  display: block;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(170, 177, 199, 0.28);
+  border-radius: 8px;
+  background: rgba(10, 15, 27, 0.55);
+  overflow: hidden;
+}
+
+.choice-spell-icon[data-essence="ember"] {
+  --spell-color: #ff8c42;
+  --spell-light: #ffd08a;
+}
+
+.choice-spell-icon[data-essence="frost"] {
+  --spell-color: #61d4e8;
+  --spell-light: #d9fbff;
+}
+
+.choice-spell-icon .spell-shape {
+  position: absolute;
+  display: block;
+  margin: 0;
+}
+
+.choice-spell-icon[data-form="bolt"] .spell-shape {
+  width: 28px;
+  height: 7px;
+  background: linear-gradient(90deg, var(--spell-color), var(--spell-light));
+  clip-path: polygon(0 36%, 68% 36%, 68% 0, 100% 50%, 68% 100%, 68% 64%, 0 64%);
+  filter: drop-shadow(0 0 2px var(--spell-color));
+}
+
+.choice-spell-icon[data-form="bolt"][data-law="split"] .spell-shape:nth-child(1) {
+  top: 5px;
+  left: 3px;
+  transform: scale(0.74);
+}
+
+.choice-spell-icon[data-form="bolt"][data-law="split"] .spell-shape:nth-child(2) {
+  top: 15px;
+  left: 6px;
+}
+
+.choice-spell-icon[data-form="bolt"][data-law="split"] .spell-shape:nth-child(3) {
+  top: 25px;
+  left: 3px;
+  transform: scale(0.74);
+}
+
+.choice-spell-icon[data-form="bolt"][data-law="echo"] .spell-shape:nth-child(1) {
+  top: 9px;
+  left: 3px;
+}
+
+.choice-spell-icon[data-form="bolt"][data-law="echo"] .spell-shape:nth-child(2) {
+  top: 21px;
+  left: 8px;
+  opacity: 0.35;
+}
+
+.choice-spell-icon[data-form="bolt"][data-law="echo"] .spell-shape:nth-child(3) {
+  display: none;
+}
+
+.choice-spell-icon[data-form="orbit"] .spell-shape {
+  border: 2px solid var(--spell-color);
+  border-radius: 50%;
+  box-shadow: 0 0 3px var(--spell-color);
+}
+
+.choice-spell-icon[data-form="orbit"]::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 5px;
+  height: 5px;
+  left: 16px;
+  top: 16px;
+  background: var(--spell-light);
+  box-shadow: 0 0 3px var(--spell-color);
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="split"] .spell-shape {
+  width: 15px;
+  height: 15px;
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="split"] .spell-shape:nth-child(1) {
+  top: 2px;
+  left: 10px;
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="split"] .spell-shape:nth-child(2) {
+  top: 17px;
+  left: 2px;
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="split"] .spell-shape:nth-child(3) {
+  top: 17px;
+  left: 18px;
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="echo"] .spell-shape:nth-child(1) {
+  width: 27px;
+  height: 27px;
+  top: 4px;
+  left: 3px;
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="echo"] .spell-shape:nth-child(2) {
+  width: 20px;
+  height: 20px;
+  top: 11px;
+  left: 11px;
+  opacity: 0.35;
+}
+
+.choice-spell-icon[data-form="orbit"][data-law="echo"] .spell-shape:nth-child(3) {
+  display: none;
+}
+
+.choice-spell-icon[data-form="support"]::before,
+.choice-spell-icon[data-form="support"]::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  width: 18px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--spell-color);
+  box-shadow: 0 0 4px rgba(255, 209, 102, 0.55);
+}
+
+.choice-spell-icon[data-form="support"]::after {
+  transform: rotate(90deg);
+}
+
+.choice-spell-icon[data-form="support"] .spell-shape {
+  display: none;
 }
 
 .upgrade-choice:active,
@@ -494,21 +639,25 @@ h1 {
   }
 
   .upgrade-choice {
-    min-height: 68px;
-    padding: 7px 10px;
+    min-height: 52px;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    gap: 6px;
+    padding: 5px 8px;
   }
 
-  .upgrade-choice strong {
-    font-size: 0.8rem;
+  .choice-spell-icon {
+    width: 34px;
+    height: 34px;
+    transform: scale(0.9);
+    transform-origin: left center;
   }
 
-  .upgrade-choice span {
-    font-size: 0.68rem;
+  .choice-name {
+    font-size: 0.7rem;
   }
 
-  .upgrade-choice .choice-keeps,
-  .upgrade-choice .choice-result {
-    font-size: 0.62rem;
+  .choice-detail {
+    font-size: 0.57rem;
   }
 
   .spell-readout {

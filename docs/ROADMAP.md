@@ -29,7 +29,7 @@ The commercial expansion uses a bounded decision gate:
 4. Build one representative full run — complete on `main`; automated gates pass.
 5. Complete its first SPCK phone test and bounded correction feedback — complete: the 5:49 run exposed comprehension/pacing/Orbit problems; the correction was later reported as highly entertaining, with roughly 15 minutes of representative depth and a remaining choice-comprehension concern.
 6. Establish the continuous evidence lane — complete: 200-run matrix, deterministic replays, documented thresholds, CI artifact, and green baseline in `0.2.0-representative.3`.
-7. Resolve fresh-player choice comprehension and obtain the second explicit go/no-go — player-facing clarity batch complete in `0.2.0-representative.4`; one fresh-player cell is now pending.
+7. Resolve fresh-player choice comprehension and obtain the second explicit go/no-go — text-heavy `.4` failed immediate review; compact visual correction `.5` is the active test build.
 8. Revise the remaining batch count from the measured unit — pending.
 
 Do not conduct indefinite research and do not start speculative content before the scope lock. Group related work into substantial batches, run both automated suites at gameplay gates, and request one consolidated asynchronous human cell only when it can decide a major commercial gate.
@@ -181,7 +181,7 @@ Exit criteria:
 
 ## Milestone 8 — Research and Commercial Scope Lock
 
-**Status:** Commercial scope locked. The corrected representative loop has positive owner feedback, the continuous automated baseline is green, and the bounded choice-comprehension interface is complete; one fresh-player cell and the second explicit go/no-go remain open.
+**Status:** Commercial scope locked. The corrected representative loop has positive owner feedback and green automation. The first comprehension interface failed visual review; its compact visual replacement must pass the target phone before the fresh-player cell and second go/no-go.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
@@ -197,7 +197,7 @@ Objectives:
 - Preserve the first phone evidence: a 5:49 clear, positive experimentation and boss response, unclear onboarding, repetitive late pacing, rote discovery risk, and weak-feeling Orbit.
 - Preserve correction feedback: highly entertaining play, roughly 15 minutes of representative experimentation, and a remaining concern that choice outcomes may not be obvious to every player.
 - Keep `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` current; maintain the fast suite and 200-run CI gate without substituting bots for human judgment.
-- Preserve the `0.2.0-representative.4` choice contract: exact change, gained behavior, kept words/behaviors, and complete result before every tap.
+- Preserve the owner correction: favor a compact resulting-spell picture and small copy over a complete visible text explanation.
 
 Exit criteria:
 
@@ -207,7 +207,7 @@ Exit criteria:
 - The representative slice is implemented and passes automation. Complete July 13, 2026.
 - One complete phone-timed run and replay-intent result. Complete: 5:49, with correction blockers recorded.
 - Continuous automated evidence system and green baseline. Complete July 13, 2026.
-- Bounded choice-comprehension implementation and strengthened 8/8 automated schema. Complete July 13, 2026.
+- Compact visual choice correction and strengthened 8/8 automated schema. Complete locally July 13, 2026; phone result pending.
 - Fresh-player choice-comprehension cell and second explicit go/no-go. Pending.
 
 ## Milestone 9 — Play-Ready Release
@@ -249,7 +249,7 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. One consolidated fresh-player commercial cell on `0.2.0-representative.4` — next.
+1. Owner checks `0.2.0-representative.5` visual fit in SPCK; if accepted, run one consolidated fresh-player commercial cell — next.
 2. Record its evidence, obtain the second explicit go/no-go, and revise the remaining batch estimate — pending.
 3. Remaining approved gameplay/content batches — blocked until that decision.
 4. External playtest, balance, and release QA — pending.

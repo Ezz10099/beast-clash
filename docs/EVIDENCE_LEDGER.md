@@ -36,4 +36,14 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Implemented contract: every rewrite separately shows the exact word changed, the practical effect gained, the two words and behaviors kept, and the complete `NEW`/`KNOWN` resulting spell. Support explicitly states that the spell stays unchanged.
 - Local automation: `npm run check` passed; `npm run evidence` remained **GREEN** with 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 strengthened choice contracts.
 - Boundary: automated checks prove presence and consistency, not fresh-player comprehension.
-- Decision: the player-facing batch is ready for one consolidated fresh-player phone cell. Full content remains blocked until that result and the owner's second explicit go/no-go.
+- Immediate human review: **FAILED**. The owner judged the cards text-heavy, oversized, and not worth the roughly 20-minute process; they proposed showing the Form shape and reducing text size instead.
+- Decision: do not send `representative.4` to the fresh-player cell. Replace text completeness with a compact visual spell preview.
+
+## July 13, 2026 — Compact Visual Choice Correction
+
+- Build: `0.2.0-representative.5`
+- Implemented contract: every rewrite shows the resulting Form shape, Essence color, and Law pattern; visible text is restricted to the axis/name, one short effect phrase, and discovery badge. Support follows the same compact layout.
+- Accessibility: exact change, complete result, unchanged words, and full behavior remain in the button's screen-reader label without crowding the visible card.
+- Local automation: `npm run check` passed; `npm run evidence` remained **GREEN** with 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 compact visual-choice contracts.
+- Automated boundary: the gate now checks visual encoding, brevity, result consistency, and discovery state—not text volume. Fresh-player understanding remains pending.
+- Decision: request the consolidated phone cell only after the corrected build is green and published.

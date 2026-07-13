@@ -116,6 +116,13 @@ Complete the bounded representative choice-comprehension batch, strengthen its a
 - Updated the representative build version to `0.2.0-representative.4` without changing gameplay balance or content.
 - Ran `npm run check`: three active 12-wave clears, all eight combinations, choice semantics, Form balance, save migration, stress limits, the 67,588-byte offline release bundle, Android artwork generation, and Android configuration all passed.
 - Ran `npm run evidence`: 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 exact change/effect/kept/result contracts. Result: GREEN.
+- The owner immediately rejected `0.2.0-representative.4` before the fresh-player cell: its cards were too text-heavy and large, the visual result did not justify the roughly 20-minute process, and a simple Form shape plus smaller text was the better direction.
+- Replaced the visible explanation wall with miniature resulting-spell previews that encode Form as Bolt/Orbit shape, Essence as Ember/Frost color, and Law as Split/Echo pattern.
+- Reduced each card to two small text lines and a tiny `NEW/KNOWN` badge; full semantic detail remains only in its accessible label.
+- Reframed the automated choice contract around visual encoding and brevity so automation cannot reward adding more visible text.
+- Updated the representative build version to `0.2.0-representative.5` without changing gameplay balance or content.
+- Ran `npm run check`: all gameplay, compact-choice, bundle, artwork, and Android checks passed; the release bundle is 71,069 runtime bytes.
+- Ran `npm run evidence`: 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 compact visual-choice contracts. Result: GREEN.
 
 ## Phone Validation Result
 
@@ -123,17 +130,17 @@ The user accepted the earlier gameplay/control, release-experience, web-release-
 
 The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. `0.2.0-representative.4` directly addresses that concern and is player-facing, so one fresh-player cell is now required. No new human result has been claimed yet.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5` now needs the owner's target-phone fit check before any fresh-player cell. No new comprehension result has been claimed.
 
 ## Current Development Objective
 
-Run one consolidated fresh-player commercial cell on `0.2.0-representative.4`. Keep the 27-combination/9-Trial production and final assets blocked until the evidence is recorded and the owner gives the second explicit go/no-go.
+First verify `0.2.0-representative.5` visually in SPCK on the target phone. If the compact spell previews fit and feel clearer, run one consolidated fresh-player commercial cell. Keep the 27-combination/9-Trial production and final assets blocked until that evidence and the second explicit go/no-go.
 
 ## Next Session Entry Point
 
 Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 and D-012 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, and this handoff. Option B and the evidence workflow are locked.
 
-Collect the fresh-player cell without coaching: at the first rewrite, ask each player to state what their chosen card changes, what behavior it adds, and what stays before tapping; after observing it, record whether the behavior matched. Consolidate the number tested, correct predictions, confusions, replay desire, boredom, and any touch/layout/runtime blocker. Then record the result and ask the owner for the second explicit go/no-go. Do not build the remaining launch content or final assets before that decision.
+Pull `.5` in SPCK and inspect the first rewrite screen. If the compact visual direction is accepted, collect the fresh-player cell without coaching: at the first rewrite, ask what the chosen card is expected to do; after observing it, record whether it matched. Consolidate predictions, confusions, replay desire, boredom, and any touch/layout/runtime blocker. Do not build remaining launch content or final assets before the second go/no-go.
 
 ## Verification
 
@@ -147,7 +154,7 @@ Current expected result:
 
 `Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (67588 runtime bytes).`
+`Release bundle checks passed (71069 runtime bytes).`
 
 `Android configuration checks passed.`
 

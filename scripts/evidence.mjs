@@ -301,17 +301,18 @@ const raw = JSON.parse(evaluate(`
           essence: axis === 'essence' ? (build.essence === 'ember' ? 'frost' : 'ember') : build.essence,
           law: axis === 'law' ? (build.law === 'split' ? 'echo' : 'split') : build.law,
         };
-        const title = button.children[0] ? button.children[0].textContent : '';
-        const effect = button.children[1] ? button.children[1].textContent : '';
-        const keeps = button.children[2] ? button.children[2].textContent : '';
-        const result = button.children[3] ? button.children[3].textContent : '';
+        const icon = button.children[0];
+        const copy = button.children[1];
+        const badge = button.children[2];
+        const title = copy && copy.children[0] ? copy.children[0].textContent : '';
+        const detail = copy && copy.children[1] ? copy.children[1].textContent : '';
         return ['form', 'essence', 'law'].includes(button.dataset.axis) &&
           ['new', 'known'].includes(button.dataset.discovery) &&
-          title.startsWith('CHANGE ' + axis.toUpperCase() + ' · ') && title.includes(' → ') &&
-          effect.startsWith('GETS · ') && effect.length > 18 &&
-          keeps === 'KEEPS · ' + keptSpellText(axis, build) &&
-          /^(NEW SPELL|KNOWN SPELL) · /.test(result) && result.endsWith(spellName(nextSpell)) &&
-          button.attributes['aria-label'].includes(title) && button.attributes['aria-label'].includes(keeps);
+          button.children.length === 3 && icon.className === 'choice-spell-icon' && icon.children.length === 3 &&
+          icon.dataset.form === nextSpell.form && icon.dataset.essence === nextSpell.essence && icon.dataset.law === nextSpell.law &&
+          title.startsWith(axis.toUpperCase() + ' · ') && detail.length > 0 && detail.length <= 20 &&
+          /^(NEW|KNOWN)$/.test(badge.textContent) && button.dataset.result === spellKey(nextSpell) &&
+          button.attributes['aria-label'].includes('Result: ' + spellName(nextSpell));
       });
       return {
         build: build.form + '|' + build.essence + '|' + build.law,
@@ -469,7 +470,7 @@ const gates = [
     id: 'choice-contract',
     title: 'Choice clarity contract',
     status: counts.choiceContracts === builds.length ? 'pass' : 'fail',
-    evidence: `${counts.choiceContracts}/${builds.length} builds expose exact change, effect, kept words, and full resulting spell`,
+    evidence: `${counts.choiceContracts}/${builds.length} builds expose a compact resulting-spell visual, axis label, short effect, and discovery state`,
   },
 ];
 
@@ -497,7 +498,7 @@ const report = {
     'seeded replay determinism',
     'relative build outcomes under one fixed bot policy',
     'empty-arena pacing and clear-time proxies',
-    'complete rewrite change, effect, kept-words, and resulting-spell schema',
+    'compact resulting-spell visual, axis label, short-effect, and discovery-state schema',
   ],
   humanOnlyClaims: [
     'fun, boredom, delight, and desire to replay',

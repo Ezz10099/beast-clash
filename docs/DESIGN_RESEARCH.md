@@ -193,9 +193,11 @@ The remaining player concern was concrete: a rewrite card named the resulting sp
 - A [Vampire Survivors beginner report](https://www.reddit.com/r/VampireSurvivors/comments/wvbb0n/the_absolute_beginnerjust_installed_guide_to/) describes completing a full run without realizing its evolution system existed. Discovery logs can reward experimentation, but cannot carry first-decision comprehension by themselves.
 - A [20 Minutes Till Dawn pacing discussion](https://www.reddit.com/r/20MinutesTillDawn/comments/zcv8ci/this_game_feels_deeply_flawed/) criticizes an opening dominated by accumulating interdependent upgrades. That argues against answering confusion with a longer tutorial or more simultaneous systems.
 
-The bounded response in `0.2.0-representative.4` is contextual and repeatable. Every rewrite card now exposes four separate facts before the tap: `CHANGE` names the exact old and new word, `GETS` states its practical behavior, `KEEPS` names the two unchanged words and their jobs, and `NEW/KNOWN SPELL` shows the complete result. Support uses the parallel `KEEP SPELL`, `GETS`, and `SPELL STAYS` structure. Axis names plus colored rails provide redundant cues without making color essential.
+`0.2.0-representative.4` exposed four separate text facts before the tap. Automation proved completeness, but the owner's immediate visual review rejected the result: it was a wall of text, used too much card space, and took disproportionate time to produce. The obvious missing move was to show the spell's shape.
 
-The automated evidence contract now verifies this exact structure across all eight starting builds. That proves the information is present and internally consistent; only the pending fresh-player cell can show whether people actually understand it quickly.
+`0.2.0-representative.5` corrects that mistake. Each rewrite now shows a miniature resulting spell: Bolt or Orbit shape, Ember or Frost color, and Split or Echo pattern. Visible copy is limited to the axis/name, one short old-to-new effect phrase, and a tiny `NEW/KNOWN` badge; Support uses the same compact layout. Full context remains only in the accessible label.
+
+The lesson is broader than this screen: automated evidence should protect a compact visual contract, not reward adding explanatory text. Human visual judgment can invalidate an automation-green interface immediately.
 
 ## Research Stop Rule
 

@@ -21,7 +21,7 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
 - The correction was later reported as highly entertaining, with roughly 15 minutes of representative experimentation; fresh-player choice comprehension remains open.
 - Evidence build `0.2.0-representative.3` added the green 200-run automated matrix and CI report.
-- Choice build `0.2.0-representative.4` makes every rewrite state its exact change, practical effect, unchanged words, and complete result before selection; its strengthened local evidence gate is green and a fresh-player phone cell is next.
+- Text-heavy choice build `.4` failed immediate visual review. `0.2.0-representative.5` replaces it with compact miniature spell previews—Form shape, Essence color, Law pattern—plus two small text lines and a discovery badge.
 
 That installed build is a **validated native vertical slice**, not the approved commercial launch game.
 

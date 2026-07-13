@@ -45,8 +45,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, with no reported layout or runtime blocker, but the gate failed because onboarding remained unclear, the late pre-boss stretch became boring, and Orbit felt much weaker than Bolt.
 - Correction build `0.2.0-representative.2` made the owner “really happy” and was reported as entertaining, with roughly 15 minutes of available representative experimentation. Choice outcomes may still be unclear to some players.
 - Evidence build `0.2.0-representative.3` added the required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact.
-- Choice build `0.2.0-representative.4` now separates every decision into exact `CHANGE`, practical `GETS`, explicit `KEEPS`, and complete `NEW/KNOWN SPELL` information; the strengthened local evidence gate is green.
-- The representative player-facing batch is ready for one fresh-player phone cell. Full launch content and final assets remain blocked on its comprehension result and the second explicit go/no-go.
+- Text-heavy choice build `0.2.0-representative.4` passed automation but failed the owner's immediate visual review.
+- Compact visual build `0.2.0-representative.5` replaces the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge.
+- Full launch content and final assets remain blocked on a fresh-player test of the corrected visual interface and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -54,7 +55,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-Choice build `0.2.0-representative.4` is player-facing and has green automation, so request one consolidated fresh-player cell now. Without outside explanation, fresh players must predict what a selected rewrite changes, what behavior it adds, and what remains; then report whether observed play matched that prediction. Also record replay desire, boredom, touch/layout blockers, and the owner's explicit go/no-go. Do not scale content before this gate closes.
+After `0.2.0-representative.5` is green and published, the owner first checks that the compact visual cards actually fit and feel better on the target phone. If they do, run one consolidated fresh-player cell without outside explanation. Record prediction accuracy, replay desire, boredom, touch/layout blockers, and the owner's explicit go/no-go. Do not scale content before this gate closes.
 
 ## Mandatory Session Protocol
 
