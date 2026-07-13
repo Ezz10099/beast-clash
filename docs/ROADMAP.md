@@ -29,11 +29,11 @@ The commercial expansion uses a bounded decision gate:
 4. Build one representative full run — complete on `main`; automated gates pass.
 5. Complete its first SPCK phone test and bounded correction feedback — complete: the 5:49 run exposed comprehension/pacing/Orbit problems; the correction was later reported as highly entertaining, with roughly 15 minutes of representative depth and a remaining choice-comprehension concern.
 6. Establish the continuous evidence lane — complete: 200-run matrix, deterministic replays, documented thresholds, CI artifact, and green baseline in `0.2.0-representative.3`.
-7. Close the representative choice-feedback loop — `.5` passed owner visual review; `.6` adds next-threat context and observable post-tap feedback and now awaits its owner SPCK pass.
-8. Resolve verified progression/replay motivation issues, then run one consolidated fresh-player cell and obtain the second explicit go/no-go — pending.
+7. Close the representative choice-feedback loop — complete: `.5` and `.6` passed owner SPCK review.
+8. Remove the rewrite power tax and test real choice policies — `.7` is automation-green and awaits one owner SPCK pass; then run one consolidated fresh-player cell and obtain the second explicit go/no-go.
 9. Revise the remaining batch count from the measured unit — pending.
 
-Do not conduct indefinite research and do not start speculative content before the scope lock. Group related work into substantial batches, run both automated suites at gameplay gates, and request one consolidated asynchronous human cell only when it can decide a major commercial gate.
+Do not conduct indefinite research or start speculative content before the representative commercial gate. Group related work into substantial batches, run both automated suites at gameplay gates, and request one consolidated asynchronous human cell only when it can decide a major commercial gate.
 
 ## Milestone 0 — Foundation
 
@@ -180,9 +180,9 @@ Exit criteria:
 
 - The user accepts the installed APK as stable enough for the next release phase. Complete: no bugs were reported and all tested behavior worked.
 
-## Milestone 8 — Research and Commercial Scope Lock
+## Milestone 8 — Representative Commercial Gate
 
-**Status:** Commercial scope locked. The corrected representative loop has positive owner feedback and green automation. Compact `.5` passed the owner's SPCK review. Closed-loop `.6` is automation-green and awaits one owner phone pass; progression/replay motivation remains an explicit open issue before the fresh-player cell and second go/no-go.
+**Status:** The corrected representative loop has positive owner feedback and green automation. Compact `.5` and closed-loop `.6` passed owner SPCK review. Incentive correction `.7` is locally green and awaits one owner phone pass before the fresh-player cell and second go/no-go.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
@@ -192,26 +192,27 @@ Objectives:
 - Preserve the completed final comparison of feasible games, player feedback, original hooks, run structures, and early commercial content.
 - Keep reusable genre patterns separate from Pixel Mage's required original identity.
 - Present the three capped options in `docs/SCOPE_OPTIONS.md`, including code, art, animation, testing, and schedule implications.
-- Preserve the owner-approved Living Spell Trials core loop, hook, content cap, horizontal progression, light framing, and exclusions.
-- Keep `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` authoritative.
+- Preserve the evidence-supported Living Spell Trials identity while treating its old exact cap as revisable.
+- Keep the Product Compass authoritative and the other planning documents current.
 - Phone-time and accept the implemented representative slice before locking duration estimates or scaling full content.
 - Preserve the first phone evidence: a 5:49 clear, positive experimentation and boss response, unclear onboarding, repetitive late pacing, rote discovery risk, and weak-feeling Orbit.
 - Preserve correction feedback: highly entertaining play, roughly 15 minutes of representative experimentation, and a remaining concern that choice outcomes may not be obvious to every player.
-- Keep `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` current; maintain the fast suite and 200-run CI gate without substituting bots for human judgment.
+- Keep `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` current; maintain the fast suite, 200-build matrix, and 100 choice-policy runs without substituting bots for human judgment.
 - Preserve the owner correction: favor a compact resulting-spell picture and small copy over a complete visible text explanation.
 - Trace material changes through the player's full logic—situation, choice, visible result, and next motivation—rather than treating UI labels as the whole comprehension problem.
 
 Exit criteria:
 
 - One commercially credible scope is explicitly approved. Complete: Option B.
-- Provisional duration, behavior, naming, and monetization are separated from locked requirements. Complete.
+- Provisional duration, behavior, naming, and monetization are separated from the binding Product Compass. Complete.
 - The first implementation batch and its phone acceptance test are precisely defined. Complete in `docs/RELEASE_SCOPE.md`.
 - The representative slice is implemented and passes automation. Complete July 13, 2026.
 - One complete phone-timed run and replay-intent result. Complete: 5:49, with correction blockers recorded.
 - Continuous automated evidence system and green baseline. Complete July 13, 2026.
 - Compact visual choice correction and strengthened 8/8 automated schema. Complete and owner-approved in SPCK July 13, 2026.
-- Next-threat preview, visual rewrite confirmation, three-part live feedback, and clearer status/Law effects. Complete locally in `.6`; owner SPCK result pending.
-- Spellbook/reward/replay motivation audit. Open; do not hide it behind a comprehension pass.
+- Next-threat preview, visual rewrite confirmation, three-part live feedback, and clearer status/Law effects. Complete in `.6`; owner SPCK passed.
+- Rewrite incentive audit and real choice-policy evidence. Complete locally in `.7`; owner SPCK pending.
+- Wider Spellbook/reward/replay motivation. Open; do not hide it behind the incentive pass.
 - Fresh-player choice-comprehension cell and second explicit go/no-go. Pending.
 
 ## Milestone 9 — Play-Ready Release
@@ -253,12 +254,12 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Owner runs one fresh-start SPCK pass on `0.2.0-representative.6` and judges incoming threat → rewrite → transformation → combat feedback — next.
-2. Resolve any verified fundamental player-logic blocker, especially Spellbook/reward/replay motivation; then open one consolidated fresh-player cell — pending.
+1. Owner runs one fresh-start SPCK pass on `0.2.0-representative.7`, mixing rewrites and Hold, and judges whether the spell clearly grows without punishing experimentation — next.
+2. If `.7` passes, Codex defines and opens one consolidated fresh-player cell — pending.
 3. Record the cell, obtain the second explicit go/no-go, and revise the remaining batch estimate — pending.
 4. Remaining approved gameplay/content batches — blocked until that decision.
 5. External playtest, balance, and release QA — pending.
 6. Publisher, monetization, privacy, and SDK decisions — pending.
 7. Signed AAB, store preparation, Google Play testing, and rollout — pending.
 
-One correction batch per gate may be used for verified blockers. New scope requires a new explicit decision.
+Correction batches remain evidence-driven. Scope may change independently when the Product Compass and evidence justify it; irreversible external actions still require owner approval.

@@ -80,31 +80,49 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Status: Active planning rule
 - Decision: Complete one final focused research round, compare feasible capped options, and phone-time a representative full run before locking content-count or playtime claims.
 - Reason: Earlier estimates such as 15 or 60 stages and fixed campaign hours were not grounded in the current one-minute build or a tested content unit.
-- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49. Its correction received strong entertainment feedback; compact visual `.5` passed owner review, while closed-loop `.6`, progression/replay motivation, fresh-player comprehension, and the second explicit go/no-go remain open.
+- Outcome: The final research round and three capped options were completed, and the owner selected Option B — Living Spell Trials — on July 13, 2026. The representative run was built and first phone-cleared in 5:49. Its correction received strong entertainment feedback; compact visual `.5` and closed-loop `.6` passed owner SPCK review. Incentive correction `.7`, fresh-player comprehension, and the second explicit go/no-go remain open.
 - Change rule: The representative run must be phone-timed before duration or total-playtime claims are locked.
 
 
 ## D-011 — Living Spell Trials Commercial Scope
 
 - Date: July 13, 2026
-- Status: Locked by explicit owner approval
+- Status: Direction retained; exact cap superseded as binding authority by D-013
 - Decision: Build Option B — Living Spell Trials — as Pixel Mage's commercial direction.
 - Core identity: One thumb, one mage, one evolving three-word spell; rewrite one Form, Essence, or Law between timed waves and record proven combinations in a Spellbook. The player experience must make each rewrite a visible tradeoff, build toward a satisfying climax, and create new ways to play rather than a rote checklist.
-- Launch cap: 1 mage, 3 arena themes, 9 authored Trials, 9 spell parts creating 27 combinations, 6 universal support upgrades, 6 normal enemy behavior families, 3 bosses, 9 Trial Mastery objectives, Trials plus post-victory Endless, and light narrative framing.
+- Original launch cap: 1 mage, 3 arena themes, 9 authored Trials, 9 spell parts creating 27 combinations, 6 universal support upgrades, 6 normal enemy behavior families, 3 bosses, 9 Trial Mastery objectives, Trials plus post-victory Endless, and light narrative framing.
 - Progression: Horizontal Trial/spell discovery and local records; no permanent-stat currency grind.
 - Exclusions: No extra heroes, inventory, equipment, crafting, shop, currencies, permanent stat tree, gacha, energy, daily rewards, battle pass, conventional campaign map, quest/dialogue/cutscene system, multiplayer, online accounts, cloud saves, online leaderboards, external SDKs, engine change, 3D, or large animated asset set for version 1.
 - First gate: Build and phone-test one 12-wave representative slice with 2×2×2 spell parts before producing the remaining launch content or final assets.
 - Still provisional: Exact component names and behaviors, balance, successful-run duration, final display/store title, monetization, and external SDKs.
 - Reason: This is the strongest researched balance of marketable identity, mobile usability, reusable code-driven variety, limited asset burden, and finishable scope.
-- Change rule: Reopen the overall direction only if the representative slice fails its acceptance gate or the owner explicitly approves a scope change.
+- Change rule: The Living Spell direction should keep earning its place through evidence. Any element may change when a documented alternative better serves the Product Compass.
 
 ## D-012 — Continuous Evidence Ownership
 
 - Date: July 13, 2026
 - Status: Locked workflow rule
 - Decision: Codex owns continuous automated evidence, targeted public-review mining, the evidence ledger, and recommendations about when a major human gate is ready. The owner coordinates short, asynchronous human cells only at explicit commercial gates and is not expected to provide friends on command.
-- Automated contract: Keep the fast `npm run check` suite and the full `npm run evidence` matrix in CI. The representative baseline is 8 builds × 25 seeds with real damage plus 8 deterministic replays, graded against recorded runtime, survivability, dominance, pacing, and choice-feedback thresholds.
+- Automated contract: Keep the fast `npm run check` suite and the full `npm run evidence` matrix in CI. The current contract is 8 builds × 25 seeds with real damage, 4 real choice policies × 25 seeds, and 8 deterministic replays, graded against runtime, survivability, build dominance, rewrite incentives, pacing, and feedback thresholds.
 - Human boundary: Bot runs and text-schema checks must never be represented as proof of fun, comprehension, touch feel, replay desire, or commercial value.
 - Privacy boundary: Do not add analytics, accounts, network permissions, telemetry, or external SDKs for this workflow without separate owner approval.
 - Reason: The project needs objective, repeatable evidence without exhausting the owner or drifting away from solutions agreed in chat.
 - Change rule: Future agents may strengthen the harness or thresholds with a recorded reason, but may not silently skip the protocol, weaken a threshold to hide a regression, or move human-only claims into the automated column.
+
+## D-013 — Final-Goal Authority and Independent Development
+
+- Date: July 13, 2026
+- Status: Locked owner mandate
+- Decision: The detailed Product Compass and player promise in `docs/START_HERE.md` are the only binding product authority. All earlier mechanics, counts, scope fences, processes, and decisions are revisable working hypotheses. Codex independently owns finding product problems, generating and comparing alternatives, choosing and implementing the next batch, and proving it without waiting for the owner to diagnose the issue or invent the solution.
+- Owner role: Supply resources when genuinely needed and judge major commercial gates or irreversible external actions; routine development should continue from evidence without requiring constant creative direction.
+- Reason: The objective is an independently developed, worthwhile finished game—not mechanical compliance with an obsolete checklist or dependence on the owner's moment-to-moment creativity.
+- Change rule: Only an explicit owner instruction may replace the final Product Compass or this authority model.
+
+## D-014 — Rewriting Must Not Cost Power
+
+- Date: July 13, 2026
+- Status: Active representative design decision
+- Decision: Remove universal Support from the representative rewrite screen. Every rewrite or Hold advances one shared living-spell level; the level visibly enlarges the spell and increases damage and cast rate. Hold preserves the current three words but receives no more growth than experimentation.
+- Evidence: The original fixed-build bots always took Support and therefore never tested the central choice. A new policy audit found median clears of 247 seconds for always-Support, 265 seconds for discovery-first, and 274 seconds for rewrite-only, with Support also ending ahead in damage, haste, health, and speed. After `.7`, 100 real policy runs passed with 99% wins, every policy reaching level 12, and only 5.8% median clear spread.
+- Reason: The game promised an evolving spell while generic Support supplied the actual vertical growth. That made ignoring the hook the rational strategy and turned Spellbook experimentation into a power tax.
+- Change rule: Future growth systems may replace spell levels, but engaging with the game's central expressive mechanic must not be systematically weaker than avoiding it.

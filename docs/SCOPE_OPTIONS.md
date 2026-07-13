@@ -2,7 +2,7 @@
 
 ## Status
 
-**Decision complete: Option B — Living Spell Trials — was owner-approved as written on July 13, 2026.**
+**Historical decision packet: Option B — Living Spell Trials — was owner-approved on July 13, 2026. D-013 later made every exact cap and mechanic here revisable while retaining the final Product Compass.**
 
 Last updated: July 13, 2026.
 
@@ -72,7 +72,7 @@ This is not claimed as an unprecedented invention. Its distinctiveness comes fro
 2. Enter with one simple three-part spell.
 3. Drag to dodge and position while the spell automatically targets a suitable threat.
 4. Survive a short timed wave with scheduled enemy arrivals.
-5. Rewrite one spell word or take one universal support improvement.
+5. Rewrite one spell word or hold the current spell; either path grows the living spell. This supersedes the original universal-Support proposal.
 6. Face a guardian at the end of Acts 1 and 2, then a distinct boss at the end of Act 3.
 7. Record newly proven spell combinations, Trial Mastery, and local best results.
 8. Unlock the next Trial or replay to discover a different spell; after victory, optionally continue in endless mode.
@@ -121,7 +121,7 @@ Longer play must come from scheduled enemies, formations, behavior changes, elit
 | Authored Trials | 9 total; 3 per arena |
 | Spell parts | 9 total; 3 Forms, 3 Essences, 3 Laws |
 | Discoverable spell combinations | 27 |
-| Universal support upgrades | 6 |
+| Universal support upgrades | 6 proposed originally; replaced by shared spell growth in the representative slice |
 | Normal enemy behavior families | 6, with data-driven variants/elites |
 | Distinct bosses | 3; one per arena |
 | Trial Mastery objectives | 9; one additional objective per Trial |

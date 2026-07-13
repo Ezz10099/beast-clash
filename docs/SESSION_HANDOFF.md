@@ -15,7 +15,7 @@
 
 ## Current Session Goal
 
-Complete a bounded player-logic audit, close the visible choice-feedback loop without expanding content, strengthen its automated contract, and leave one exact owner phone judgment before any fresh-player cell.
+Independently find the undisclosed remaining issue after `.6` passed SPCK, correct the strongest verified player-logic failure, strengthen automation so it cannot miss the same class of problem, and leave one exact owner phone judgment before any fresh-player cell.
 
 ## Completed This Session
 
@@ -136,6 +136,17 @@ Complete a bounded player-logic audit, close the visible choice-feedback loop wi
 - Updated the representative build version to `0.2.0-representative.6`.
 - Ran `npm run check`: gameplay, choice-loop, bundle, artwork, and Android checks passed; the release bundle is 79,217 runtime bytes.
 - Ran `npm run evidence`: 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 closed choice-feedback loops. Result: GREEN.
+- Recorded the owner's SPCK pass for `.6` and their new authority mandate: the final Product Compass is binding; all other mechanics, counts, processes, and earlier decisions are revisable, and Codex owns independently finding and solving the next problem.
+- Audited the actual choice economy and found that all previous evidence bots always took Support and forcibly kept a fixed spell, so they never tested rewriting. Support stacked power while every rewrite was only a sidegrade.
+- Added a pre-change 100-run choice-policy comparison. Always-Support cleared in a 247-second median versus 265 seconds discovery-first and 274 seconds rewrite-only, and also ended ahead in damage, haste, health, and speed.
+- Triangulated the diagnosis with MDA, meaningful-play, dominant-strategy, and metrics-driven design sources; used them to shape the audit rather than to substitute for local evidence.
+- Removed universal Support from the representative screen and replaced it with Hold. Every Hold or rewrite now advances the same living-spell level, which visibly enlarges the spell and increases damage and cast rate.
+- Added checkpoint migration and fast tests for spell level, equal Hold/rewrite growth, compact Hold visuals, visible growth, and unchanged spell words on Hold.
+- Expanded `npm run evidence` to 200 fixed-build runs plus 100 real choice-policy runs across always-Hold, mixed, discovery-first, and rewrite-only behavior, with movement following the current spell.
+- Updated the representative build version to `0.2.0-representative.7`.
+- Ran `npm run check`: gameplay, equal-growth, migration, bundle, artwork, and Android checks passed; the release bundle is 79,285 runtime bytes.
+- Ran `npm run evidence`: 200 build runs recorded with 99% wins, 100 policy runs recorded with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% policy spread, and level 12 for every policy median. Result: GREEN.
+- Attempted independent browser visual validation, but the available cloud browser could not reach the private localhost preview. Automated responsive checks passed; target-phone visual feel remains the requested SPCK judgment.
 
 ## Phone Validation Result
 
@@ -143,17 +154,17 @@ The user accepted the earlier gameplay/control, release-experience, web-release-
 
 The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. They still believe some players may not easily understand what each choice provides. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5` passed the owner's SPCK review. Closed-loop `.6` has no phone result yet, so no new comprehension claim has been made.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5` and closed-loop `.6` passed the owner's SPCK review. `.7` has no phone result yet, so satisfying/visible spell growth remains pending human evidence.
 
 ## Current Development Objective
 
-Verify `0.2.0-representative.6` in one fresh-start SPCK run. Judge whether incoming threat → rewrite → transformation → combat result now reads naturally, and report any remaining basic logic problem. Keep friends, the 27-combination/9-Trial production, and final assets blocked; progression/replay motivation remains open even if comprehension improves.
+Verify `0.2.0-representative.7` in one fresh-start SPCK run. Mix rewrites with Hold and judge one thing: does the spell clearly feel as though it grows while experimentation remains safe and tempting? Keep the fresh-player cell and full production blocked until this result.
 
 ## Next Session Entry Point
 
-Read `AGENTS.md`, `docs/START_HERE.md`, `docs/RELEASE_SCOPE.md`, D-011 and D-012 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, and this handoff. Option B and the evidence workflow are locked.
+Read `AGENTS.md`, `docs/START_HERE.md`, D-013 and D-014 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, roadmap, and this handoff. The Product Compass and independent-development mandate are binding; exact scope is not.
 
-Pull `.6` in SPCK and start a new Trial. Make several different rewrites and observe the incoming-threat strip, transformation moment, live three-part hint, and battlefield status/Echo feedback. The owner reports only what still feels illogical, unclear, weak, or boring. Do not recruit friends or build remaining launch content yet.
+Pull `.7` in SPCK and start a new Trial. Use at least two rewrites and two Holds. Judge whether `LV` growth, larger/stronger spells, and equal growth make the living spell's evolution obvious without making Hold the hidden correct choice. Report only pass/fail and the first thing that breaks the promise. Do not recruit friends yet.
 
 ## Verification
 
@@ -167,8 +178,8 @@ Current expected result:
 
 `Pixel Mage checks passed: 3 active 12-wave clears, 8 readable spell combinations, form balance, save migration, and stress limits.`
 
-`Release bundle checks passed (79217 runtime bytes).`
+`Release bundle checks passed (79285 runtime bytes).`
 
 `Android configuration checks passed.`
 
-`Pixel Mage evidence GREEN: 200 full runs, 100% wins, 9.7% build spread, 9.47s longest empty stretch.`
+`Pixel Mage evidence GREEN: 200 full runs, 99% wins, 9.3% build spread, 100 policy runs, 5.8% policy spread.`

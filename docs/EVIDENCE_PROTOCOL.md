@@ -22,7 +22,9 @@ Generated reports are build artifacts and are not committed. Stable conclusions 
 
 ## Representative Evidence Contract
 
-The full gate runs all 8 representative spell combinations across the same 25 seeds: 200 complete, real-damage bot runs. Each bot keeps one fixed Form/Essence/Law combination, accepts the offered Support between waves, and uses deterministic danger-aware movement appropriate to Bolt or Orbit. One repeat per build verifies replay determinism.
+The full gate first runs all 8 representative spell combinations across the same 25 seeds: 200 complete, real-damage bot runs. Each fixed-build bot uses Hold between waves and deterministic danger-aware movement appropriate to its current Form. One repeat per build verifies replay determinism.
+
+It then runs 100 additional real-damage trials from the same starting spell: 25 seeds each for always-Hold, mixed Hold/rewrite, discovery-first, and rewrite-only policies. Movement adapts to the current spell. This second matrix exists because fixed-build runs cannot detect whether the game quietly punishes players for engaging with rewriting.
 
 | Gate | Green | Yellow | Red |
 |---|---|---|---|
@@ -31,6 +33,7 @@ The full gate runs all 8 representative spell combinations across the same 25 se
 | Determinism | 8/8 replays match | — | Any mismatch |
 | Bot survivability | Every build wins at least 80% | 60–79.9% weakest build | Below 60% |
 | Dominance proxy | Build median spread ≤20% and Form gap ≤15% | Spread ≤35% and Form gap ≤25% | Worse |
+| Rewrite incentive | Every policy wins at least 80%, median clear spread ≤20%, and all finish at level 12 | Every policy wins at least 60% and spread ≤35% | Worse |
 | Pacing proxy | Empty stretch stays inside authored arrival gap, no post-schedule wait, boss arrives within 9 seconds | At most 2 seconds over the authored gap, ≤0.5-second post-schedule wait, or ≤1-second boss overrun | Worse |
 | Choice feedback loop | 8/8 builds expose a compact resulting-spell visual, next-wave threat context, and post-tap transformation confirmation | — | Missing, verbose, or inconsistent loop |
 
@@ -38,7 +41,7 @@ A red result fails CI. Yellow preserves the report and permits diagnosis, but ca
 
 ## Interpretation Boundary
 
-Automation can support claims about termination, finite state, caps, deterministic outcomes, relative outcomes under its fixed policy, authored empty intervals, and whether the required visual/context/confirmation states exist.
+Automation can support claims about termination, finite state, caps, deterministic outcomes, relative outcomes across the configured builds and choice policies, authored empty intervals, and whether required visual/context/confirmation states exist.
 
 Automation cannot establish that a human understood the text, enjoyed the run, felt a choice was fair, wanted to replay, or received enough entertainment for the price. Those claims require human evidence and must remain labeled pending until collected.
 

@@ -21,6 +21,8 @@ Player promise: **One thumb. One living spell. Rewrite its Form, Essence, and La
 
 The content cap is a production fence, not the whole design. For every material improvement, Codex must trace the player's logic—what the player sees, expects, chooses, observes, and wants next—then generate and compare solutions using source inspection, automated evidence, targeted comparable research, and bounded prototypes. Owner feedback remains decisive human evidence, but must not be treated as the only source of ideas.
 
+**Authority boundary, July 13, 2026:** the final goal and player promise above are binding. Every earlier scope, mechanic, content count, process rule, and design decision may be revised when Codex can show that another route better serves that goal. Codex owns finding the problem, generating alternatives, selecting and implementing the next step, and proving it; the owner supplies resources when genuinely needed and judges major commercial gates.
+
 ## Authority Order
 
 Read these files in order:
@@ -49,14 +51,15 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - That build is a validated native vertical slice, not the approved commercial launch game.
 - The old tiny release contract has been superseded as a commercial target.
 - The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
-- Option B — Living Spell Trials — and its capped launch direction were owner-approved on July 13, 2026.
+- Living Spell Trials remains the evidence-supported direction; its old exact cap is now a revisable production hypothesis rather than binding authority.
 - The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, with no reported layout or runtime blocker, but the gate failed because onboarding remained unclear, the late pre-boss stretch became boring, and Orbit felt much weaker than Bolt.
 - Correction build `0.2.0-representative.2` made the owner “really happy” and was reported as entertaining, with roughly 15 minutes of available representative experimentation. Choice outcomes may still be unclear to some players.
 - Evidence build `0.2.0-representative.3` added the required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact.
 - Text-heavy choice build `0.2.0-representative.4` passed automation but failed the owner's immediate visual review.
 - Compact visual build `0.2.0-representative.5` replaced the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge; the owner approved it in SPCK.
-- Player-logic build `0.2.0-representative.6` closes more of the choice loop: a visual starting spell, next-wave threat context before choosing, immediate transformation confirmation, persistent three-part combat feedback, clearer status/Law effects, and an explicit Spellbook proof rule.
-- Full launch content and final assets remain blocked on the `.6` phone result, unresolved progression/replay issues, a later fresh-player cell, and the second explicit go/no-go.
+- Player-logic build `0.2.0-representative.6` closed the observable choice loop and passed the owner's SPCK check.
+- Incentive build `0.2.0-representative.7` fixes the independently discovered power tax: Support no longer competes with rewriting, every rewrite or hold advances the same visible living-spell level, and automation now compares 100 real choice-policy runs in addition to the 200-build matrix.
+- Full launch content and final assets remain blocked on the `.7` phone result, one later fresh-player cell, and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -64,7 +67,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-Run one owner SPCK pass on `0.2.0-representative.6`: start fresh, make several rewrites, and judge whether the loop now reads naturally from **incoming threat → choice → visible transformation → combat result**. Do not recruit friends yet. After remaining fundamental player-logic issues are resolved, open one consolidated fresh-player cell and then the second explicit go/no-go. Do not scale content before that gate closes.
+Run one owner SPCK pass on `0.2.0-representative.7`: start fresh, mix rewrites with Hold, and judge whether the spell now feels like it grows without punishing experimentation. Do not recruit friends yet. If this passes, Codex prepares one consolidated fresh-player cell and the second explicit go/no-go.
 
 ## Mandatory Session Protocol
 
@@ -73,7 +76,7 @@ At the start:
 1. Read the authority files.
 2. Check the latest `main`.
 3. Report the current milestone, latest accepted phone test, and one meaningful session goal.
-4. Distinguish locked decisions from research candidates.
+4. Distinguish the binding final goal from revisable working hypotheses.
 
 During work:
 
@@ -94,7 +97,7 @@ Before ending:
 
 ## Decision Authority
 
-ChatGPT/Codex leads routine technical, research, architecture, testing, and workflow choices. The owner remains creative director and approves major or irreversible decisions.
+ChatGPT/Codex independently leads product diagnosis, solution generation, implementation, research, architecture, testing, and workflow. The owner remains creative director for major commercial gates and irreversible external actions.
 
 ## Asset Safety
 
@@ -102,4 +105,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow their authority links, including the evidence protocol and ledger. Option B — Living Spell Trials — is locked. Report the current milestone and one substantial session goal, complete one approved verified batch, run the required evidence, push it to `main`, and update the handoff and roadmap. Do not scale beyond the representative slice until its commercial gate passes.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then the evidence protocol, ledger, roadmap, and handoff. The final Product Compass is binding; all implementation details are revisable. Independently find the highest-value player problem, compare solutions, implement one verified batch, push it to `main`, and update the project memory. Ask the owner only for genuinely needed resources or a major commercial gate.

@@ -34,7 +34,7 @@ const H = canvas.height;
 const FPS = 60;
 const TOTAL_WAVES = 12;
 const SAVE_VERSION = 2;
-const CHECKPOINT_VERSION = 1;
+const CHECKPOINT_VERSION = 2;
 const SAVE_KEY = "pixel_mage_save_v2";
 const LEGACY_BEST_SCORE_KEY = "pixel_mage_best_score_v1";
 const LEGACY_SETTINGS_KEY = "pixel_mage_settings_v1";
@@ -45,6 +45,8 @@ const MAX_ENEMY_PROJECTILES = 72;
 const MAX_PENDING_CASTS = 24;
 const MAX_SPARKS = 360;
 const ORBIT_HIT_GAP = 18;
+const SPELL_GROWTH_DAMAGE = 0.06;
+const SPELL_GROWTH_HASTE = 0.015;
 const VALID_FORMS = Object.freeze(["bolt", "orbit"]);
 const VALID_ESSENCES = Object.freeze(["ember", "frost"]);
 const VALID_LAWS = Object.freeze(["split", "echo"]);
@@ -279,47 +281,6 @@ const RUN_DEFINITION = Object.freeze([
   }),
 ]);
 
-const SUPPORT_UPGRADES = Object.freeze([
-  Object.freeze({
-    id: "power",
-    title: "Arcane Focus",
-    describe: function () { return "All spell hits gain +0.25 damage."; },
-    apply: function (player, supports) {
-      supports.power += 1;
-      player.power += 0.25;
-    },
-  }),
-  Object.freeze({
-    id: "haste",
-    title: "Quickening",
-    describe: function () { return "Cast every Form 6% more often."; },
-    apply: function (player, supports) {
-      supports.haste += 1;
-      player.haste = Math.min(0.3, player.haste + 0.06);
-    },
-  }),
-  Object.freeze({
-    id: "vitality",
-    title: "Vital Spark",
-    describe: function (player) { return "Maximum HP " + player.maxHp + " → " + (player.maxHp + 1) + "; heal 2."; },
-    apply: function (player, supports) {
-      supports.vitality += 1;
-      player.maxHp += 1;
-      player.hp = Math.min(player.maxHp, player.hp + 2);
-    },
-  }),
-  Object.freeze({
-    id: "step",
-    title: "Wind Step",
-    describe: function () { return "Move 6% faster and heal 1 HP."; },
-    apply: function (player, supports) {
-      supports.step += 1;
-      player.speed += 0.13;
-      player.hp = Math.min(player.maxHp, player.hp + 1);
-    },
-  }),
-]);
-
 const SOUND_CUES = Object.freeze({
   click: [{ start: 420, end: 560, duration: 0.035, volume: 0.018, type: "square" }],
   cast: [{ start: 580, end: 920, duration: 0.055, volume: 0.014, type: "square" }],
@@ -448,6 +409,15 @@ function normalizeCheckpoint(checkpoint) {
   const rawWave = Number(checkpoint.wave || checkpoint.currentWave);
   if (!Number.isFinite(rawWave) || rawWave < 1 || rawWave > TOTAL_WAVES) return null;
   const wave = Math.round(rawWave);
+  const player = normalizePlayer(checkpoint.player);
+  const legacySupports = normalizeSupports(checkpoint.supports);
+  if (checkpoint.version !== CHECKPOINT_VERSION) {
+    player.power = Math.max(0, player.power - legacySupports.power * 0.25);
+    player.haste = Math.max(0, player.haste - legacySupports.haste * 0.06);
+    player.maxHp = Math.max(5, player.maxHp - legacySupports.vitality);
+    player.hp = Math.min(player.hp, player.maxHp);
+    player.speed = Math.max(2.08, player.speed - legacySupports.step * 0.13);
+  }
 
   return {
     version: CHECKPOINT_VERSION,
@@ -457,9 +427,10 @@ function normalizeCheckpoint(checkpoint) {
     score: safeInteger(checkpoint.score, 0, 0, 100000000),
     defeated: safeInteger(checkpoint.defeated, 0, 0, 1000000),
     elapsedFrames: safeInteger(checkpoint.elapsedFrames, 0, 0, 100000000),
-    player: normalizePlayer(checkpoint.player),
+    player,
     spell: normalizeSpell(checkpoint.spell),
-    supports: normalizeSupports(checkpoint.supports),
+    spellLevel: safeInteger(checkpoint.spellLevel, wave, 1, TOTAL_WAVES),
+    supports: normalizeSupports(null),
   };
 }
 
@@ -593,6 +564,7 @@ const state = {
   waveBannerText: "",
   rewriteNoticeTimer: 0,
   rewriteNotice: null,
+  spellLevel: 1,
   lastDiscovery: "",
   screenShake: 0,
   damageFlash: 0,
@@ -718,6 +690,14 @@ function spellCombatHint(spell) {
     SPELL_PARTS.laws[spell.law].title.toUpperCase() + " " + spellPartPromise("law", spell.law);
 }
 
+function spellGrowthDamage() {
+  return Math.max(0, state.spellLevel - 1) * SPELL_GROWTH_DAMAGE;
+}
+
+function spellGrowthHaste() {
+  return Math.min(0.18, Math.max(0, state.spellLevel - 1) * SPELL_GROWTH_HASTE);
+}
+
 function rewrittenSpell(axis, value) {
   return {
     form: axis === "form" ? value : state.spell.form,
@@ -775,6 +755,7 @@ function checkpointFromState(phase) {
       haste: state.player.haste,
     },
     spell: { form: state.spell.form, essence: state.spell.essence, law: state.spell.law },
+    spellLevel: state.spellLevel,
     supports: {
       power: state.supports.power,
       haste: state.supports.haste,
@@ -1075,7 +1056,7 @@ const EnemySystem = Object.freeze({
     enemy.hitFlash = 5;
     if (essence === "ember") {
       enemy.burnUntil = Math.max(enemy.burnUntil, state.time + 120);
-      enemy.burnDamage = Math.max(enemy.burnDamage, 0.22 + state.player.power * 0.08);
+      enemy.burnDamage = Math.max(enemy.burnDamage, 0.22 + (state.player.power + spellGrowthDamage()) * 0.08);
       if (enemy.nextBurnAt <= state.time) enemy.nextBurnAt = state.time + 24;
     } else {
       enemy.slowUntil = Math.max(enemy.slowUntil, state.time + 105);
@@ -1175,7 +1156,7 @@ const SpellSystem = Object.freeze({
     const baseCooldown = SPELL_PARTS.forms[form].cooldown;
     if (multiplier === undefined) {
       if (player.cooldown > 0) return false;
-      player.cooldown = Math.max(8, Math.round(baseCooldown * (1 - player.haste)));
+      player.cooldown = Math.max(8, Math.round(baseCooldown * (1 - Math.min(0.3, player.haste + spellGrowthHaste()))));
     }
     const castMultiplier = multiplier === undefined ? 1 : multiplier;
     this.spawnCast(target, castMultiplier, multiplier !== undefined);
@@ -1189,7 +1170,12 @@ const SpellSystem = Object.freeze({
         state.pendingCasts.splice(0, state.pendingCasts.length - MAX_PENDING_CASTS);
       }
     }
-    addSparks(player.x, player.y - 17, form === "orbit" ? 7 : 5, SPELL_PARTS.essences[state.spell.essence].light);
+    addSparks(
+      player.x,
+      player.y - 17,
+      (form === "orbit" ? 7 : 5) + Math.floor((state.spellLevel - 1) / 4),
+      SPELL_PARTS.essences[state.spell.essence].light,
+    );
     playSound("cast");
     return true;
   },
@@ -1207,7 +1193,7 @@ const SpellSystem = Object.freeze({
       if (state.spell.form === "bolt") {
         const speed = essence === "frost" ? 5.25 : 5.65;
         const damageBase = essence === "ember" ? 1.8 : 1.4;
-        const damage = (damageBase + player.power) * castMultiplier * (split ? 0.73 : 1);
+        const damage = (damageBase + player.power + spellGrowthDamage()) * castMultiplier * (split ? 0.73 : 1);
         state.projectiles.push({
           kind: "bolt",
           essence,
@@ -1220,7 +1206,7 @@ const SpellSystem = Object.freeze({
           vy: Math.sin(baseAngle + offset) * speed,
           speed,
           targetId: target.id,
-          r: essence === "ember" ? 5 : 4,
+          r: (essence === "ember" ? 5 : 4) + Math.min(2.4, (state.spellLevel - 1) * 0.22),
           damage,
           life: 105,
           pierce: essence === "frost" ? 1 : 0,
@@ -1236,11 +1222,11 @@ const SpellSystem = Object.freeze({
           echoed: echoed === true,
           x: player.x,
           y: player.y,
-          r: 12,
-          damage: (damageBase + player.power * 0.55) * castMultiplier * (split ? 0.78 : 1),
+          r: 12 + Math.min(3, (state.spellLevel - 1) * 0.27),
+          damage: (damageBase + (player.power + spellGrowthDamage()) * 0.55) * castMultiplier * (split ? 0.78 : 1),
           life: 168,
           angle: baseAngle + offset + (Math.PI * 2 * index) / count,
-          radius: count === 1 ? 44 : 34 + index * 10,
+          radius: (count === 1 ? 44 : 34 + index * 10) + Math.min(8, (state.spellLevel - 1) * 0.7),
           angularVelocity: essence === "frost" ? 0.084 : 0.096,
           hitIds: {},
         });
@@ -1362,6 +1348,7 @@ const RunSystem = Object.freeze({
     state.waveBannerText = "";
     state.rewriteNoticeTimer = 0;
     state.rewriteNotice = null;
+    state.spellLevel = 1;
     state.lastDiscovery = "";
     state.screenShake = 0;
     state.damageFlash = 0;
@@ -1392,6 +1379,7 @@ const RunSystem = Object.freeze({
     state.runElapsed = checkpoint.elapsedFrames;
     state.player = normalizePlayer(checkpoint.player);
     state.spell = normalizeSpell(checkpoint.spell);
+    state.spellLevel = checkpoint.spellLevel;
     state.supports = normalizeSupports(checkpoint.supports);
     pointerControl.x = state.player.x;
     pointerControl.y = state.player.y;
@@ -1469,13 +1457,16 @@ const RunSystem = Object.freeze({
   chooseRewrite: function (option) {
     if (state.mode !== "upgrade") return;
     option.apply();
-    const changedValue = option.spell
-      ? SPELL_PARTS[option.axis === "form" ? "forms" : option.axis === "essence" ? "essences" : "laws"][state.spell[option.axis]].title
-      : option.title.replace("SUPPORT · ", "");
+    state.spellLevel = Math.min(TOTAL_WAVES, state.spellLevel + 1);
+    const held = option.axis === "hold";
+    const changedValue = held
+      ? ""
+      : SPELL_PARTS[option.axis === "form" ? "forms" : option.axis === "essence" ? "essences" : "laws"][state.spell[option.axis]].title;
     state.rewriteNotice = {
       axis: option.axis,
-      title: option.axis.toUpperCase() + " → " + changedValue,
-      detail: option.detail,
+      title: held ? "SPELL HELD · LV " + state.spellLevel : option.axis.toUpperCase() + " → " + changedValue,
+      detail: held ? "same shape · spell grows" : option.detail + " · LV " + state.spellLevel,
+      level: state.spellLevel,
       spell: { form: state.spell.form, essence: state.spell.essence, law: state.spell.law },
     };
     state.rewriteNoticeTimer = REWRITE_NOTICE_DURATION;
@@ -1534,7 +1525,7 @@ const UISystem = Object.freeze({
         : "Resume Wave " + checkpoint.wave;
       startStatus.textContent = "Checkpoint: " + spellName(checkpoint.spell) + " · " + formatFrames(checkpoint.elapsedFrames);
     } else {
-      startStatus.textContent = "Three acts, twelve waves. Rewrite for a new play style or take Support.";
+      startStatus.textContent = "12 waves · Rewrite or hold · Every choice grows the spell";
     }
     spellbookText.textContent = "Spellbook " + persistent.profile.discovered.length +
       "/8 · Clear a wave with a NEW spell to prove it";
@@ -1545,13 +1536,13 @@ const UISystem = Object.freeze({
     upgradeChoices.replaceChildren();
     upgradeEyebrow.textContent = state.lastDiscovery
       ? "New Spell Proven · " + persistent.profile.discovered.length + "/8"
-      : "Wave Cleared";
+      : "Spell LV " + state.spellLevel + " → " + (state.spellLevel + 1);
     upgradeTitle.textContent = state.wave === 4
       ? "Act I cleared · Choose one"
       : state.wave === 8
         ? "Act II cleared · Choose one"
         : "Choose one";
-    upgradeHelp.textContent = "CURRENT · " + spellName(state.spell);
+    upgradeHelp.textContent = "CURRENT · " + spellName(state.spell) + " · LV " + state.spellLevel + " → " + (state.spellLevel + 1);
 
     const threat = waveThreatSummary(RUN_DEFINITION[state.wave]);
     nextWaveTitle.textContent = threat.heading;
@@ -1572,10 +1563,10 @@ const UISystem = Object.freeze({
     const nextForm = state.spell.form === "bolt" ? "orbit" : "bolt";
     const nextEssence = state.spell.essence === "ember" ? "frost" : "ember";
     const nextLaw = state.spell.law === "split" ? "echo" : "split";
-    const support = SUPPORT_UPGRADES[hashNumbers(state.seed, state.wave, 77) % SUPPORT_UPGRADES.length];
     const formSpell = rewrittenSpell("form", nextForm);
     const essenceSpell = rewrittenSpell("essence", nextEssence);
     const lawSpell = rewrittenSpell("law", nextLaw);
+    const heldSpell = { form: state.spell.form, essence: state.spell.essence, law: state.spell.law };
     const options = [
       {
         axis: "form",
@@ -1602,10 +1593,12 @@ const UISystem = Object.freeze({
         apply: function () { state.spell.law = nextLaw; },
       },
       {
-        axis: "support",
-        title: "SUPPORT · " + support.title,
-        detail: support.describe(state.player),
-        apply: function () { support.apply(state.player, state.supports); },
+        axis: "hold",
+        spell: heldSpell,
+        title: "HOLD · Current Spell",
+        detail: "same shape · still grows",
+        description: "Keeps every spell word while the living spell gains its next level.",
+        apply: function () {},
       },
     ];
 
@@ -1619,7 +1612,16 @@ const UISystem = Object.freeze({
       button.className = "upgrade-choice";
       button.type = "button";
       button.dataset.axis = option.axis;
-      if (option.spell) {
+      if (option.axis === "hold") {
+        button.dataset.discovery = "hold";
+        button.dataset.result = spellKey(option.spell);
+        icon.dataset.form = option.spell.form;
+        icon.dataset.essence = option.spell.essence;
+        icon.dataset.law = option.spell.law;
+        badge.textContent = "HOLD";
+        button.setAttribute("aria-label", "Keep " + spellName(option.spell) + ". The spell still grows to level " +
+          (state.spellLevel + 1) + ".");
+      } else {
         const isNew = !persistent.profile.discovered.includes(spellKey(option.spell));
         button.dataset.discovery = isNew ? "new" : "known";
         button.dataset.result = spellKey(option.spell);
@@ -1640,13 +1642,8 @@ const UISystem = Object.freeze({
         const group = option.axis === "form" ? "forms" : option.axis === "essence" ? "essences" : "laws";
         button.setAttribute("aria-label", "Change " + option.axis + " from " + SPELL_PARTS[group][currentValue].title +
           " to " + SPELL_PARTS[group][nextValue].title + ". " + option.description + " " + kept +
-          " stay. Result: " + spellName(option.spell) + ". " + badge.textContent + " spell.");
-      } else {
-        button.dataset.discovery = "support";
-        icon.dataset.form = "support";
-        badge.textContent = "KEEP SPELL";
-        button.setAttribute("aria-label", option.title + ". " + option.detail +
-          " Current spell stays " + spellName(state.spell) + ".");
+          " stay. Result: " + spellName(option.spell) + ". " + badge.textContent + " spell. The living spell also grows to level " +
+          (state.spellLevel + 1) + ".");
       }
       icon.className = "choice-spell-icon";
       for (let markIndex = 0; markIndex < 3; markIndex += 1) {
@@ -1723,7 +1720,7 @@ const UISystem = Object.freeze({
     menuButton.textContent = state.menuOpen ? "Resume" : state.mode === "playing" ? "Pause" : "Options";
     menuButton.setAttribute("aria-label", state.menuOpen ? "Resume game" : state.mode === "playing" ? "Pause game" : "Open options");
     healthText.textContent = player ? "HP " + Math.max(0, Math.ceil(player.hp)) + "/" + player.maxHp : "HP 5/5";
-    spellText.textContent = spellReadout(state.spell);
+    spellText.textContent = spellReadout(state.spell) + " · LV " + state.spellLevel;
     controlHint.textContent = state.rewriteNoticeTimer > 0 && state.rewriteNotice
       ? state.rewriteNotice.title + " · " + state.rewriteNotice.detail
       : spellCombatHint(state.spell);
@@ -2021,38 +2018,33 @@ function drawRewriteNotice() {
   ctx.save();
   ctx.globalAlpha = alpha;
 
-  if (notice.axis === "support") {
-    ctx.fillStyle = "#ffd166";
-    ctx.fillRect(Math.round(x - 18), Math.round(y - 2), 36, 4);
-    ctx.fillRect(Math.round(x - 2), Math.round(y - 18), 4, 36);
+  const spell = notice.spell;
+  const essence = SPELL_PARTS.essences[spell.essence];
+  const growth = Math.min(8, Math.max(0, notice.level - 1) * 0.7);
+  ctx.strokeStyle = essence.light;
+  ctx.fillStyle = essence.color;
+  ctx.lineWidth = 2;
+  if (spell.form === "orbit") {
+    const ringCount = spell.law === "split" ? 3 : 2;
+    for (let index = 0; index < ringCount; index += 1) {
+      ctx.globalAlpha = alpha * (spell.law === "echo" && index === 1 ? 0.34 : 0.78);
+      ctx.beginPath();
+      ctx.arc(x, y, 27 + growth + index * 8, 0, Math.PI * 2);
+      ctx.stroke();
+    }
   } else {
-    const spell = notice.spell;
-    const essence = SPELL_PARTS.essences[spell.essence];
-    ctx.strokeStyle = essence.light;
-    ctx.fillStyle = essence.color;
-    ctx.lineWidth = 2;
-    if (spell.form === "orbit") {
-      const ringCount = spell.law === "split" ? 3 : 2;
-      for (let index = 0; index < ringCount; index += 1) {
-        ctx.globalAlpha = alpha * (spell.law === "echo" && index === 1 ? 0.34 : 0.78);
-        ctx.beginPath();
-        ctx.arc(x, y, 27 + index * 8, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-    } else {
-      const rayCount = spell.law === "split" ? 3 : 2;
-      for (let index = 0; index < rayCount; index += 1) {
-        const offset = rayCount === 3 ? (index - 1) * 0.26 : index * 0.12;
-        const ghost = spell.law === "echo" && index === 1;
-        ctx.globalAlpha = alpha * (ghost ? 0.3 : 0.82);
-        const endX = x + Math.sin(offset) * 38 + (ghost ? 7 : 0);
-        const endY = y - Math.cos(offset) * 38 + (ghost ? 4 : 0);
-        ctx.beginPath();
-        ctx.moveTo(x, y - 12);
-        ctx.lineTo(endX, endY);
-        ctx.stroke();
-        ctx.fillRect(Math.round(endX - 2), Math.round(endY - 3), 5, 6);
-      }
+    const rayCount = spell.law === "split" ? 3 : 2;
+    for (let index = 0; index < rayCount; index += 1) {
+      const offset = rayCount === 3 ? (index - 1) * 0.26 : index * 0.12;
+      const ghost = spell.law === "echo" && index === 1;
+      ctx.globalAlpha = alpha * (ghost ? 0.3 : 0.82);
+      const endX = x + Math.sin(offset) * (38 + growth) + (ghost ? 7 : 0);
+      const endY = y - Math.cos(offset) * (38 + growth) + (ghost ? 4 : 0);
+      ctx.beginPath();
+      ctx.moveTo(x, y - 12);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      ctx.fillRect(Math.round(endX - 2), Math.round(endY - 3), 5, 6);
     }
   }
 
@@ -2178,15 +2170,19 @@ function drawProjectiles() {
     ctx.save();
     if (projectile.echoed) ctx.globalAlpha = 0.58;
     if (projectile.kind === "orbit") {
+      const outer = Math.max(6, Math.round(projectile.r / 2));
+      const inner = Math.max(3, Math.round(outer / 2));
       ctx.fillStyle = essence.color;
-      ctx.fillRect(x - 6, y - 6, 12, 12);
+      ctx.fillRect(x - outer, y - outer, outer * 2, outer * 2);
       ctx.fillStyle = essence.light;
-      ctx.fillRect(x - 3, y - 3, 6, 6);
+      ctx.fillRect(x - inner, y - inner, inner * 2, inner * 2);
     } else {
+      const outer = Math.max(4, Math.round(projectile.r * 0.8));
+      const inner = Math.max(2, Math.round(outer / 2));
       ctx.fillStyle = essence.color;
-      ctx.fillRect(x - 4, y - 4, 8, 8);
+      ctx.fillRect(x - outer, y - outer, outer * 2, outer * 2);
       ctx.fillStyle = essence.light;
-      ctx.fillRect(x - 2, y - 2, 4, 4);
+      ctx.fillRect(x - inner, y - inner, inner * 2, inner * 2);
     }
     if (projectile.echoed) {
       ctx.globalAlpha = 0.3;

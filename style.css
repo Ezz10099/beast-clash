@@ -496,6 +496,10 @@ h1 {
   --axis-color: #d9b8ff;
 }
 
+.upgrade-choice[data-axis="hold"] {
+  --axis-color: #ffd166;
+}
+
 .choice-copy,
 .choice-name,
 .choice-detail,
@@ -651,27 +655,6 @@ h1 {
 }
 
 .choice-spell-icon[data-form="orbit"][data-law="echo"] .spell-shape:nth-child(3) {
-  display: none;
-}
-
-.choice-spell-icon[data-form="support"]::before,
-.choice-spell-icon[data-form="support"]::after {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 16px;
-  width: 18px;
-  height: 5px;
-  border-radius: 2px;
-  background: var(--spell-color);
-  box-shadow: 0 0 4px rgba(255, 209, 102, 0.55);
-}
-
-.choice-spell-icon[data-form="support"]::after {
-  transform: rotate(90deg);
-}
-
-.choice-spell-icon[data-form="support"] .spell-shape {
   display: none;
 }
 

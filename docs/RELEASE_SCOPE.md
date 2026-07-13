@@ -2,11 +2,13 @@
 
 ## Status
 
-**Locked: Option B — Living Spell Trials. Owner-approved July 13, 2026.**
+**Current direction: Option B — Living Spell Trials. Owner-approved July 13, 2026; exact scope made revisable July 13, 2026.**
+
+The Product Compass in `docs/START_HERE.md` is the only binding product authority. This file is the current smallest credible route, not a fence against a stronger evidence-backed solution.
 
 The earlier five-wave Android build remains a stable, accepted vertical slice. It is the technical foundation, not the intended commercial launch game.
 
-## Locked Foundation
+## Current Foundation
 
 - Pixel Mage is the only active project.
 - Repository `Ezz10099/beast-clash` and branch `main` remain authoritative.
@@ -19,7 +21,7 @@ The earlier five-wave Android build remains a stable, accepted vertical slice. I
 
 **Working pitch:** “One thumb. One spell. Rewrite it.”
 
-The player controls one mage and exactly one living spell. The spell has three readable words—Form, Essence, and Law. Between combat waves, the player rewrites one word or takes a universal support improvement. The spell's mechanics, generated name, color, sound, and code-driven effect change coherently.
+The player controls one mage and exactly one living spell. The spell has three readable words—Form, Essence, and Law. Between combat waves, the player rewrites one word or holds the current shape; either choice advances the same living-spell level. The spell's mechanics, generated name, color, sound, strength, and code-driven effect change coherently.
 
 The distinct identity is the complete combination of:
 
@@ -30,18 +32,18 @@ The distinct identity is the complete combination of:
 5. permanent Spellbook discovery;
 6. one-thumb movement and automatic threat targeting designed for mobile.
 
-## Locked Repeatable Core Loop
+## Current Repeatable Core Loop
 
 1. Select an unlocked Trial.
 2. Enter with one simple three-part spell.
 3. Drag to dodge and position while the spell automatically targets a suitable threat.
 4. Survive a short timed wave with scheduled enemy arrivals.
-5. Rewrite one spell word or choose one universal support improvement.
+5. Rewrite one spell word or hold the current spell; either path grows the living spell.
 6. Face guardians at the ends of Acts 1 and 2 and a distinct boss at the end of Act 3.
 7. Record newly proven spell combinations, Trial Mastery, and local best results.
 8. Unlock the next Trial or replay for another discovery; after victory, optionally continue into Endless.
 
-## Locked Launch Cap
+## Current Working Launch Cap
 
 | Content | Version-1 cap |
 |---|---:|
@@ -51,16 +53,16 @@ The distinct identity is the complete combination of:
 | Spell axes | Form, Essence, Law |
 | Spell parts | 9 total; 3 per axis |
 | Discoverable combinations | 27 |
-| Universal support upgrades | 6 |
+| Automatic living-spell growth | 1 level per cleared-wave choice |
 | Normal enemy behavior families | 6, with data-driven variants/elites |
 | Distinct bosses | 3; one per arena |
 | Trial Mastery objectives | 9; one additional objective per Trial |
 | Modes | Trials plus post-victory Endless |
 | Narrative | One short premise, arena introductions, and one ending |
 
-The working component set is Bolt, Orbit, Sigil; Ember, Frost, Storm; and Split, Echo, Seek. Exact names or behaviors may be replaced during the representative prototype when a combination is unclear, but the three-axis 3×3×3 cap remains locked.
+The working component set is Bolt, Orbit, Sigil; Ember, Frost, Storm; and Split, Echo, Seek. Names, behaviors, and even this 3×3×3 cap may change if measured development value, clarity, replay depth, or production cost supports a better route.
 
-## Locked Progression
+## Current Progression Direction
 
 - Unlock Trials and spell words horizontally.
 - Record all 27 proven combinations in the Spellbook.
@@ -68,13 +70,13 @@ The working component set is Bolt, Orbit, Sigil; Ember, Frost, Storm; and Split,
 - Introduce words gradually through clear achievements.
 - Do not use permanent purchasable or grind-based damage, health, or speed. Run 1 must remain winnable through skill and choices.
 
-## Locked Story Level
+## Current Story Level
 
 Use light framing only: a short reason the mage enters the Trials, one line introducing each arena, boss identity, and a brief ending.
 
 Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated cast for version 1.
 
-## Locked Version-1 Exclusions
+## Current Version-1 Exclusions
 
 - No additional playable heroes.
 - No equipment inventory, crafting, shop, currencies, permanent stat tree, gacha, energy, daily rewards, or battle pass.
@@ -82,11 +84,11 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 - No multiplayer, online accounts, cloud save, or online leaderboard.
 - No external advertising, analytics, login, or purchase SDK until the representative slice and external playtest gates pass and the owner separately approves monetization and data collection.
 - No engine change, 3D content, full character animation set, or large bespoke asset pack.
-- No content beyond the locked caps without a new explicit owner decision.
+- Do not multiply content before the representative commercial gate; after it, content should be justified by value and production evidence rather than the old cap alone.
 
 ## First Approved Implementation Batch — Representative Slice
 
-**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` now connects incoming threat, rewrite, visible transformation, and combat feedback without expanding content. Full launch scaling still awaits its phone result, a later fresh-player cell, and the second owner go/no-go.
+**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removes the power penalty for engaging with rewrites and awaits one consolidated phone pass. Full launch scaling still awaits that result, a later fresh-player cell, and the second owner go/no-go.
 
 Build this as one substantial related batch before producing the full launch content:
 
@@ -110,13 +112,15 @@ Build this as one substantial related batch before producing the full launch con
 - The bounded comprehension correction shows the resulting spell visually—Form shape, Essence color, and Law pattern—with only two short text lines and a discovery badge.
 - The owner approved that compact visual direction in SPCK, but the fresh-player cell was deliberately paused while deeper player logic was audited.
 - The follow-up closes the observable loop: it previews the actual next enemy mix before the rewrite, confirms the chosen transformation in the arena, keeps all three live effects visible, differentiates Ember/Frost and Split/Echo feedback, and states how a `NEW` spell becomes proven.
-- Full launch-content production remains blocked pending the `.6` phone result, unresolved progression/replay judgment, one later fresh-player comprehension cell, and the second explicit go/no-go.
+- The `.6` phone result passed, but an independent incentive audit found that generic Support accumulated power while rewrites only sidegraded the spell. This made ignoring the central hook the rational route.
+- `.7` replaces Support with Hold and gives every choice the same visible spell-level growth. The choice remains about play style, not whether to accept an invisible power tax.
+- Full launch-content production remains blocked pending the `.7` phone result, one later fresh-player comprehension cell, and the second explicit go/no-go.
 
 ### Automated Evidence Contract
 
 - `npm run check` remains the fast development suite.
-- `npm run evidence` runs all 8 builds across 25 seeds with real damage, verifies one deterministic replay per build, grades runtime integrity, survivability, dominance, pacing, and the compact choice-feedback loop, then writes CI-uploaded reports.
-- The July 13 baseline is green: 200/200 wins, 0 runtime violations, 8/8 deterministic replays, 9.7% build median spread, 4.9% Form gap, no post-schedule waiting, and a 7-second boss arrival.
+- `npm run evidence` runs all 8 builds across 25 seeds with real damage, 100 additional runs across Hold/mixed/discovery-first/rewrite-only policies, and one deterministic replay per build. It grades runtime integrity, survivability, build dominance, rewrite incentives, pacing, and the compact feedback loop, then writes CI-uploaded reports.
+- The `.7` local result is green: 200/200 build runs recorded with 99% wins, 100 policy runs with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% choice-policy spread, no post-schedule waiting, and a 7-second boss arrival.
 - This contract supports technical and balance judgments only. Human fun and understanding remain human gates under `docs/EVIDENCE_PROTOCOL.md`.
 
 ## Representative-Slice Acceptance Gate
@@ -143,7 +147,7 @@ The package ID remains `com.ezz10099.pixelmage` unless the owner explicitly appr
 
 The game is finished only after:
 
-- the locked capped scope is implemented;
+- the final evidence-backed release scope is implemented;
 - representative-run and total-progression measurements are recorded;
 - automated, save-migration, stress, web, and native reliability gates pass;
 - external target-player testing shows that the loop is understandable and worth replaying;

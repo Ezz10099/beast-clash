@@ -195,7 +195,7 @@ The remaining player concern was concrete: a rewrite card named the resulting sp
 
 `0.2.0-representative.4` exposed four separate text facts before the tap. Automation proved completeness, but the owner's immediate visual review rejected the result: it was a wall of text, used too much card space, and took disproportionate time to produce. The obvious missing move was to show the spell's shape.
 
-`0.2.0-representative.5` corrects that mistake. Each rewrite now shows a miniature resulting spell: Bolt or Orbit shape, Ember or Frost color, and Split or Echo pattern. Visible copy is limited to the axis/name, one short old-to-new effect phrase, and a tiny `NEW/KNOWN` badge; Support uses the same compact layout. Full context remains only in the accessible label.
+`0.2.0-representative.5` corrected that mistake. Each rewrite shows a miniature resulting spell: Bolt or Orbit shape, Ember or Frost color, and Split or Echo pattern. Visible copy is limited to the axis/name, one short effect phrase, and a tiny `NEW/KNOWN` badge. The old Support card used the same compact layout; `.7` later replaced it with Hold. Full context remains in the accessible label.
 
 The lesson is broader than this screen: automated evidence should protect a compact visual contract, not reward adding explanatory text. Human visual judgment can invalidate an automation-green interface immediately.
 
@@ -220,6 +220,33 @@ Targeted comparison was used only to test the first three hypotheses:
 
 The automated matrix remains green and now verifies the pre-choice threat preview and post-tap confirmation for all eight builds. That proves the loop is present and consistent, not that a person understands or enjoys it. The owner phone result remains required before a later fresh-player cell.
 
+## Rewrite-Incentive Audit — July 13, 2026
+
+The owner passed `.6` in SPCK but intentionally withheld the remaining issue, asking Codex to diagnose it independently. The next audit therefore began from mechanics and player incentives rather than another interface edit.
+
+Source inspection found a contradiction: every Form, Essence, or Law rewrite was a sidegrade, while Support was the only choice that stacked damage, cast rate, health, or movement. Worse, the existing 200-run evidence always selected Support and reset the spell to a fixed build after every wave. It measured build balance while bypassing the game's central decision.
+
+A new pre-change policy simulation made the cost visible across 25 real-damage seeds per behavior:
+
+| Policy | Wins | Median clear | Median unique spells | Final growth |
+|---|---:|---:|---:|---|
+| Always Support | 25/25 | 247s | 1 | +power, haste, HP, speed |
+| Discovery-first | 25/25 | 265s | 8 | four late Supports only |
+| Rewrite-only | 25/25 | 274s | 6 | none |
+
+The issue was not merely a 27-second balance gap. The system told an optimizer to ignore rewriting, told an experimenter to accept weaker growth, and called the result a “living spell” even though generic Support supplied the actual evolution.
+
+Targeted sources were used to test the reasoning method:
+
+- The original [Mechanics–Dynamics–Aesthetics paper](https://www.cs.northwestern.edu/~hunicke/MDA.pdf) argues that implemented mechanics produce runtime dynamics and ultimately player experience. That supports simulating decision policies, not judging the card labels in isolation.
+- Salen and Zimmerman's [meaningful-play framework](https://www.waffler.org/wp-content/uploads/2009/05/game-design-and-meaningful-play.pdf) distinguishes an immediately visible outcome from one integrated into the larger game. `.6` improved visibility; the power economy still failed integration.
+- A [semantic review of game-balance definitions](https://ceur-ws.org/Vol-2486/icaiw_vgameedu_2.pdf) identifies avoiding dominant strategies as a recurring balancing goal. Always-Support was not an interesting tradeoff because it alone compounded power.
+- Mega Crit's [metrics-driven Slay the Spire talk](https://www.gdcvault.com/play/1025731/-Slay-the-Spire-Metrics) describes balancing from run data and community feedback together. Pixel Mage therefore adds policy metrics without treating bots as substitutes for phone evidence.
+
+`0.2.0-representative.7` removes that contradiction. Support becomes Hold; every Hold or rewrite advances the same spell level; the level increases damage and cast rate and visibly enlarges the spell. The choice is now whether the coming threat justifies a different play style, not whether the player is willing to sacrifice vertical growth.
+
+The strengthened gate adds 100 runs across always-Hold, mixed, discovery-first, and rewrite-only behaviors. Locally, those policies produced 99/100 wins, all reached level 12, and their median clear times stayed within 5.8%. This does not prove fun. It does prove that the automated system now exercises the promised mechanic and that experimentation no longer loses its growth budget.
+
 ## Research Stop Rule
 
-The required broad research round and owner choice are complete. Stop broad ideation. Continue only targeted review mining tied to a concrete mechanic or commercial gate, and use the evidence protocol before later content estimates or the second go/no-go.
+The required broad research round is complete. Stop broad ideation. Continue only targeted research tied to a concrete mechanic or commercial gate, and use the evidence protocol before later content estimates or the second go/no-go. Earlier exact scope is a revisable hypothesis under D-013; research should serve the Product Compass, not preserve the old cap by default.

@@ -161,10 +161,28 @@ const raw = JSON.parse(evaluate(`
       return values.every(Number.isFinite);
     }
 
-    function simulate(build, seed, buildIndex) {
+    function chooseUpgrade(policy, decisionIndex, seenSpells) {
+      const choices = upgradeChoices.children;
+      const hold = choices.find(function (button) { return button.dataset.axis === 'hold'; });
+      const rewrites = choices.filter(function (button) { return ['form', 'essence', 'law'].includes(button.dataset.axis); });
+      if (policy === 'rewrite') return rewrites[decisionIndex % rewrites.length];
+      if (policy === 'explore') {
+        return rewrites.find(function (button) { return !seenSpells.has(button.dataset.result); }) || hold;
+      }
+      if (policy === 'mixed' && decisionIndex % 2 === 0) {
+        return rewrites.find(function (button) { return !seenSpells.has(button.dataset.result); }) || hold;
+      }
+      return hold;
+    }
+
+    function simulate(build, seed, buildIndex, policy) {
       resetRandom(seed, buildIndex);
       RunSystem.startNew(seed);
       state.spell = { ...build };
+      const choicePolicy = policy || 'hold';
+      const seenSpells = new Set([spellKey(state.spell)]);
+      const choicesMade = { hold: 0, rewrite: 0 };
+      let decisionIndex = 0;
       let frames = 0;
       let damageHits = 0;
       let previousHp = state.player.hp;
@@ -184,20 +202,22 @@ const raw = JSON.parse(evaluate(`
 
       while (state.mode !== 'win' && state.mode !== 'lose' && frames < MAX_RUN_FRAMES) {
         if (state.mode === 'upgrade') {
-          const supportButton = upgradeChoices.children.find(function (button) { return button.dataset.axis === 'support'; });
-          if (!supportButton) {
+          const choice = chooseUpgrade(choicePolicy, decisionIndex, seenSpells);
+          if (!choice) {
             invalidFrames += 1;
             break;
           }
-          supportButton.handlers.click();
-          state.spell = { ...build };
+          choicesMade[choice.dataset.axis === 'hold' ? 'hold' : 'rewrite'] += 1;
+          choice.handlers.click();
+          seenSpells.add(spellKey(state.spell));
+          decisionIndex += 1;
           waveStartedAt = state.runElapsed;
           previousHp = state.player.hp;
           frames += 1;
           continue;
         }
 
-        if (frames % DECISION_GAP === 0) chooseDestination(build, frames, seed);
+        if (frames % DECISION_GAP === 0) chooseDestination(state.spell, frames, seed);
         const waveBefore = state.wave;
         update();
 
@@ -251,6 +271,7 @@ const raw = JSON.parse(evaluate(`
 
       return {
         build: build.form + '|' + build.essence + '|' + build.law,
+        policy: choicePolicy,
         seed,
         mode: state.mode,
         finalWave: state.wave,
@@ -268,6 +289,13 @@ const raw = JSON.parse(evaluate(`
         maxima,
         invalidFrames,
         capViolations,
+        choicesMade,
+        uniqueSpells: seenSpells.size,
+        finalPower: state.player.power,
+        finalHaste: state.player.haste,
+        finalMaxHp: state.player.maxHp,
+        finalSpeed: state.player.speed,
+        finalSpellLevel: state.spellLevel,
         timedOut: frames >= MAX_RUN_FRAMES && state.mode !== 'win' && state.mode !== 'lose',
       };
     }
@@ -315,14 +343,20 @@ const raw = JSON.parse(evaluate(`
           icon.dataset.form === nextSpell.form && icon.dataset.essence === nextSpell.essence && icon.dataset.law === nextSpell.law &&
           title.startsWith(axis.toUpperCase() + ' · ') && detail.length > 0 && detail.length <= 20 &&
           /^(NEW|KNOWN)$/.test(badge.textContent) && button.dataset.result === spellKey(nextSpell) &&
-          button.attributes['aria-label'].includes('Result: ' + spellName(nextSpell));
+          button.attributes['aria-label'].includes('Result: ' + spellName(nextSpell)) &&
+          button.attributes['aria-label'].includes('also grows to level 2');
       });
+      const holdChoice = upgradeChoices.children.find(function (button) { return button.dataset.axis === 'hold'; });
+      const holdChoiceComplete = holdChoice && holdChoice.dataset.discovery === 'hold' &&
+        holdChoice.dataset.result === spellKey(build) && holdChoice.children[0].dataset.form === build.form &&
+        holdChoice.children[0].dataset.essence === build.essence && holdChoice.children[0].dataset.law === build.law &&
+        holdChoice.children[2].textContent === 'HOLD' && holdChoice.attributes['aria-label'].includes('still grows to level 2');
       const changedForm = build.form === 'bolt' ? 'orbit' : 'bolt';
       const formChoice = rewriteChoices.find(function (button) { return button.dataset.axis === 'form'; });
       formChoice.handlers.click();
       UISystem.updateHud();
       const transformationComplete = state.mode === 'playing' && state.wave === 2 && state.spell.form === changedForm &&
-        state.rewriteNoticeTimer > 0 && state.rewriteNotice.axis === 'form' &&
+        state.spellLevel === 2 && state.rewriteNoticeTimer > 0 && state.rewriteNotice.axis === 'form' &&
         controlHint.textContent.includes('FORM → ' + SPELL_PARTS.forms[changedForm].title);
       return {
         build: build.form + '|' + build.essence + '|' + build.law,
@@ -331,7 +365,7 @@ const raw = JSON.parse(evaluate(`
         readout,
         threatPreviewComplete,
         transformationComplete,
-        complete: name.split(' · ').length === 3 && role.split(' · ').length === 3 && rewriteChoicesComplete &&
+        complete: name.split(' · ').length === 3 && role.split(' · ').length === 3 && rewriteChoicesComplete && holdChoiceComplete &&
           threatPreviewComplete && transformationComplete &&
           readout.includes('FORM ') && readout.includes('ESSENCE ') && readout.includes('LAW '),
       };
@@ -339,13 +373,19 @@ const raw = JSON.parse(evaluate(`
 
     const runs = [];
     for (let buildIndex = 0; buildIndex < config.builds.length; buildIndex += 1) {
-      for (const seed of config.seeds) runs.push(simulate(config.builds[buildIndex], seed, buildIndex));
+      for (const seed of config.seeds) runs.push(simulate(config.builds[buildIndex], seed, buildIndex, 'hold'));
+    }
+
+    const policyRuns = [];
+    const startingBuild = { form: 'bolt', essence: 'ember', law: 'split' };
+    for (const policy of ['hold', 'mixed', 'explore', 'rewrite']) {
+      for (const seed of config.seeds) policyRuns.push(simulate(startingBuild, seed, 0, policy));
     }
 
     const determinism = [];
     for (let buildIndex = 0; buildIndex < config.builds.length; buildIndex += 1) {
       const original = runs[buildIndex * config.seeds.length];
-      const replay = simulate(config.builds[buildIndex], config.seeds[0], buildIndex);
+      const replay = simulate(config.builds[buildIndex], config.seeds[0], buildIndex, 'hold');
       determinism.push({ build: original.build, matches: fingerprint(original) === fingerprint(replay) });
     }
 
@@ -360,6 +400,7 @@ const raw = JSON.parse(evaluate(`
 
     return {
       runs,
+      policyRuns,
       determinism,
       choiceContracts,
       pacingContract: {
@@ -412,6 +453,15 @@ const byForm = Object.fromEntries(['bolt', 'orbit'].map((form) => [
   summarizeRuns(raw.runs.filter((run) => run.build.startsWith(`${form}|`))),
 ]));
 const overall = summarizeRuns(raw.runs);
+const byPolicy = Object.fromEntries(['hold', 'mixed', 'explore', 'rewrite'].map((policy) => {
+  const runs = raw.policyRuns.filter((run) => run.policy === policy);
+  return [policy, {
+    ...summarizeRuns(runs),
+    medianUniqueSpells: round(median(runs.map((run) => run.uniqueSpells)), 1),
+    medianRewrites: round(median(runs.map((run) => run.choicesMade.rewrite)), 1),
+    medianFinalSpellLevel: round(median(runs.map((run) => run.finalSpellLevel)), 1),
+  }];
+}));
 
 const buildClearMedians = Object.values(byBuild).map((summary) => summary.medianClearSeconds).filter(Number.isFinite);
 const fastestBuild = Math.min(...buildClearMedians);
@@ -420,11 +470,16 @@ const clearSpread = buildClearMedians.length === builds.length ? slowestBuild / 
 const minimumBuildWinRate = Math.min(...Object.values(byBuild).map((summary) => summary.winRate));
 const maximumFormGap = Math.abs(byForm.bolt.medianClearSeconds - byForm.orbit.medianClearSeconds) /
   Math.min(byForm.bolt.medianClearSeconds, byForm.orbit.medianClearSeconds);
+const policyClearMedians = Object.values(byPolicy).map((summary) => summary.medianClearSeconds).filter(Number.isFinite);
+const policyClearSpread = Math.max(...policyClearMedians) / Math.min(...policyClearMedians) - 1;
+const minimumPolicyWinRate = Math.min(...Object.values(byPolicy).map((summary) => summary.winRate));
+const minimumFinalSpellLevel = Math.min(...Object.values(byPolicy).map((summary) => summary.medianFinalSpellLevel));
 
+const allRuns = [...raw.runs, ...raw.policyRuns];
 const counts = {
-  timeouts: raw.runs.filter((run) => run.timedOut).length,
-  invalidRuns: raw.runs.filter((run) => run.invalidFrames > 0).length,
-  capViolationRuns: raw.runs.filter((run) => run.capViolations > 0).length,
+  timeouts: allRuns.filter((run) => run.timedOut).length,
+  invalidRuns: allRuns.filter((run) => run.invalidFrames > 0).length,
+  capViolationRuns: allRuns.filter((run) => run.capViolations > 0).length,
   deterministicReplays: raw.determinism.filter((entry) => entry.matches).length,
   choiceContracts: raw.choiceContracts.filter((entry) => entry.complete).length,
 };
@@ -468,6 +523,16 @@ const gates = [
     evidence: `${round(clearSpread * 100, 1)}% build median spread · ${round(maximumFormGap * 100, 1)}% Form gap`,
   },
   {
+    id: 'choice-incentives',
+    title: 'Rewrite incentive screen',
+    status: raw.policyRuns.length === 4 * seedsPerBuild && minimumPolicyWinRate >= 0.8 &&
+      policyClearSpread <= 0.2 && minimumFinalSpellLevel === 12
+      ? 'pass'
+      : minimumPolicyWinRate >= 0.6 && policyClearSpread <= 0.35 ? 'warn' : 'fail',
+    evidence: `${raw.policyRuns.length} policy runs · ${round(policyClearSpread * 100, 1)}% clear spread · ` +
+      `LV ${minimumFinalSpellLevel} minimum policy median`,
+  },
+  {
     id: 'pacing',
     title: 'Active pacing proxy',
     status: pacing.longestEmptySeconds <= pacing.authoredArrivalGapSeconds &&
@@ -493,7 +558,7 @@ const status = gates.some((gate) => gate.status === 'fail')
 
 const generatedAt = new Date().toISOString();
 const report = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   generatedAt,
   gameVersion: packageJson.version,
   status,
@@ -501,15 +566,17 @@ const report = {
     builds: builds.length,
     seedsPerBuild,
     fullRuns: raw.runs.length,
+    policyRuns: raw.policyRuns.length,
     replayRuns: raw.determinism.length,
-    botPolicy: 'deterministic danger-grid movement with fixed-build support upgrades',
+    botPolicy: 'deterministic danger-grid movement across hold, mixed, discovery-first, and rewrite-only choice policies',
   },
   gates,
-  summary: { overall, byForm, byBuild, pacing },
+  summary: { overall, byForm, byBuild, byPolicy, pacing },
   automatedClaims: [
     'runtime termination, finite state, and hard collection caps',
     'seeded replay determinism',
-    'relative build outcomes under one fixed bot policy',
+    'relative build outcomes under one fixed movement policy',
+    'survival and clear-time outcomes across four real rewrite/hold policies',
     'empty-arena pacing and clear-time proxies',
     'compact resulting-spell visual, next-threat context, and post-tap transformation-feedback schema',
   ],
@@ -525,15 +592,19 @@ const report = {
 const tableRows = Object.entries(byBuild).map(([build, summary]) => (
   `| ${build.replaceAll('|', ' · ')} | ${summary.wins}/${summary.runs} | ${summary.medianClearSeconds ?? '—'} | ${summary.medianDamageHits ?? '—'} | ${summary.maxIdleSeconds} |`
 ));
+const policyRows = Object.entries(byPolicy).map(([policy, summary]) => (
+  `| ${policy} | ${summary.wins}/${summary.runs} | ${summary.medianClearSeconds ?? '—'} | ${summary.medianDamageHits ?? '—'} | ${summary.medianRewrites} | ${summary.medianUniqueSpells} | ${summary.medianFinalSpellLevel} |`
+));
 const gateRows = gates.map((gate) => `| ${gate.status.toUpperCase()} | ${gate.title} | ${gate.evidence} |`);
 const markdown = `# Pixel Mage Automated Evidence\n\n` +
   `- Result: **${status.toUpperCase()}**\n` +
   `- Version: \`${packageJson.version}\`\n` +
   `- Generated: ${generatedAt}\n` +
-  `- Matrix: ${raw.runs.length} full runs (${builds.length} builds × ${seedsPerBuild} seeds) plus ${raw.determinism.length} deterministic replays\n\n` +
+  `- Matrix: ${raw.runs.length} build runs + ${raw.policyRuns.length} choice-policy runs + ${raw.determinism.length} deterministic replays\n\n` +
   `## Gates\n\n| Result | Gate | Evidence |\n|---|---|---|\n${gateRows.join('\n')}\n\n` +
   `## Build Outcomes\n\n| Build | Wins | Median clear (s) | Median hits taken | Longest empty stretch (s) |\n|---|---:|---:|---:|---:|\n${tableRows.join('\n')}\n\n` +
-  `## Interpretation Boundary\n\nAutomation can catch crashes, invalid state, regressions, pacing gaps, and dominant outcomes under a fixed policy. It cannot prove fun or human understanding. Those remain short phone-test questions at explicit commercial gates.\n`;
+  `## Choice-Policy Outcomes\n\n| Policy | Wins | Median clear (s) | Median hits | Rewrites | Unique spells | Final level |\n|---|---:|---:|---:|---:|---:|---:|\n${policyRows.join('\n')}\n\n` +
+  `## Interpretation Boundary\n\nAutomation can catch crashes, invalid state, regressions, pacing gaps, and strategies that quietly punish rewriting. It cannot prove fun or human understanding. Those remain short phone-test questions at explicit commercial gates.\n`;
 
 await mkdir(outputDirectory, { recursive: true });
 await Promise.all([
@@ -543,7 +614,8 @@ await Promise.all([
 
 process.stdout.write(
   `Pixel Mage evidence ${status.toUpperCase()}: ${raw.runs.length} full runs, ${round(overall.winRate * 100, 1)}% wins, ` +
-  `${round(clearSpread * 100, 1)}% build spread, ${overall.maxIdleSeconds}s longest empty stretch.\n`,
+  `${round(clearSpread * 100, 1)}% build spread, ${raw.policyRuns.length} policy runs, ` +
+  `${round(policyClearSpread * 100, 1)}% policy spread.\n`,
 );
 process.stdout.write(`Reports: artifacts/evidence/evidence-report.{json,md}\n`);
 

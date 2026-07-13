@@ -15,7 +15,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 9. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
 10. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
-The accepted technical foundation, the Product Compass in `docs/START_HERE.md`, and the owner-approved Living Spell Trials commercial scope are authoritative. Exact duration, balance, component behavior, final title, and monetization remain gated. Do not reduce the goal to a feature checklist or wait for the owner to invent every improvement; trace the player's logic and independently compare bounded solutions inside the approved scope.
+The final product goal and player promise in the Product Compass are authoritative. Everything else—scope details, mechanics, counts, process, and earlier decisions—is a revisable working hypothesis when evidence shows a better route to that goal. Do not wait for the owner to identify problems or invent patches: trace the player's logic, generate alternatives, choose, implement, and prove the strongest bounded next step independently.
 
 ## User Workflow
 
@@ -49,8 +49,8 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 
 - Treat the accepted one-minute five-wave build as a stable vertical slice, not a commercially finished game.
 - Preserve its validated controls, technical route, Android identity, and automated checks.
-- Option B — Living Spell Trials — was explicitly owner-approved on July 13, 2026. Follow the locked cap in `docs/RELEASE_SCOPE.md`.
-- Build the representative slice before scaling content: one arena, one 12-wave timed run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, one elite behavior, one boss, wave-boundary checkpoint/resume, and expanded automated checks.
+- Living Spell Trials remains the current product direction because it has positive phone evidence, not because its old exact cap is untouchable.
+- Treat the implemented representative slice—one arena, one 12-wave run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, one elite behavior, one boss, checkpoint/resume, and expanded evidence—as the current test bed.
 - Do not produce the remaining launch content or final assets until that slice passes its consolidated phone gate.
 - The 7–9-minute successful-run target, exact spell-word names/behaviors, balance, and final display title remain provisional until their listed gates pass.
 - Treat Pixel Mage as a working title. Do not change the display name or package ID without explicit owner approval.
@@ -61,13 +61,13 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 
 - Work in substantial milestone batches, not micro-feature test cycles.
 - Implement the representative slice as one substantial related batch, then request one consolidated phone test and a second go/no-go.
-- After the lock, group related implementation and run automated checks. Request one consolidated human cell only at an explicit major commercial gate; do not create micro-test fatigue.
+- Group related implementation and run automated checks. Request one consolidated human cell only at an explicit major commercial gate; do not create micro-test fatigue.
 - Prefer a stable, engaging, time-bounded release over either a one-minute shell or an unfinishable large RPG.
 
 ## Decision Boundaries
 
-- Lead routine technical, architecture, testing, research, and workflow decisions.
-- Obtain explicit owner approval before scope expansion, engine changes, monetization, data collection, external SDKs, package identity changes, signing-key creation, publisher-account choices, destructive removals, or Google Play submission.
+- Codex owns routine product discovery as well as technical, architecture, testing, research, and workflow decisions. This includes finding the next issue without waiting for owner diagnosis.
+- Obtain explicit owner approval before irreversible external actions: spending money, monetization or data collection, external SDKs, package identity or publisher-account changes, signing-key creation, destructive loss of accepted work, Google Play submission, or the major commercial go/no-go.
 - Record every durable decision in `docs/DECISIONS.md`.
 
 ## Session Closure

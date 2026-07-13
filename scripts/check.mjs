@@ -86,7 +86,7 @@ assert.equal(evaluate('persistent.version'), 2);
 assert.equal(evaluate('persistent.profile.bestScore'), 321, 'legacy best score should migrate');
 assert.equal(evaluate('JSON.stringify(persistent.settings)'), '{"sound":true,"haptics":true}');
 assert.equal(JSON.parse(storage.get('pixel_mage_save_v2')).version, 2);
-assert.match(elements.get('#startStatus').textContent, /three acts, twelve waves/i);
+assert.match(elements.get('#startStatus').textContent, /12 waves.*Every choice grows/i);
 assert.match(elements.get('#spellbookText').textContent, /Clear a wave with a NEW spell/);
 
 elements.get('#startRunButton').handlers.click();
@@ -183,12 +183,12 @@ assert.equal(upgradePanel.hidden, false);
 assert.equal(elements.get('#upgradeChoices').children.length, 4);
 assert.equal(
   JSON.stringify(elements.get('#upgradeChoices').children.map((button) => button.dataset.axis)),
-  '["form","essence","law","support"]',
+  '["form","essence","law","hold"]',
 );
 assert.equal(evaluate('persistent.checkpoint.phase'), 'upgrade');
 assert.equal(evaluate('persistent.profile.discovered.length'), 1);
 assert.match(elements.get('#upgradeEyebrow').textContent, /New Spell Proven/);
-assert.equal(elements.get('#upgradeHelp').textContent, 'CURRENT · Bolt · Ember · Split');
+assert.equal(elements.get('#upgradeHelp').textContent, 'CURRENT · Bolt · Ember · Split · LV 1 → 2');
 assert.equal(elements.get('#nextWaveTitle').textContent, 'NEXT · WAVE 2 · Crossfire');
 assert.equal(elements.get('#nextWaveDetail').textContent, 'Motes ×6 · Casters ×2');
 assert.equal(
@@ -212,6 +212,7 @@ assert.equal(formChoice.children[1].children[0].textContent, 'FORM · Orbit');
 assert.equal(formChoice.children[1].children[1].textContent, 'guards nearby');
 assert.equal(formChoice.children[2].textContent, 'NEW');
 assert.match(formChoice.attributes['aria-label'], /Change form from Bolt to Orbit.*Result: Orbit · Ember · Split/);
+assert.match(formChoice.attributes['aria-label'], /also grows to level 2/);
 
 const essenceChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'essence');
 assert.deepEqual(essenceChoice.children[0].dataset, { form: 'bolt', essence: 'frost', law: 'split' });
@@ -223,24 +224,27 @@ assert.deepEqual(lawChoice.children[0].dataset, { form: 'bolt', essence: 'ember'
 assert.equal(lawChoice.children[1].children[0].textContent, 'LAW · Echo');
 assert.equal(lawChoice.children[1].children[1].textContent, 'repeats later');
 
-const supportChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'support');
-assert.equal(supportChoice.children[0].dataset.form, 'support');
-assert.match(supportChoice.children[1].children[0].textContent, /SUPPORT · /);
-assert.ok(supportChoice.children[1].children[1].textContent.length < 42, 'support detail should remain brief');
-assert.equal(supportChoice.children[2].textContent, 'KEEP SPELL');
+const holdChoice = elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'hold');
+assert.deepEqual(holdChoice.children[0].dataset, { form: 'bolt', essence: 'ember', law: 'split' });
+assert.equal(holdChoice.children[1].children[0].textContent, 'HOLD · Current Spell');
+assert.equal(holdChoice.children[1].children[1].textContent, 'same shape · still grows');
+assert.equal(holdChoice.children[2].textContent, 'HOLD');
+assert.match(holdChoice.attributes['aria-label'], /still grows to level 2/);
 formChoice.handlers.click();
 assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 2);
 assert.equal(evaluate('state.spell.form'), 'orbit');
+assert.equal(evaluate('state.spellLevel'), 2, 'rewriting should advance the living spell itself');
 evaluate('UISystem.updateHud()');
 assert.ok(evaluate('state.rewriteNoticeTimer > 0'), 'the chosen rewrite should receive a visible in-arena confirmation window');
 assert.equal(evaluate('state.rewriteNotice.title'), 'FORM → Orbit');
-assert.equal(evaluate('state.rewriteNotice.detail'), 'guards nearby');
-assert.match(elements.get('#controlHint').textContent, /FORM → Orbit · guards nearby/);
+assert.equal(evaluate('state.rewriteNotice.detail'), 'guards nearby · LV 2');
+assert.match(elements.get('#controlHint').textContent, /FORM → Orbit · guards nearby · LV 2/);
 evaluate('state.rewriteNoticeTimer = 0; UISystem.updateHud()');
 assert.match(elements.get('#controlHint').textContent, /ORBIT guards nearby.*EMBER burns \+ splashes.*SPLIT casts 3 now/);
 assert.equal(evaluate('persistent.checkpoint.wave'), 2);
 assert.equal(evaluate('persistent.checkpoint.phase'), 'wave');
+assert.equal(evaluate('persistent.checkpoint.spellLevel'), 2);
 
 const checkpointSpell = evaluate('JSON.stringify(persistent.checkpoint.spell)');
 const checkpointHp = evaluate('persistent.checkpoint.player.hp');
@@ -249,6 +253,7 @@ assert.equal(evaluate('state.mode'), 'playing');
 assert.equal(evaluate('state.wave'), 2);
 assert.equal(evaluate('JSON.stringify(state.spell)'), checkpointSpell);
 assert.equal(evaluate('state.player.hp'), checkpointHp);
+assert.equal(evaluate('state.spellLevel'), 2);
 assert.notEqual(evaluate('state.score'), 999999);
 
 evaluate(`
@@ -263,6 +268,11 @@ assert.equal(evaluate('persistent.checkpoint.phase'), 'upgrade');
 evaluate('RunSystem.resume()');
 assert.equal(evaluate('state.mode'), 'upgrade', 'an upgrade-boundary checkpoint should resume at the rewrite choice');
 assert.equal(elements.get('#upgradeChoices').children.length, 4);
+const spellBeforeHold = evaluate('JSON.stringify(state.spell)');
+const levelBeforeHold = evaluate('state.spellLevel');
+elements.get('#upgradeChoices').children.find((button) => button.dataset.axis === 'hold').handlers.click();
+assert.equal(evaluate('JSON.stringify(state.spell)'), spellBeforeHold, 'Hold should preserve the current spell words');
+assert.equal(evaluate('state.spellLevel'), levelBeforeHold + 1, 'Hold and rewrite should grant equal spell growth');
 
 const migratedV1 = JSON.parse(evaluate(`JSON.stringify(SaveSystem.migrate({
   version: 1,
@@ -283,6 +293,20 @@ assert.equal(migratedV1.settings.sound, false);
 assert.equal(migratedV1.checkpoint.wave, 6);
 assert.equal(migratedV1.checkpoint.phase, 'upgrade');
 assert.deepEqual(migratedV1.checkpoint.spell, { form: 'orbit', essence: 'frost', law: 'echo' });
+assert.equal(migratedV1.checkpoint.spellLevel, 6, 'older checkpoints should infer spell growth from their wave');
+const migratedSupportCheckpoint = JSON.parse(evaluate(`JSON.stringify(normalizeCheckpoint({
+  version: 1,
+  wave: 6,
+  seed: 9,
+  player: { hp: 6, maxHp: 6, speed: 2.21, power: 0.5, haste: 0.12 },
+  spell: { form: "bolt", essence: "ember", law: "split" },
+  supports: { power: 2, haste: 2, vitality: 1, step: 1 }
+}))`));
+assert.equal(migratedSupportCheckpoint.player.power, 0, 'legacy Support power should not stack with inferred spell growth');
+assert.equal(migratedSupportCheckpoint.player.haste, 0);
+assert.equal(migratedSupportCheckpoint.player.maxHp, 5);
+assert.equal(migratedSupportCheckpoint.player.speed, 2.08);
+assert.deepEqual(migratedSupportCheckpoint.supports, { power: 0, haste: 0, vitality: 0, step: 0 });
 assert.equal(evaluate('SaveSystem.migrate({ version: 2, checkpoint: { wave: 99 } }, {}).checkpoint'), null);
 assert.equal(
   evaluate('SaveSystem.migrate({ profile: { discovered: ["bolt|ember|split", "bad|entry|here"] } }, {}).profile.discovered.length'),
@@ -462,9 +486,8 @@ const buildResults = JSON.parse(evaluate(`
       let frames = 0;
       while (state.mode !== "win" && frames < 90000) {
         if (state.mode === "upgrade") {
-          const supportButton = upgradeChoices.children.find((button) => button.dataset.axis === "support");
-          supportButton.handlers.click();
-          state.spell = { ...builds[run] };
+          const holdButton = upgradeChoices.children.find((button) => button.dataset.axis === "hold");
+          holdButton.handlers.click();
         } else {
           state.player.hp = state.player.maxHp;
           state.player.invincible = 120;

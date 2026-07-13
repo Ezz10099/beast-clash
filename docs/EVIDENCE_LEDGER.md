@@ -57,5 +57,19 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Implemented loop: visual starting spell; authored next-wave enemy preview; in-arena rewrite confirmation; persistent three-part combat hint; distinct burn/slow and Echo feedback; explicit one-wave Spellbook proof rule.
 - Local automation: `npm run check` passed with a 79,217-byte offline bundle. `npm run evidence` remained **GREEN** with 200/200 wins, 8/8 deterministic replays, zero runtime violations, 9.7% build spread, 4.9% Form gap, and 8/8 choice-feedback loops.
 - Boundary: automation proves the states are present and consistent. It does not prove that the owner or a fresh player reads the loop naturally.
+- Phone result: the owner passed `.6` in SPCK, then deliberately withheld the remaining issue so Codex would diagnose it independently.
 - Open product issue: the Spellbook/reward/replay structure still offers weak long-term motivation and must not be hidden by passing comprehension checks.
-- Decision: request one owner SPCK pass on `.6`; do not recruit friends or scale launch content yet.
+- Decision: accept the observable loop, audit incentives independently, and do not recruit friends or scale launch content yet.
+
+## July 13, 2026 — Rewrite Incentive Correction
+
+- Build: `0.2.0-representative.7`
+- Independent diagnosis: all previous 200-run bots chose Support and forcibly kept a fixed spell. They could compare builds, but could not test the actual rewrite decision. Source inspection showed that Support stacked power while Form/Essence/Law rewrites were pure sidegrades.
+- Before-change policy audit: 25/25 wins for each tested policy, but always-Support cleared in a 247-second median versus 265 seconds discovery-first and 274 seconds rewrite-only. Always-Support also ended with higher damage, haste, maximum health, and movement speed.
+- Design inference: the rational survival strategy was to avoid the central living-spell hook. The Spellbook asked for experimentation while the power economy punished it.
+- Implemented correction: remove Support from the representative choice screen; add a visual Hold card; advance the same living-spell level after every Hold or rewrite; use that level for visible projectile growth, damage, and cast rate; preserve compact result cards and next-threat context.
+- Evidence contract correction: add 100 real-damage policy runs across always-Hold, mixed, discovery-first, and rewrite-only behaviors; movement follows the current Form; gate policy survivability, clear spread, and final spell level.
+- Local automation: `npm run check` passed with a 79,285-byte release bundle. `npm run evidence` was **GREEN**: 200/200 build runs recorded with 99% wins, 100/100 policy runs recorded with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% policy spread, and level 12 for every policy median.
+- Research triangulation: MDA supports tracing mechanics into runtime dynamics rather than inspecting labels alone; meaningful-play theory requires outcomes to be both visible and integrated into the larger system; game-balance literature warns against dominant strategies; Mega Crit's published process supports decision-level telemetry alongside human feedback. These sources shaped the audit method, not the answer by themselves.
+- Boundary: the gate proves that configured rewrite behaviors are no longer systematically denied growth. It does not prove that spell growth feels satisfying or visually clear on the target phone.
+- Decision: request one consolidated owner SPCK pass on `.7`; if it passes, prepare the fresh-player cell and second explicit go/no-go.
