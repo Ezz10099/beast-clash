@@ -23,18 +23,19 @@ That installed build is a **validated native vertical slice**, not the approved 
 
 ## Commercial Scope Status
 
-The exact commercial scope is under focused research and requires explicit owner approval.
+The final focused research round is complete. The commercial gameplay scope still requires explicit owner approval.
 
-Research currently supports exploring:
+Three bounded directions are compared in `docs/SCOPE_OPTIONS.md`. The recommendation is **Living Spell Trials**:
 
-- short timed waves inside a complete replayable run;
-- meaningful build combinations rather than many tiny linear stages;
-- the accepted one-thumb drag-and-auto-cast controls;
-- difficulty, challenges, and/or endless continuation for replay;
-- a distinctive, asset-efficient magic system;
-- minimal story unless it materially strengthens the game.
+- one mage and one evolving spell;
+- three readable spell words that can be rewritten between timed waves;
+- a Spellbook for horizontal discovery rather than currency grind;
+- a 12-wave representative run that must be phone-timed before full content production;
+- limited reusable arenas, enemy behaviors, and bosses instead of a large animated roster.
 
-These are provisional findings, not locked feature counts. See `docs/DESIGN_RESEARCH.md` and `docs/RELEASE_SCOPE.md`.
+The recommended counts and 7–9-minute run target are test hypotheses, not locked promises. No gameplay expansion begins until the owner chooses or edits an option.
+
+`Pixel Mage` is also a working title. Existing Google Play games use closely related names, so the final display/store name must be approved before store assets are produced. The package ID remains unchanged unless the owner explicitly decides otherwise.
 
 ## Run in SPCK Editor
 

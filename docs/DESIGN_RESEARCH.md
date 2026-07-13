@@ -76,24 +76,84 @@ The idea still requires research because modular spell crafting already exists i
 
 No exact rune count, combination count, wave count, duration, or content total is approved.
 
-## Final Research Round Required
+## Research Round 2 — July 13, 2026 (Final)
 
-The next and final discovery round must:
+### Early-scope and solo-development evidence
 
-1. Compare several spell-building and asset-light games specifically for originality and repetitive-build risks.
-2. Examine early commercially released scope where evidence exists, not only years of accumulated updates.
-3. Evaluate two or three Pixel Mage directions against:
-   - player appeal;
-   - originality;
-   - code complexity;
-   - art and animation burden;
-   - mobile-control suitability;
-   - testing and balancing burden;
-   - realistic implementation batches;
-   - monetization compatibility without grind.
-4. Recommend one capped direction and list hard exclusions.
-5. Stop researching and request explicit owner approval.
+- **Vampire Survivors genre interviews:** successful derivatives were most legible when they kept the familiar foundation and added one clear structural hook, such as Deep Rock Galactic: Survivor's mining and short mission stages or Rogue: Genesia's campaign map. Rogue: Genesia's creator also described its early public content as too light. The practical lesson is focused differentiation, not either a clone or total reinvention.
+  - https://www.gamesradar.com/games/action/vampire-survivors-kicked-off-a-game-development-gold-rush-but-has-a-legitimately-new-genre-emerged-between-the-cash-ins/
+- **SNKRX developer postmortem:** a solo developer finished an initial version in one month and spent two more months on content, yet still felt it lacked enough long-term hooks. Reusing stable engine code accelerated development; unclear planning created major delays; the developer later identified visual quality as important for marketing.
+  - https://a327ex.com/posts/lessons_second_game
+- **SNKRX post-release log:** substantial weekly updates temporarily increased active players but did not themselves increase sales; creator coverage drove discovery. Planning quality strongly correlated with patch quality, and requested looping/endless support required meaningful work.
+  - https://a327ex.com/posts/snkrx_log
+- **SNKRX commercial analysis:** a strong, streamable mechanical hook supported 15–20-minute replayable runs despite basic graphics.
+  - https://newsletter.gamediscover.co/p/snkrx-anatomy-of-a-sleeper-hit
+- **10 Minutes Till Dawn:** its released web version promised 5–10-minute sessions and more than 50 upgrades, showing that a compact run can support hours of experimentation when builds visibly differ. The count is evidence of variety's value, not a feasible Pixel Mage target.
+  - https://flanne.itch.io/10-minutes-till-dawn
+- **Maze Mice:** its pitch is immediately understandable—familiar bullet-heaven play where time moves only when the player moves. This supports one clear marketable twist over many weak novelties.
+  - https://trampolinetales.com/mm/presskit
 
-## Lock Gate
+### Originality check for spell construction
 
-After that round, update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` with the approved direction. Then build one representative full run, measure it on the target phone, and use that evidence for all later duration and total-content estimates.
+Modular spell or weapon construction is already central to several successful games:
+
+- **Magicraft** advertises roughly one hundred spells and free-form combinations.
+  - https://store.steampowered.com/app/2103140/Magicraft/
+- **Spell Disk** centers runs on crafted spell, disk, and artifact synergies.
+  - https://store.steampowered.com/app/2292060/Spell_Disk/
+- **Noita** uses deep wand and spell modification.
+  - https://noitagame.com/
+- **Nova Drift** builds identity around an endlessly evolving weapon/ship and overlapping modifications.
+  - https://store.steampowered.com/app/858210/Nova_Drift/
+- **Pixel Wizard: Dungeon Survivor** already markets one-finger play and freely linked spells on Google Play.
+  - https://play.google.com/store/apps/details?id=com.qerdoplay.pixelwizard
+
+Therefore “combine spell parts” is not a sufficient original hook. The strongest feasible distinction is a deliberately accessible mobile structure: exactly one living spell, exactly three readable words, rewrite one word at a break, and record coherent named combinations in a Spellbook.
+
+### Direct Google Play market and naming check
+
+- **Pixel Mage Survival** already occupies the same broad name and survivor positioning, with 50K+ downloads at the time of research. Visible reviews criticize movement sensitivity, limited visibility, odd hitboxes, and long currency grind.
+  - https://play.google.com/store/apps/details?id=com.creativekind.pixelmagesurvival
+- Other current titles include **Pixel Mage TD**, **Pixel Mage: Idle RPG**, and **Pixel Wizard: Dungeon Survivor**.
+  - https://play.google.com/store/apps/details?id=com.pmtd.hakuna.and
+  - https://play.google.com/store/apps/details?id=com.streetcomplete.pixelmagician
+  - https://play.google.com/store/apps/details?id=com.qerdoplay.pixelwizard
+
+The implication is not to rename the package now. Pixel Mage should remain the working title until the core hook is proven, then the owner should approve a more searchable display/store name before store-art production.
+
+### Exact repository feasibility audit
+
+The current `game.js` is a stable 1,198-line single-file runtime. Its five wave definitions spawn only 3, 4, 5, 6, and 3 enemies respectively, with the final group containing the boss. Every group appears once at wave start. Bolts travel upward, enemies mostly chase, and four of five upgrades primarily modify numbers.
+
+This explains the owner's roughly one-minute clear. It is not evidence that JavaScript, SPCK, or Capacitor cannot support a longer game.
+
+The accepted foundation already supplies responsive touch input, interruption handling, local persistence, deterministic complete-run automation, projectile caps, a deterministic offline bundle, and verified Android configuration. A commercial expansion is feasible if the monolith is separated into data-driven run, spawn, spell, enemy, save, and UI responsibilities before content multiplies.
+
+The largest technical risks are combination balance, auto-target clarity, projectile stress, save-schema evolution, and resuming longer mobile runs.
+
+### Design deductions
+
+1. Keep drag movement and auto-cast; do not introduce fine twin-stick aiming.
+2. Replace one-time groups with timed scheduled pressure and clear behavior changes.
+3. Give the run three acts and a boss payoff, but phone-time it before promising a duration.
+4. Create variety from code-driven interactions and horizontal discovery, not animated heroes or permanent stat grind.
+5. Prototype only 2×2×2 spell parts before committing to 27 combinations.
+6. Save at wave boundaries so Android process loss does not erase a longer run.
+7. Use strict visual and runtime budgets because combinatorial spells can overwhelm a small screen.
+8. Keep narrative to premise-level or light framing.
+9. Treat final naming as a commercial gate, not a technical refactor.
+10. Stop discovery now and make the owner decision.
+
+## Final Options and Recommendation
+
+Three bounded options are recorded in `docs/SCOPE_OPTIONS.md`:
+
+1. Refined Survivor — lowest risk, weakest identity.
+2. Living Spell Trials — recommended balance.
+3. Rune-Path Arena — strongest interaction novelty, highest control risk.
+
+The recommendation is **Living Spell Trials**, subject to explicit owner approval. Its proposed counts and 7–9-minute successful-run target are hypotheses for a representative phone test, not release promises.
+
+## Research Stop Rule
+
+The required final research round is complete. Do not continue broad ideation or implement any option until the owner chooses or edits one. After approval, build the representative slice, measure it, and use that evidence for the second go/no-go and all later content estimates.

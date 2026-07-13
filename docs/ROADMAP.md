@@ -20,13 +20,13 @@ The current debug APK proves the technical route. It is not the project endpoint
 
 Milestones 0–7 completed the technical vertical slice and Android acceptance route.
 
-The commercial expansion now uses a bounded discovery gate:
+The commercial expansion uses a bounded decision gate:
 
-1. One final focused internet/player-review research round.
-2. Two or three capped scope options with implementation and asset costs.
-3. One explicit owner-approved commercial scope.
-4. One representative full-run implementation and phone timing.
-5. A revised batch count based on that measured unit.
+1. Complete one final focused internet/player-review research round — complete.
+2. Record three capped scope options with implementation and asset costs — complete in `docs/SCOPE_OPTIONS.md`.
+3. Obtain one explicit owner-approved commercial scope — pending.
+4. Build one representative full run and phone-time it — pending approval.
+5. Revise the remaining batch count from that measured unit — pending.
 
 Do not conduct indefinite research and do not start speculative content before the scope lock. After approval, group related work into substantial batches with automated checks and one consolidated phone test per batch.
 
@@ -177,16 +177,16 @@ Exit criteria:
 
 ## Milestone 8 — Research and Commercial Scope Lock
 
-**Status:** In progress. The old tiny scope is superseded as a commercial target; no replacement counts are approved.
+**Status:** Research complete; explicit owner scope choice pending. The old tiny scope is superseded as a commercial target, and no replacement count is approved.
 
 **Goal:** choose the smallest scope that is genuinely marketable and engaging without becoming unfinishable.
 
 Objectives:
 
 - Preserve the findings and sources in `docs/DESIGN_RESEARCH.md`.
-- Complete one final focused comparison of feasible games, player feedback, original hooks, run structures, and early commercial content.
-- Separate reusable genre patterns from Pixel Mage's original identity.
-- Produce two or three capped options with code, art, animation, testing, and schedule implications.
+- Preserve the completed final comparison of feasible games, player feedback, original hooks, run structures, and early commercial content.
+- Keep reusable genre patterns separate from Pixel Mage's required original identity.
+- Present the three capped options in `docs/SCOPE_OPTIONS.md`, including code, art, animation, testing, and schedule implications.
 - Obtain explicit approval for the core loop, original hook, run structure, content caps, progression/replay, story level, and exclusions.
 - Update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md` before gameplay expansion.
 - Build and phone-time one representative full run before locking duration and total-content estimates.
@@ -236,7 +236,7 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Final focused research and commercial scope lock — in progress.
+1. Owner commercial scope lock from the completed option packet — pending.
 2. Representative full-run system and phone timing — pending scope approval.
 3. Remaining commercial gameplay/content batches — count set only after the representative run.
 4. External playtest, balance, and release QA — pending.

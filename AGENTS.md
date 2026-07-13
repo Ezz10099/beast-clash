@@ -7,11 +7,12 @@ Pixel Mage is the only active game in this repository. Read these files before m
 1. `docs/START_HERE.md` — permanent project map and mandatory session protocol.
 2. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
 3. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
-4. `docs/DESIGN_RESEARCH.md` — evidence, provisional findings, and unanswered design questions.
-5. `docs/ROADMAP.md` — measurable roadmap through Google Play.
-6. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-7. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
-8. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+4. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
+5. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
+6. `docs/ROADMAP.md` — measurable roadmap through Google Play.
+7. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
+8. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+9. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
 The accepted technical foundation is authoritative. The exact commercial gameplay scope is not locked yet.
 
@@ -47,16 +48,17 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 
 - Treat the accepted one-minute five-wave build as a stable vertical slice, not a commercially finished game.
 - Preserve its validated controls, technical route, Android identity, and automated checks.
-- Research and documentation work may refine the proposed commercial direction.
+- The final research round is complete. Present `docs/SCOPE_OPTIONS.md` and obtain an explicit owner choice before commercial gameplay expansion.
 - Do not implement new heroes, arenas, stories, currencies, equipment, shops, quests, external SDKs, or major progression systems until the owner explicitly approves the capped launch scope.
-- Provisional ideas—including timed waves, endless continuation, and the “living spell” concept—must not be described as locked.
+- Provisional ideas—including timed waves, endless continuation, the “living spell” concept, content caps, and duration targets—must not be described as locked.
+- Treat Pixel Mage as a working title. Do not change the display name or package ID without explicit owner approval.
 - Do not invent fixed content counts or playtime promises before a representative full run is built and phone-timed.
 - Prefer code-driven variety and reusable data over asset-heavy animation or large rosters.
 
 ## Delivery Pace
 
 - Work in substantial milestone batches, not micro-feature test cycles.
-- Complete one final focused research round, present capped options, and obtain a scope lock before commercial gameplay expansion.
+- Present the recorded capped options and obtain a scope lock before commercial gameplay expansion.
 - After the lock, group related implementation, run automated checks, and request one consolidated phone test per batch.
 - Prefer a stable, engaging, time-bounded release over either a one-minute shell or an unfinishable large RPG.
 

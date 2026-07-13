@@ -9,12 +9,13 @@
 - Release contract: `docs/RELEASE_SCOPE.md`
 - Durable decisions: `docs/DECISIONS.md`
 - Design evidence: `docs/DESIGN_RESEARCH.md`
+- Scope decision packet: `docs/SCOPE_OPTIONS.md`
 - Roadmap: `docs/ROADMAP.md`
 - Publishing path: `docs/GOOGLE_PLAY.md`
 
 ## Current Session Goal
 
-Preserve the accepted native vertical slice, use outside evidence to correct the commercial-scope assumptions, and define the bounded research gate required before scope lock.
+Complete the final commercial-design research, audit technical feasibility, record three bounded options, and stop before owner scope approval.
 
 ## Completed This Session
 
@@ -64,7 +65,15 @@ Preserve the accepted native vertical slice, use outside evidence to correct the
 - Identified the “living spell” concept as a candidate original hook, not an approved feature.
 - Added `docs/DESIGN_RESEARCH.md` and reconciled the scope, decisions, roadmap, start guide, README, and Google Play documents.
 - Confirmed `npm run check` still passes: ten complete runs, release bundle verification, and Android configuration checks.
-
+- Completed the final focused research round using early-scope postmortems, official game descriptions, current Google Play listings, and visible player feedback.
+- Confirmed that modular spell-building alone is not original; Magicraft, Spell Disk, Noita, Nova Drift, and Pixel Wizard already occupy that idea space.
+- Found that Pixel Mage is commercially crowded as a name and should remain a working title until an explicit owner naming decision before store-art production.
+- Audited the exact current runtime and confirmed the one-minute length comes from five one-time groups of only 3–6 enemies, not a JavaScript or Capacitor limitation.
+- Created `docs/SCOPE_OPTIONS.md` with three capped directions, implementation/test costs, hard exclusions, a clear recommendation, and an owner decision prompt.
+- Recommended Living Spell Trials: one evolving three-word spell, a horizontal Spellbook, timed acts, limited reusable content, and no permanent power grind.
+- Defined a 2×2×2 representative spell prototype and one 12-wave phone-timed run as the fastest safe validation route before full content and final assets.
+- Ran `npm run check` in an isolated copy: ten complete runs, 39,442-byte release bundle verification, Android asset generation, and Android configuration checks all passed.
+- Made no gameplay, package, display-name, monetization, SDK, or asset changes during the research gate.
 
 ## Phone Validation Result
 
@@ -72,21 +81,15 @@ The user accepted the gameplay/control, release-experience, and web-release-cand
 
 ## Current Development Objective
 
-Do not lock the first attractive idea and do not research indefinitely. Complete exactly one more focused discovery round, then present two or three capped commercial-scope options with a clear recommendation.
+Present `docs/SCOPE_OPTIONS.md` to the owner. The recommendation is Option B — Living Spell Trials — but it remains provisional.
 
-The next research must answer:
-
-1. What original hook is both marketable and feasible with code-driven visuals?
-2. What run structure keeps one-thumb play engaging without artificial health padding?
-3. What minimum launch content creates meaningful replay without a large roster or story burden?
-4. Which progression and difficulty systems create variety without grind?
-5. What should be explicitly excluded from version 1?
+The next authorized action is an owner choice: approve Option B, approve it with named changes, choose another option, or reject all three with the specific missing player fantasy. Do not implement commercial gameplay before that choice.
 
 ## Next Session Entry Point
 
-Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/DESIGN_RESEARCH.md`. Conduct the final focused research round. Produce two or three capped options comparing originality, player appeal, code complexity, asset burden, testing burden, estimated implementation batches, and key risks. Recommend one option, but obtain explicit owner approval before changing the commercial gameplay scope.
+Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/SCOPE_OPTIONS.md`. Briefly present the three choices and the Option B recommendation. Obtain explicit owner approval or requested changes.
 
-Do not start gameplay expansion, monetization, store preparation, or asset production during that research step.
+After approval, update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`, then define the first substantial implementation batch for the representative run. Do not build the remaining 27-combination/9-Trial content until that representative run passes its phone gate.
 
 ## Verification
 

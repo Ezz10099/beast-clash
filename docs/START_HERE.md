@@ -22,10 +22,11 @@ Read these files in order:
 3. `docs/RELEASE_SCOPE.md`
 4. `docs/DECISIONS.md`
 5. `docs/DESIGN_RESEARCH.md`
-6. `docs/ROADMAP.md`
-7. `docs/SESSION_HANDOFF.md`
-8. `docs/GOOGLE_PLAY.md`
-9. `docs/BUILD.md` and `docs/ANDROID.md`
+6. `docs/SCOPE_OPTIONS.md`
+7. `docs/ROADMAP.md`
+8. `docs/SESSION_HANDOFF.md`
+9. `docs/GOOGLE_PLAY.md`
+10. `docs/BUILD.md` and `docs/ANDROID.md`
 
 If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
@@ -38,7 +39,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - The complete current five-wave run lasts roughly one minute.
 - That build is a validated native vertical slice, not the approved commercial launch game.
 - The old tiny release contract has been superseded as a commercial target.
-- Focused design research is in progress; no replacement feature counts or duration promises are locked.
+- The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
+- Living Spell Trials is recommended, but no replacement feature count, run target, or commercial scope is owner-approved yet.
+- Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
 The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
@@ -47,11 +50,11 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 Before commercial gameplay expansion:
 
-1. Complete one final focused research round.
-2. Present two or three capped, feasible scope options with costs and risks.
-3. Obtain explicit owner approval for the core loop, original hook, run structure, launch content cap, story level, progression/replay systems, and exclusions.
-4. Update `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`.
-5. Build one representative full run and phone-time it before locking playtime claims.
+1. Read `docs/SCOPE_OPTIONS.md`.
+2. The owner chooses one option, approves the recommendation with changes, or rejects all three with a specific missing player fantasy.
+3. Record that explicit choice in `docs/RELEASE_SCOPE.md` and `docs/DECISIONS.md`.
+4. Build only the representative full-run slice defined by the approved option.
+5. Phone-time and evaluate that slice before producing the remaining content or final assets.
 
 ## Mandatory Session Protocol
 
@@ -88,4 +91,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow the linked authority documents. Report the current milestone and propose one substantial session goal before editing. Do not treat the accepted vertical slice or provisional research as the locked commercial scope. Complete and verify the approved batch, push it to `main`, and update the handoff and roadmap.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then follow their authority links. Report the current milestone and one substantial session goal. If the commercial scope is not owner-approved, present `docs/SCOPE_OPTIONS.md` and do not expand gameplay. Otherwise complete one approved verified batch, push it to `main`, and update the handoff and roadmap.
