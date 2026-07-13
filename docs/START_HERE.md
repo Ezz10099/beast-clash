@@ -21,6 +21,8 @@ Player promise: **One thumb. One living spell. Rewrite its Form, Essence, and La
 
 The content cap is a production fence, not the whole design. For every material improvement, Codex must trace the player's logic—what the player sees, expects, chooses, observes, and wants next—then generate and compare solutions using source inspection, automated evidence, targeted comparable research, and bounded prototypes. Owner feedback remains decisive human evidence, but must not be treated as the only source of ideas.
 
+**Goal-to-code rule:** the Product Compass must remain active throughout implementation, not merely be quoted during planning or review. Use `docs/DEVELOPMENT_MODEL.md` for the permanent chain: **final goal → intended player experience → feature purpose → alternatives and tradeoffs → code → evidence → updated understanding**. Public-human evidence, creative sources, synthetic play, fresh-context criticism, and calibrated rare human gates jointly reduce dependence on owner creativity without pretending that automation can feel fun.
+
 **Authority boundary, July 13, 2026:** the final goal and player promise above are binding. Every earlier scope, mechanic, content count, process rule, and design decision may be revised when Codex can show that another route better serves that goal. Codex owns finding the problem, generating alternatives, selecting and implementing the next step, and proving it; the owner supplies resources when genuinely needed and judges major commercial gates.
 
 ## Authority Order
@@ -29,15 +31,16 @@ Read these files in order:
 
 1. `AGENTS.md`
 2. `docs/START_HERE.md`
-3. `docs/RELEASE_SCOPE.md`
-4. `docs/DECISIONS.md`
-5. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
-6. `docs/DESIGN_RESEARCH.md`
-7. `docs/SCOPE_OPTIONS.md`
-8. `docs/ROADMAP.md`
-9. `docs/SESSION_HANDOFF.md`
-10. `docs/GOOGLE_PLAY.md`
-11. `docs/BUILD.md` and `docs/ANDROID.md`
+3. `docs/DEVELOPMENT_MODEL.md`
+4. `docs/RELEASE_SCOPE.md`
+5. `docs/DECISIONS.md`
+6. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
+7. `docs/DESIGN_RESEARCH.md`
+8. `docs/SCOPE_OPTIONS.md`
+9. `docs/ROADMAP.md`
+10. `docs/SESSION_HANDOFF.md`
+11. `docs/GOOGLE_PLAY.md`
+12. `docs/BUILD.md` and `docs/ANDROID.md`
 
 If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
@@ -61,7 +64,8 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - Incentive build `0.2.0-representative.7` fixes the independently discovered power tax: Support no longer competes with rewriting, every rewrite or hold advances the same visible living-spell level, and automation now compares 100 real choice-policy runs in addition to the 200-build matrix.
 - The owner passed `.7` in SPCK. A subsequent independent audit found that the default Bolt won 25/25 untouched runs and that the post-run “different build” promise silently restarted the same spell.
 - Agency build `0.2.0-representative.8` adds clearly telegraphed red Trial runes that require movement and turns proven Spellbook combinations into selectable starting spells.
-- Full launch content and final assets remain blocked on the `.8` phone result, one later fresh-player cell, and the second explicit go/no-go.
+- The owner passed `.8` in SPCK: the red rune was accepted and a proven spell successfully became the next Trial's selected starting build.
+- Full launch content and final assets remain blocked on one consolidated fresh-player cell and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
 
@@ -69,7 +73,7 @@ The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
 
 ## Current Commercial Gate
 
-Run one consolidated owner SPCK pass on `0.2.0-representative.8`: confirm that a closing red rune is readable and fair to dodge, then prove a spell and verify that it can be selected as the next Trial's starting spell. Do not recruit friends yet. If this passes, Codex prepares one consolidated fresh-player cell and the second explicit go/no-go.
+Apply the locked development model to the complete representative slice, confirm that the evidence packet and exact questions are sufficient for one consolidated fresh-player cell, then prepare that cell and the second explicit go/no-go. Do not scale launch content before the decision.
 
 ## Mandatory Session Protocol
 
@@ -107,4 +111,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md` and `docs/START_HERE.md`, then the evidence protocol, ledger, roadmap, and handoff. The final Product Compass is binding; all implementation details are revisable. Independently find the highest-value player problem, compare solutions, implement one verified batch, push it to `main`, and update the project memory. Ask the owner only for genuinely needed resources or a major commercial gate.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/START_HERE.md`, and `docs/DEVELOPMENT_MODEL.md`, then the evidence protocol, ledger, roadmap, and handoff. The final Product Compass and goal-to-code model are binding; all implementation details are revisable. `.8` passed SPCK. Apply the complete development model to the current game, independently choose the strongest bounded next step, verify it at the correct evidence level, push stable changes to `main`, and update project memory. Ask the owner only for genuinely needed resources or a major commercial gate.

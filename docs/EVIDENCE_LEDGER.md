@@ -85,4 +85,15 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Evidence contract: retain 200 active build runs and 100 choice-policy runs; add 25 untouched idle controls, 25 simple continuous-movement controls, visible-rune runtime validation, and 8 starting-spell payoff checks.
 - Local automation: `npm run check` passed with an 87,967-byte offline bundle. The evidence gate remained **GREEN**: 99% active-build wins, 0% idle wins, 100% simple-movement wins, 8/8 selectable starting spells, 0 runtime violations, 9% build spread, 4.4% Form gap, and 5.8% choice-policy spread.
 - Boundary: automation proves that active input and discovery now change state and outcomes. It does not prove that the red warning feels readable/fair or that the Spellbook creates enough replay desire on a phone.
-- Decision: request one consolidated owner SPCK pass on rune fairness and starting-spell payoff before the fresh-player cell.
+- Human prediction: the slow closing rune should read as an avoidable movement instruction, and proving/selecting a spell should make horizontal discovery visibly functional. The likely failure would be an unclear or unfair rune, or the selected spell failing to begin equipped.
+- Phone result: **PASS**. The owner dodged a red rune, proved a new spell, selected it from the Spellbook, and began the next run with it; no unclear or unfair moment was reported.
+- Calibration: the predicted interaction and payoff were confirmed by the owner cell. This does not establish newcomer comprehension, broad fun, or sufficient commercial longevity.
+- Decision: accept `.8` on the target phone, then prepare one consolidated fresh-player cell and the second explicit go/no-go under the goal-driven development model.
+
+## July 13, 2026 — Goal-Driven Development Model
+
+- Owner mandate: the detailed final goal must remain active inside every material coding decision, not merely be quoted at planning or review time.
+- External-brain contract: `docs/DEVELOPMENT_MODEL.md` now connects goal, intended experience, feature purpose, alternatives, code, evidence, and updated understanding.
+- Fun-potential contract: Codex estimates potential through exact/component/experience analogues, public review mining, motivational and design research, cross-platform idea discovery, mobile translation, synthetic play styles, and fresh-context criticism.
+- Human boundary: none of those methods is proof of experienced fun. Sparse owner/fresh-player results remain the calibration truth at major gates.
+- Decision: use prediction-versus-result calibration so each human result becomes a reusable warning pattern rather than one disposable opinion.

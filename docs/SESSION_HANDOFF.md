@@ -165,17 +165,17 @@ The user accepted the earlier gameplay/control, release-experience, web-release-
 
 The first Living Spell Trials representative phone run completed in 5:49. It supported experimentation and the boss, but failed comprehension, late pacing, Spellbook, and Orbit-feel gates.
 
-After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5`, closed-loop `.6`, and equal-growth `.7` passed the owner's SPCK review. `.8` has no phone result yet, so rune readability/fairness and the starting-spell payoff remain pending human evidence.
+After the correction, the owner reported being very happy and finding the game entertaining, with roughly 15 minutes of available representative experimentation. Text-heavy `.4` failed immediate review and must not be tested. Compact visual `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed the owner's SPCK review. In `.8`, the owner dodged a red rune, proved and selected a spell, and confirmed it began the next Trial equipped.
 
 ## Current Development Objective
 
-Verify `0.2.0-representative.8` in one consolidated SPCK pass: the red rune should make movement necessary without feeling unfair, and a proven spell should clearly become a selectable starting build. Keep the fresh-player cell and full production blocked until this result.
+Apply `docs/DEVELOPMENT_MODEL.md` to the complete representative slice. Confirm the strongest remaining question, prepare the prediction and evidence packet for one consolidated fresh-player cell, and use that cell to support the second explicit go/no-go. Keep full production blocked until the decision.
 
 ## Next Session Entry Point
 
-Read `AGENTS.md`, `docs/START_HERE.md`, D-013 through D-015 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, roadmap, and this handoff. The Product Compass and independent-development mandate are binding; exact scope is not.
+Read `AGENTS.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, D-013 through D-016 in `docs/DECISIONS.md`, `docs/EVIDENCE_PROTOCOL.md`, the ledger, roadmap, and this handoff. The Product Compass and goal-to-code development model are binding; exact mechanics and scope are not.
 
-Pull `.8` in SPCK. Start a Trial, wait for one red rune, and move out before it closes. Prove any rewritten spell, return to the start screen after the run, select that spell in the Living Spellbook, and confirm the next Trial begins with it. Report one pass/fail plus the first thing that feels unclear or unfair. Do not recruit friends yet.
+`.8` passed SPCK. Apply the full model to the current game rather than mechanically executing the old checklist: reconstruct the player journey, identify the strongest remaining Product-Compass risk, compare alternatives with public-human, synthetic, creative, and production evidence, and choose the strongest bounded next step. If the representative slice is genuinely ready, prepare one consolidated fresh-player cell with predictions and stop conditions; otherwise close the better-supported blocker first. Do not scale full content before the second go/no-go.
 
 ## Verification
 

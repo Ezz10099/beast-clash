@@ -6,11 +6,13 @@ This protocol prevents product decisions from depending on chat memory, one pers
 
 No analytics SDK, account, network permission, or player-data collection is part of this system. Bot runs execute locally and in GitHub Actions.
 
-## Three Evidence Lanes
+## Evidence Lanes
 
-1. **Automated runtime evidence** — deterministic bot runs, state validation, balance proxies, pacing proxies, save migration, stress caps, bundle checks, and Android checks.
-2. **Targeted review mining** — before a material mechanic or commercial decision, Codex searches current public reviews and primary product sources for the closest comparable behavior, records links and dates in `docs/DESIGN_RESEARCH.md`, and states what is inference rather than fact.
-3. **Human cells** — fresh players answer a few behavior questions at major commercial gates. These cells judge fun, comprehension, touch feel, boredom, replay desire, and value; automation cannot.
+1. **Source and player-logic inspection** — trace the complete player journey, actual state transitions, upstream/downstream consequences, and likely contradictions before deciding what to code.
+2. **Automated runtime and synthetic-play evidence** — deterministic bot runs, varied play policies/personas, state validation, balance and pacing proxies, save migration, stress caps, bundle checks, and Android checks.
+3. **Public-human and creative evidence** — mine repeated mechanic-specific praise and complaints across exact, component, and experience analogues; search mobile, PC, console, browser, tabletop, mods, jams, design patterns, postmortems, and research prototypes. Record context, negative cases, links, dates, and causal uncertainty in `docs/DESIGN_RESEARCH.md`. Research must change, reject, strengthen, or narrow a design decision.
+4. **Fresh-context AI or heuristic criticism** — inspect the actual build or captured states without the intended explanation to find missing information, contradictions, general playability risks, and alternatives. This is not human evidence.
+5. **Human cells** — the owner or fresh players answer a few behavior questions at major commercial gates. These cells judge experienced fun, comprehension, touch feel, boredom, replay desire, and value.
 
 ## Commands
 
@@ -49,6 +51,10 @@ Automation can support claims about termination, finite state, caps, determinist
 
 Automation cannot establish that a human understood the text, enjoyed the run, felt a choice was fair, wanted to replay, or received enough entertainment for the price. Those claims require human evidence and must remain labeled pending until collected.
 
+Public reviews can establish that real people reacted to a mechanic under specific conditions, but cannot prove that the mechanic caused a game's success or that a new combination will work in Pixel Mage. Fresh-context AI can identify likely problems but cannot be counted as a player. Use the detailed claim boundaries in `docs/DEVELOPMENT_MODEL.md`.
+
+Do not issue a precise synthetic “fun score.” For a new or creative mechanic, record its proposed engine of fun, supporting and opposing human evidence, synthetic behavior, mobile/production fit, failure modes, uncertainty, and cheapest decisive experiment.
+
 ## Human-Cell Trigger
 
 Do not repeatedly ask the owner or friends for micro-tests. Request one short, consolidated, asynchronous cell only when:
@@ -59,6 +65,8 @@ Do not repeatedly ask the owner or friends for micro-tests. Request one short, c
 4. the result can cause a real go/no-go, scope, store, monetization, or release decision.
 
 The owner is not expected to have testers available on command. Codex must continue to handle all safe automated work before asking.
+
+Before opening a human cell, record predictions for comprehension, enjoyment, boredom, fairness, replay motivation, and the likely first failure moment. After the result, compare those predictions with reality and add every reusable miss to `docs/EVIDENCE_LEDGER.md`.
 
 ## Session Rule
 

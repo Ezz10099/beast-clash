@@ -5,17 +5,18 @@
 Pixel Mage is the only active game in this repository. Read these files before making changes:
 
 1. `docs/START_HERE.md` — permanent project map and mandatory session protocol.
-2. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
-3. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
-4. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
-5. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
-6. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
-7. `docs/ROADMAP.md` — measurable roadmap through Google Play.
-8. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-9. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
-10. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+2. `docs/DEVELOPMENT_MODEL.md` — locked goal-to-code reasoning, creative discovery, fun-potential assessment, evidence boundaries, and calibration.
+3. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
+4. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
+5. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
+6. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
+7. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
+8. `docs/ROADMAP.md` — measurable roadmap through Google Play.
+9. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
+10. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+11. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
-The final product goal and player promise in the Product Compass are authoritative. Everything else—scope details, mechanics, counts, process, and earlier decisions—is a revisable working hypothesis when evidence shows a better route to that goal. Do not wait for the owner to identify problems or invent patches: trace the player's logic, generate alternatives, choose, implement, and prove the strongest bounded next step independently.
+The final product goal and player promise in the Product Compass are authoritative. Everything else—scope details, mechanics, counts, process, and earlier decisions—is a revisable working hypothesis when evidence shows a better route to that goal. Apply `docs/DEVELOPMENT_MODEL.md` to every material decision: the goal must actively shape the intended experience, alternatives, code, evidence, and learning. Do not wait for the owner to identify problems or invent patches.
 
 ## User Workflow
 
@@ -51,7 +52,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Preserve its validated controls, technical route, Android identity, and automated checks.
 - Living Spell Trials remains the current product direction because it has positive phone evidence, not because its old exact cap is untouchable.
 - Treat the implemented representative slice—one arena, one 12-wave run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, one elite behavior, one boss, readable Trial-rune movement pressure, selectable proven starting spells, checkpoint/resume, and expanded evidence—as the current test bed.
-- Do not produce the remaining launch content or final assets until that slice passes its consolidated phone gate.
+- The representative slice passed its consolidated owner phone gate through `.8`; do not produce the remaining launch content or final assets until the fresh-player cell and second explicit go/no-go.
 - The 7–9-minute successful-run target, exact spell-word names/behaviors, balance, and final display title remain provisional until their listed gates pass.
 - Treat Pixel Mage as a working title. Do not change the display name or package ID without explicit owner approval.
 - Do not invent fixed content counts or playtime promises before a representative full run is built and phone-timed.

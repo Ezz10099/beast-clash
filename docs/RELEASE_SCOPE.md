@@ -88,7 +88,7 @@ Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated
 
 ## First Approved Implementation Batch — Representative Slice
 
-**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removed the rewrite power penalty and passed SPCK. Agency build `.8` now closes two further contradictions: untouched Bolt could clear the Trial, and proven spells could not alter the next run. Full launch scaling still awaits the `.8` phone result, a later fresh-player cell, and the second owner go/no-go.
+**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removed the rewrite power penalty and passed SPCK. Agency build `.8` closed two further contradictions—untouched Bolt could clear the Trial, and proven spells could not alter the next run—and passed the owner's consolidated SPCK test. Full launch scaling now awaits one fresh-player cell and the second owner go/no-go.
 
 Build this as one substantial related batch before producing the full launch content:
 
@@ -116,7 +116,8 @@ Build this as one substantial related batch before producing the full launch con
 - `.7` replaces Support with Hold and gives every choice the same visible spell-level growth. The choice remains about play style, not whether to accept an invisible power tax.
 - The owner passed `.7` in SPCK.
 - `.8` adds a slow, clearly telegraphed red Trial rune that punishes remaining stationary while ordinary movement escapes it; it also makes every proven Spellbook combination a selectable starting spell and returns the result screen to that selection instead of silently repeating the default build.
-- Full launch-content production remains blocked pending the `.8` phone result, one later fresh-player comprehension cell, and the second explicit go/no-go.
+- The owner passed `.8` in SPCK by dodging a rune, proving a new spell, selecting it, and confirming that the next Trial began equipped with it.
+- Full launch-content production remains blocked pending one consolidated fresh-player comprehension cell and the second explicit go/no-go.
 
 ### Automated Evidence Contract
 

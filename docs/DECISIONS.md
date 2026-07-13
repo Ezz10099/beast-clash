@@ -135,3 +135,15 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Evidence: Before `.8`, the default Bolt won 25/25 deterministic idle runs with a median of only two damage events, while the “try a different build” action started Bolt · Ember · Split again and the Spellbook only changed a count. After `.8`, idle, simple-movement, active-build, and starting-spell payoff controls are permanent evidence gates.
 - Reason: One-thumb movement and horizontal discovery are part of the player promise. If neither action changes an outcome, the game can look complete while withholding actual agency and replay value.
 - Change rule: The exact hazard, UI, and unlock presentation may change, but active input must matter and discovery must unlock a different playable possibility rather than a cosmetic checklist entry.
+
+## D-016 — The Product Goal Must Actively Govern Code
+
+- Date: July 13, 2026
+- Status: Locked owner mandate
+- Decision: Every material gameplay, UX, progression, or commercial change must follow `docs/DEVELOPMENT_MODEL.md`: final goal → intended player experience → feature purpose → alternatives and tradeoffs → code → evidence → updated understanding. The Product Compass is not a ceremonial preface or end-of-session checklist.
+- Creative responsibility: Codex owns generating and comparing improvements using source inspection, public human evidence, cross-platform and experimental mechanics, design patterns, original recombination, bounded prototypes, synthetic play styles, and fresh-context criticism. Owner feedback is decisive evidence but not the project's only source of ideas.
+- Fun-potential rule: New ideas must be decomposed into player action, game response, runtime dynamic, and intended feeling. Search exact, component, and experience analogues; include positive and negative implementations; translate deliberately to one-thumb portrait mobile play. Public reviews and theory support hypotheses, not certainty.
+- Evidence rule: Tests and bots establish technical and behavioral properties; AI/heuristic review identifies likely logic and playability risks; public reviews establish existing human reactions; only owner or fresh-player cells establish experienced fun, boredom, confusion, touch feel, replay desire, or perceived value.
+- Calibration rule: Before a rare human gate, Codex records predictions. Afterward it records correct predictions, misses, causes, and reusable warning patterns in the evidence ledger so sparse feedback improves future independent judgment.
+- Reason: A locally correct patch can still fail the final game if it ignores tacit context, optimizes the immediate request, or mistakes measurable proxies for player value. The project needs an external brain that connects every implementation level to the finishable commercial outcome.
+- Change rule: Only an explicit owner instruction may replace the Product Compass or this development model. The methods may improve when the reason and evidence boundary are recorded.

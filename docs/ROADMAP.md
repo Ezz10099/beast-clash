@@ -31,8 +31,8 @@ The commercial expansion uses a bounded decision gate:
 6. Establish the continuous evidence lane — complete: 200-run matrix, deterministic replays, documented thresholds, CI artifact, and green baseline in `0.2.0-representative.3`.
 7. Close the representative choice-feedback loop — complete: `.5` and `.6` passed owner SPCK review.
 8. Remove the rewrite power tax and test real choice policies — complete: `.7` passed automation and the owner SPCK pass.
-9. Restore active agency and make discovery alter replay — `.8` is implemented with movement-vs-idle evidence and selectable proven starting spells; one consolidated owner phone pass is pending.
-10. Run one consolidated fresh-player cell and obtain the second explicit go/no-go — blocked on `.8` phone acceptance.
+9. Restore active agency and make discovery alter replay — complete: `.8` passed automation and the owner SPCK gate.
+10. Run one consolidated fresh-player cell and obtain the second explicit go/no-go — next; prepare its evidence packet and predictions under `docs/DEVELOPMENT_MODEL.md`.
 11. Revise the remaining batch count from the measured unit — pending.
 
 Do not conduct indefinite research or start speculative content before the representative commercial gate. Group related work into substantial batches, run both automated suites at gameplay gates, and request one consolidated asynchronous human cell only when it can decide a major commercial gate.
@@ -214,7 +214,7 @@ Exit criteria:
 - Compact visual choice correction and strengthened 8/8 automated schema. Complete and owner-approved in SPCK July 13, 2026.
 - Next-threat preview, visual rewrite confirmation, three-part live feedback, and clearer status/Law effects. Complete in `.6`; owner SPCK passed.
 - Rewrite incentive audit and real choice-policy evidence. Complete in `.7`; owner SPCK passed.
-- Untouched-play audit, readable movement pressure, and selectable proven starting spells. Implemented in `.8`; owner SPCK pending.
+- Untouched-play audit, readable movement pressure, and selectable proven starting spells. Complete in `.8`; owner SPCK passed.
 - Wider launch-scale reward/replay motivation. Still open; `.8` makes discovery functional but does not prove sufficient commercial longevity.
 - Fresh-player choice-comprehension cell and second explicit go/no-go. Pending.
 
@@ -257,9 +257,9 @@ Exit criteria:
 
 ## Remaining Major Batches
 
-1. Owner runs one consolidated SPCK pass on `0.2.0-representative.8`: dodge a closing red rune, prove a spell, and select it as the next starting spell — next.
-2. If `.8` passes, Codex defines and opens one consolidated fresh-player cell — pending.
-3. Record the cell, obtain the second explicit go/no-go, and revise the remaining batch estimate — pending.
+1. Owner runs one consolidated SPCK pass on `0.2.0-representative.8`: dodge a closing red rune, prove a spell, and select it as the next starting spell — complete; passed July 13, 2026.
+2. Codex applies the goal-driven model, records predictions, and prepares one consolidated fresh-player cell — next.
+3. Run and record the cell, obtain the second explicit go/no-go, and revise the remaining batch estimate — pending.
 4. Remaining approved gameplay/content batches — blocked until that decision.
 5. External playtest, balance, and release QA — pending.
 6. Publisher, monetization, privacy, and SDK decisions — pending.

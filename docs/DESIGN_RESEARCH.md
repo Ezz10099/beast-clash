@@ -218,7 +218,7 @@ Targeted comparison was used only to test the first three hypotheses:
 
 `0.2.0-representative.6` therefore implements one bounded loop rather than more prose: the start shows the actual starting spell; each rewrite shows the authored next-wave mix; the selected change receives a code-drawn transformation confirmation; the live hint names all three current effects; Ember/Frost statuses and delayed Echo casts are visually distinct; and the Spellbook line states that clearing a wave proves a `NEW` spell.
 
-The automated matrix remains green and now verifies the pre-choice threat preview and post-tap confirmation for all eight builds. That proves the loop is present and consistent, not that a person understands or enjoys it. The owner phone result remains required before a later fresh-player cell.
+The automated matrix remained green and verified the pre-choice threat preview and post-tap confirmation for all eight builds. That proved the loop was present and consistent, not that a person understood or enjoyed it. The owner subsequently passed `.6` in SPCK before the independent incentive audit continued.
 
 ## Rewrite-Incentive Audit — July 13, 2026
 
@@ -263,6 +263,25 @@ The targeted comparable check supported presentation constraints rather than sup
 - Poncle's official *Vampire Survivors* FAQ confirms that a player's saved characters, weapons, and unlocks become selectable availability. This reinforces the narrow rule that an unlock should be usable, while Pixel Mage retains its own three-word spell identity: https://poncle.games/vs-online-faq
 
 `0.2.0-representative.8` implements the bounded correction. Red Trial runes force visible, avoidable movement; the starter and every proven combination can be selected for the next Trial; result taps return to that choice. Evidence now compares 25 idle controls against 25 simple continuous-movement controls in addition to the active matrices, and verifies all 8 starting spells. This does not prove phone readability, fairness, or sufficient long-term replay value; those remain the consolidated human question and later commercial gate.
+
+The owner subsequently passed the complete `.8` SPCK cell: rune dodge, spell proof, Spellbook selection, and next-run equipment all worked without a reported unclear or unfair moment. This accepts the target-phone interaction and payoff, not newcomer comprehension or launch-scale longevity.
+
+## Goal-Driven Fun-Potential Research — July 13, 2026
+
+The project now separates experienced fun from evidence-supported fun potential. New mechanics can be researched even when no exact analogue exists by decomposing player action → system response → repeated dynamic → intended feeling, then combining exact, component, and experience analogues.
+
+Primary and direct sources supporting the model:
+
+- **MDA:** coded mechanics generate runtime dynamics that produce player-facing aesthetic responses; the paper explicitly connects seemingly small implementation decisions to final gameplay. https://www.cs.northwestern.edu/~hunicke/MDA.pdf
+- **Self-Determination Theory in games:** across experimental and survey studies, perceived autonomy and competence were associated with enjoyment and preference for future play; intuitive controls were a gatekeeper rather than sufficient enjoyment by themselves. https://www.rochester.edu/warner/lida/wp-content/uploads/2022/11/02bfe513dd59366750000000.pdf
+- **Procedural personas:** archetypal AI play styles can act as synthetic testers when human feedback is unavailable or rapid interaction exploration is needed. https://arxiv.org/pdf/1802.06881
+- **EA/AAAI automated playtesting:** thousands of simulations exposed imbalances, inconsequential rewards, and ineffective optional strategies in *The Sims Mobile*. https://cdn.aaai.org/ojs/13034/13034-52-16551-1-2-20201228.pdf
+- **Heuristic Evaluation for Playability:** heuristic review found useful early general issues but missed player-specific boredom, challenge, pacing, and terminology problems. This establishes both its value and its human boundary. https://www.valuesatplay.org/wp-content/uploads/2007/09/desurvireplayabilityheurist.pdf
+- **Review mining:** CHI 2026 research maps large public review corpora to established player-experience constructs using language models, supporting structured review evidence rather than anecdotal link collection. https://doi.org/10.1145/3772318.3790760
+
+Creative source pools include gameplay-design-pattern collections, experimental and game-jam projects, PC/console/browser games, tabletop mechanics, mods, postmortems, and academic prototypes. Useful starting collections include https://www.gameplaydesignpatterns.org/, https://itch.io/jams, https://etc.cmu.edu/projects/experimentalgameplay/, and https://ludii.games/.
+
+Design conclusion: no single source supplies human intuition. The strongest nonhuman estimate comes from convergence among existing human reactions, motivational evidence, mechanic decomposition, synthetic behavior, fresh-context criticism, mobile translation, and production constraints. It must produce a falsifiable prediction and a cheaper next experiment—not a fabricated numeric fun score. Rare human gates then calibrate the model by recording predictions, misses, causes, and reusable warning patterns.
 
 The strengthened gate adds 100 runs across always-Hold, mixed, discovery-first, and rewrite-only behaviors. Locally, those policies produced 99/100 wins, all reached level 12, and their median clear times stayed within 5.8%. This does not prove fun. It does prove that the automated system now exercises the promised mechanic and that experimentation no longer loses its growth budget.
 
