@@ -67,6 +67,7 @@
     touchActive: false,
     trail: [],
     lastFrame: 0,
+    lastStatusSync: 0,
   };
 
   function syncDisplayedStatus() {
@@ -116,13 +117,6 @@
   ["pointerup", "pointercancel", "pointerleave"].forEach(function (type) {
     gameCanvas.addEventListener(type, function () { fx.touchActive = false; });
   });
-
-  if (typeof MutationObserver === "function") {
-    const observer = new MutationObserver(syncDisplayedStatus);
-    observer.observe(healthText, { childList: true, characterData: true, subtree: true });
-    observer.observe(waveText, { childList: true, characterData: true, subtree: true });
-    observer.observe(spellText, { childList: true, characterData: true, subtree: true });
-  }
 
   function drawAmbient(seconds) {
     const actColor = ACT_COLORS[fx.act] || ACT_COLORS[1];
@@ -252,6 +246,10 @@
   function drawFrame(timestamp) {
     const delta = fx.lastFrame ? Math.min(0.05, (timestamp - fx.lastFrame) / 1000) : 0;
     fx.lastFrame = timestamp;
+    if (timestamp - fx.lastStatusSync >= 90) {
+      syncDisplayedStatus();
+      fx.lastStatusSync = timestamp;
+    }
     advance(delta);
     ctx.clearRect(0, 0, FX_WIDTH, FX_HEIGHT);
 
