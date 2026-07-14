@@ -54,34 +54,30 @@ The active session is mutable operational state, not higher authority. If it con
 ## Current High-Level State
 
 - The gameplay foundation, controls, release UX, persistence, code-drawn polish, sound, haptics, and deterministic web bundle passed SPCK phone testing.
-- The browser release candidate is frozen on `web-rc-0.1.0`.
+- The browser release candidate is frozen on `web-rc-0.1.0` as the native foundation; the representative Living Spell runtime continues above it.
 - Capacitor and the Android project are configured.
 - The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
-- The accepted five-wave APK lasts roughly one minute and remains the stable native foundation.
-- That build is a validated native vertical slice, not the approved commercial launch game.
-- The old tiny release contract has been superseded as a commercial target.
+- The accepted five-wave APK lasts roughly one minute and remains the stable native foundation, not the intended commercial game.
 - Living Spell Trials remains the evidence-supported direction; its old exact cap is a revisable production hypothesis rather than binding authority.
 - The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, but onboarding, late pacing, Spellbook value, and Orbit feel failed.
 - Correction build `0.2.0-representative.2` was reported as entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` failed immediate visual review. Compact `.5`, player-logic `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
-- Gate-preparation `.9` added token-isolated clean saves without changing normal gameplay or the owner's save.
-- Arabic readiness is implemented, including essential DOM/canvas translation, RTL presentation, isolated clean Arabic saves, default-English preservation, and deterministic checks. The owner later reported awkward or incorrect wording, so `docs/ARABIC_GLOSSARY.md` now fixes one permanent terminology set and the corrected Arabic path awaits phone acceptance.
-- The gameplay page was rebuilt into one portrait composition: compact header, dominant unchanged arena, unified combat dashboard, meters attached to their labels, screen-aware dashboard visibility, and one responsive overlay hierarchy. Owner visual acceptance remains pending.
-- A separate pointer-transparent arena-FX layer now adds act-specific atmosphere, Ember/Frost edge identity, a short touch trail, wave pulses, and damage/critical-health edge feedback while reading only displayed HUD text and public pointer events. It does not change `game.js` or mechanics and awaits owner phone acceptance.
-- `cell-runner.html` is an offline repository-only observer tool. It generates isolated English/Arabic URLs, blocks reused tokens, hides the interview during play, records the frozen protocol, enforces GO conditions, and exports Markdown.
-- `test-launcher.html` is the required owner-facing SPCK test entry point. It provides visible **Open Arabic Game**, **Open English Game**, and **Open Cell Runner** buttons and constructs all parameters/tokens automatically.
-- The July 14 Console error proved that hidden query instructions were not owner-ready. It did not test Arabic mode or gameplay.
-- Future owner phone checks must start from an exact SPCK file or screen and use a visible touch path. Manual Console input, query-string editing, token construction, terminal commands, or source edits are prohibited when a bounded interface can perform the action.
-- Full launch content and final assets remain blocked on the genuine fresh-player cell and the second explicit go/no-go.
-- Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
-- Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
-- The persistent ChatGPT workflow is repository-backed through mutable active state, mandatory per-response and owner-execution gates, visible work-state lines, and deterministic workflow integrity checks.
+- Gate-preparation `.9` added token-isolated clean saves without changing the owner's normal save.
+- Arabic readiness is implemented with a permanent glossary, RTL presentation, isolated clean saves, and default-English preservation.
+- The gameplay page was rebuilt into a compact header, dominant arena, unified dashboard, attached meters, and one responsive overlay hierarchy.
+- The owner accepted the pointer-transparent arena-feedback layer with act atmosphere, essence identity, touch trail, wave pulse, and damage-edge feedback.
+- The current-roster enemy-variety batch is implemented and automated-green: Wave 1 stays simple; Act II adds flanking, spacing, three-line Caster warnings, and visible Caster–Mote links; Act III adds orange warnings before committed fast movement. Phone readability and fairness remain pending.
+- The complete pipeline passed release construction, the documented 150 KB/per-file budget, evidence, Android configuration, Capacitor sync, debug APK build, APK verification, and artifact upload.
+- `cell-runner.html` is the offline observer tool, and `test-launcher.html` is the required tap-only owner entry point.
+- Future owner phone checks must use exact visible tap paths; Console input, manual query editing, token construction, terminal commands, and source edits are prohibited when a bounded interface can do the task.
+- Full launch content, final assets, monetization, signing, store materials, and publication remain blocked on the genuine fresh-player cell and the second explicit go/no-go.
+- Pixel Mage remains the working title until a later owner-approved store-name decision.
 
 The exact latest state belongs in `docs/ACTIVE_SESSION.md` and `docs/SESSION_HANDOFF.md`. The active state controls continuity during the session; the handoff preserves the complete cross-session record.
 
 ## Current Commercial Gate
 
-Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Corrected Arabic access, the rebuilt portrait layout, arena feedback, the offline Cell Runner, the tap-only SPCK Test Launcher, thumb clearance, and interaction-safety corrections are implemented but require one owner phone check. The owner must first open `test-launcher.html` and verify Arabic active-play readability/effects, rewrite/Spellbook/Options overlays, English comparison, and the complete Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
+Preserve the `.8` accepted gameplay and `.9` clean-save foundation. The owner must first open `test-launcher.html` and verify the new enemy roles and warnings, Arabic presentation, English comparison, and Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the frozen non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
 
 ## Mandatory Session Protocol
 
@@ -107,14 +103,15 @@ During work:
 9. Run `npm run localization:check` when changing localization.
 10. Run `npm run controls:check` when changing touch controls.
 11. Run `npm run polish:check` when changing phone presentation or interaction safety.
-12. Run `npm run fx:check` when changing arena atmosphere or read-only combat feedback.
-13. Run `npm run cell:check` when changing the Cell Runner.
-14. Run `npm run launcher:check` when changing owner test navigation.
-15. Run `npm run check` before publishing code.
-16. Run `npm run evidence` before gameplay gates or commercial recommendations.
-17. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
-18. Ask for one consolidated human cell only at a major commercial gate.
-19. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
+12. Run `npm run fx:check` when changing arena feedback.
+13. Run `npm run enemy:check` when changing current-roster enemy behavior or telegraphs.
+14. Run `npm run cell:check` when changing the Cell Runner.
+15. Run `npm run launcher:check` when changing owner test navigation.
+16. Run `npm run check` before publishing code.
+17. Run `npm run evidence` before gameplay gates or commercial recommendations.
+18. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
+19. Ask for one consolidated human cell only at a major commercial gate.
+20. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
