@@ -20,9 +20,10 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
 - The corrected loop was later reported as entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` failed review. Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
-- `.9` added token-isolated clean saves and the fixed protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay remained unchanged.
+- `.9` added token-isolated clean saves and the frozen protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay remained unchanged.
 - `main` now adds a bounded Arabic/RTL test path with `?lang=ar`, compatible with `?fresh=<token>&lang=ar`, without changing gameplay or the default English path.
-- The next step is one owner Arabic meaning/layout check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
+- `cell-runner.html` is an offline repository-only observer tool that generates isolated links, blocks reused tokens, hides the interview during play, records the frozen cell, and exports Markdown.
+- The next step is one owner Arabic meaning/layout check plus one owner Cell Runner usability check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
 
 The installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -48,24 +49,32 @@ Full launch content, final assets, monetization, and store production remain blo
 ## Run in SPCK Editor
 
 1. Clone or pull `https://github.com/Ezz10099/beast-clash.git`.
-2. Open `index.html`.
+2. Open `index.html` for the game or `cell-runner.html` for the observer tool.
 3. Start SPCK preview/local server.
 
-Normal English path: open the preview normally.
+Normal English game path: open the game preview normally.
 
 Owner Arabic meaning/layout check:
 
 `?fresh=owner-ar-check&lang=ar`
 
-For a genuine Arabic fresh-player cell, replace `owner-ar-check` with a new unique token and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
+Owner Cell Runner check:
+
+- open `cell-runner.html`;
+- choose Arabic and confirm the generated URL includes both `fresh` and `lang=ar`;
+- use dummy answers to walk through setup, observation, interview, gate, and export;
+- reset it afterward.
+
+For a genuine fresh-player cell, generate a new unused token in the runner and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
 
 ## Verification and Android
 
 - `npm run workflow:check` protects the persistent development process.
 - `npm run localization:check` verifies default English, Arabic/RTL activation, essential translations, canvas text, whitespace stability, and fresh-save compatibility.
+- `npm run cell:check` verifies offline-only runner behavior, unique URL generation, reused-token rejection, hidden interview flow, exact questions, GO enforcement, export, mobile layout, and production-bundle exclusion.
 - `npm run check` runs those checks plus gameplay, release-bundle, artwork, and Android configuration gates.
 - `npm run evidence` runs the 200-build matrix, 100 real choice-policy trials, idle/movement controls, deterministic replays, and starting-spell payoff checks.
-- `npm run preview` serves the exact generated `dist/` bundle.
+- `npm run preview` serves the exact generated production `dist/` bundle; the Cell Runner is intentionally opened directly from the repository preview.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts.
 - The future Google Play upload is a securely signed release AAB.
