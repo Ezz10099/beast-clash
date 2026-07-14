@@ -22,54 +22,53 @@ Living Spell Trials remains the evidence-supported direction. Full content, fina
 
 - `.8` passed owner SPCK review for compact choices, active rune dodging, proven-spell selection, and starting-spell payoff.
 - `.9` remained GREEN: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 starting-spell checks, isolated fresh saves, and no runtime violation.
-- The owner confirmed the test tools appear, found direct touch occlusion, rejected 56-pixel clearance as too small, and accepted 84 pixels enough to continue.
-- The owner reported multiple visible phone issues; the consolidated phone-quality layer remains pending phone acceptance.
-- The owner then reported incorrect or awkward Arabic wording, proving activation alone was insufficient for a valid Arabic cell.
+- The owner confirmed the test tools appear, rejected 56-pixel thumb clearance, and accepted 84 pixels enough to continue.
+- Arabic activation worked, but the owner identified incorrect wording; the full glossary correction was then implemented.
+- The owner subsequently judged the gameplay layout itself problematic and requested one substantial improvement batch.
 
-## Arabic Wording and Glossary Batch
+## Portrait Gameplay Layout Rebuild
 
-Implemented on `main` without changing `game.js`, combat, movement speed, balance, progression, content, or saves:
+Implemented on `main` without changing `game.js`, the 320×480 arena coordinates, combat, movement speed, balance, progression, content, or saves:
 
-- standardized Trial/التحدّي, Run/المحاولة, Rewrite/إعادة الصياغة, Form/الشكل, Essence/الجوهر, Law/القانون, health/الصحة, and every spell/enemy term;
-- rewrote awkward opening, HUD, Spellbook, rewrite, pause, wave-cue, result, enemy, and restart phrases;
-- corrected the Cell Runner neutral instruction, retry sentence, placeholder, and all eight Arabic questions;
-- updated `docs/FRESH_PLAYER_CELL.md` to match exactly;
-- added permanent `docs/ARABIC_GLOSSARY.md` and made AGENTS/START_HERE/workflow checks require it;
-- added regression checks that reject retired mixed terms;
-- minified all release CSS and presentation/control JavaScript to preserve the 100 KB runtime ceiling.
+- replaced the accumulated header/canvas/readout/HUD/detached-meter/hint stack with one coherent portrait composition;
+- added a compact branded header and consistently reachable Options button;
+- made the unchanged arena the dominant visual surface with reduced framing;
+- created one combat dashboard containing the current spell, health, wave progress, score, and control feedback;
+- attached the five-part health meter directly to health and the 12-part progress meter directly to wave status;
+- removed the detached unlabeled meter row;
+- added visible-panel DOM state tracking so the dashboard appears during active play and stays hidden behind start, rewrite, Spellbook, and Options overlays;
+- rebuilt all overlays around one fluid, scroll-safe hierarchy with larger critical text and consistent English/Arabic behavior;
+- replaced extreme tiny-text breakpoints with height-aware whole-frame scaling;
+- aligned the rebuilt dashboard and card direction for Arabic;
+- strengthened `polish:check` and release checks for the exact hierarchy, panel-state transitions, attached meters, offline boundary, and bundle inclusion.
 
-## Consolidated Phone-Quality Layer
+## Existing Readiness Layers Preserved
 
-Still present on `main`:
-
-- one opening instruction;
+- corrected Arabic glossary and player-facing wording;
+- offline Cell Runner and tap-only Test Launcher;
 - 84-pixel thumb clearance;
-- scroll-safe overlays and wrapped threat text;
-- larger critical Spellbook/rewrite text;
-- HP and 12-wave meters plus low-health emphasis;
-- two-tap active-Trial restart protection;
-- portrait guidance and visible focus/disabled states.
+- low-health emphasis and two-tap restart protection;
+- portrait guidance, focus/disabled states, fully local runtime, and minified release assets.
 
 ## Verification Status
 
-Repository contracts now cover:
+Passed in an isolated JavaScript behavior harness:
 
-- approved Arabic glossary terms and retired-term rejection;
-- essential static, dynamic, canvas, direct-markup, and restart translations;
-- corrected Cell Runner protocol/questions and frozen stage behavior;
-- isolated Arabic fresh saves and default-English preservation;
-- presentation/control minification, checksums, offline behavior, load order, and the 100 KB ceiling;
-- no direct localization/touch/polish access to saves or private gameplay state.
+- `phone-polish.js` syntax;
+- health and wave meter generation;
+- start → playing → menu screen-state priority;
+- first-tap restart blocking.
 
-A complete clean-checkout `npm run check` could not run because the assistant environment cannot resolve GitHub. Arabic naturalness and phone presentation are not accepted until the owner checks them in SPCK.
+Repository contracts now cover the new DOM hierarchy, attached meters, dashboard visibility rules, Arabic alignment, responsive overlays, release ordering, minification, and the 100 KB ceiling. A complete clean-checkout `npm run check` still could not run because the assistant environment cannot resolve GitHub. The layout is not phone-accepted until the owner checks it in SPCK.
 
 ## Exact Next Action
 
 1. Pull latest `main` in SPCK.
 2. Open `test-launcher.html` → **Preview** → **Open Arabic Game**.
-3. Review the opening, HUD, Spellbook, rewrite choices, pause/restart, cues, victory, and defeat wording.
-4. Return to the launcher → **Open Cell Runner** → choose Arabic and read the neutral instruction and eight questions.
-5. Send a screenshot or exact text for any phrase that still sounds wrong.
-6. Briefly confirm **Open English Game** remains unchanged.
+3. Check the header and arena on the opening screen.
+4. Start a Trial and check the unified spell/HUD dashboard and attached HP/wave bars.
+5. Reach one rewrite, open the Spellbook, and open Options; confirm each overlay fits and the dashboard stays out of the way.
+6. Briefly check **Open English Game** and **Open Cell Runner**.
+7. Report any remaining layout problem with a screenshot.
 
-Do not involve the genuine fresh participant until this owner check passes. Do not scale content before the commercial decision.
+Do not involve the genuine fresh participant until this owner visual pass succeeds. Do not scale content before the commercial decision.
