@@ -38,7 +38,7 @@ for (const record of manifest.files) {
   const bundled = await readFile(resolve(output, record.path));
   const digest = createHash('sha256').update(bundled).digest('hex');
 
-  if (record.path !== 'game.js') {
+  if (record.path !== 'game.js' && record.path !== 'localization.js') {
     const source = await readFile(resolve(root, record.path));
     assert.deepEqual(bundled, source, `${record.path} changed while being bundled`);
   }
@@ -67,8 +67,12 @@ assert.match(css, /@media \(max-height: 700px\)/, 'short portrait layout is requ
 assert.match(css, /@media \(max-height: 600px\)/, 'small portrait layout is required');
 assert.match(localizationCss, /html\[lang="ar"\]/, 'Arabic layout must remain query-scoped');
 assert.match(localizationCss, /direction:\s*rtl/, 'Arabic layout must retain RTL presentation');
-assert.match(localization, /new URLSearchParams\(search\)\.get\("lang"\) === "ar"/, 'Arabic mode must remain explicitly query-activated');
+assert.match(localization, /URLSearchParams\(.+\)\.get\(["']lang["']\)/, 'Arabic mode must remain explicitly query-activated');
 assert.doesNotMatch(localization, /localStorage|SaveSystem|persistent\.|state\./, 'localization must not touch saves or gameplay state');
+assert.ok(
+  localization.length < (await readFile(resolve(root, 'localization.js'), 'utf8')).length,
+  'release localization must be minified',
+);
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
 assert.match(nativeGame, /appStateChange/, 'native bundle must handle native app pausing');
