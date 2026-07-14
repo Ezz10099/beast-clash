@@ -2,6 +2,18 @@ html[lang="ar"] body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
 }
 
+.touch-guide-ar {
+  display: none;
+}
+
+html[lang="ar"] .touch-guide-en {
+  display: none;
+}
+
+html[lang="ar"] .touch-guide-ar {
+  display: inline;
+}
+
 html[lang="ar"] .eyebrow,
 html[lang="ar"] .spell-readout {
   letter-spacing: 0;
