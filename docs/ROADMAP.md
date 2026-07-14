@@ -11,7 +11,7 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 - Make Form, Essence, and Law create meaningful, visible play-style changes.
 - Build runs toward satisfying guardians and bosses.
 - Create replay desire through functional discovery rather than permanent-power grinding.
-- Preserve portrait readability, offline play, persistence, performance, and Android delivery.
+- Preserve natural Arabic and English presentation, portrait readability, offline play, persistence, performance, and Android delivery.
 - Keep automation and human evidence within their honest boundaries.
 
 ## Commercial Gate Sequence
@@ -21,13 +21,14 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 3. Representative 12-wave 2×2×2 slice — **complete**.
 4. Owner corrections through `.8` — **complete**.
 5. Continuous evidence lane and clean fresh saves on `.9` — **complete and green**.
-6. Arabic-capable access — **implemented; consolidated owner check pending**.
+6. Arabic-capable access — **implemented**.
 7. Offline Cell Runner — **implemented; owner check pending**.
 8. Tap-only SPCK Test Launcher — **implemented and visible on phone**.
 9. 84-pixel thumb-clearance correction — **owner accepted enough to continue**.
 10. Consolidated phone-readability and interaction-safety batch — **implemented; owner check pending**.
-11. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
-12. Define remaining production scope from measured evidence — **blocked on step 11**.
+11. Complete Arabic terminology and wording correction with permanent glossary — **implemented; owner wording check pending**.
+12. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
+13. Define remaining production scope from measured evidence — **blocked on step 12**.
 
 Do not scale content, create final assets, add monetization, or begin store production before the second go/no-go.
 
@@ -61,38 +62,37 @@ The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait control
 - Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - `.9` automated evidence: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 replays, 8/8 starting-spell checks, and no runtime violation.
 - Owner phone control evidence: direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
+- Owner localization evidence: Arabic activated successfully, but inconsistent and awkward wording made the path unready for a genuine participant.
 
 These results do not prove newcomer comprehension, touch quality across players, boredom/fairness, climax satisfaction, replay desire, or commercial longevity.
 
-### Test-readiness infrastructure
+### Test-readiness and phone-quality infrastructure
 
 Implemented on `main`:
 
 - Arabic/RTL game access with default-English preservation;
 - offline Cell Runner with staged observation/interview/gate/export;
 - tap-only Test Launcher for Arabic, English, and Cell Runner access;
-- permanent Owner Phone Workflow Gate prohibiting hidden Console/query/token steps when a UI is feasible.
+- permanent Owner Phone Workflow Gate prohibiting hidden Console/query/token steps when a UI is feasible;
+- one concise opening instruction and 84-pixel scaled thumb clearance;
+- scroll-safe overlays, wrapped next-threat copy, larger critical text, HP/wave meters, low-health emphasis, protected restart, portrait guidance, and visible focus/disabled states.
 
-### Consolidated phone-quality batch
+### Arabic wording and glossary batch
 
-Implemented on `main` without changing combat or progression:
+Implemented on `main` without changing gameplay:
 
-- one concise English/Arabic opening instruction;
-- 84-pixel scaled thumb clearance;
-- scroll-safe overlays for short screens and Arabic;
-- wrapped next-threat copy instead of ellipsis;
-- larger critical Spellbook/rewrite text;
-- HP and 12-wave progress meters;
-- low/critical-health emphasis;
-- two-tap active-Trial restart protection;
-- portrait guidance and visible focus/disabled states;
-- deterministic `npm run polish:check` and release-bundle contracts.
+- permanent `docs/ARABIC_GLOSSARY.md`;
+- one vocabulary for Trial, Run, Rewrite, Hold, Form, Essence, Law, health, spell parts, enemies, and boss;
+- naturalized opening, HUD, Spellbook, rewrite, pause, cue, result, enemy, and restart text;
+- corrected neutral instruction, retry wording, and all eight frozen Arabic questions;
+- retired-term regression checks across game, Cell Runner, and workflow;
+- minification of every release presentation/control CSS and JavaScript asset while retaining the 100 KB ceiling.
 
 ### Remaining Milestone 8 exit criteria
 
-1. Owner passes one consolidated SPCK phone-quality check.
-2. Owner confirms Arabic meaning/layout and normal English presentation.
-3. Owner passes Cell Runner usability and staged-flow checks.
+1. Owner passes one consolidated SPCK Arabic and phone-quality check.
+2. Owner confirms normal English presentation is unchanged.
+3. Owner passes Cell Runner usability, corrected Arabic questions, and staged-flow checks.
 4. Normal repository checks pass.
 5. One genuine fresh participant completes the frozen non-leading cell.
 6. Predictions are compared with the result.
@@ -112,4 +112,4 @@ Complete any applicable Play testing requirement, collect structured evidence, f
 
 ## Exact Next Step
 
-Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Complete one attempt while checking the new meters, text/panel fit, touch visibility, and restart confirmation. Then briefly confirm **Open English Game** and **Open Cell Runner** still work.
+Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Review the opening, HUD, Spellbook, rewrite choices, pause/restart, wave cues, victory, and defeat wording. Then return and tap **Open Cell Runner**, choose Arabic, and read the neutral instruction and eight questions. Send a screenshot or the exact wording of any remaining phrase that sounds wrong.
