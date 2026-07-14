@@ -10,16 +10,16 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - **Active repository/branch:** `Ezz10099/beast-clash` / `main`
 - **Active product:** Pixel Mage
 - **Current milestone:** Milestone 8 — Representative Commercial Gate
-- **Current implementation:** `0.2.0-representative.9` gameplay plus corrected Arabic/RTL wording, Cell Runner, tap-only Test Launcher, 84-pixel thumb clearance, and the consolidated phone-quality layer on `main`
-- **Latest accepted phone behavior:** `.8` passed. The owner confirmed the later SPCK edits appear and now reports that the gameplay layout itself still has issues.
-- **Latest automated evidence:** `.9` remained GREEN. Later localization/control/polish layers have isolated contracts; full clean-checkout `npm run check` remains unavailable in this environment.
-- **Current verification status:** gameplay mechanics are preserved, but the current presentation is a stack of independently patched header, canvas, spell readout, HUD, meters, and hint rather than one coherent portrait layout.
-- **Strongest current fun/engagement limitation:** the phone layout does not yet frame the arena, survival information, spell identity, and controls as one clear mobile game screen.
-- **Current approval boundary:** layout hierarchy, spacing, responsive portrait behavior, panel fit, and visible HUD organization only; preserve gameplay, balance, progression, saves, content, package identity, and launch scope.
-- **Current commercial gate:** owner checks the rebuilt portrait gameplay layout and corrected Arabic; then one genuinely fresh participant completes the frozen cell.
-- **Current workflow goal:** replace accumulated layout patches with one cohesive, arena-first mobile composition.
-- **Workflow implementation status:** portrait gameplay layout rebuild is in progress.
-- **Exact next product action:** rebuild the main gameplay page structure and responsive CSS, strengthen screen-state/layout checks, verify the release bundle, then provide one tap-only SPCK review path.
+- **Current implementation:** `0.2.0-representative.9` gameplay plus corrected Arabic/RTL wording, Cell Runner, tap-only Test Launcher, 84-pixel thumb clearance, and the rebuilt portrait gameplay layout on `main`
+- **Latest accepted phone behavior:** `.8` passed. The owner confirmed later readiness edits appear, accepted 84-pixel clearance enough to continue, and identified the previous gameplay layout as still problematic. The new layout is not yet phone-accepted.
+- **Latest automated evidence:** `.9` remained GREEN. The portrait layout passes isolated JavaScript behavior checks and strengthened source/build contracts; full clean-checkout `npm run check` remains unavailable in this environment.
+- **Current verification status:** the page now has one compact header, dominant unchanged arena, unified combat dashboard, attached health/wave meters, screen-aware dashboard visibility, and one responsive overlay system. Phone visual quality remains pending.
+- **Strongest current fun/engagement limitation:** confirm that the new hierarchy feels clean and readable on the target phone before a fresh participant judges the game.
+- **Current approval boundary:** preserve gameplay, balance, progression, saves, content, package identity, and launch scope.
+- **Current commercial gate:** owner checks the rebuilt layout, corrected Arabic, English comparison, and Cell Runner; then one genuinely fresh participant completes the frozen cell.
+- **Current workflow goal:** obtain trustworthy fresh-player evidence from a coherent, owner-approved phone presentation.
+- **Workflow implementation status:** portrait gameplay layout rebuild is complete on `main`; owner phone evidence is pending.
+- **Exact next product action:** owner pulls latest `main`, opens `test-launcher.html` → **Preview** → **Open Arabic Game**, checks the opening, active dashboard, rewrite, Spellbook, and Options layouts, then briefly confirms English and Cell Runner still work.
 
 ## Response Watchlist
 
@@ -28,37 +28,37 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - Full launch scaling remains blocked.
 - Phone requests must use exact visible SPCK tap paths.
 - Arabic must follow `docs/ARABIC_GLOSSARY.md`.
-- Do not change `game.js`, combat, balance, progression, or saves in this batch.
+- Do not involve a genuine participant until the owner visual pass succeeds.
 
 ## Current Work Packet
 
-- **Status:** Audit complete; implementation in progress.
-- **Player-facing problem:** the canvas, title, spell readout, three text stats, two detached meter rows, and control hint compete for space and do not read as one intentional portrait interface. Existing height breakpoints also shrink critical text too aggressively.
-- **Intended player experience:** the arena is the visual focus; Options is immediately reachable; current spell, health, wave progress, and score form one compact control deck; start/rewrite/Spellbook/menu panels remain readable without clipping in English or Arabic.
-- **Strongest known causes:** detached unlabeled meters; excessive nested borders/padding; height-specific width shrinking; tiny breakpoint typography; inconsistent card hierarchy; overlays inherited from multiple corrective batches.
-- **Alternatives considered:** another small CSS patch would preserve the fragmented structure; a gameplay/canvas aspect-ratio change would affect mechanics and coordinate feel; a full art redesign exceeds the gate. A markup-and-CSS composition rebuild around the unchanged 320×480 arena was selected.
-- **Selected approach:** create one edge-conscious portrait shell; enlarge and visually prioritize the arena; organize spell/HUD/meters into one combat deck; attach each meter to its label; use fluid type and spacing instead of tiny breakpoint values; make all overlays scroll-safe and consistent; expose DOM screen state without reading private game state.
-- **Predicted visible benefit:** faster visual parsing, less clutter, more arena presence, clearer health/wave status, and a more credible app-like phone presentation.
-- **Likely failure mode:** the combat deck may still feel too tall or the overlay cards may be too dense on the target phone.
-- **Evidence required:** source/DOM behavior checks, responsive CSS contracts, release ordering/minification/size checks, then one consolidated owner SPCK pass.
-- **Files/systems expected to change:** `index.html`, `phone-polish.css`, `phone-polish.js`, polish/build checks, and project memory. `game.js` remains unchanged.
+- **Status:** Implementation complete; owner phone evidence pending.
+- **Player-facing problem:** the canvas, title, spell readout, text stats, detached meter row, and control hint competed for space and did not read as one intentional portrait interface. Height breakpoints also shrank critical text too aggressively.
+- **Intended player experience:** the arena is the visual focus; Options is immediately reachable; spell, health, wave progress, score, and control feedback form one compact dashboard; overlays remain readable without clipping in English or Arabic.
+- **Strongest known causes:** detached unlabeled meters; excessive framing/padding; tiny breakpoint typography; inconsistent card hierarchy; overlays accumulated across separate patches.
+- **Alternatives considered:** another small CSS patch would preserve fragmentation; changing canvas aspect ratio would affect mechanics and touch mapping; a full art redesign exceeded the gate. A markup-and-CSS composition rebuild around the unchanged 320×480 arena was selected.
+- **Selected approach:** compact header; dominant arena; unified combat deck; meters attached to labels; fluid type and spacing; one scroll-safe overlay system; DOM screen-state tracking without private game-state access.
+- **Predicted visible benefit:** faster parsing, less clutter, more arena presence, clearer survival/progress status, and a more credible app-like presentation.
+- **Likely failure mode:** the combat deck may still feel too tall or overlay cards may remain dense on the target phone.
+- **Evidence obtained:** `phone-polish.js` syntax and isolated behavior passed for meter generation, start/playing/menu state priority, and restart blocking. Static/release contracts cover the new hierarchy, attached meters, responsive overlays, Arabic alignment, offline boundaries, ordering, minification, and size ceiling.
+- **Evidence still required:** one consolidated owner SPCK visual pass and a complete clean-checkout `npm run check`.
+- **Files/systems changed:** `index.html`, `phone-polish.css`, `phone-polish.js`, `localization.css`, polish/build checks, README, build guide, roadmap, active state, and handoff. `game.js` is unchanged.
 - **Approval boundary:** presentation and layout only.
 
 ## Session Update Log
 
-### July 14, 2026 — Portrait Gameplay Layout Rebuild Started
+### July 14, 2026 — Portrait Gameplay Layout Rebuild Completed
 
-- Recorded owner evidence that the current gameplay layout remains visibly problematic.
-- Diagnosed the page as a stack of accumulated patches rather than a coherent portrait composition.
-- Selected a substantial arena-first layout rebuild without changing the game runtime.
+- Replaced the fragmented screen stack with a compact header, dominant arena, and unified combat dashboard.
+- Attached health and wave meters to their labels and removed the detached meter row.
+- Added screen-aware dashboard visibility for start, play, rewrite, Spellbook, and Options states.
+- Rebuilt overlays with fluid critical text and responsive scroll-safe spacing.
+- Aligned Arabic dashboard/card direction and strengthened polish/release checks.
+- Preserved `game.js`, arena coordinates, gameplay, balance, progression, and saves.
 
 ### July 14, 2026 — Arabic Wording and Glossary Completed
 
 - Standardized the full Arabic game vocabulary and corrected direct/dynamic wording.
-
-### July 14, 2026 — Consolidated Phone-Quality Batch Completed
-
-- Added scroll-safe overlays, wrapped threat copy, larger critical text, HUD meters, restart protection, and portrait guidance.
 
 ### July 14, 2026 — Thumb Clearance Recalibrated
 
