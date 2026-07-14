@@ -11,7 +11,7 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 - Make Form, Essence, and Law create meaningful, visible play-style changes.
 - Build runs toward satisfying guardians and bosses.
 - Create replay desire through functional discovery rather than permanent-power grinding.
-- Preserve natural Arabic and English presentation, coherent portrait hierarchy, offline play, persistence, performance, and Android delivery.
+- Preserve natural Arabic and English presentation, coherent portrait hierarchy, readable combat feedback, offline play, persistence, performance, and Android delivery.
 - Keep automation and human evidence within their honest boundaries.
 
 ## Commercial Gate Sequence
@@ -28,8 +28,9 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 10. Consolidated phone-readability and interaction-safety batch — **implemented**.
 11. Complete Arabic terminology and wording correction with permanent glossary — **implemented**.
 12. Cohesive portrait gameplay layout rebuild — **implemented; owner visual check pending**.
-13. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
-14. Define remaining production scope from measured evidence — **blocked on step 13**.
+13. Arena feedback and atmosphere batch — **implemented; owner visual check pending**.
+14. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
+15. Define remaining production scope from measured evidence — **blocked on step 14**.
 
 Do not scale content, create final assets, add monetization, or begin store production before the second go/no-go.
 
@@ -65,6 +66,7 @@ The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait control
 - Owner phone control evidence: direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
 - Owner localization evidence: Arabic activated successfully, but inconsistent wording required a full correction.
 - Owner layout evidence: the accumulated header/canvas/readout/HUD/meter/hint stack still looked wrong after the first quality batch.
+- The owner then requested another substantial improvement before human testing, so combat presentation—not mechanics—became the next bounded target.
 
 These results do not prove newcomer comprehension, touch quality across players, boredom/fairness, climax satisfaction, replay desire, or commercial longevity.
 
@@ -93,9 +95,23 @@ Implemented on `main` without changing `game.js`, combat, balance, progression, 
 - height-aware composition that shrinks the whole frame instead of making essential text unreadably small;
 - strengthened polish and release-bundle checks for the new hierarchy.
 
+### Arena feedback and atmosphere batch
+
+Implemented on `main` without changing `game.js`, combat timing, damage, movement, progression, or saves:
+
+- a pointer-transparent 320×480 canvas layered above the existing arena;
+- subtle act-specific atmosphere for Acts I, II, and III;
+- Ember/Frost-colored arena edge identity driven by the displayed spell readout;
+- a short fading trail for the adjusted touch target;
+- wave-entry border pulses driven by displayed wave text;
+- damage and critical-health edge feedback driven by displayed health text;
+- automatic reduced-motion behavior;
+- lightweight 90 ms HUD sampling instead of per-frame DOM mutation observers;
+- dedicated `npm run fx:check`, release inclusion, minification, offline/read-only checks, and the unchanged 100 KB bundle ceiling.
+
 ### Remaining Milestone 8 exit criteria
 
-1. Owner passes one consolidated SPCK portrait-layout and Arabic check.
+1. Owner passes one consolidated SPCK portrait-layout, combat-feedback, and Arabic check.
 2. Owner confirms normal English presentation is unchanged.
 3. Owner passes Cell Runner usability, corrected Arabic questions, and staged-flow checks.
 4. Normal repository checks pass.
@@ -117,4 +133,4 @@ Complete any applicable Play testing requirement, collect structured evidence, f
 
 ## Exact Next Step
 
-Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Check the header, arena size, unified combat deck, attached HP/wave bars, start screen, one rewrite screen, Spellbook, Options, and Arabic fit. Then briefly open **Open English Game** and **Open Cell Runner**. Do not involve a fresh participant until this visual pass succeeds.
+Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Start a Trial and check the arena atmosphere, touch trail, wave pulse, damage-edge feedback, unified combat deck, and readability of enemies/projectiles/runes. Reach one rewrite and open Spellbook/Options to confirm effects stay behind overlays. Then briefly open **Open English Game** and **Open Cell Runner**. Do not involve a fresh participant until this visual pass succeeds.
