@@ -43,6 +43,7 @@ Before every work-related response, silently answer:
 5. **Evidence truth:** Are verified facts, automated evidence, public-human evidence, owner/fresh-player evidence, predictions, and uncertainty clearly separated?
 6. **Decision quality:** For a material decision, were real alternatives and tradeoffs considered rather than implementing the first idea?
 7. **Persistence:** Did this response create a durable change that must update the active state, handoff, roadmap, decisions, research, or evidence ledger?
+8. **Owner execution:** Can the owner perform every requested phone action through an explicit visible tap path in SPCK, without guessing where a URL fragment, console command, token, or hidden control belongs?
 
 If any answer exposes a contradiction, correct the response or update the active state before proceeding.
 
@@ -83,7 +84,25 @@ For each coherent batch:
 6. Run `npm run workflow:check` and `npm run check` before a stable code commit.
 7. Run `npm run evidence` before a gameplay gate or commercial recommendation.
 8. Compare results with predictions and update the project understanding.
-9. Ask for a phone or human cell only when subjective evidence can change a real decision and the documented gate is ready.
+9. Prepare and verify the exact visible tap path before asking the owner to perform a phone check.
+10. Ask for a phone or human cell only when subjective evidence can change a real decision and the documented gate is ready.
+
+## Owner Phone Workflow Gate
+
+The owner normally works from SPCK on Android. Testability includes the usability of the testing instructions themselves.
+
+Before requesting any owner phone action:
+
+1. Provide a visible, touch-sized route starting from an exact file or screen the owner can open in SPCK.
+2. Prefer buttons, links, toggles, or a dedicated launcher that constructs all flags and tokens automatically.
+3. Do not require the owner to type into the JavaScript Console, DevTools, a terminal, or source code.
+4. Do not require manual query-string editing or hand-built test tokens when a bounded interface can generate them.
+5. Name the exact file to open and the exact buttons to tap, in order.
+6. Verify the route structurally and behaviorally before asking for the check.
+7. Keep internal test tools outside the production release bundle unless they are intentionally part of the player-facing product.
+8. When an unavoidable advanced step remains, explain where it belongs before giving the text and state why no visible route is feasible.
+
+A technically valid test path that the owner cannot reasonably discover or execute on the phone is not ready for owner validation.
 
 ## Active-State Update Triggers
 
