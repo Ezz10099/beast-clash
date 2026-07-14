@@ -2,7 +2,7 @@
 
 ## Role and Authority
 
-This is the small mutable state that must stay active throughout a ChatGPT/Codex work session. It does not override the Product Compass, Owner Mandate, Development Model, durable decisions, or accepted evidence. When this file conflicts with newer authoritative evidence, reconcile and update it before continuing.
+This mutable state must remain active throughout a ChatGPT/Codex work session. It cannot override the Product Compass, Owner Mandate, Development Model, durable decisions, or accepted evidence.
 
 ## Current State
 
@@ -10,64 +10,54 @@ This is the small mutable state that must stay active throughout a ChatGPT/Codex
 - **Active repository/branch:** `Ezz10099/beast-clash` / `main`
 - **Active product:** Pixel Mage
 - **Current milestone:** Milestone 8 — Representative Commercial Gate
-- **Current implementation:** `0.2.0-representative.9` gameplay plus Arabic readiness, the offline Cell Runner, and tap-only SPCK Test Launcher; touch-occlusion correction in progress
-- **Latest accepted phone behavior:** `.8` passed the consolidated SPCK gate. The owner then confirmed the new launcher, Arabic path, and Cell Runner appear, but reported a control problem: direct finger-follow places the thumb over the mage and nearby threats while moving.
-- **Latest automated evidence:** `.9` remained GREEN: 200 active build runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 deterministic replays, 8/8 selectable starting spells, isolated fresh saves, and no runtime violation. Later test-readiness tooling has isolated checks but not yet a complete clean-checkout run.
-- **Current verification status:** The touch cause is confirmed in source: pointer input maps the movement target directly to the fingertip. A bounded offset-control layer and automated contract are being prepared; phone feel remains unverified.
-- **Strongest current fun/engagement limitation:** touch occlusion hides the player and immediate hazards during the game’s required movement, weakening control readability and fairness before the fresh-player cell.
-- **Current approval boundary:** correct touch visibility only; preserve movement speed, combat, balance, progression, saves, content, localization, package identity, and launch scope.
-- **Current commercial gate:** owner checks the corrected touch control together with Arabic/layout and Cell Runner usability; then one genuinely fresh participant completes the frozen cell.
-- **Current workflow goal:** keep the mage visibly above the thumb while retaining one-thumb direct, responsive movement.
-- **Workflow implementation status:** persistence, Arabic readiness, Cell Runner, and tap-only launcher are complete; touch correction is the active bounded gameplay/UX batch.
-- **Exact next product action:** implement and verify a fixed thumb-clearance control offset, then expose the same visible launcher route for one consolidated owner phone check.
+- **Current implementation:** `0.2.0-representative.9` gameplay plus Arabic readiness, Cell Runner, tap-only Test Launcher, and a 56-canvas-pixel touch-clearance layer on `main`
+- **Latest accepted phone behavior:** `.8` passed. The owner later confirmed the new test tools appear and reported that direct finger-follow covered the mage and nearby play area. The correction is implemented but not yet phone-accepted.
+- **Latest automated evidence:** `.9` remained GREEN. The touch layer passed isolated syntax and behavior checks for scaled touch offset, unchanged mouse coordinates, bilingual guidance, release inclusion, and offline behavior. Full clean-checkout `npm run check` remains unavailable in this environment.
+- **Current verification status:** source/static behavior verifies that touch pointerdown and pointermove targets shift 56 canvas pixels upward before `game.js` receives them; `game.js`, movement speed, combat, balance, progression, and saves are unchanged. Phone feel remains pending.
+- **Strongest current fun/engagement limitation:** confirm that the mage now stays visibly above the thumb without the offset feeling excessive or restricting comfortable movement.
+- **Current approval boundary:** touch visibility only; preserve combat, movement speed, balance, progression, saves, content, localization, package identity, and launch scope.
+- **Current commercial gate:** owner checks corrected touch feel together with Arabic/layout and Cell Runner usability; then one genuinely fresh participant completes the frozen cell.
+- **Current workflow goal:** obtain trustworthy human evidence with visible, fair one-thumb control and a tap-only SPCK workflow.
+- **Workflow implementation status:** persistence, Arabic readiness, Cell Runner, Test Launcher, and touch-clearance correction are complete on `main`; owner phone evidence is pending.
+- **Exact next product action:** owner pulls latest `main`, opens `test-launcher.html`, taps `Open Arabic Game`, and checks whether the mage stays comfortably above the thumb throughout movement. Then finish the previously listed Arabic, English, and Cell Runner checks.
 
 ## Response Watchlist
 
-Every work-related response must preserve these points:
-
-- Pixel Mage continuity is the default.
-- A worthwhile game—not merely a completed build—is the final goal.
-- Fun and engagement potential remain primary design concerns.
+- Pixel Mage continuity and a worthwhile finished game remain primary.
 - Touch input must not hide the mage or immediate threats.
-- Automated evidence must not be presented as proof of touch feel or human enjoyment.
-- Full launch scaling remains blocked at the current gate.
-- Test requests must use an exact visible SPCK tap path.
-- The Test Launcher and Cell Runner remain outside the Android release bundle.
+- Automated evidence does not prove touch feel, comprehension, or enjoyment.
+- Full launch scaling remains blocked.
+- Phone requests must use exact visible SPCK tap paths.
+- Test Launcher and Cell Runner remain outside the Android release bundle.
 
 ## Current Work Packet
 
-- **Status:** In progress.
-- **Player-facing problem:** The current pointer target equals the fingertip position, so the player’s thumb covers the mage and nearby hazards while steering.
-- **Intended player experience:** The player can drag naturally with one thumb while keeping the mage and danger area visible.
-- **Strongest known cause:** `updatePointerTarget()` maps `event.clientY` directly to the in-game target, and the mage moves toward that exact point.
-- **Alternatives considered:** direct-follow unchanged was rejected; a virtual joystick adds visible UI and learning cost; fully relative drag is flexible but changes the accepted feel more substantially; a fixed upward thumb-clearance offset is selected as the smallest understandable correction.
-- **Selected approach:** add a small pre-runtime touch-control layer that shifts pointerdown/pointermove targets upward by a fixed canvas-space clearance, preserves horizontal position and all game logic, updates the opening instruction, and remains covered by deterministic checks.
-- **Predicted visible benefit:** The mage stays roughly one thumb-width above the finger, making the character, runes, and nearby enemies readable while preserving direct steering.
-- **Likely failure mode:** the offset may feel too large or reduce access to the lowest arena edge; phone judgment must confirm comfort.
-- **Evidence required:** syntax and behavior checks for scaled offset, unchanged English/mouse event semantics, release inclusion, size ceiling, and one owner SPCK feel check.
-- **Files/systems expected to change:** `touch-controls.js`, `index.html`, `localization.css`, release whitelist, package/check scripts, build documentation, active state, roadmap, handoff, and durable decision record. Core combat logic should remain unchanged.
-- **Approval boundary:** touch visibility correction only; no balance, speed, enemy, hazard, progression, save, content, monetization, identity, or release-action changes.
+- **Status:** Implementation complete; owner phone evidence pending.
+- **Player-facing problem:** direct fingertip targeting covered the mage and nearby hazards.
+- **Intended player experience:** responsive one-thumb steering while the mage remains visible.
+- **Strongest known cause:** `game.js` mapped touch coordinates directly to the movement target.
+- **Alternatives considered:** no change failed phone observation; a virtual joystick added UI/learning cost; fully relative drag changed accepted feel more substantially; a fixed upward clearance was selected.
+- **Selected approach:** `touch-controls.js` wraps canvas pointerdown/pointermove before `game.js`, shifting non-mouse input upward by 56 scaled canvas pixels. Mouse input remains exact.
+- **Predicted visible benefit:** the mage, red runes, and nearby enemies remain readable while the thumb stays below the target.
+- **Likely failure mode:** the offset may feel too large or slightly reduce comfortable access near the arena bottom.
+- **Evidence obtained:** isolated syntax/behavior checks passed; release whitelist and build checks now require the layer; bilingual opening guidance is present.
+- **Evidence still required:** one owner SPCK feel check and the normal clean-checkout repository check.
+- **Files/systems changed:** `touch-controls.js`, `index.html`, `localization.css`, release/check scripts, package scripts, build documentation, active state, roadmap, and handoff. `game.js` is unchanged.
+- **Approval boundary:** touch visibility correction only.
 
 ## Session Update Log
 
-### July 14, 2026 — Touch Occlusion Correction Started
+### July 14, 2026 — Touch Occlusion Corrected
 
-- Accepted the owner’s direct phone observation that the finger covers the mage and nearby screen while moving.
-- Confirmed the source cause: touch input targets the fingertip exactly.
-- Selected a fixed upward thumb-clearance layer as the smallest correction that preserves one-thumb direct steering.
+- Confirmed direct fingertip targeting as the cause.
+- Added a 56-pixel scaled upward touch target while preserving mouse input.
+- Added English/Arabic guidance and deterministic control/build checks.
+- Kept combat, speed, saves, content, launcher, and Cell Runner behavior unchanged.
 
 ### July 14, 2026 — Tap-Only SPCK Testing Rule
 
 - Replaced hidden query instructions with `test-launcher.html` and a permanent visible-tap workflow rule.
 
-### July 14, 2026 — Offline Cell Runner Completed
+### July 14, 2026 — Test Readiness
 
-- Added phone-first observer tooling with hidden interview stages, token protection, and Markdown export.
-
-### July 14, 2026 — Arabic Fresh-Cell Readiness Completed
-
-- Added Arabic/RTL test access while preserving default English and gameplay.
-
-### July 14, 2026 — Persistence Workflow Integration
-
-- Implemented repository-backed active state, per-response gate, visible work state, recovery, and workflow checks.
+- Added Arabic/RTL access and the offline staged Cell Runner.
