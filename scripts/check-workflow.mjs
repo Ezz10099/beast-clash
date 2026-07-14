@@ -16,6 +16,7 @@ for (const requiredReference of [
   'mandatory per-response gate',
   'Work state:',
   'Current Work Packet',
+  'visible tap path',
 ]) {
   assert.match(
     agents,
@@ -30,6 +31,7 @@ for (const requiredSection of [
   '## Visible Drift Signal',
   '## Material Decision Packet',
   '## Implementation Loop',
+  '## Owner Phone Workflow Gate',
   '## Active-State Update Triggers',
   '## Interruption and Context-Recovery Rule',
   '## Session Closure',
@@ -38,6 +40,19 @@ for (const requiredSection of [
     workflow,
     new RegExp(requiredSection.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
     `docs/CHATGPT_WORKFLOW.md is missing ${requiredSection}`,
+  );
+}
+
+for (const requiredOwnerWorkflowRule of [
+  'visible, touch-sized route',
+  'Do not require the owner to type into the JavaScript Console',
+  'Do not require manual query-string editing',
+  'Name the exact file to open and the exact buttons to tap',
+]) {
+  assert.match(
+    workflow,
+    new RegExp(requiredOwnerWorkflowRule.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'),
+    `docs/CHATGPT_WORKFLOW.md is missing owner workflow rule: ${requiredOwnerWorkflowRule}`,
   );
 }
 
