@@ -38,8 +38,8 @@ The launcher and runner are execution tooling, not sources of gameplay evidence.
 - Use a new token for every participant. The generated token creates an isolated local save with no owner progress, preserves reload checkpoints, sends no data, and does not alter the owner's normal save.
 - Use only one language path for the whole cell. Do not switch languages or translate individual game terms during play.
 - English neutral instruction: **“Please play this as if you found it yourself. I will not explain it, but you can stop whenever you want.”**
-- Arabic neutral instruction: **«العب هذه اللعبة كأنك وجدتها بنفسك. لن أشرحها لك، ويمكنك التوقف متى أردت.»**
-- Do not explain drag, automatic casting, red runes, Form/الشكل, Essence/العنصر, Law/طريقة الإطلاق, rewriting, proving, or the Spellbook. Do not suggest a choice.
+- Arabic neutral instruction: **«العب هذه اللعبة كما لو أنك وجدتها بنفسك. لن أشرحها لك، ويمكنك التوقف متى شئت.»**
+- Do not explain drag, automatic casting, red runes, Form/الشكل, Essence/الجوهر, Law/القانون, rewriting/إعادة الصياغة, proving/discovery, or the Spellbook. Do not suggest a choice.
 
 ## Cell Procedure
 
@@ -50,7 +50,7 @@ The launcher and runner are execution tooling, not sources of gameplay evidence.
 5. After the result screen appears, wait ten seconds. Record whether the player voluntarily opens the Spellbook, selects a proven spell, or starts another Trial.
 6. If the first attempt ends before Wave 3, offer one uncoached retry only.
    - English: **“You may try once more if you want.”**
-   - Arabic: **«يمكنك المحاولة مرة أخرى إن أردت.»**
+   - Arabic: **«يمكنك أن تحاول مرة أخرى إن أردت.»**
    A second early failure is a gate result; do not teach around it.
 7. End the runner's observation stage only after play has ended. Then ask the questions below exactly as shown and preserve the player's own words.
 8. Export the Markdown result and return it to the development session without editing answers into more favorable language.
@@ -68,14 +68,14 @@ The launcher and runner are execution tooling, not sources of gameplay evidence.
 
 ## Exact Questions — Arabic
 
-1. «ماذا فهمت أن عليك أن تفعل؟»
-2. «ماذا يغيّر كل واحد من: الشكل، والعنصر، وطريقة الإطلاق؟ لا مشكلة إن كانت الإجابة: لا أعرف.»
+1. «ماذا فهمت أنه ينبغي عليك فعله؟»
+2. «ماذا يغيّر كلٌّ من الشكل والجوهر والقانون؟ لا بأس إن كانت إجابتك: لا أعرف.»
 3. «صف اختيارًا واحدًا قمت به: ماذا توقعت أن يحدث، وماذا تغيّر بعده؟»
-4. «ما اللحظة الأكثر متعة؟ وما اللحظة الأقل متعة أو الأكثر مللًا؟»
+4. «ما أكثر لحظة استمتعت بها؟ وما أقل لحظة استمتعت بها أو شعرت فيها بالملل؟»
 5. «هل كان هناك شيء غير واضح، أو صعب الملاحظة، أو غير عادل؟»
-6. «هل ستختار بدء محاولة أخرى الآن من دون مكافأة مقابل مساعدتنا؟ لماذا أو لماذا لا؟»
+6. «هل ستختار بدء محاولة أخرى الآن، من دون مكافأة مقابل مساعدتنا؟ لماذا؟»
 7. «ماذا تتوقع أو تأمل أن تكتشف بعد ذلك؟»
-8. «ماذا تحتاج النسخة المكتملة حتى تشعر أنها تستحق التنزيل والاحتفاظ بها؟»
+8. «ما الذي تحتاجه النسخة المكتملة كي تستحق، برأيك، تنزيلها والاحتفاظ بها؟»
 
 Do not correct an answer during the interview. Clarify the game's rules only after every answer is recorded. The Arabic wording is a meaning-preserving version of the English questions, not an additional explanation.
 
@@ -98,7 +98,7 @@ One participant cannot establish general market appeal. A positive cell only per
 
 ## Pre-Registered Predictions
 
-- **Comprehension:** drag, automatic casting, and the closing rune should be understood from play. Form/الشكل should be easiest to explain; Frost/جليد and Echo/تكرار are the most likely effects to be missed.
+- **Comprehension:** drag, automatic casting, and the closing rune should be understood from play. Form/الشكل should be easiest to explain; Frost/صقيع and Echo/صدى are the most likely effects to be missed.
 - **Enjoyment:** active dodging, a visibly changing spell, and The Redactor should provide the strongest moments.
 - **Boredom:** the highest risk is repetition across the middle acts or repeated rewrite pauses, not forced timer padding.
 - **Fairness:** the rune should feel avoidable; overlapping caster, guardian, and rune pressure is the likeliest source of unexplained damage.
