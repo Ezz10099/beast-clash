@@ -13,7 +13,7 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - **Current implementation:** `0.2.0-representative.9` foundation plus corrected Arabic/RTL, visible test tooling, 84-pixel thumb clearance, rebuilt portrait layout, accepted arena feedback, and the bounded current-roster enemy-variety batch
 - **Latest accepted phone behavior:** the owner accepted the arena-feedback batch and selected enemy variety. The new enemy batch is not yet phone-accepted.
 - **Latest automated evidence:** GREEN with 200/200 build runs, 100 choice-policy runs, 0% idle wins, 96% simple-movement wins, 8/8 deterministic replays, 99% overall active survivability, 9.2% build spread, 4.3% Form gap, and zero runtime violations.
-- **Current verification status:** all workflow, localization, controls, layout, arena-FX, enemy, Cell Runner, launcher, core gameplay, release, layered size, Android configuration, Capacitor sync, debug APK build, APK output, and artifact-upload gates passed in GitHub Actions.
+- **Current verification status:** all workflow, localization, controls, layout, arena-FX, enemy, Cell Runner, launcher, core gameplay, release, Android configuration, Capacitor sync, debug APK build, APK output, and artifact-upload gates passed in GitHub Actions. Runtime size is now reported without an arbitrary blocking cap.
 - **Strongest current fun/engagement limitation:** whether the new late-wave roles and overlapping telegraphs feel readable, fair, and tactically distinct on the target phone.
 - **Current approval boundary:** owner phone review of the implemented enemy batch only. Preserve spell system, progression, saves, package identity, launch scope, and current roster.
 - **Current commercial gate:** owner passes the enemy-variety/Arabic/English/Cell Runner check; then one genuinely fresh participant completes the frozen cell.
@@ -23,7 +23,8 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 
 ## Response Watchlist
 
-- Pixel Mage continuity and a worthwhile finished game remain primary.
+- Pixel Mage continuity and a worthwhile finished commercial game remain primary.
+- Runtime size is evidence, not product authority; no arbitrary byte cap may block worthwhile development.
 - Do not claim fun, fairness, or phone clarity from automation.
 - Keep Wave 1 onboarding simple and every new attack visibly telegraphed.
 - Do not add a new enemy family, currency, progression system, asset dependency, or save field before the commercial decision.
@@ -41,18 +42,25 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - **Interaction preserved:** Frost slows surges, Orbit can block fan projectiles, and Ember benefits from separated-but-near formations.
 - **Predicted visible benefit:** less clumping, clearer priorities, stronger act escalation, better spell relevance, and more memorable waves from the current roster.
 - **Likely failure mode:** late-wave telegraphs may overlap and create noise or unfair-looking pressure.
-- **Automated evidence:** all deterministic behavior checks passed; full evidence remained GREEN; release runtime is 127,449 bytes under the documented 150 KB total and per-file budgets; debug APK built successfully.
+- **Automated evidence:** all deterministic behavior checks passed; full evidence remained GREEN; the release runtime is 127,449 bytes and is reported diagnostically rather than judged against an arbitrary hard cap; debug APK built successfully.
 - **Evidence still required:** one consolidated owner SPCK pass for readability, fairness, visual noise, and perceived tactical variety.
 - **Approval boundary:** current-roster enemy behavior and presentation only.
 
 ## Session Update Log
 
+### July 14, 2026 — Arbitrary Runtime Cap Removed
+
+- Owner identified that the assistant-created 100 KB and 150 KB caps conflicted with the finished commercial Google Play goal.
+- Removed total and per-file blocking size thresholds.
+- Kept release whitelisting, minification, checksums, legacy exclusion, and non-blocking per-file size reporting.
+- Added durable decision D-019: runtime size may block only when grounded in a real platform, performance, memory, download, build, maintenance, or commercial constraint.
+
 ### July 14, 2026 — Enemy Variety Batch Completed
 
 - Added progressive Mote and Caster roles, formations, telegraphs, and cooperation using only the existing roster.
 - Preserved Wave 1 simplicity and added no persistent or commercial-scope systems.
-- Fixed UTF-8 release minification and replaced the obsolete vertical-slice 100 KB cap with a documented 150 KB total plus per-file regression budgets.
-- GitHub Actions passed the complete evidence, release, Capacitor, debug APK, and artifact pipeline.
+- Fixed UTF-8 release minification.
+- GitHub Actions passed the complete evidence, release, Capacitor, debug APK, and artifact pipeline before the size-policy correction.
 
 ### July 14, 2026 — Arena Feedback and Atmosphere Accepted
 
