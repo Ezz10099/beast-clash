@@ -104,7 +104,7 @@ assert.match(polishCss, /\.hud-card/, 'attached HUD card styling must ship');
 assert.match(polishCss, /overflow-y:auto/, 'phone overlays must remain scroll safe');
 assert.match(polishCss, /@media\(orientation:landscape\)/, 'landscape guidance must remain available');
 assert.match(arenaFxCss, /pointer-events:none/, 'arena FX must never intercept gameplay input');
-assert.match(arenaFxCss, /data-screen=.playing./, 'arena FX must remain scoped to active play');
+assert.match(arenaFxCss, /data-screen=(?:["']?playing["']?)/, 'arena FX must remain scoped to active play');
 assert.match(localization, /URLSearchParams\(.+\)\.get\(.lang.\)/, 'Arabic mode must remain explicitly query-activated');
 assert.doesNotMatch(localization, /localStorage|SaveSystem|persistent\.|state\./, 'localization must not touch saves or gameplay state');
 assert.match(localization, /الجوهر/, 'release localization must preserve the approved Essence term');
