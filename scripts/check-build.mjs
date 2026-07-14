@@ -14,10 +14,12 @@ const MINIFIED_SOURCE_FILES = new Set([
   'localization.css',
   'phone-polish.css',
   'arena-fx.css',
+  'enemy-variety.css',
   'localization.js',
   'touch-controls.js',
   'phone-polish.js',
   'arena-fx.js',
+  'enemy-variety.js',
 ]);
 
 async function listFiles(directory) {
@@ -66,27 +68,33 @@ const css = await readFile(resolve(output, 'style.css'), 'utf8');
 const localizationCss = await readFile(resolve(output, 'localization.css'), 'utf8');
 const polishCss = await readFile(resolve(output, 'phone-polish.css'), 'utf8');
 const arenaFxCss = await readFile(resolve(output, 'arena-fx.css'), 'utf8');
+const enemyVarietyCss = await readFile(resolve(output, 'enemy-variety.css'), 'utf8');
 const localization = await readFile(resolve(output, 'localization.js'), 'utf8');
 const touchControls = await readFile(resolve(output, 'touch-controls.js'), 'utf8');
 const phonePolish = await readFile(resolve(output, 'phone-polish.js'), 'utf8');
 const arenaFx = await readFile(resolve(output, 'arena-fx.js'), 'utf8');
+const enemyVariety = await readFile(resolve(output, 'enemy-variety.js'), 'utf8');
 assert.doesNotMatch(html, /(?:src|href)=["']https?:\/\//i, 'release HTML must not depend on the network');
 assert.match(html, /href=["']style\.css["']/);
 assert.match(html, /href=["']localization\.css["']/);
 assert.match(html, /href=["']phone-polish\.css["']/);
 assert.match(html, /href=["']arena-fx\.css["']/);
+assert.match(html, /href=["']enemy-variety\.css["']/);
 assert.match(html, /src=["']localization\.js["']/);
 assert.match(html, /src=["']touch-controls\.js["']/);
 assert.match(html, /src=["']game\.js["']/);
 assert.match(html, /src=["']phone-polish\.js["']/);
 assert.match(html, /src=["']arena-fx\.js["']/);
+assert.match(html, /src=["']enemy-variety\.js["']/);
 assert.match(html, /id=["']arenaFx["'][^>]*width=["']320["'][^>]*height=["']480["']/);
+assert.match(html, /id=["']enemyFx["'][^>]*width=["']320["'][^>]*height=["']480["']/);
 assert.ok(
   html.indexOf('src="localization.js"') < html.indexOf('src="touch-controls.js"') &&
     html.indexOf('src="touch-controls.js"') < html.indexOf('src="game.js"') &&
     html.indexOf('src="game.js"') < html.indexOf('src="phone-polish.js"') &&
-    html.indexOf('src="phone-polish.js"') < html.indexOf('src="arena-fx.js"'),
-  'localization and controls must initialize before the game; polish and arena FX must initialize afterward',
+    html.indexOf('src="phone-polish.js"') < html.indexOf('src="arena-fx.js"') &&
+    html.indexOf('src="arena-fx.js"') < html.indexOf('src="enemy-variety.js"'),
+  'core dependencies must initialize before presentation and enemy-variety extensions',
 );
 assert.match(html, /viewport-fit=cover/, 'safe-area viewport support is required');
 assert.match(html, /class="combat-deck"/, 'release HTML must include the unified combat dashboard');
@@ -105,6 +113,8 @@ assert.match(polishCss, /overflow-y:auto/, 'phone overlays must remain scroll sa
 assert.match(polishCss, /@media\(orientation:landscape\)/, 'landscape guidance must remain available');
 assert.match(arenaFxCss, /pointer-events:none/, 'arena FX must never intercept gameplay input');
 assert.match(arenaFxCss, /data-screen=(?:["']?playing["']?)/, 'arena FX must remain scoped to active play');
+assert.match(enemyVarietyCss, /pointer-events:none/, 'enemy telegraphs must never intercept gameplay input');
+assert.match(enemyVarietyCss, /data-screen=(?:["']?playing["']?)/, 'enemy telegraphs must remain scoped to active play');
 assert.match(localization, /URLSearchParams\(.+\)\.get\(.lang.\)/, 'Arabic mode must remain explicitly query-activated');
 assert.doesNotMatch(localization, /localStorage|SaveSystem|persistent\.|state\./, 'localization must not touch saves or gameplay state');
 assert.match(localization, /الجوهر/, 'release localization must preserve the approved Essence term');
@@ -120,6 +130,10 @@ assert.doesNotMatch(phonePolish, /localStorage|SaveSystem|persistent\.|state\./,
 assert.match(arenaFx, /requestAnimationFrame/, 'release arena FX must animate through the browser frame clock');
 assert.match(arenaFx, /prefers-reduced-motion/, 'release arena FX must respect reduced motion');
 assert.doesNotMatch(arenaFx, /localStorage|SaveSystem|persistent\.|state\.|fetch\(/, 'arena FX must remain offline and read-only');
+assert.match(enemyVariety, /roleForEnemy/, 'release enemy variety must retain deterministic roles');
+assert.match(enemyVariety, /assignRelayLinks/, 'release enemy variety must retain roster interactions');
+assert.match(enemyVariety, /baseUpdate/, 'release enemy variety must participate in deterministic gameplay updates');
+assert.doesNotMatch(enemyVariety, /localStorage|SaveSystem|persistent\.|fetch\(/, 'enemy variety must remain offline and outside persistence');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
 assert.match(nativeGame, /appStateChange/, 'native bundle must handle native app pausing');
