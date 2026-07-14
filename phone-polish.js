@@ -98,7 +98,7 @@
   if (newRunButton) {
     newRunButton.addEventListener("click", function (event) {
       const label = newRunButton.textContent.trim();
-      const destructive = label === "Restart Trial" || label === "إعادة الاختبار" || newRunButton.classList.contains("new-run-confirming");
+      const destructive = label === "Restart Trial" || label === "إعادة التحدّي" || newRunButton.classList.contains("new-run-confirming");
       if (!destructive) {
         disarmRestart();
         return;
@@ -116,10 +116,10 @@
       savedMenuStatus = menuStatus ? menuStatus.textContent : "";
       restartArmedUntil = now + 3200;
       newRunButton.classList.add("new-run-confirming");
-      newRunButton.textContent = isArabic() ? "اضغط مرة أخرى لإعادة الاختبار" : "Tap again to restart";
+      newRunButton.textContent = isArabic() ? "اضغط مرة أخرى لإعادة التحدّي" : "Tap again to restart";
       if (menuStatus) {
         menuStatus.textContent = isArabic()
-          ? "لن تُحذف المحاولة إلا إذا ضغطت الزر مرة أخرى."
+          ? "لن تبدأ محاولة جديدة إلا إذا ضغطت الزر مرة أخرى."
           : "Your run is safe unless you tap the button again.";
       }
       restartTimer = setTimeout(disarmRestart, 3200);
