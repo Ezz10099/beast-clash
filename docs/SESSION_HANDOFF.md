@@ -16,73 +16,49 @@
 
 **Milestone 8 — Representative Commercial Gate.**
 
-Living Spell Trials remains the evidence-supported direction. Full content, final assets, monetization, signing, and Play submission remain blocked until the valid fresh-player result and owner second go/no-go.
+Full content, final assets, monetization, signing, and Play submission remain blocked until the valid fresh-player result and owner second go/no-go.
 
-## Accepted Evidence
+## Latest Owner Evidence
 
-- `.8` passed owner SPCK review for compact choices, active rune dodging, proven-spell selection, and starting-spell payoff.
-- `.9` remained GREEN: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 starting-spell checks, isolated fresh saves, and no runtime violation.
-- The owner confirmed the test tools appear, rejected 56-pixel thumb clearance, and accepted 84 pixels enough to continue.
-- Arabic activation worked, but the owner identified incorrect wording; the full glossary correction was implemented.
-- The owner judged the accumulated gameplay layout problematic, then requested another substantial improvement before involving a fresh participant.
+- `.8` passed for active movement, rewrite choices, Spellbook selection, and starting-spell payoff.
+- The owner accepted the arena-feedback batch.
+- The owner selected enemy variety as the next substantial field.
+- The new variety batch is automated-green but not yet phone-accepted.
 
-## Portrait Gameplay Layout Rebuild
+## Enemy Variety Batch
 
-Implemented on `main` without changing `game.js`, the 320×480 arena coordinates, combat, movement speed, balance, progression, content, or saves:
+Implemented using only the existing Mote and Glyph Caster roster:
 
-- compact branded header and dominant arena;
-- one combat dashboard containing spell, health, wave progress, score, and control feedback;
-- health and wave meters attached directly to their labels;
-- visible-panel DOM state tracking so the dashboard stays behind start, rewrite, Spellbook, and Options overlays;
-- one fluid, scroll-safe English/Arabic overlay hierarchy;
-- height-aware whole-frame scaling instead of unreadably small breakpoint text;
-- strengthened `polish:check` and release contracts.
+- Wave 1 remains simple;
+- Act II adds flanking Motes and group spacing;
+- selected Casters use a visible purple three-lane pattern with warning and recovery time;
+- nearby Casters visibly connect to one Mote, creating a priority choice;
+- Act III adds orange warning rings and lines before a Mote commits to a fast movement lane;
+- Frost still slows this movement, Orbit can block the new projectiles, and Ember remains useful against nearby groups;
+- all new indicators use a pointer-transparent overlay;
+- no new enemy family, art dependency, save field, currency, progression system, or package change was added.
 
-## Arena Feedback and Atmosphere Batch
+## Verification
 
-Implemented on `main` without changing `game.js`, combat timing, damage, movement, balance, progression, content, or saves:
+The complete GitHub Actions pipeline passed:
 
-- added `arena-fx.js` and `arena-fx.css` as a pointer-transparent 320×480 overlay above the existing game canvas;
-- added distinct low-opacity ambience for Acts I, II, and III;
-- tied arena edge identity to displayed Ember/Frost spell text;
-- added a short fading trail for the adjusted touch target;
-- added wave-entry border pulses from displayed wave text;
-- added damage and critical-health edge feedback from displayed health text;
-- added automatic reduced-motion behavior;
-- used lightweight 90 ms HUD sampling rather than mutation callbacks on text rewritten every frame;
-- added `npm run fx:check`, release inclusion, minification, offline/read-only checks, and 100 KB ceiling coverage.
+- all workflow, language, control, layout, visual-effects, enemy, test-tool, and core-game checks;
+- UTF-8 release construction and all release contracts;
+- 127,449-byte runtime under the documented 150 KB total and per-file budgets;
+- 200 build runs, 100 choice-policy runs, 25 idle controls, 25 movement controls, and 8 deterministic replays;
+- 99% overall active survivability, 0% idle wins, 96% simple-movement wins, and zero runtime violations;
+- Capacitor sync, debug APK build, APK verification, and artifact upload.
 
-The new layer reads only `healthText`, `waveText`, `spellText`, public pointer events, and `game-card[data-screen]`. It has `pointer-events: none` and cannot access saves or private game state.
-
-## Existing Readiness Layers Preserved
-
-- corrected Arabic glossary and player-facing wording;
-- offline Cell Runner and tap-only Test Launcher;
-- 84-pixel thumb clearance;
-- low-health emphasis and two-tap restart protection;
-- portrait guidance, focus/disabled states, fully local runtime, and minified release assets.
-
-## Verification Status
-
-Repository contracts cover:
-
-- arena-FX dimensions, DOM and script order, pointer transparency, active-play scoping, and reduced-motion behavior;
-- English/Arabic health, wave, act, and essence parsing;
-- presence of touch trail, wave pulse, damage feedback, and act ambience;
-- absence of network calls, storage access, telemetry, and private-state access;
-- release inclusion, minification, ordering, and the 100 KB ceiling;
-- unchanged gameplay file and existing layout/localization/control checks.
-
-A complete clean-checkout `npm run check` could not run because the assistant environment cannot resolve GitHub. The layout and effects are not phone-accepted until the owner checks them in SPCK.
+Automation does not prove phone readability, fairness, fun, or tactical distinctness.
 
 ## Exact Next Action
 
 1. Pull latest `main` in SPCK.
 2. Open `test-launcher.html` → **Preview** → **Open Arabic Game**.
-3. Start a Trial and check the arena atmosphere, touch trail, wave-entry pulse, damage-edge feedback, dashboard, and enemy/projectile/rune readability.
-4. Reach Act II or III if practical and confirm the atmosphere changes without becoming distracting.
-5. Reach one rewrite, open Spellbook, and open Options; confirm effects remain behind overlays and nothing clips.
-6. Briefly check **Open English Game** and **Open Cell Runner**.
-7. Report any remaining problem with a screenshot.
+3. Confirm Wave 1 remains calm.
+4. Reach Act II and check flanking, purple three-line warnings, spacing, and visible links.
+5. Reach Act III and check orange warnings before fast movement.
+6. Confirm nothing hides the mage, red runes, enemies, or projectiles.
+7. Briefly check **Open English Game** and **Open Cell Runner**.
 
-Do not involve the genuine fresh participant until this owner visual pass succeeds. Do not scale content before the commercial decision.
+Do not involve the genuine fresh participant until this owner pass succeeds. Do not scale launch content before the commercial decision.
