@@ -37,7 +37,7 @@ assert.match(css, /@media \(max-width: 620px\)/, 'runner must have a compact pho
 
 assert.match(js, /pixel_mage_cell_runner_draft_v1/, 'runner must use a dedicated local draft key');
 assert.match(js, /pixel_mage_cell_runner_used_tokens_v1/, 'runner must remember used tokens locally');
-assert.match(js, /\^\[a-z0-9_-\]\{1,32\}\$/i, 'runner token validation must match the game fresh-token contract');
+assert.match(js, /\^\[a-z0-9_-\]\{1,32\}\$\/i/, 'runner token validation must match the game fresh-token contract');
 assert.match(js, /searchParams\.set\("fresh"/, 'runner must construct isolated fresh URLs');
 assert.match(js, /searchParams\.set\("lang", "ar"\)/, 'runner must construct the Arabic path explicitly');
 assert.match(js, /usedTokens\(\)\.includes\(token\)/, 'runner must reject reused participant tokens');
@@ -55,17 +55,18 @@ for (const forbidden of [/\bfetch\s*\(/, /XMLHttpRequest/, /WebSocket/, /sendBea
 
 const requiredProtocolText = [
   'Please play this as if you found it yourself. I will not explain it, but you can stop whenever you want.',
-  'العب هذه اللعبة كأنك وجدتها بنفسك. لن أشرحها لك، ويمكنك التوقف متى أردت.',
+  'العب هذه اللعبة كما لو أنك وجدتها بنفسك. لن أشرحها لك، ويمكنك التوقف متى شئت.',
   'What did you think you were supposed to do?',
   'What do Form, Essence, and Law each change?',
   'Would you choose to start another run now, without a reward for helping us?',
-  'ماذا فهمت أن عليك أن تفعل؟',
-  'ماذا يغيّر كل واحد من: الشكل، والعنصر، وطريقة الإطلاق؟',
-  'هل ستختار بدء محاولة أخرى الآن من دون مكافأة مقابل مساعدتنا؟',
+  'ماذا فهمت أنه ينبغي عليك فعله؟',
+  'ماذا يغيّر كلٌّ من الشكل والجوهر والقانون؟',
+  'هل ستختار بدء محاولة أخرى الآن، من دون مكافأة مقابل مساعدتنا؟',
 ];
 for (const text of requiredProtocolText) {
   assert.ok(js.includes(text), `runner is missing frozen protocol text: ${text}`);
 }
+assert.doesNotMatch(js, /طريقة الإطلاق|ماذا فهمت أن عليك أن تفعل|كأنك وجدتها بنفسك/, 'retired awkward Arabic protocol wording must not return');
 
 for (const field of [
   'Build/commit', 'Language path', 'Fresh token', 'Device and orientation', 'Mobile-game familiarity',
@@ -95,8 +96,9 @@ elements.get('languagePath').handlers.change();
 assert.match(elements.get('testUrl').value, /fresh=/);
 assert.match(elements.get('testUrl').value, /lang=ar/);
 assert.match(elements.get('neutralInstruction').textContent, /لن أشرحها/);
+assert.match(elements.get('neutralInstruction').textContent, /كما لو أنك وجدتها بنفسك/);
 
-elements.get('familiarity').value = 'occasional';
+ elements.get('familiarity').value = 'occasional';
 elements.get('device').value = 'POCO X2 · portrait';
 elements.get('participantFreshConfirmed').checked = true;
 elements.get('beginObservationButton').handlers.click();
