@@ -11,7 +11,7 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 - Make Form, Essence, and Law create meaningful, visible play-style changes.
 - Build runs toward satisfying guardians and bosses.
 - Create replay desire through functional discovery rather than permanent-power grinding.
-- Preserve natural Arabic and English presentation, portrait readability, offline play, persistence, performance, and Android delivery.
+- Preserve natural Arabic and English presentation, coherent portrait hierarchy, offline play, persistence, performance, and Android delivery.
 - Keep automation and human evidence within their honest boundaries.
 
 ## Commercial Gate Sequence
@@ -25,10 +25,11 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 7. Offline Cell Runner — **implemented; owner check pending**.
 8. Tap-only SPCK Test Launcher — **implemented and visible on phone**.
 9. 84-pixel thumb-clearance correction — **owner accepted enough to continue**.
-10. Consolidated phone-readability and interaction-safety batch — **implemented; owner check pending**.
-11. Complete Arabic terminology and wording correction with permanent glossary — **implemented; owner wording check pending**.
-12. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
-13. Define remaining production scope from measured evidence — **blocked on step 12**.
+10. Consolidated phone-readability and interaction-safety batch — **implemented**.
+11. Complete Arabic terminology and wording correction with permanent glossary — **implemented**.
+12. Cohesive portrait gameplay layout rebuild — **implemented; owner visual check pending**.
+13. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
+14. Define remaining production scope from measured evidence — **blocked on step 13**.
 
 Do not scale content, create final assets, add monetization, or begin store production before the second go/no-go.
 
@@ -62,35 +63,39 @@ The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait control
 - Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - `.9` automated evidence: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 replays, 8/8 starting-spell checks, and no runtime violation.
 - Owner phone control evidence: direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
-- Owner localization evidence: Arabic activated successfully, but inconsistent and awkward wording made the path unready for a genuine participant.
+- Owner localization evidence: Arabic activated successfully, but inconsistent wording required a full correction.
+- Owner layout evidence: the accumulated header/canvas/readout/HUD/meter/hint stack still looked wrong after the first quality batch.
 
 These results do not prove newcomer comprehension, touch quality across players, boredom/fairness, climax satisfaction, replay desire, or commercial longevity.
 
-### Test-readiness and phone-quality infrastructure
+### Test-readiness and language infrastructure
 
 Implemented on `main`:
 
 - Arabic/RTL game access with default-English preservation;
+- permanent Arabic glossary and corrected game/interview wording;
 - offline Cell Runner with staged observation/interview/gate/export;
 - tap-only Test Launcher for Arabic, English, and Cell Runner access;
 - permanent Owner Phone Workflow Gate prohibiting hidden Console/query/token steps when a UI is feasible;
-- one concise opening instruction and 84-pixel scaled thumb clearance;
-- scroll-safe overlays, wrapped next-threat copy, larger critical text, HP/wave meters, low-health emphasis, protected restart, portrait guidance, and visible focus/disabled states.
+- 84-pixel scaled thumb clearance and protected restart;
+- minified offline release assets under the enforced bundle ceiling.
 
-### Arabic wording and glossary batch
+### Cohesive portrait layout rebuild
 
-Implemented on `main` without changing gameplay:
+Implemented on `main` without changing `game.js`, combat, balance, progression, or saves:
 
-- permanent `docs/ARABIC_GLOSSARY.md`;
-- one vocabulary for Trial, Run, Rewrite, Hold, Form, Essence, Law, health, spell parts, enemies, and boss;
-- naturalized opening, HUD, Spellbook, rewrite, pause, cue, result, enemy, and restart text;
-- corrected neutral instruction, retry wording, and all eight frozen Arabic questions;
-- retired-term regression checks across game, Cell Runner, and workflow;
-- minification of every release presentation/control CSS and JavaScript asset while retaining the 100 KB ceiling.
+- compact branded header with a consistently reachable Options button;
+- dominant unchanged 320×480 arena with reduced outer framing;
+- one unified combat deck instead of separate spell, HUD, and detached meter rows;
+- health and wave meters attached directly to their corresponding labels;
+- live DOM screen-state tracking so the combat deck appears during play and stays out of start/rewrite/Spellbook/menu overlays;
+- one responsive overlay system with fluid critical text, wrapping, safe scrolling, and matching English/Arabic hierarchy;
+- height-aware composition that shrinks the whole frame instead of making essential text unreadably small;
+- strengthened polish and release-bundle checks for the new hierarchy.
 
 ### Remaining Milestone 8 exit criteria
 
-1. Owner passes one consolidated SPCK Arabic and phone-quality check.
+1. Owner passes one consolidated SPCK portrait-layout and Arabic check.
 2. Owner confirms normal English presentation is unchanged.
 3. Owner passes Cell Runner usability, corrected Arabic questions, and staged-flow checks.
 4. Normal repository checks pass.
@@ -112,4 +117,4 @@ Complete any applicable Play testing requirement, collect structured evidence, f
 
 ## Exact Next Step
 
-Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Review the opening, HUD, Spellbook, rewrite choices, pause/restart, wave cues, victory, and defeat wording. Then return and tap **Open Cell Runner**, choose Arabic, and read the neutral instruction and eight questions. Send a screenshot or the exact wording of any remaining phrase that sounds wrong.
+Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Check the header, arena size, unified combat deck, attached HP/wave bars, start screen, one rewrite screen, Spellbook, Options, and Arabic fit. Then briefly open **Open English Game** and **Open Cell Runner**. Do not involve a fresh participant until this visual pass succeeds.
