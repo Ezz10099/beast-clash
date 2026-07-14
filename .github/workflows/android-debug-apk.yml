@@ -115,17 +115,17 @@ jobs:
           set -o pipefail
           node scripts/check-build.mjs 2>&1 | tee artifacts/diagnostics/build-check.log
 
+      - name: Verify runtime size
+        run: npm run size:check
+
       - name: Upload release diagnostics
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: pixel-mage-build-diagnostics
-          path: artifacts/diagnostics/build-check.log
+          path: artifacts/diagnostics/*
           if-no-files-found: warn
           retention-days: 7
-
-      - name: Verify runtime size
-        run: npm run size:check
 
       - name: Build Android artwork
         run: npm run assets:android
