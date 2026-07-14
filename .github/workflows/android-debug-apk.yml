@@ -12,10 +12,19 @@ on:
       - 'capacitor.config.json'
       - 'game.js'
       - 'index.html'
+      - 'style.css'
+      - 'localization.css'
+      - 'localization.js'
+      - 'touch-controls.js'
+      - 'phone-polish.css'
+      - 'phone-polish.js'
+      - 'arena-fx.css'
+      - 'arena-fx.js'
+      - 'enemy-variety.css'
+      - 'enemy-variety.js'
       - 'package.json'
       - 'package-lock.json'
       - 'scripts/**'
-      - 'style.css'
 
 permissions:
   contents: read
