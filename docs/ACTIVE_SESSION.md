@@ -11,54 +11,54 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - **Active product:** Pixel Mage
 - **Current milestone:** Milestone 8 — Representative Commercial Gate
 - **Current implementation:** `0.2.0-representative.9` gameplay plus corrected Arabic/RTL wording, Cell Runner, tap-only Test Launcher, 84-pixel thumb clearance, and the consolidated phone-quality layer on `main`
-- **Latest accepted phone behavior:** `.8` passed. The owner confirmed the tools appear, accepted the larger clearance enough to continue, and reported awkward or incorrect Arabic. The full Arabic wording correction is implemented but not yet phone-accepted.
-- **Latest automated evidence:** `.9` remained GREEN. Localization, Cell Runner, touch, phone-polish, glossary, and build contracts have been updated; full clean-checkout `npm run check` remains unavailable in this environment.
-- **Current verification status:** one Arabic glossary now governs game UI, canvas text, direct markup, restart protection, Cell Runner instructions, and frozen questions. Release CSS and helper scripts are minified to protect the 100 KB ceiling. Owner language judgment and complete check-suite status remain pending.
-- **Strongest current fun/engagement limitation:** confirm that the corrected Arabic is natural and that no rare dynamic phrase or phone-layout issue remains before involving a fresh participant.
-- **Current approval boundary:** preserve gameplay, balance, progression, saves, content, package identity, and launch scope.
-- **Current commercial gate:** owner checks the corrected Arabic and consolidated phone-quality batch; then one genuinely fresh participant completes the frozen cell.
-- **Current workflow goal:** obtain trustworthy Arabic fresh-player evidence without translation-caused confusion.
-- **Workflow implementation status:** Arabic terminology/wording correction and permanent glossary are complete on `main`; owner phone evidence is pending.
-- **Exact next product action:** owner pulls latest `main`, opens `test-launcher.html` → **Preview** → **Open Arabic Game**, reviews the opening, HUD, Spellbook, rewrite choices, pause/restart, cues, and result wording, then briefly opens the Arabic questions in **Open Cell Runner**.
+- **Latest accepted phone behavior:** `.8` passed. The owner confirmed the later SPCK edits appear and now reports that the gameplay layout itself still has issues.
+- **Latest automated evidence:** `.9` remained GREEN. Later localization/control/polish layers have isolated contracts; full clean-checkout `npm run check` remains unavailable in this environment.
+- **Current verification status:** gameplay mechanics are preserved, but the current presentation is a stack of independently patched header, canvas, spell readout, HUD, meters, and hint rather than one coherent portrait layout.
+- **Strongest current fun/engagement limitation:** the phone layout does not yet frame the arena, survival information, spell identity, and controls as one clear mobile game screen.
+- **Current approval boundary:** layout hierarchy, spacing, responsive portrait behavior, panel fit, and visible HUD organization only; preserve gameplay, balance, progression, saves, content, package identity, and launch scope.
+- **Current commercial gate:** owner checks the rebuilt portrait gameplay layout and corrected Arabic; then one genuinely fresh participant completes the frozen cell.
+- **Current workflow goal:** replace accumulated layout patches with one cohesive, arena-first mobile composition.
+- **Workflow implementation status:** portrait gameplay layout rebuild is in progress.
+- **Exact next product action:** rebuild the main gameplay page structure and responsive CSS, strengthen screen-state/layout checks, verify the release bundle, then provide one tap-only SPCK review path.
 
 ## Response Watchlist
 
 - Pixel Mage continuity and a worthwhile finished game remain primary.
-- Do not present static/automated checks as proof of Arabic naturalness or player comprehension.
+- Do not present static checks as proof of phone visual quality.
 - Full launch scaling remains blocked.
 - Phone requests must use exact visible SPCK tap paths.
-- Arabic must follow `docs/ARABIC_GLOSSARY.md` and preserve English meaning without extra coaching.
-- Test Launcher and Cell Runner remain outside the Android release bundle.
+- Arabic must follow `docs/ARABIC_GLOSSARY.md`.
+- Do not change `game.js`, combat, balance, progression, or saves in this batch.
 
 ## Current Work Packet
 
-- **Status:** Implementation complete; owner wording review pending.
-- **Player-facing problem:** the Arabic path mixed literal and inconsistent terms for the same systems and contained several unnatural sentences.
-- **Intended player experience:** one coherent, concise Arabic game vocabulary that feels native rather than translated.
-- **Strongest known causes:** inconsistent Trial, Rewrite, Essence, Law, Hold, enemy, HP, result, and direct-markup wording.
-- **Alternatives considered:** screenshot-only fixes would miss hidden dynamic strings; additional explanation would contaminate the fresh-player gate; a complete glossary and sentence audit was selected.
-- **Selected approach:** standardized game terms, rewrote exact/dynamic strings, aligned direct Arabic markup and restart copy, corrected the frozen Arabic protocol/questions, added `docs/ARABIC_GLOSSARY.md`, strengthened regression checks, and minified all release presentation/control assets.
-- **Predicted visible benefit:** fewer false comprehension failures and consistent wording across play and interview.
-- **Likely failure mode:** one glossary preference may still sound unnatural to the owner or a rare dynamic phrase may remain.
-- **Evidence obtained:** source/static contracts cover the glossary, retired-term rejection, game/Cell Runner consistency, restart wording, fresh-save behavior, offline boundaries, release ordering, minification, and the 100 KB ceiling.
-- **Evidence still required:** owner SPCK wording review and a complete clean-checkout `npm run check`.
-- **Files/systems changed:** `localization.js`, `index.html`, `phone-polish.js`, Cell Runner protocol, fresh-player document, Arabic glossary, localization/cell/touch/polish/workflow/build checks, build minification, agent/start guidance, and project memory. `game.js` is unchanged.
-- **Approval boundary:** Arabic wording and release-safe presentation only.
+- **Status:** Audit complete; implementation in progress.
+- **Player-facing problem:** the canvas, title, spell readout, three text stats, two detached meter rows, and control hint compete for space and do not read as one intentional portrait interface. Existing height breakpoints also shrink critical text too aggressively.
+- **Intended player experience:** the arena is the visual focus; Options is immediately reachable; current spell, health, wave progress, and score form one compact control deck; start/rewrite/Spellbook/menu panels remain readable without clipping in English or Arabic.
+- **Strongest known causes:** detached unlabeled meters; excessive nested borders/padding; height-specific width shrinking; tiny breakpoint typography; inconsistent card hierarchy; overlays inherited from multiple corrective batches.
+- **Alternatives considered:** another small CSS patch would preserve the fragmented structure; a gameplay/canvas aspect-ratio change would affect mechanics and coordinate feel; a full art redesign exceeds the gate. A markup-and-CSS composition rebuild around the unchanged 320×480 arena was selected.
+- **Selected approach:** create one edge-conscious portrait shell; enlarge and visually prioritize the arena; organize spell/HUD/meters into one combat deck; attach each meter to its label; use fluid type and spacing instead of tiny breakpoint values; make all overlays scroll-safe and consistent; expose DOM screen state without reading private game state.
+- **Predicted visible benefit:** faster visual parsing, less clutter, more arena presence, clearer health/wave status, and a more credible app-like phone presentation.
+- **Likely failure mode:** the combat deck may still feel too tall or the overlay cards may be too dense on the target phone.
+- **Evidence required:** source/DOM behavior checks, responsive CSS contracts, release ordering/minification/size checks, then one consolidated owner SPCK pass.
+- **Files/systems expected to change:** `index.html`, `phone-polish.css`, `phone-polish.js`, polish/build checks, and project memory. `game.js` remains unchanged.
+- **Approval boundary:** presentation and layout only.
 
 ## Session Update Log
 
+### July 14, 2026 — Portrait Gameplay Layout Rebuild Started
+
+- Recorded owner evidence that the current gameplay layout remains visibly problematic.
+- Diagnosed the page as a stack of accumulated patches rather than a coherent portrait composition.
+- Selected a substantial arena-first layout rebuild without changing the game runtime.
+
 ### July 14, 2026 — Arabic Wording and Glossary Completed
 
-- Standardized: التحدّي، المحاولة، إعادة الصياغة، الشكل، الجوهر، القانون، جمرة، صقيع، صدى، الصحة.
-- Rewrote awkward opening, HUD, Spellbook, rewrite, pause, cue, result, enemy, and restart phrases.
-- Corrected the neutral Arabic instruction and all eight frozen interview questions.
-- Added `docs/ARABIC_GLOSSARY.md` to permanent project authority and workflow checks.
-- Added retired-term regression checks and minified every release presentation/control asset to protect the bundle ceiling.
-- Preserved `game.js`, gameplay, balance, progression, saves, and English behavior.
+- Standardized the full Arabic game vocabulary and corrected direct/dynamic wording.
 
 ### July 14, 2026 — Consolidated Phone-Quality Batch Completed
 
-- Added scroll-safe overlays, wrapped threat copy, larger critical text, HP/wave meters, restart protection, and portrait guidance.
+- Added scroll-safe overlays, wrapped threat copy, larger critical text, HUD meters, restart protection, and portrait guidance.
 
 ### July 14, 2026 — Thumb Clearance Recalibrated
 
