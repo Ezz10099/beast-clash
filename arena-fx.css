@@ -1,0 +1,35 @@
+#game {
+  position: relative;
+  z-index: 0;
+}
+
+#arenaFx {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.game-card[data-screen="playing"] #arenaFx {
+  opacity: 1;
+}
+
+.game-stage {
+  isolation: isolate;
+}
+
+.game-card[data-health-state="critical"] #arenaFx {
+  filter: saturate(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #arenaFx {
+    transition: none;
+  }
+}
