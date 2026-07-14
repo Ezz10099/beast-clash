@@ -1,0 +1,124 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0b0f18;
+  color: #f4ead7;
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top, rgba(91, 61, 154, 0.32), transparent 34rem),
+    linear-gradient(#11182a, #080b12);
+}
+
+button { font: inherit; }
+
+.launcher-shell {
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding:
+    calc(22px + env(safe-area-inset-top))
+    max(18px, env(safe-area-inset-right))
+    calc(28px + env(safe-area-inset-bottom))
+    max(18px, env(safe-area-inset-left));
+}
+
+header { margin-bottom: 20px; }
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #ffd166;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 8vw, 2.7rem);
+  line-height: 1.05;
+}
+
+.lede {
+  margin: 12px 0 0;
+  color: #c7cbe0;
+  line-height: 1.55;
+}
+
+.launcher-card,
+.help-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 18px;
+  border: 1px solid #48567e;
+  border-radius: 18px;
+  background: rgba(24, 32, 54, 0.94);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.primary-card { border-color: #7b68b6; }
+
+.step-number {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #2d385a;
+  color: #ffd166;
+  font-weight: 900;
+}
+
+h2 {
+  margin: 1px 0 6px;
+  font-size: 1.15rem;
+}
+
+.launcher-card p,
+.help-card p {
+  margin: 0 0 14px;
+  color: #b7bdd2;
+  line-height: 1.45;
+}
+
+button {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid #8c9ed2;
+  border-radius: 13px;
+  background: linear-gradient(#4d5f94, #34446f);
+  color: #fff8e8;
+  font-weight: 800;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.14);
+  touch-action: manipulation;
+}
+
+button:active { transform: translateY(1px); }
+button:focus-visible { outline: 3px solid #9bf6ff; outline-offset: 3px; }
+
+.help-card {
+  display: block;
+  border-color: #35415f;
+  background: rgba(15, 20, 34, 0.9);
+}
+
+.help-card p { margin: 6px 0 0; }
+
+.status {
+  min-height: 1.4em;
+  margin: 14px 2px 0;
+  color: #9bf6ff;
+}
+
+@media (max-width: 420px) {
+  .launcher-shell { padding-left: 14px; padding-right: 14px; }
+  .launcher-card { padding: 15px; }
+}
