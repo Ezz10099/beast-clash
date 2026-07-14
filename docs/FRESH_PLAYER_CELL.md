@@ -2,7 +2,7 @@
 
 ## Status and Decision
 
-**Ready on `0.2.0-representative.9`; results pending.**
+**Arabic-capable test path implemented on `main`; owner meaning/layout check pending before the genuine cell.**
 
 This is one consolidated, non-leading human cell for the representative slice. It asks the strongest remaining Product-Compass question: can a newcomer understand and enjoy the living-spell loop, reach a satisfying climax, and want a genuinely different next run without outside explanation?
 
@@ -12,10 +12,14 @@ The result supports the owner's second explicit go/no-go. It does not prove broa
 
 - Use one person who has not played, watched, or been taught Pixel Mage. Record only broad mobile-game familiarity: none, occasional, or frequent.
 - Use the target POCO X2/SPCK preview when practical so device behavior stays controlled. If another portrait Android phone is used, record it rather than coaching around device differences.
-- Pull the latest `main` in SPCK and open the preview with a unique token such as `?fresh=cell-a`. If the preview URL already contains `?`, append `&fresh=cell-a` instead.
+- Pull the latest `main` in SPCK.
+- For an English participant, open the preview with a unique token such as `?fresh=cell-a`.
+- For an Arabic participant, open the preview with both parameters, such as `?fresh=cell-a&lang=ar`. If the preview URL already contains `?`, append the parameters with `&` instead.
 - Use a new token for every participant. The token creates an isolated local save with no owner progress, preserves reload checkpoints, sends no data, and does not alter the owner's normal save.
-- Say only: **“Please play this as if you found it yourself. I will not explain it, but you can stop whenever you want.”**
-- Do not explain drag, automatic casting, red runes, Form, Essence, Law, rewriting, proving, or the Spellbook. Do not suggest a choice.
+- Use only one language path for the whole cell. Do not switch languages or translate individual game terms during play.
+- English neutral instruction: **“Please play this as if you found it yourself. I will not explain it, but you can stop whenever you want.”**
+- Arabic neutral instruction: **«العب هذه اللعبة كأنك وجدتها بنفسك. لن أشرحها لك، ويمكنك التوقف متى أردت.»**
+- Do not explain drag, automatic casting, red runes, Form/الشكل, Essence/العنصر, Law/طريقة الإطلاق, rewriting, proving, or the Spellbook. Do not suggest a choice.
 
 ## Cell Procedure
 
@@ -24,10 +28,13 @@ The result supports the owner's second explicit go/no-go. It does not prove broa
 3. Record the first visible confusion, first damage that felt unexplained, first boredom comment or disengaged stretch, and the wave where each occurred.
 4. Record every Hold/rewrite choice and whether the player comments on a visible combat change.
 5. After the result screen appears, wait ten seconds. Record whether the player voluntarily opens the Spellbook, selects a proven spell, or starts another Trial.
-6. If the first attempt ends before Wave 3, offer one uncoached retry only: **“You may try once more if you want.”** A second early failure is a gate result; do not teach around it.
+6. If the first attempt ends before Wave 3, offer one uncoached retry only.
+   - English: **“You may try once more if you want.”**
+   - Arabic: **«يمكنك المحاولة مرة أخرى إن أردت.»**
+   A second early failure is a gate result; do not teach around it.
 7. Ask the questions below only after play. Preserve the player's own words.
 
-## Exact Questions
+## Exact Questions — English
 
 1. “What did you think you were supposed to do?”
 2. “What do Form, Essence, and Law each change? ‘I don't know’ is fine.”
@@ -38,7 +45,18 @@ The result supports the owner's second explicit go/no-go. It does not prove broa
 7. “What would you expect or hope to discover next?”
 8. “What would a finished version need before it felt worth downloading and keeping?”
 
-Do not correct an answer during the interview. Clarify the game's rules only after every answer is recorded.
+## Exact Questions — Arabic
+
+1. «ماذا فهمت أن عليك أن تفعل؟»
+2. «ماذا يغيّر كل واحد من: الشكل، والعنصر، وطريقة الإطلاق؟ لا مشكلة إن كانت الإجابة: لا أعرف.»
+3. «صف اختيارًا واحدًا قمت به: ماذا توقعت أن يحدث، وماذا تغيّر بعده؟»
+4. «ما اللحظة الأكثر متعة؟ وما اللحظة الأقل متعة أو الأكثر مللًا؟»
+5. «هل كان هناك شيء غير واضح، أو صعب الملاحظة، أو غير عادل؟»
+6. «هل ستختار بدء محاولة أخرى الآن من دون مكافأة مقابل مساعدتنا؟ لماذا أو لماذا لا؟»
+7. «ماذا تتوقع أو تأمل أن تكتشف بعد ذلك؟»
+8. «ماذا تحتاج النسخة المكتملة حتى تشعر أنها تستحق التنزيل والاحتفاظ بها؟»
+
+Do not correct an answer during the interview. Clarify the game's rules only after every answer is recorded. The Arabic wording is a meaning-preserving version of the English questions, not an additional explanation.
 
 ## Decision Rules
 
@@ -59,16 +77,18 @@ One participant cannot establish general market appeal. A positive cell only per
 
 ## Pre-Registered Predictions
 
-- **Comprehension:** drag, automatic casting, and the closing rune should be understood from play. Form should be easiest to explain; Frost and Echo are the most likely effects to be missed.
+- **Comprehension:** drag, automatic casting, and the closing rune should be understood from play. Form/الشكل should be easiest to explain; Frost/جليد and Echo/تكرار are the most likely effects to be missed.
 - **Enjoyment:** active dodging, a visibly changing spell, and The Redactor should provide the strongest moments.
 - **Boredom:** the highest risk is repetition across the middle acts or repeated rewrite pauses, not forced timer padding.
 - **Fairness:** the rune should feel avoidable; overlapping caster, guardian, and rune pressure is the likeliest source of unexplained damage.
 - **Replay motivation:** selecting a proven starting spell should create one concrete “try this next” impulse, but the representative slice may still feel too narrow for launch value.
-- **Likely first failure:** the first rewrite screen—understanding that one word changes, the complete result is previewed, and every option grows the spell equally.
+- **Likely first failure:** the first rewrite screen—understanding that one part changes, the complete result is previewed, and every option grows the spell equally.
+- **Language-specific risk:** an awkward translation or RTL layout problem may create confusion that is not caused by the central game loop. Record it as a technical/localization issue rather than coaching around it.
 
 ## Result Record
 
 - Build/commit:
+- Language path: English / Arabic
 - Fresh token:
 - Device and orientation:
 - Mobile-game familiarity:
@@ -83,7 +103,8 @@ One participant cannot establish general market appeal. A positive cell only per
 - Boss/climax reaction:
 - Voluntary post-result action:
 - Answers 1–8:
-- Technical issues:
+- Translation or RTL issues:
+- Other technical issues:
 - Prediction matches:
 - Prediction misses and likely causes:
 - Gate result: GO candidate / REVISION candidate / NO-GO-rethink candidate
