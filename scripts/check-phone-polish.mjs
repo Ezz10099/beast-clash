@@ -17,9 +17,13 @@ assert.match(html, /href="phone-polish\.css"/);
 assert.match(html, /src="game\.js"[\s\S]*src="phone-polish\.js"/, 'phone polish must initialize after game.js');
 assert.equal((html.match(/class="opening-guide/g) || []).length, 1, 'opening instructions must not be duplicated');
 assert.match(html, /Drag anywhere to steer above your thumb\. Avoid red runes; spells cast automatically\./);
+assert.match(html, /يتحرك الساحر فوق إصبعك/);
 assert.match(html, /id="healthMeter"/);
 assert.match(html, /id="waveMeter"/);
 assert.match(html, /class="orientation-notice"/);
+assert.match(js, /اضغط مرة أخرى لإعادة التحدّي/);
+assert.match(js, /لن تبدأ محاولة جديدة إلا إذا ضغطت الزر مرة أخرى/);
+assert.doesNotMatch(js, /إعادة الاختبار|لن تُحذف المحاولة/, 'retired awkward Arabic restart wording must not return');
 
 for (const contract of [
   /overflow-y:\s*auto/,
