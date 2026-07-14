@@ -132,7 +132,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Date: July 13, 2026
 - Status: Active representative design decision
 - Decision: The automatic spell cannot complete the Trial while the player remains untouched. Combat must contain a slow, readable, avoidable movement check. A proven Spellbook combination must also become a usable starting spell, and the result screen must return to build selection instead of silently repeating the default.
-- Evidence: Before `.8`, the default Bolt won 25/25 deterministic idle runs with a median of only two damage events, while the “try a different build” action started Bolt · Ember · Split again and the Spellbook only changed a count. After `.8`, idle, simple-movement, active-build, and starting-spell payoff controls are permanent evidence gates.
+- Evidence: Before `.8`, the default Bolt won 25/25 deterministic runs while the player never moved, with a median of two damage events. The result prompt also promised a different build but immediately restarted the default spell; Spellbook discovery only increased a count. After `.8`, idle, simple-movement, active-build, and starting-spell payoff controls are permanent evidence gates.
 - Reason: One-thumb movement and horizontal discovery are part of the player promise. If neither action changes an outcome, the game can look complete while withholding actual agency and replay value.
 - Change rule: The exact hazard, UI, and unlock presentation may change, but active input must matter and discovery must unlock a different playable possibility rather than a cosmetic checklist entry.
 
@@ -169,3 +169,13 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Reason: Chat memory and session-opening summaries can fade during long sessions, context compression, interruptions, or narrow implementation work. Multiple independent safeguards are needed so the Product Compass remains the active development logic rather than a ceremonial statement.
 - Evidence boundary: The automated check proves only that the persistence structure and mandatory fields remain present. Whether ChatGPT actually applies the gate well is judged through the consistency of later responses, repository updates, and owner observation.
 - Change rule: The workflow may be strengthened when a concrete failure is found, but it may not be silently removed, reduced to session-start reading, or treated as optional.
+
+## D-019 — Runtime Size Is Evidence, Not Product Authority
+
+- Date: July 14, 2026
+- Status: Locked goal-protection rule
+- Decision: Pixel Mage has no arbitrary total-code or per-file size cap. Runtime size must be measured and reported, but it may block development only when tied to a verified platform, performance, memory, download, build, maintenance, or commercial requirement.
+- Superseded rule: The 100 KB vertical-slice ceiling and its later 150 KB replacement were assistant-created engineering thresholds, not owner-approved product requirements or Capacitor/Google Play limits.
+- Reason: A fixed byte number can silently reward deleting worthwhile localization, presentation, behavior, or content even when the game remains tiny and performs well. That conflicts with the Product Compass and the goal of a finished, commercially credible Google Play game.
+- Ongoing discipline: Keep deterministic release whitelisting, minification, checksums, legacy-file exclusion, offline behavior, performance testing, and per-file diagnostic reporting. Investigate suspicious growth, duplication, unnecessary dependencies, or measured phone regressions without treating size alone as a failure.
+- Change rule: A blocking size threshold requires a documented real-world constraint and must be reviewed against player value and commercial scope before adoption.
