@@ -42,6 +42,7 @@ for (const path of MINIFIED_SOURCE_FILES) {
     ...(isJavaScript ? { format: 'iife' } : {}),
     platform: 'browser',
     target: ['chrome60'],
+    charset: 'utf8',
     minify: true,
     legalComments: 'none',
   });
@@ -54,6 +55,7 @@ await build({
   format: 'iife',
   platform: 'browser',
   target: ['chrome60'],
+  charset: 'utf8',
   minify: true,
   legalComments: 'none',
   define: {
