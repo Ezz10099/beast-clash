@@ -11,55 +11,50 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - **Active product:** Pixel Mage
 - **Current milestone:** Milestone 8 — Representative Commercial Gate
 - **Current implementation:** `0.2.0-representative.9` gameplay plus Arabic readiness, Cell Runner, tap-only Test Launcher, 84-pixel thumb clearance, and the consolidated phone-quality layer on `main`
-- **Latest accepted phone behavior:** `.8` passed. The owner confirmed the test tools appear, identified finger occlusion, rejected 56 pixels as too small, and judged 84 pixels acceptable enough to continue. The consolidated phone-quality layer remains unaccepted until the next SPCK check.
-- **Latest automated evidence:** `.9` remained GREEN. The phone-quality layer passes isolated syntax/static/behavior checks for HUD parsing/meters, restart protection, responsive panel contracts, release inclusion, and offline/no-state-access boundaries. Full clean-checkout `npm run check` remains unavailable in this environment.
-- **Current verification status:** implementation and repository contracts are complete; phone feel, visual density, Arabic fit, and complete check-suite status remain pending.
-- **Strongest current fun/engagement limitation:** confirm that the corrected phone presentation is readable, safe, and not visually busy before a fresh participant judges comprehension and fun.
-- **Current approval boundary:** preserve combat, movement speed, balance, progression, saves, content, package identity, and launch scope.
-- **Current commercial gate:** owner checks the consolidated phone-quality batch, Arabic/English presentation, and Cell Runner usability; then one genuinely fresh participant completes the frozen cell.
-- **Current workflow goal:** obtain trustworthy fresh-player evidence after removing obvious phone-facing friction.
-- **Workflow implementation status:** persistence, Arabic readiness, Cell Runner, Test Launcher, touch clearance, and phone-quality batch are implemented on `main`; owner phone evidence is pending.
-- **Exact next product action:** owner pulls latest `main`, opens `test-launcher.html`, taps `Open Arabic Game`, completes one attempt while checking meters/text/panels/restart safety, then briefly confirms English and Cell Runner still work.
+- **Latest accepted phone behavior:** `.8` passed. The owner confirmed the test tools appear, accepted the larger thumb clearance enough to continue, and now reports incorrect or awkward Arabic wording in multiple places.
+- **Latest automated evidence:** `.9` remained GREEN. Later readiness and phone-quality layers have isolated contracts; full clean-checkout `npm run check` remains unavailable in this environment.
+- **Current verification status:** Arabic mechanics and layout activate correctly, but wording quality and terminology consistency are not owner-accepted.
+- **Strongest current fun/engagement limitation:** inconsistent or literal Arabic can create false confusion before a fresh participant fairly judges the living-spell loop.
+- **Current approval boundary:** Arabic wording, glossary consistency, and RTL-readable phrasing only; preserve gameplay, balance, progression, saves, content, package identity, and launch scope.
+- **Current commercial gate:** owner checks corrected Arabic wording and the consolidated phone-quality layer; then one genuinely fresh participant completes the frozen cell.
+- **Current workflow goal:** make the Arabic path natural, concise, and internally consistent without adding explanations unavailable in English.
+- **Workflow implementation status:** Arabic terminology audit and correction batch is in progress.
+- **Exact next product action:** standardize all player-facing Arabic terms and sentences across the game, restart protection, Cell Runner protocol, frozen questions, and regression checks; then request one tap-only SPCK pass.
 
 ## Response Watchlist
 
 - Pixel Mage continuity and a worthwhile finished game remain primary.
-- Do not present static/automated checks as proof of phone feel, comprehension, or enjoyment.
+- Do not present static/automated checks as proof of Arabic naturalness or player comprehension.
 - Full launch scaling remains blocked.
 - Phone requests must use exact visible SPCK tap paths.
+- Arabic must preserve English meaning without coaching or extra explanation.
 - Test Launcher and Cell Runner remain outside the Android release bundle.
-- `phone-polish.js` may read displayed HUD text but must not access saves or private gameplay state.
 
 ## Current Work Packet
 
-- **Status:** Implementation complete; owner phone evidence pending.
-- **Player-facing problem:** duplicated instructions, clipping/truncation, undersized text, weak survival/progress glanceability, and one-tap restart could invalidate a fresh-player judgment.
-- **Intended player experience:** one clear opening instruction, visible health/progress, fully readable English/Arabic panels, and safe pause/restart interaction.
-- **Strongest known causes:** duplicate copy; `nowrap`/ellipsis; fixed centered overlays with clipping; tiny card text; text-only HUD; destructive restart without confirmation.
-- **Alternatives considered:** waiting for screenshots left known defects; a full redesign exceeded scope; micro-patches created test fatigue; one bounded presentation/safety layer was selected.
-- **Selected approach:** `phone-polish.css` and `phone-polish.js`, plus consolidated markup and release/check integration.
-- **Predicted visible benefit:** clearer onboarding, fewer hidden messages, faster danger/progress reading, and fewer accidental run losses.
-- **Likely failure mode:** meters may feel busy or scrollable overlays may need one visual adjustment on the target phone.
-- **Evidence obtained:** syntax and isolated behavior harness passed; source/build contracts cover scroll/wrap/type, HUD meters, low-health state, restart confirmation, orientation guidance, offline behavior, release inclusion, and no direct save/game-state access.
-- **Evidence still required:** one consolidated owner SPCK pass and normal clean-checkout `npm run check`.
-- **Files/systems changed:** `index.html`, `phone-polish.css`, `phone-polish.js`, release/check/package scripts, build documentation, agent guide, README, roadmap, active state, and handoff. `game.js` is unchanged.
-- **Approval boundary:** phone readability and interaction safety only.
+- **Status:** Audit in progress.
+- **Player-facing problem:** the Arabic path mixes literal, explanatory, and inconsistent translations for the same systems; several phrases sound unnatural or use the wrong game term.
+- **Intended player experience:** Arabic-speaking players should see one coherent game vocabulary and understand concise interface sentences without noticing that they are translations.
+- **Strongest known causes:** inconsistent translations of Trial, Rewrite, Essence, Law, Hold, Mote, Glyph Caster, HP, and result/status phrases; some direct Arabic strings bypass the localization glossary.
+- **Alternatives considered:** correcting only reported screenshots would leave hidden inconsistencies; adding more explanatory text would contaminate the fresh-player gate; one full glossary and sentence audit was selected.
+- **Selected approach:** standardize a compact glossary, rewrite awkward exact/dynamic phrases, align direct Arabic markup and restart copy, update the Cell Runner and frozen Arabic questions, and strengthen regression assertions.
+- **Predicted visible benefit:** fewer false comprehension failures, more natural Arabic, and consistent wording between game UI and interview questions.
+- **Likely failure mode:** one preferred term may still feel unnatural to the owner or a rare dynamic string may remain untranslated.
+- **Evidence required:** syntax/static translation checks, protocol consistency checks, release-size contract, then owner SPCK wording review with screenshots of any remaining phrase.
+- **Files/systems expected to change:** `localization.js`, direct Arabic strings in `index.html` and `phone-polish.js`, Cell Runner protocol, `docs/FRESH_PLAYER_CELL.md`, localization/cell/polish checks, and project memory. `game.js` remains unchanged.
+- **Approval boundary:** wording and terminology only.
 
 ## Session Update Log
 
+### July 14, 2026 — Arabic Wording Correction Batch Started
+
+- Recorded owner evidence that Arabic activation works but wording is incorrect or awkward in several places.
+- Began a complete terminology and sentence audit rather than waiting for isolated screenshots.
+
 ### July 14, 2026 — Consolidated Phone-Quality Batch Completed
 
-- Consolidated duplicated onboarding into one bilingual line.
-- Added scroll-safe overlays, wrapped threat copy, and larger critical text.
-- Added HP/wave meters and low-health emphasis.
-- Added two-tap active-Trial restart protection and portrait guidance.
-- Added `npm run polish:check` and release-bundle contracts.
-- Preserved gameplay, balance, progression, saves, identity, and scope.
+- Added scroll-safe overlays, wrapped threat copy, larger critical text, HP/wave meters, restart protection, and portrait guidance.
 
 ### July 14, 2026 — Thumb Clearance Recalibrated
 
 - Recorded 56 pixels as too small and increased clearance to 84 canvas pixels.
-
-### July 14, 2026 — Test Readiness
-
-- Added Arabic/RTL access, the offline Cell Runner, and the tap-only Test Launcher.
