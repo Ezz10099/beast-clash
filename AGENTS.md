@@ -53,10 +53,13 @@ Reading the authority documents once is not enough. Every meaningful session and
 - `index.html`
 - `style.css`
 - `localization.css`
+- `phone-polish.css`
 - `localization.js`
+- `touch-controls.js`
 - `game.js`
+- `phone-polish.js`
 
-`localization.js` and `localization.css` are a bounded test-readiness layer. They must not change gameplay state, balance, progression, persistence, normal English behavior, or the commercial approval boundary.
+`localization.js`/`.css`, `touch-controls.js`, and `phone-polish.js`/`.css` are bounded presentation/control layers. They must not change combat state, balance, progression, persistence, normal English behavior, or the commercial approval boundary. The phone-polish layer may read displayed HUD text to render meters and protect destructive UI actions, but it must not access saves or private gameplay state directly.
 
 The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast Clash prototype and are not loaded by Pixel Mage. Do not reactivate them.
 
@@ -129,6 +132,6 @@ Before ending any meaningful session:
 
 ## Verification
 
-Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check`, `npm run cell:check`, and `npm run launcher:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
+Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check`, `npm run controls:check`, `npm run polish:check`, `npm run cell:check`, and `npm run launcher:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
 
 For browser preview, run `npm run preview` for the production bundle. Open `test-launcher.html` directly through SPCK preview for owner testing; it is intentionally not served from `dist/`. Before asking the owner to validate anything in SPCK, verify a visible tap path and state the exact file and buttons to use.
