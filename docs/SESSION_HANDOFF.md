@@ -2,134 +2,67 @@
 
 ## Current Authority
 
-- Active repository/branch: `Ezz10099/beast-clash` / `main`
-- Active product: Pixel Mage
-- Permanent entry point: `docs/START_HERE.md`
-- Live session state: `docs/ACTIVE_SESSION.md`
-- Persistent execution workflow: `docs/CHATGPT_WORKFLOW.md`
-- Product authority: `docs/OWNER_MANDATE.md` and `docs/DEVELOPMENT_MODEL.md`
+- Repository/branch: `Ezz10099/beast-clash` / `main`
+- Product: Pixel Mage
+- Entry point: `docs/START_HERE.md`
+- Live state: `docs/ACTIVE_SESSION.md`
+- Workflow: `docs/CHATGPT_WORKFLOW.md`
 - Fresh-player gate: `docs/FRESH_PLAYER_CELL.md`
-- Owner test entry point: `test-launcher.html`
+- Owner test entry: `test-launcher.html`
 - Observer tool: `cell-runner.html`
-- Evidence: `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
-- Roadmap: `docs/ROADMAP.md`
-
-Durable development history is preserved in Git, `docs/DECISIONS.md`, the evidence ledger, design research, and the roadmap. This handoff intentionally stays focused on the exact current state.
 
 ## Current Milestone
 
 **Milestone 8 — Representative Commercial Gate.**
 
-Living Spell Trials remains the evidence-supported Pixel Mage direction. The representative slice contains one 12-wave/three-act run, 2 Forms × 2 Essences × 2 Laws, two normal enemy families, guardian behavior, The Redactor boss, readable red-rune movement pressure, selectable proven starting spells, checkpoint/resume, and the compact visual rewrite flow.
+Living Spell Trials remains the evidence-supported direction. Full content, final assets, monetization, signing, and Play submission remain blocked until the valid fresh-player result and owner second go/no-go.
 
-Full launch content, final assets, monetization, signing, and Google Play submission remain blocked pending the valid fresh-player result and the owner's second explicit go/no-go.
+## Accepted Evidence
 
-## Latest Accepted Human Evidence
+- `.8` passed owner SPCK review for compact choices, active rune dodging, proven-spell selection, and starting-spell payoff.
+- `.9` remained GREEN: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 deterministic replays, 8/8 starting-spell checks, isolated fresh saves, and no runtime violation.
+- Arabic readiness, the Cell Runner, and the tap-only Test Launcher are implemented but still await consolidated phone acceptance.
+- The owner’s latest phone observation identified a real control problem: the fingertip directly covered the mage and nearby threats while moving.
 
-- The first complete representative run cleared in 5:49 and exposed unclear onboarding, a boring late pre-boss stretch, rote Spellbook risk, and weak-feeling Orbit.
-- The corrected `.2` loop was reported as entertaining, with roughly 15 minutes of representative experimentation.
-- Text-heavy `.4` failed immediate visual review.
-- Compact visual `.5`, player-logic `.6`, equal-growth `.7`, and agency/progression `.8` passed the owner's SPCK review.
-- In `.8`, the owner dodged a red Trial rune, proved and selected a spell, and confirmed that the next Trial began with it equipped.
-- On July 14, the owner entered the provided Arabic query string into SPCK Console. SPCK interpreted it as JavaScript and returned `SyntaxError: Unexpected token '?'`. This is evidence that the hidden test workflow was not usable; it is not evidence that Arabic mode or gameplay failed.
+## Touch-Occlusion Correction
 
-These results support the current direction but do not establish newcomer comprehension, experienced pacing/fairness, climax satisfaction, replay desire, or launch-scale longevity.
+Implemented on `main`:
 
-## Latest Accepted Automated Evidence
+- Added `touch-controls.js` before `game.js`.
+- Non-mouse pointer targets shift upward by 56 canvas pixels, scaled to the displayed canvas.
+- Mouse input remains exact.
+- Added visible English and Arabic guidance that the mage stays above the thumb.
+- Added `npm run controls:check` inside `npm run check`.
+- Added release-bundle checks for load order, clearance value, offline behavior, and no direct save/game-state access.
+- Added `touch-controls.js` to the production release whitelist.
+- Left `game.js`, movement speed, combat, balance, progression, and saves unchanged.
 
-`0.2.0-representative.9` remained GREEN before the test-readiness/tooling batches:
-
-- 200 active build runs with 99% wins and about 9% build spread;
-- 100 real choice-policy runs with 5.8% median spread;
-- 25/25 idle controls lost;
-- 25/25 simple-movement controls won;
-- 8/8 deterministic replays matched;
-- all 8 proven starting spells equipped correctly;
-- isolated fresh saves preserved normal owner progress;
-- no runtime violation.
-
-Automation does not prove fun, comprehension, fairness, replay desire, or value.
-
-## Completed Test-Readiness Infrastructure
-
-### Arabic readiness
-
-- Added Arabic/RTL presentation for essential opening, HUD, Spellbook, rewrite, pause, wave, cue, result, and spell-part language.
-- Preserved English as default and left gameplay, balance, progression, persistence, and content unchanged.
-- Added localization and fresh-save compatibility checks.
-- Preserved the 100 KB release ceiling by minifying localization separately.
-
-### Offline Cell Runner
-
-- Added repository-only `cell-runner.html`, `cell-runner.css`, and `cell-runner.js`.
-- Added English/Arabic selection, isolated token generation, reused-token rejection, hidden interview stages, timing, observations, exact questions, GO enforcement, local draft recovery, and Markdown export.
-- Kept the runner offline, telemetry-free, unnamed, and outside `dist/`, APKs, and AABs.
-- Added `npm run cell:check` to normal verification.
-
-### Tap-only SPCK Test Launcher
-
-- Added repository-only `test-launcher.html`, `test-launcher.css`, and `test-launcher.js`.
-- Added three visible touch-sized buttons: **Open Arabic Game**, **Open English Game**, and **Open Cell Runner**.
-- Arabic and English buttons generate unique clean owner-check tokens automatically.
-- No Console, DevTools, URL editing, source editing, or manual token construction is required.
-- Added `scripts/check-test-launcher.mjs` and `npm run launcher:check` inside `npm run check`.
-- Kept launcher files outside the production release whitelist.
-
-### Permanent workflow correction
-
-- Added **Owner execution** to the mandatory per-response gate.
-- Added `## Owner Phone Workflow Gate` to `docs/CHATGPT_WORKFLOW.md`.
-- Future phone requests must name an exact SPCK file or screen and provide a visible tap path.
-- Hidden query strings, Console input, terminal commands, manual tokens, and source edits are prohibited when a bounded interface can perform the action.
-- `npm run workflow:check` now protects this rule.
+The selected correction is deliberately smaller than a virtual joystick or full relative-drag redesign. Its remaining uncertainty is phone feel: the 56-pixel clearance may be correct, too small, or too large.
 
 ## Verification Status
 
-Verified through isolated source/static/headless contracts:
+Passed in an isolated Node behavior harness:
 
-- localization source syntax and Arabic/English behavior;
-- fresh-save semantics;
-- Cell Runner staged flow, token reuse blocking, hidden interview, GO enforcement, and export;
-- Test Launcher automatic Arabic/English URL construction and direct Cell Runner navigation;
-- touch-sized/safe-area layout contracts;
-- offline/no-telemetry behavior;
-- exclusion of launcher and runner files from the production release whitelist.
+- touch input receives the scaled upward offset;
+- `preventDefault()` remains functional;
+- mouse coordinates remain unchanged;
+- the control script is offline and telemetry-free;
+- bilingual guidance and release inclusion are enforced.
 
-A complete clean-checkout `npm run check` could not be executed inside the assistant environment because direct GitHub cloning failed DNS resolution, and no commit status was exposed for these direct `main` writes. Do not represent the new batches as phone-accepted until the owner completes the SPCK checks.
+A complete clean-checkout `npm run check` could not run because the assistant environment could not resolve GitHub. Do not call the touch correction phone-accepted yet.
 
-## Exact Next Action — Tap Only
+## Exact Next Action
 
-The owner should pull latest `main` in SPCK and perform these checks before involving the genuine participant:
-
-1. In the SPCK file list, tap `test-launcher.html`.
-2. Tap **Preview**.
+1. Pull latest `main` in SPCK.
+2. Open `test-launcher.html` and tap **Preview**.
 3. Tap **Open Arabic Game**.
-   - Check Arabic appears immediately.
-   - Check opening, HUD, wave cues, Spellbook, rewrites, options, victory, and defeat for incorrect meaning, clipping, overlap, or changed behavior.
-4. Press Android **Back** to return to the launcher.
-5. Tap **Open English Game**.
-   - Confirm the normal English path remains unchanged.
-6. Press Android **Back** to return to the launcher.
-7. Tap **Open Cell Runner**.
-   - Use dummy information.
-   - Complete Setup → Observation → Interview → Gate → Export.
-   - Confirm questions stay hidden during observation, partial GO is rejected, draft recovery works, and the Markdown record copies.
-8. Reset the Cell Runner after the owner check.
+4. During Wave 1, drag from the lower half of the arena and confirm:
+   - the mage remains clearly above the thumb;
+   - red runes and nearby enemies stay visible;
+   - steering still feels immediate;
+   - reaching left, right, upward, and near the bottom remains comfortable.
+5. Continue the Arabic/layout check, then use **Open English Game** and **Open Cell Runner** as previously listed.
 
-Do not type into SPCK Console, edit the preview URL, or construct a token manually.
+Report only whether the clearance feels **right**, **too small**, or **too large**, plus any remaining visible bug.
 
-## After the Owner Checks Pass
-
-- Open the Cell Runner from `test-launcher.html`.
-- Generate a different unused token.
-- Use one genuinely fresh participant.
-- Follow `docs/FRESH_PLAYER_CELL.md` exactly without coaching.
-- Return the exported Markdown record.
-
-Then compare the result with the pre-registered predictions and choose:
-
-- **GO candidate:** owner may approve the next bounded production batch.
-- **REVISION candidate:** diagnose one observed clarity, feedback, fairness, pacing, localization, or tooling cause and make one bounded correction.
-- **NO-GO/rethink candidate:** reconsider the current implementation within Pixel Mage if the central loop, climax, or replay desire fails despite valid uncoached access.
-
-Do not scale content before that decision.
+Do not involve the genuine fresh participant until the owner checks pass. Do not scale content before the commercial decision.
