@@ -2,19 +2,23 @@
 
 ## Status and Decision
 
-**Arabic-capable game path and offline Cell Runner are implemented on `main`; owner phone checks remain pending before the genuine cell.**
+**Arabic-capable game path, tap-only SPCK Test Launcher, and offline Cell Runner are implemented on `main`; owner phone checks remain pending before the genuine cell.**
 
 This is one consolidated, non-leading human cell for the representative slice. It asks the strongest remaining Product-Compass question: can a newcomer understand and enjoy the living-spell loop, reach a satisfying climax, and want a genuinely different next run without outside explanation?
 
 The result supports the owner's second explicit go/no-go. It does not prove broad market demand, final content volume, or willingness to pay.
 
-## Preferred Execution Tool
+## Required Execution Path
 
-Open `cell-runner.html` in SPCK preview on the **observer's** phone. The participant should see only the game.
+1. In SPCK, open `test-launcher.html` and tap **Preview**.
+2. Tap **Open Cell Runner**.
+3. In the runner, choose English or Arabic, record device/familiarity, confirm the participant is genuinely fresh, and use the generated game link.
+
+Do not type query strings, tokens, or commands into SPCK Console. Do not manually edit the preview URL. If the launcher or runner cannot open the game correctly, stop and record a tooling failure rather than improvising a hidden path around it.
 
 The runner:
 
-- generates a valid unique `?fresh=` token and the correct English or Arabic game URL;
+- generates a valid unique isolated token and the correct English or Arabic game URL;
 - rejects a token already used through that browser;
 - shows the neutral instruction before play;
 - keeps the eight interview questions hidden until silent observation ends;
@@ -23,17 +27,15 @@ The runner:
 - autosaves an unnamed draft locally and exports the complete result as Markdown;
 - sends no data and is excluded from `dist/`, the APK, and the future AAB.
 
-The runner is execution tooling, not a source of gameplay evidence. This document remains the authority and the manual fallback if the runner is unavailable.
+The launcher and runner are execution tooling, not sources of gameplay evidence. This document remains the authority for questions and decision rules.
 
 ## Participant and Clean Setup
 
 - Use one person who has not played, watched, or been taught Pixel Mage. Record only broad mobile-game familiarity: none, occasional, or frequent.
 - Use the target POCO X2/SPCK preview when practical so device behavior stays controlled. If another portrait Android phone is used, record it rather than coaching around device differences.
-- Pull the latest `main` in SPCK.
-- Preferred: open `cell-runner.html`, choose the language path, record the device/familiarity, confirm the participant is fresh, and use its generated game link.
-- Manual fallback for an English participant: open the game with a unique token such as `?fresh=cell-a`.
-- Manual fallback for an Arabic participant: open it with both parameters, such as `?fresh=cell-a&lang=ar`. If the preview URL already contains `?`, append the parameters with `&` instead.
-- Use a new token for every participant. The token creates an isolated local save with no owner progress, preserves reload checkpoints, sends no data, and does not alter the owner's normal save.
+- Pull the latest `main` in SPCK before opening `test-launcher.html`.
+- Use the Cell Runner generated from the launcher; do not construct a token or language URL manually.
+- Use a new token for every participant. The generated token creates an isolated local save with no owner progress, preserves reload checkpoints, sends no data, and does not alter the owner's normal save.
 - Use only one language path for the whole cell. Do not switch languages or translate individual game terms during play.
 - English neutral instruction: **“Please play this as if you found it yourself. I will not explain it, but you can stop whenever you want.”**
 - Arabic neutral instruction: **«العب هذه اللعبة كأنك وجدتها بنفسك. لن أشرحها لك، ويمكنك التوقف متى أردت.»**
@@ -103,11 +105,11 @@ One participant cannot establish general market appeal. A positive cell only per
 - **Replay motivation:** selecting a proven starting spell should create one concrete “try this next” impulse, but the representative slice may still feel too narrow for launch value.
 - **Likely first failure:** the first rewrite screen—understanding that one part changes, the complete result is previewed, and every option grows the spell equally.
 - **Language-specific risk:** an awkward translation or RTL layout problem may create confusion that is not caused by the central game loop. Record it as a technical/localization issue rather than coaching around it.
-- **Execution-specific risk:** a reused token, early interview reveal, incomplete notes, or observer prompting can invalidate the cell. The runner reduces these risks but does not replace observer discipline.
+- **Execution-specific risk:** a reused token, early interview reveal, incomplete notes, observer prompting, or bypassing the visible launcher path can invalidate the cell. The tooling reduces these risks but does not replace observer discipline.
 
 ## Result Record
 
-The runner exports these fields; the manual fallback must preserve the same structure.
+The runner exports these fields:
 
 - Build/commit:
 - Language path: English / Arabic
