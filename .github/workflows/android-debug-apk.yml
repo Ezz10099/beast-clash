@@ -91,8 +91,47 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Verify and sync Android project
-        run: npm run android:sync
+      - name: Verify workflow contract
+        run: npm run workflow:check
+
+      - name: Verify localization
+        run: npm run localization:check
+
+      - name: Verify controls
+        run: npm run controls:check
+
+      - name: Verify phone layout
+        run: npm run polish:check
+
+      - name: Verify arena feedback
+        run: npm run fx:check
+
+      - name: Verify enemy variety
+        run: npm run enemy:check
+
+      - name: Verify Cell Runner
+        run: npm run cell:check
+
+      - name: Verify Test Launcher
+        run: npm run launcher:check
+
+      - name: Verify core gameplay
+        run: node --check game.js && node scripts/check.mjs
+
+      - name: Build release bundle
+        run: npm run build
+
+      - name: Verify release bundle
+        run: node scripts/check-build.mjs
+
+      - name: Build Android artwork
+        run: npm run assets:android
+
+      - name: Verify Android configuration
+        run: node scripts/check-android.mjs
+
+      - name: Sync Capacitor Android project
+        run: npx cap sync android
 
       - name: Build debug APK
         working-directory: android
