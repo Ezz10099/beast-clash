@@ -3,16 +3,18 @@ import { readFile } from 'node:fs/promises';
 
 const root = new URL('../', import.meta.url);
 
-const [agents, workflow, activeSession, startHere] = await Promise.all([
+const [agents, workflow, activeSession, startHere, arabicGlossary] = await Promise.all([
   readFile(new URL('AGENTS.md', root), 'utf8'),
   readFile(new URL('docs/CHATGPT_WORKFLOW.md', root), 'utf8'),
   readFile(new URL('docs/ACTIVE_SESSION.md', root), 'utf8'),
   readFile(new URL('docs/START_HERE.md', root), 'utf8'),
+  readFile(new URL('docs/ARABIC_GLOSSARY.md', root), 'utf8'),
 ]);
 
 for (const requiredReference of [
   'docs/CHATGPT_WORKFLOW.md',
   'docs/ACTIVE_SESSION.md',
+  'docs/ARABIC_GLOSSARY.md',
   'mandatory per-response gate',
   'Work state:',
   'Current Work Packet',
@@ -85,12 +87,23 @@ assert.doesNotMatch(
 for (const requiredReference of [
   'docs/CHATGPT_WORKFLOW.md',
   'docs/ACTIVE_SESSION.md',
+  'docs/ARABIC_GLOSSARY.md',
 ]) {
   assert.match(
     startHere,
     new RegExp(requiredReference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
     `docs/START_HERE.md must reference ${requiredReference}`,
   );
+}
+
+for (const requiredTerm of [
+  '| Trial | التحدّي |',
+  '| Rewrite | إعادة الصياغة |',
+  '| Essence | الجوهر |',
+  '| Law | القانون |',
+  '| Echo | صدى |',
+]) {
+  assert.ok(arabicGlossary.includes(requiredTerm), `Arabic glossary is missing: ${requiredTerm}`);
 }
 
 console.log('Pixel Mage workflow persistence checks passed.');
