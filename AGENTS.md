@@ -56,12 +56,14 @@ Reading the authority documents once is not enough. Every meaningful session and
 - `style.css`
 - `localization.css`
 - `phone-polish.css`
+- `arena-fx.css`
 - `localization.js`
 - `touch-controls.js`
 - `game.js`
 - `phone-polish.js`
+- `arena-fx.js`
 
-`localization.js`/`.css`, `touch-controls.js`, and `phone-polish.js`/`.css` are bounded presentation/control layers. They must not change combat state, balance, progression, persistence, normal English behavior, or the commercial approval boundary. The phone-polish layer may read displayed HUD text to render meters and protect destructive UI actions, but it must not access saves or private gameplay state directly.
+`localization.js`/`.css`, `touch-controls.js`, `phone-polish.js`/`.css`, and `arena-fx.js`/`.css` are bounded presentation/control layers. They must not change combat state, balance, progression, persistence, normal English behavior, or the commercial approval boundary. The phone-polish layer may read displayed HUD and visible-panel DOM state to render meters and protect destructive UI actions. The arena-FX layer may read displayed health, wave, and spell text plus public pointer events to render atmosphere and feedback. Neither layer may access saves or private gameplay state directly, and the arena-FX canvas must remain pointer-transparent.
 
 The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast Clash prototype and are not loaded by Pixel Mage. Do not reactivate them.
 
@@ -82,7 +84,7 @@ The Test Launcher is the tap-only SPCK entry point for owner checks. The Cell Ru
 ## Release Bundle and Android
 
 - `npm run build` creates `dist/` from the whitelist in `scripts/release-config.mjs`.
-- `localization.js` is separately minified in the generated bundle; source remains readable in Git.
+- Release CSS and presentation/control JavaScript are separately minified in the generated bundle; source remains readable in Git.
 - Never edit or commit `dist/`.
 - Keep the runtime fully local and below the enforced size ceiling.
 - Keep package ID `com.ezz10099.pixelmage` unchanged.
@@ -134,6 +136,6 @@ Before ending any meaningful session:
 
 ## Verification
 
-Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check`, `npm run controls:check`, `npm run polish:check`, `npm run cell:check`, and `npm run launcher:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
+Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check`, `npm run controls:check`, `npm run polish:check`, `npm run fx:check`, `npm run cell:check`, and `npm run launcher:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
 
 For browser preview, run `npm run preview` for the production bundle. Open `test-launcher.html` directly through SPCK preview for owner testing; it is intentionally not served from `dist/`. Before asking the owner to validate anything in SPCK, verify a visible tap path and state the exact file and buttons to use.
