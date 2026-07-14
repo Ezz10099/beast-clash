@@ -81,12 +81,18 @@ assert.ok(
   'localization and controls must initialize before the game; polish must initialize after it',
 );
 assert.match(html, /viewport-fit=cover/, 'safe-area viewport support is required');
+assert.match(html, /class="combat-deck"/, 'release HTML must include the unified combat dashboard');
+assert.match(html, /class="hud-card hud-health"[\s\S]*id="healthMeter"/, 'health meter must remain attached to health');
+assert.match(html, /class="hud-card hud-wave"[\s\S]*id="waveMeter"/, 'wave meter must remain attached to wave progress');
+assert.doesNotMatch(html, /class="status-meters"/, 'detached meter row must not return');
 assert.match(css, /safe-area-inset-top/, 'top safe-area support is required');
 assert.match(css, /100svh/, 'small-viewport height support is required');
 assert.match(css, /@media\(max-height:700px\)|@media \(max-height: 700px\)/, 'short portrait layout is required');
 assert.match(css, /@media\(max-height:600px\)|@media \(max-height: 600px\)/, 'small portrait layout is required');
 assert.match(localizationCss, /html\[lang=.?ar.?\]/, 'Arabic layout must remain query-scoped');
 assert.match(localizationCss, /direction:rtl/, 'Arabic layout must retain RTL presentation');
+assert.match(polishCss, /\.combat-deck/, 'unified combat dashboard styling must ship');
+assert.match(polishCss, /\.hud-card/, 'attached HUD card styling must ship');
 assert.match(polishCss, /overflow-y:auto/, 'phone overlays must remain scroll safe');
 assert.match(polishCss, /@media\(orientation:landscape\)/, 'landscape guidance must remain available');
 assert.match(localization, /URLSearchParams\(.+\)\.get\(.lang.\)/, 'Arabic mode must remain explicitly query-activated');
@@ -99,6 +105,7 @@ assert.match(touchControls, /THUMB_CLEARANCE_CANVAS_Y=84|84/, 'release controls 
 assert.doesNotMatch(touchControls, /localStorage|SaveSystem|persistent\.|state\./, 'touch controls must not alter saves or game state directly');
 assert.match(phonePolish, /Tap again to restart/, 'release polish must retain restart protection');
 assert.match(phonePolish, /إعادة التحدّي/, 'release polish must retain corrected Arabic restart wording');
+assert.match(phonePolish, /dataset\.screen/, 'release polish must track visible panel state for the portrait layout');
 assert.doesNotMatch(phonePolish, /localStorage|SaveSystem|persistent\.|state\./, 'phone polish must not alter saves or game state directly');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
