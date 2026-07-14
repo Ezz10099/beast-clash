@@ -123,7 +123,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Date: July 13, 2026
 - Status: Active representative design decision
 - Decision: Remove universal Support from the representative rewrite screen. Every rewrite or Hold advances one shared living-spell level; the level visibly enlarges the spell and increases damage and cast rate. Hold preserves the current three words but receives no more growth than experimentation.
-- Evidence: The original fixed-build bots always took Support and therefore never tested the central choice. A new policy audit found median clears of 247 seconds for always-Support, 265 seconds for discovery-first, and 274 seconds for rewrite-only, with Support also ending ahead in damage, haste, health, and speed. After `.7`, 100 real policy runs passed with 99% wins, every policy reaching level 12, and only 5.8% median clear spread.
+- Evidence: The original fixed-build bots always took Support and therefore never tested the central choice. A new policy audit found median clears of 247 seconds for always-Support, 265 seconds discovery-first and 274 seconds for rewrite-only, with Support also ending ahead in damage, haste, health, and speed. After `.7`, 100 real policy runs passed with 99% wins, every policy reaching level 12, and only 5.8% median clear spread.
 - Reason: The game promised an evolving spell while generic Support supplied the actual vertical growth. That made ignoring the hook the rational strategy and turned Spellbook experimentation into a power tax.
 - Change rule: Future growth systems may replace spell levels, but engaging with the game's central expressive mechanic must not be systematically weaker than avoiding it.
 
@@ -159,3 +159,13 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Scope balance: Avoid both endless expansion and premature minimalism. The target is the smallest release that is genuinely fun, engaging, replayable, polished, worth keeping, and realistically finishable through the GitHub–SPCK–Capacitor workflow.
 - Permanent source: `docs/OWNER_MANDATE.md` contains the full interpretation and mandatory copy-paste new-session prompt.
 - Change rule: Only an explicit owner instruction may replace this continuity and priority mandate. Strong evidence may justify changing mechanics inside Pixel Mage, but not casual project switching.
+
+## D-018 — Persistent Per-Response Development Workflow
+
+- Date: July 14, 2026
+- Status: Locked workflow rule
+- Decision: Reading the authority documents once at session start is insufficient. Every work-related response must pass the goal, player-effect, strongest-limitation, continuity/scope, evidence-truth, decision-quality, and persistence checks in `docs/CHATGPT_WORKFLOW.md`. `docs/ACTIVE_SESSION.md` must preserve the compact live state, and material responses must expose a concise `Work state` line so drift is visible to the owner.
+- Implementation: `AGENTS.md` and `docs/START_HERE.md` require the workflow and active-state files; material decisions require a recorded work packet before coding; state changes must be persisted immediately; interruption recovery must reread the repository; and `npm run workflow:check` is part of the normal verification path.
+- Reason: Chat memory and session-opening summaries can fade during long sessions, context compression, interruptions, or narrow implementation work. Multiple independent safeguards are needed so the Product Compass remains the active development logic rather than a ceremonial statement.
+- Evidence boundary: The automated check proves only that the persistence structure and mandatory fields remain present. Whether ChatGPT actually applies the gate well is judged through the consistency of later responses, repository updates, and owner observation.
+- Change rule: The workflow may be strengthened when a concrete failure is found, but it may not be silently removed, reduced to session-start reading, or treated as optional.
