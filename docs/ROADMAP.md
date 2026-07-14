@@ -9,9 +9,10 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 - Preserve Pixel Mage continuity and one-thumb automatic-casting play.
 - Keep the mage and immediate threats visible during touch control.
 - Make Form, Essence, and Law create meaningful, visible play-style changes.
+- Make the small enemy roster produce distinct, readable tactical situations.
 - Build runs toward satisfying guardians and bosses.
 - Create replay desire through functional discovery rather than permanent-power grinding.
-- Preserve natural Arabic and English presentation, coherent portrait hierarchy, readable combat feedback, offline play, persistence, performance, and Android delivery.
+- Preserve natural Arabic and English presentation, coherent portrait hierarchy, offline play, persistence, performance, and Android delivery.
 - Keep automation and human evidence within their honest boundaries.
 
 ## Commercial Gate Sequence
@@ -20,17 +21,15 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 2. Owner selected Living Spell Trials — **complete**.
 3. Representative 12-wave 2×2×2 slice — **complete**.
 4. Owner corrections through `.8` — **complete**.
-5. Continuous evidence lane and clean fresh saves on `.9` — **complete and green**.
+5. Continuous evidence lane and clean fresh saves on `.9` — **complete and green before the enemy-variety batch**.
 6. Arabic-capable access — **implemented**.
 7. Offline Cell Runner — **implemented; owner check pending**.
 8. Tap-only SPCK Test Launcher — **implemented and visible on phone**.
 9. 84-pixel thumb-clearance correction — **owner accepted enough to continue**.
-10. Consolidated phone-readability and interaction-safety batch — **implemented**.
-11. Complete Arabic terminology and wording correction with permanent glossary — **implemented**.
-12. Cohesive portrait gameplay layout rebuild — **implemented; owner visual check pending**.
-13. Arena feedback and atmosphere batch — **implemented; owner visual check pending**.
-14. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
-15. Define remaining production scope from measured evidence — **blocked on step 14**.
+10. Phone readability, Arabic correction, portrait layout, and arena-feedback batches — **implemented; latest arena-feedback batch owner-confirmed**.
+11. Current-roster enemy-variety batch — **implemented; automated and owner checks pending**.
+12. Genuine fresh-player commercial cell and owner second go/no-go — **next after step 11 passes**.
+13. Define remaining production scope from measured evidence — **blocked on step 12**.
 
 Do not scale content, create final assets, add monetization, or begin store production before the second go/no-go.
 
@@ -62,59 +61,49 @@ The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait control
 - Corrected loop: entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` rejected.
 - Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
-- `.9` automated evidence: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 replays, 8/8 starting-spell checks, and no runtime violation.
-- Owner phone control evidence: direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
-- Owner localization evidence: Arabic activated successfully, but inconsistent wording required a full correction.
-- Owner layout evidence: the accumulated header/canvas/readout/HUD/meter/hint stack still looked wrong after the first quality batch.
-- The owner then requested another substantial improvement before human testing, so combat presentation—not mechanics—became the next bounded target.
+- `.9` evidence before enemy variety: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 replays, 8/8 starting-spell checks, and no runtime violation.
+- Direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
+- Arabic activation worked but required a full terminology correction.
+- The initial stacked gameplay layout failed owner review and was rebuilt.
+- The later arena-feedback/atmosphere batch was owner-confirmed.
+- The owner selected enemy variety as the next substantial development field.
 
 These results do not prove newcomer comprehension, touch quality across players, boredom/fairness, climax satisfaction, replay desire, or commercial longevity.
 
-### Test-readiness and language infrastructure
+### Test-readiness and presentation infrastructure
 
 Implemented on `main`:
 
-- Arabic/RTL game access with default-English preservation;
-- permanent Arabic glossary and corrected game/interview wording;
+- Arabic/RTL game access with a permanent glossary and default-English preservation;
 - offline Cell Runner with staged observation/interview/gate/export;
 - tap-only Test Launcher for Arabic, English, and Cell Runner access;
-- permanent Owner Phone Workflow Gate prohibiting hidden Console/query/token steps when a UI is feasible;
+- permanent Owner Phone Workflow Gate;
 - 84-pixel scaled thumb clearance and protected restart;
-- minified offline release assets under the enforced bundle ceiling.
+- compact header, dominant arena, unified dashboard, attached meters, and responsive overlays;
+- act/essence atmosphere, touch trail, wave pulse, and damage-edge feedback;
+- minified offline release assets under the unchanged bundle ceiling.
 
-### Cohesive portrait layout rebuild
+### Current-roster enemy-variety batch
 
-Implemented on `main` without changing `game.js`, combat, balance, progression, or saves:
+Implemented on `main` without adding a new enemy family, asset dependency, save field, currency, or progression system:
 
-- compact branded header with a consistently reachable Options button;
-- dominant unchanged 320×480 arena with reduced outer framing;
-- one unified combat deck instead of separate spell, HUD, and detached meter rows;
-- health and wave meters attached directly to their corresponding labels;
-- live DOM screen-state tracking so the combat deck appears during play and stays out of start/rewrite/Spellbook/menu overlays;
-- one responsive overlay system with fluid critical text, wrapping, safe scrolling, and matching English/Arabic hierarchy;
-- height-aware composition that shrinks the whole frame instead of making essential text unreadably small;
-- strengthened polish and release-bundle checks for the new hierarchy.
-
-### Arena feedback and atmosphere batch
-
-Implemented on `main` without changing `game.js`, combat timing, damage, movement, progression, or saves:
-
-- a pointer-transparent 320×480 canvas layered above the existing arena;
-- subtle act-specific atmosphere for Acts I, II, and III;
-- Ember/Frost-colored arena edge identity driven by the displayed spell readout;
-- a short fading trail for the adjusted touch target;
-- wave-entry border pulses driven by displayed wave text;
-- damage and critical-health edge feedback driven by displayed health text;
-- automatic reduced-motion behavior;
-- lightweight 90 ms HUD sampling instead of per-frame DOM mutation observers;
-- dedicated `npm run fx:check`, release inclusion, minification, offline/read-only checks, and the unchanged 100 KB bundle ceiling.
+- Wave 1 remains the simple pursuit onboarding lane;
+- Act II introduces deterministic flanking Motes;
+- later Mote groups use separation so threats remain readable instead of collapsing into one blob;
+- selected Glyph Casters replace one aimed shot with a purple, three-lane fan pattern after a visible windup and before a recovery gap;
+- nearby Casters visibly relay to one Mote, creating a readable priority interaction and modest movement pressure;
+- Act III introduces orange-ring/line surging Motes that slow for a windup and then commit toward the captured lane;
+- Frost still slows surges, Orbit can block fan projectiles, and clustered formations preserve value for Ember splash;
+- telegraphs use a pointer-transparent 320×480 overlay;
+- the deterministic headless runtime now loads `enemy-variety.js`, so normal checks and evidence include the new behavior;
+- `npm run enemy:check` protects role assignment, Wave 1 simplicity, formations, fan-fire timing, surger commitment, relay links, current-roster scope, release inclusion, and no persistence/network access.
 
 ### Remaining Milestone 8 exit criteria
 
-1. Owner passes one consolidated SPCK portrait-layout, combat-feedback, and Arabic check.
-2. Owner confirms normal English presentation is unchanged.
-3. Owner passes Cell Runner usability, corrected Arabic questions, and staged-flow checks.
-4. Normal repository checks pass.
+1. Enemy-variety automated evidence and full release/Android checks pass.
+2. Owner passes one consolidated SPCK enemy-readability and fairness check in Arabic.
+3. Owner confirms normal English presentation remains correct.
+4. Owner passes Cell Runner usability and staged-flow checks.
 5. One genuine fresh participant completes the frozen non-leading cell.
 6. Predictions are compared with the result.
 7. Owner gives GO / bounded REVISION / NO-GO-rethink.
@@ -133,4 +122,4 @@ Complete any applicable Play testing requirement, collect structured evidence, f
 
 ## Exact Next Step
 
-Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Start a Trial and check the arena atmosphere, touch trail, wave pulse, damage-edge feedback, unified combat deck, and readability of enemies/projectiles/runes. Reach one rewrite and open Spellbook/Options to confirm effects stay behind overlays. Then briefly open **Open English Game** and **Open Cell Runner**. Do not involve a fresh participant until this visual pass succeeds.
+Wait for the current automated evidence/release build to pass. Then pull latest `main`, open `test-launcher.html` in SPCK Preview, tap **Open Arabic Game**, and check Wave 1 simplicity, Act II flanking/fan-fire/relay links, and Act III surger telegraphs. Confirm the new patterns are readable rather than chaotic, then briefly check **Open English Game** and **Open Cell Runner**. Do not involve a fresh participant until this pass succeeds.
