@@ -51,14 +51,17 @@ const html = await readFile(resolve(output, 'index.html'), 'utf8');
 const css = await readFile(resolve(output, 'style.css'), 'utf8');
 const localizationCss = await readFile(resolve(output, 'localization.css'), 'utf8');
 const localization = await readFile(resolve(output, 'localization.js'), 'utf8');
+const touchControls = await readFile(resolve(output, 'touch-controls.js'), 'utf8');
 assert.doesNotMatch(html, /(?:src|href)=["']https?:\/\//i, 'release HTML must not depend on the network');
 assert.match(html, /href=["']style\.css["']/);
 assert.match(html, /href=["']localization\.css["']/);
 assert.match(html, /src=["']localization\.js["']/);
+assert.match(html, /src=["']touch-controls\.js["']/);
 assert.match(html, /src=["']game\.js["']/);
 assert.ok(
-  html.indexOf('src="localization.js"') < html.indexOf('src="game.js"'),
-  'localization must initialize before the game runtime',
+  html.indexOf('src="localization.js"') < html.indexOf('src="touch-controls.js"') &&
+    html.indexOf('src="touch-controls.js"') < html.indexOf('src="game.js"'),
+  'localization and touch controls must initialize before the game runtime',
 );
 assert.match(html, /viewport-fit=cover/, 'safe-area viewport support is required');
 assert.match(css, /safe-area-inset-top/, 'top safe-area support is required');
@@ -73,6 +76,8 @@ assert.ok(
   localization.length < (await readFile(resolve(root, 'localization.js'), 'utf8')).length,
   'release localization must be minified',
 );
+assert.match(touchControls, /THUMB_CLEARANCE_CANVAS_Y\s*=\s*56/, 'release controls must preserve thumb clearance');
+assert.doesNotMatch(touchControls, /localStorage|SaveSystem|persistent\.|state\./, 'touch controls must not alter saves or game state directly');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
 assert.match(nativeGame, /appStateChange/, 'native bundle must handle native app pausing');
