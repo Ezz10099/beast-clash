@@ -21,9 +21,10 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The corrected loop was later reported as entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` failed review. Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - `.9` added token-isolated clean saves and the frozen protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay remained unchanged.
-- `main` now adds a bounded Arabic/RTL test path with `?lang=ar`, compatible with `?fresh=<token>&lang=ar`, without changing gameplay or the default English path.
-- `cell-runner.html` is an offline repository-only observer tool that generates isolated links, blocks reused tokens, hides the interview during play, records the frozen cell, and exports Markdown.
-- The next step is one owner Arabic meaning/layout check plus one owner Cell Runner usability check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
+- `main` now includes bounded Arabic/RTL test-readiness without changing gameplay or the default English path.
+- `cell-runner.html` is an offline repository-only observer tool for the frozen fresh-player cell.
+- `test-launcher.html` is the tap-only SPCK entry point. It opens clean Arabic, clean English, and the Cell Runner without Console input, URL editing, or manual token construction.
+- The next step is one owner launcher/Arabic/English/Cell Runner usability check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
 
 The installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -46,35 +47,30 @@ Full launch content, final assets, monetization, and store production remain blo
 
 `Pixel Mage` remains a working title until a later owner-approved store-name decision.
 
-## Run in SPCK Editor
+## Check the Current Work in SPCK
 
-1. Clone or pull `https://github.com/Ezz10099/beast-clash.git`.
-2. Open `index.html` for the game or `cell-runner.html` for the observer tool.
-3. Start SPCK preview/local server.
+1. Pull the latest `main`.
+2. In the SPCK file list, tap `test-launcher.html`.
+3. Tap **Preview**.
+4. Use only the three visible buttons:
+   - **Open Arabic Game** — check Arabic meaning, RTL fit, clipping, and unchanged gameplay.
+   - Press Android **Back** to return, then tap **Open English Game** — confirm the normal English path is unchanged.
+   - Press Android **Back** to return, then tap **Open Cell Runner** — walk through Setup → Observation → Interview → Gate → Export with dummy data.
+5. Reset the Cell Runner after the owner check.
 
-Normal English game path: open the game preview normally.
+Do not use SPCK Console, edit the preview URL, or construct a `fresh` token manually. The launcher handles those details.
 
-Owner Arabic meaning/layout check:
-
-`?fresh=owner-ar-check&lang=ar`
-
-Owner Cell Runner check:
-
-- open `cell-runner.html`;
-- choose Arabic and confirm the generated URL includes both `fresh` and `lang=ar`;
-- use dummy answers to walk through setup, observation, interview, gate, and export;
-- reset it afterward.
-
-For a genuine fresh-player cell, generate a new unused token in the runner and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
+For a genuine fresh-player cell, open the Cell Runner from the launcher, generate a new unused token, and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
 
 ## Verification and Android
 
-- `npm run workflow:check` protects the persistent development process.
+- `npm run workflow:check` protects the persistent development process and the tap-only owner workflow rule.
 - `npm run localization:check` verifies default English, Arabic/RTL activation, essential translations, canvas text, whitespace stability, and fresh-save compatibility.
 - `npm run cell:check` verifies offline-only runner behavior, unique URL generation, reused-token rejection, hidden interview flow, exact questions, GO enforcement, export, mobile layout, and production-bundle exclusion.
+- `npm run launcher:check` verifies visible tap navigation, automatic clean English/Arabic tokens, direct Cell Runner opening, mobile layout, offline behavior, and production-bundle exclusion.
 - `npm run check` runs those checks plus gameplay, release-bundle, artwork, and Android configuration gates.
 - `npm run evidence` runs the 200-build matrix, 100 real choice-policy trials, idle/movement controls, deterministic replays, and starting-spell payoff checks.
-- `npm run preview` serves the exact generated production `dist/` bundle; the Cell Runner is intentionally opened directly from the repository preview.
+- `npm run preview` serves the exact generated production `dist/` bundle; repository-only test tools are opened directly through SPCK Preview.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts.
 - The future Google Play upload is a securely signed release AAB.
