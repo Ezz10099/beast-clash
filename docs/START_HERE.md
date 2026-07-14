@@ -1,6 +1,6 @@
 # Pixel Mage — Start Here
 
-This is the permanent entry point for every future ChatGPT or Codex session. Chat memory is helpful; the repository is the source of truth.
+This is the permanent entry point for every future ChatGPT or Codex session. Chat memory is helpful; the repository is the source of truth. `docs/CHATGPT_WORKFLOW.md` makes the Product Compass operational throughout a session, and `docs/ACTIVE_SESSION.md` preserves the compact live state that must affect later responses.
 
 ## Fixed Project Context
 
@@ -23,7 +23,7 @@ Player promise: **One thumb. One living spell. Rewrite its Form, Essence, and La
 
 The content cap is a production fence, not the whole design. For every material improvement, Codex must trace the player's logic—what the player sees, expects, chooses, observes, and wants next—then generate and compare solutions using source inspection, automated evidence, targeted comparable research, and bounded prototypes. Owner feedback remains decisive human evidence, but must not be treated as the only source of ideas.
 
-**Goal-to-code rule:** the Product Compass must remain active throughout implementation, not merely be quoted during planning or review. Use `docs/DEVELOPMENT_MODEL.md` for the permanent chain: **final goal → intended player experience → feature purpose → alternatives and tradeoffs → code → evidence → updated understanding**. Public-human evidence, creative sources, synthetic play, fresh-context criticism, and calibrated rare human gates jointly reduce dependence on owner creativity without pretending that automation can feel fun.
+**Goal-to-code rule:** the Product Compass must remain active throughout implementation, not merely be quoted during planning or review. Use `docs/DEVELOPMENT_MODEL.md` for the permanent chain: **final goal → intended player experience → feature purpose → alternatives and tradeoffs → code → evidence → updated understanding**. Use `docs/CHATGPT_WORKFLOW.md` and `docs/ACTIVE_SESSION.md` to keep that chain active across every response and through interruptions. Public-human evidence, creative sources, synthetic play, fresh-context criticism, and calibrated rare human gates jointly reduce dependence on owner creativity without pretending that automation can feel fun.
 
 **Authority boundary, July 13, 2026:** the final goal, player promise, and fun-first continuity mandate are binding. Earlier scope, mechanic, content count, process rule, and design decisions may be revised when Codex can show that another route inside Pixel Mage better serves that goal. Codex owns finding the problem, generating alternatives, selecting and implementing the next step, and proving it; the owner supplies resources when genuinely needed and judges major commercial gates.
 
@@ -35,18 +35,20 @@ Read these files in order:
 2. `docs/OWNER_MANDATE.md`
 3. `docs/START_HERE.md`
 4. `docs/DEVELOPMENT_MODEL.md`
-5. `docs/RELEASE_SCOPE.md`
-6. `docs/DECISIONS.md`
-7. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
-8. `docs/FRESH_PLAYER_CELL.md`
-9. `docs/DESIGN_RESEARCH.md`
-10. `docs/SCOPE_OPTIONS.md`
-11. `docs/ROADMAP.md`
-12. `docs/SESSION_HANDOFF.md`
-13. `docs/GOOGLE_PLAY.md`
-14. `docs/BUILD.md` and `docs/ANDROID.md`
+5. `docs/CHATGPT_WORKFLOW.md`
+6. `docs/ACTIVE_SESSION.md`
+7. `docs/RELEASE_SCOPE.md`
+8. `docs/DECISIONS.md`
+9. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
+10. `docs/FRESH_PLAYER_CELL.md`
+11. `docs/DESIGN_RESEARCH.md`
+12. `docs/SCOPE_OPTIONS.md`
+13. `docs/ROADMAP.md`
+14. `docs/SESSION_HANDOFF.md`
+15. `docs/GOOGLE_PLAY.md`
+16. `docs/BUILD.md` and `docs/ANDROID.md`
 
-If documents conflict, reconcile them before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
+The active session is mutable operational state, not higher authority. If it conflicts with durable authority or newer accepted evidence, reconcile and update it before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
 ## Current High-Level State
 
@@ -75,8 +77,9 @@ If documents conflict, reconcile them before coding. A new explicit owner decisi
 - Full launch content and final assets remain blocked on the next valid commercial evidence step and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
+- The persistent ChatGPT workflow is now repository-backed through a mutable active state, mandatory per-response gate, visible material-response state line, and deterministic workflow integrity check.
 
-The exact latest state belongs in `docs/SESSION_HANDOFF.md`.
+The exact latest state belongs in `docs/ACTIVE_SESSION.md` and `docs/SESSION_HANDOFF.md`. The active state controls continuity during the session; the handoff preserves the complete cross-session record.
 
 ## Current Commercial Gate
 
@@ -87,29 +90,37 @@ Preserve the `.8` accepted gameplay and `.9` clean-save foundation. First make t
 At the start:
 
 1. Read the authority files, beginning with `docs/OWNER_MANDATE.md`.
-2. Check the latest `main`.
-3. Report the current milestone, latest accepted phone test, strongest current fun/engagement limitation, and one meaningful session goal.
-4. Distinguish the binding final goal and continuity mandate from revisable working hypotheses.
-5. Do not propose another project or casual core replacement unless the owner explicitly asks or strong evidence shows Pixel Mage cannot satisfy the Product Compass.
+2. Read and reconcile `docs/ACTIVE_SESSION.md` against the durable authority files and latest `main`.
+3. Update the active state before work when its milestone, build, strongest limitation, approval boundary, evidence, work goal, or exact next step is stale.
+4. Report the current milestone, latest accepted phone test, strongest current fun/engagement limitation, and one meaningful session goal.
+5. Distinguish the binding final goal and continuity mandate from revisable working hypotheses.
+6. Do not propose another project or casual core replacement unless the owner explicitly asks or strong evidence shows Pixel Mage cannot satisfy the Product Compass.
 
 During work:
 
-1. Work in substantial related batches.
-2. Preserve the SPCK and responsive portrait workflow.
-3. Stay inside the current approval boundary.
-4. Run `npm run check` before publishing code.
-5. Run `npm run evidence` before gameplay gates or commercial recommendations.
-6. Ask for one consolidated human cell only at a major commercial gate.
-7. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
+1. Apply the mandatory per-response gate in `docs/CHATGPT_WORKFLOW.md` before every work-related response.
+2. Include the compact `Work state` line for every material recommendation, coding batch, test request, commercial judgment, or direction change.
+3. Complete or update the `Current Work Packet` before a material gameplay, UX, progression, or commercial change.
+4. Work in substantial related batches.
+5. Preserve the SPCK and responsive portrait workflow.
+6. Stay inside the current approval boundary.
+7. Update `docs/ACTIVE_SESSION.md` immediately when a changed fact could affect later responses in the same session.
+8. Run `npm run workflow:check` before stable work commits.
+9. Run `npm run check` before publishing code.
+10. Run `npm run evidence` before gameplay gates or commercial recommendations.
+11. Ask for one consolidated human cell only at a major commercial gate.
+12. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
 1. Push intended stable changes to `main`.
-2. Update the handoff and roadmap.
-3. Update decisions only for durable decisions.
-4. Update design research when evidence changes the recommendation.
-5. Never call untested behavior or provisional scope accepted.
-6. Confirm that the next step is the strongest finishable response to the current fun/engagement problem.
+2. Confirm `docs/ACTIVE_SESSION.md` contains the exact live state and next action.
+3. Update the handoff and roadmap.
+4. Update decisions only for durable decisions.
+5. Update design research when evidence changes the recommendation.
+6. Never call untested behavior or provisional scope accepted.
+7. State what was verified, what remains provisional, and what the next session must do first.
+8. Confirm that the next step is the strongest finishable response to the current fun/engagement problem.
 
 ## Decision Authority
 
@@ -121,4 +132,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, and `docs/DEVELOPMENT_MODEL.md`, then the latest roadmap, evidence, decisions, and handoff. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, `docs/CHATGPT_WORKFLOW.md`, and `docs/ACTIVE_SESSION.md`, then the latest roadmap, evidence, decisions, and handoff. Reconcile the active state against latest `main` before working. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Apply the repository's mandatory per-response gate throughout the session, update the active state whenever a decision-relevant fact changes, and use the visible `Work state` line for material responses. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
