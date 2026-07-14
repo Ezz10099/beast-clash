@@ -124,6 +124,9 @@ jobs:
       - name: Verify release bundle
         run: node scripts/check-build.mjs
 
+      - name: Verify runtime size
+        run: npm run size:check
+
       - name: Build Android artwork
         run: npm run assets:android
 
