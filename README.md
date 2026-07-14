@@ -21,13 +21,14 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The corrected loop was later reported as entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` failed review. Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - `.9` added token-isolated clean saves and the frozen protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay remained unchanged.
-- `main` includes corrected Arabic/RTL wording, 84-pixel thumb clearance, and a rebuilt portrait gameplay composition without changing combat, balance, progression, or saves.
-- The portrait layout now uses one compact header, a dominant unchanged 320×480 arena, and one unified combat dashboard. Health and wave meters are attached directly to their labels instead of floating in a detached row.
-- Start, rewrite, Spellbook, and Options panels share one responsive scroll-safe overlay system; critical text uses fluid sizing rather than extremely small height-breakpoint values.
+- `main` includes corrected Arabic/RTL wording, 84-pixel thumb clearance, a rebuilt portrait composition, and a new read-only arena feedback layer without changing combat, balance, progression, or saves.
+- The portrait layout uses one compact header, a dominant unchanged 320×480 arena, and one unified combat dashboard with health and wave meters attached to their labels.
+- `arena-fx.js`/`.css` add act-based atmosphere, Ember/Frost edge identity, a short touch trail, wave-entry pulses, and damage/critical-health edge feedback. The overlay is pointer-transparent and reads only displayed HUD text.
+- Start, rewrite, Spellbook, and Options panels share one responsive scroll-safe overlay system.
 - `docs/ARABIC_GLOSSARY.md` permanently standardizes the Arabic game and interview terminology.
 - `cell-runner.html` is an offline repository-only observer tool for the frozen fresh-player cell.
 - `test-launcher.html` is the tap-only SPCK entry point. It opens clean Arabic, clean English, and the Cell Runner without Console input, URL editing, or manual token construction.
-- The next step is one consolidated owner layout/Arabic/English/Cell Runner check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
+- The next step is one consolidated owner layout/combat-feedback/Arabic/English/Cell Runner check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
 
 The installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -55,10 +56,11 @@ Full launch content, final assets, monetization, and store production remain blo
 1. Pull the latest `main`.
 2. Open `test-launcher.html` and tap **Preview**.
 3. Tap **Open Arabic Game**.
-4. Check the compact header, arena size, unified spell/HUD dashboard, attached HP/wave bars, start screen, rewrite screen, Spellbook, Options, and Arabic fit.
-5. Play through at least one rewrite and pause once; confirm the combat dashboard appears only during active play and the overlays do not clip.
-6. Press Android **Back**, tap **Open English Game**, and confirm the same layout remains clean in English.
-7. Press Android **Back**, tap **Open Cell Runner**, choose Arabic, and confirm the neutral instruction and eight questions still read naturally.
+4. Start a Trial and check the arena atmosphere, touch trail, wave pulse, damage-edge feedback, unified dashboard, and Arabic fit.
+5. Reach Act II or Act III if practical and confirm the atmosphere changes without hiding enemies, projectiles, or red runes.
+6. Reach one rewrite, open the Spellbook, and open Options; confirm the overlay effects disappear behind menus and nothing clips.
+7. Press Android **Back**, tap **Open English Game**, and confirm the same presentation remains clean in English.
+8. Press Android **Back**, tap **Open Cell Runner**, choose Arabic, and confirm the neutral instruction and eight questions still read naturally.
 
 Do not use SPCK Console, edit the preview URL, or construct a `fresh` token manually. The launcher handles those details.
 
@@ -68,8 +70,9 @@ For a genuine fresh-player cell, open the Cell Runner from the launcher, generat
 
 - `npm run workflow:check` protects the persistent development process, visible owner workflow, and Arabic glossary references.
 - `npm run localization:check` verifies default English, approved Arabic terms, RTL activation, essential translations, canvas text, retired-term rejection, whitespace stability, and fresh-save compatibility.
-- `npm run controls:check` verifies the scaled touch clearance and unchanged mouse input.
+- `npm run controls:check` verifies the scaled thumb clearance and unchanged mouse input.
 - `npm run polish:check` verifies the portrait shell, dominant arena, unified dashboard, attached meters, panel-state transitions, responsive overlays, restart confirmation, and no direct save/game-state access.
+- `npm run fx:check` verifies the pointer-transparent 320×480 overlay, English/Arabic HUD parsing, act/essence mapping, touch/wave/damage feedback contracts, reduced-motion support, offline behavior, and release inclusion.
 - `npm run cell:check` verifies offline-only runner behavior, unique URLs, reused-token rejection, hidden interview flow, corrected frozen questions, GO enforcement, export, mobile layout, and production-bundle exclusion.
 - `npm run launcher:check` verifies visible tap navigation, automatic clean English/Arabic tokens, direct Cell Runner opening, mobile layout, offline behavior, and production-bundle exclusion.
 - `npm run check` runs those checks plus gameplay, fully minified release construction, the 100 KB ceiling, artwork, and Android configuration gates.
