@@ -13,13 +13,24 @@ const packageJson = JSON.parse(await readFile(resolve(root, 'package.json'), 'ut
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 
-for (const path of RELEASE_FILES.filter((file) => file !== 'game.js')) {
+for (const path of RELEASE_FILES.filter((file) => file !== 'game.js' && file !== 'localization.js')) {
   const source = resolve(root, path);
   const destination = resolve(output, path);
 
   await mkdir(dirname(destination), { recursive: true });
   await copyFile(source, destination);
 }
+
+await build({
+  entryPoints: [resolve(root, 'localization.js')],
+  outfile: resolve(output, 'localization.js'),
+  bundle: true,
+  format: 'iife',
+  platform: 'browser',
+  target: ['chrome60'],
+  minify: true,
+  legalComments: 'none',
+});
 
 await build({
   entryPoints: [resolve(root, 'scripts/native-entry.mjs')],
