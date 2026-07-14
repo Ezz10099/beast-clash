@@ -25,6 +25,18 @@ The manifest records the release version, byte count, and SHA-256 checksum of ea
 
 The build contains no remote URLs, animal assets, or legacy Phaser code, so it loads entirely offline inside Capacitor.
 
+## Repository-Only Cell Runner
+
+The following files are internal test tooling and must remain outside `RELEASE_FILES`, `dist/`, the APK, and the future AAB:
+
+- `cell-runner.html`
+- `cell-runner.css`
+- `cell-runner.js`
+
+Open `cell-runner.html` through SPCK preview to prepare and record the fresh-player commercial cell. It generates isolated English/Arabic game links, blocks reused tokens, hides the interview during play, stores an unnamed draft locally, enforces the frozen GO checklist, and exports the result as Markdown.
+
+The runner uses no remote resources, analytics, accounts, telemetry, or network transmission. It is not part of the player-facing product and must never be added to the release whitelist.
+
 ## Verification
 
 Run:
@@ -35,6 +47,7 @@ This now runs:
 
 - the persistent workflow integrity check;
 - `npm run localization:check` for English preservation, Arabic/RTL activation, essential DOM/canvas translations, whitespace stability, and combined fresh-save semantics;
+- `npm run cell:check` for offline-only runner behavior, valid English/Arabic URLs, token reuse rejection, stage-gated questions, local drafts, frozen protocol wording, GO-condition enforcement, complete Markdown export, mobile layout, and release-bundle exclusion;
 - the normal gameplay, choice, movement, balance, persistence, and stress checks;
 - the deterministic release build and manifest checks;
 - localization minification and the unchanged 100 KB runtime ceiling;
