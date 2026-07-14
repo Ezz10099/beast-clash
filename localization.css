@@ -1,0 +1,52 @@
+html[lang="ar"] body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+html[lang="ar"] .eyebrow,
+html[lang="ar"] .spell-readout {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html[lang="ar"] .opening-spell,
+html[lang="ar"] .spellbook-choice,
+html[lang="ar"] .upgrade-choice,
+html[lang="ar"] .next-wave-copy {
+  text-align: right;
+}
+
+html[lang="ar"] .opening-spell-copy,
+html[lang="ar"] .spellbook-choice-copy,
+html[lang="ar"] .choice-copy,
+html[lang="ar"] .next-wave-copy,
+html[lang="ar"] .spell-readout,
+html[lang="ar"] .control-hint,
+html[lang="ar"] .hud {
+  direction: rtl;
+  unicode-bidi: plaintext;
+}
+
+html[lang="ar"] .choice-badge,
+html[lang="ar"] #scoreText {
+  text-align: left;
+}
+
+html[lang="ar"] #healthText {
+  text-align: right;
+}
+
+html[lang="ar"] .upgrade-choice {
+  border-left: 2px solid #59658c;
+  border-right: 3px solid var(--axis-color);
+}
+
+html[lang="ar"] .upgrade-choice[data-discovery="new"] {
+  border-left-color: #b88735;
+  border-right-color: var(--axis-color);
+}
+
+html[lang="ar"] .opening-spell-copy small,
+html[lang="ar"] .spellbook-choice-state,
+html[lang="ar"] .choice-badge {
+  letter-spacing: 0;
+}
