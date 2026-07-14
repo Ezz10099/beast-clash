@@ -53,6 +53,9 @@ class FakeAudioContext {
 
 export async function createHeadlessGame(options = {}) {
   const gameCode = options.gameCode || await readFile(new URL('../game.js', import.meta.url), 'utf8');
+  const enemyVarietyCode = options.enemyVarietyCode === false
+    ? ''
+    : options.enemyVarietyCode || await readFile(new URL('../enemy-variety.js', import.meta.url), 'utf8');
   const storage = new Map(options.storageEntries || []);
   const windowHandlers = new Map();
   const documentHandlers = new Map();
@@ -83,6 +86,15 @@ export async function createHeadlessGame(options = {}) {
   canvas.hasPointerCapture = () => false;
   canvas.releasePointerCapture = () => {};
 
+  const enemyFx = makeElement('enemyFx');
+  enemyFx.width = canvas.width;
+  enemyFx.height = canvas.height;
+  enemyFx.getContext = () => drawingContext;
+  enemyFx.getBoundingClientRect = canvas.getBoundingClientRect;
+
+  const gameCard = makeElement('gameCard');
+  gameCard.dataset.screen = 'playing';
+
   const startPanel = makeElement('startPanel');
   const spellbookPanel = makeElement('spellbookPanel');
   spellbookPanel.hidden = true;
@@ -94,6 +106,8 @@ export async function createHeadlessGame(options = {}) {
   menuPanel.hidden = true;
   const elements = new Map([
     ['#game', canvas],
+    ['#enemyFx', enemyFx],
+    ['.game-card', gameCard],
     ['#healthText', makeElement('healthText')],
     ['#waveText', makeElement('waveText')],
     ['#scoreText', makeElement('scoreText')],
@@ -158,12 +172,15 @@ export async function createHeadlessGame(options = {}) {
 
   vm.createContext(sandbox);
   vm.runInContext(gameCode, sandbox, { filename: 'game.js' });
+  if (enemyVarietyCode) vm.runInContext(enemyVarietyCode, sandbox, { filename: 'enemy-variety.js' });
 
   return {
     canvas,
     documentHandlers,
     elements,
+    enemyFx,
     evaluate: (source) => vm.runInContext(source, sandbox),
+    gameCard,
     menuPanel,
     resumeRunButton,
     sandbox,
