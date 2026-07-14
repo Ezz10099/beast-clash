@@ -90,6 +90,7 @@ assert.equal(arabic.documentElement.lang, 'ar');
 assert.equal(arabic.documentElement.dir, 'rtl');
 assert.equal(arabic.body.dataset.language, 'ar');
 assert.match(arabic.body.textNode.nodeValue, /العلامات الحمراء/);
+assert.equal(translate('   '), '   ', 'whitespace-only DOM nodes must remain stable');
 assert.equal(translate('Bolt · Ember · Split'), 'صاعقة · نار · انقسام');
 assert.equal(
   translate('FORM Bolt · ESSENCE Frost · LAW Echo · LV 4'),
