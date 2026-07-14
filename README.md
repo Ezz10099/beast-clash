@@ -2,7 +2,7 @@
 
 Pixel Mage is a mobile-first, one-thumb action roguelite being developed as the owner's first commercially credible Google Play release.
 
-The repository remains simple enough for the owner's normal workflow: ChatGPT/Codex edits GitHub, the owner pulls in SPCK Editor, and testing happens on an Android phone.
+The repository remains simple enough for the normal workflow: ChatGPT/Codex edits GitHub, the owner pulls in SPCK Editor, and testing happens on an Android phone.
 
 ## Goal
 
@@ -13,35 +13,37 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 ## Current State
 
 - The custom HTML/CSS/JavaScript runtime is stable.
-- Drag movement, automatic casting, upgrades, boss behavior, pause, settings, sound, haptics, persistence, win, loss, and replay are implemented.
-- The deterministic web release candidate is frozen on `web-rc-0.1.0`.
+- Drag movement, automatic casting, rewrites, boss behavior, pause, settings, sound, haptics, persistence, win, loss, and replay are implemented.
 - Capacitor 8 and the Android project are configured.
 - The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
 - The accepted five-wave APK remains the stable native foundation and takes roughly one minute.
 - The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
-- The correction was later reported as highly entertaining, with roughly 15 minutes of representative experimentation; fresh-player choice comprehension remains open.
-- Evidence build `0.2.0-representative.3` added the green 200-run automated matrix and CI report.
-- Text-heavy choice build `.4` failed immediate visual review. Compact visual `.5` passed the owner's SPCK review.
-- `0.2.0-representative.6` closed that observable loop and passed SPCK. `.7` removed the rewrite power penalty and passed SPCK. `.8` adds readable movement pressure and lets every proven Spellbook combination become the next Trial's starting spell; the owner passed its consolidated SPCK test.
-- `.9` prepares the commercial cell with token-isolated clean saves and the fixed protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay is unchanged.
+- The corrected loop was later reported as entertaining, with roughly 15 minutes of representative experimentation.
+- Text-heavy `.4` failed review. Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
+- `.9` added token-isolated clean saves and the fixed protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay remained unchanged.
+- `main` now adds a bounded Arabic/RTL test path with `?lang=ar`, compatible with `?fresh=<token>&lang=ar`, without changing gameplay or the default English path.
+- The next step is one owner Arabic meaning/layout check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
 
-That installed build is a **validated native vertical slice**, not the approved commercial launch game.
+The installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
 ## Commercial Scope Status
 
-**Option B — Living Spell Trials — is the current evidence-supported direction.** The Product Compass is binding; its exact old cap is revisable when a better evidence-backed route appears.
+**Option B — Living Spell Trials — is the current evidence-supported direction.** The Product Compass is binding; its exact old cap remains revisable when a better evidence-backed route appears.
 
-The current working launch direction uses:
+The representative slice provides:
 
-- one mage and exactly one evolving spell;
-- three readable spell axes—Form, Essence, and Law—with 3 parts each and 27 possible combinations;
-- timed three-act runs, three arena themes, nine authored Trials, six normal enemy behavior families, three bosses, and optional post-victory Endless;
-- a Spellbook, Trial unlocks, Mastery, and local records instead of permanent-stat currency grind;
-- light narrative framing without a dialogue, cutscene, quest, equipment, or large-roster system.
+- one mage and one evolving three-part spell;
+- Bolt/Orbit Forms, Ember/Frost Essences, and Split/Echo Laws;
+- one 12-wave/three-act run;
+- two normal enemy families, guardian charges, and The Redactor boss;
+- compact visual rewrites, next-threat previews, and shared spell growth;
+- readable red-rune movement pressure;
+- a functional Spellbook with selectable proven starting spells;
+- local records, checkpoint/resume, and isolated fresh-player saves.
 
-The representative slice provides one arena, one scheduled 12-wave/three-act run, 2×2×2 spell parts, two normal enemy families, guardians, one boss, wave-boundary checkpoint/resume, and stress-tested runtime budgets. The correction build labels every spell axis, gives Bolt and Orbit distinct validated roles, removes fixed post-clear timer padding, and makes the pre-boss act a Mote rush, Glyph crossfire, and twin-guardian sequence. The current loop shows the resulting spell, coming threat, transformation, combat effect, shared spell growth, active dodge pressure, and a usable horizontal Spellbook. Full content and final assets still wait for the prepared fresh-player cell and the owner's second go/no-go.
+Full launch content, final assets, monetization, and store production remain blocked pending the fresh-player result and second go/no-go.
 
-The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypothesis: engagement and clarity now decide the duration. `Pixel Mage` also remains a working title until a later owner-approved store-name decision.
+`Pixel Mage` remains a working title until a later owner-approved store-name decision.
 
 ## Run in SPCK Editor
 
@@ -49,10 +51,20 @@ The 5:49 phone clear disproved the need to chase the earlier 7–9-minute hypoth
 2. Open `index.html`.
 3. Start SPCK preview/local server.
 
+Normal English path: open the preview normally.
+
+Owner Arabic meaning/layout check:
+
+`?fresh=owner-ar-check&lang=ar`
+
+For a genuine Arabic fresh-player cell, replace `owner-ar-check` with a new unique token and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
+
 ## Verification and Android
 
-- `npm run check` verifies all eight readable spell combinations, Bolt/Orbit role balance, active wave pacing, save migration/checkpointing, runtime stress limits, three seeded 12-wave clears, the offline release bundle, and Android configuration.
-- `npm run evidence` runs 200 real-damage build trials plus 100 Hold/mixed/discovery-first/rewrite-only trials, deterministic replays, regression gates, and balance/pacing/choice-feedback reports.
+- `npm run workflow:check` protects the persistent development process.
+- `npm run localization:check` verifies default English, Arabic/RTL activation, essential translations, canvas text, whitespace stability, and fresh-save compatibility.
+- `npm run check` runs those checks plus gameplay, release-bundle, artwork, and Android configuration gates.
+- `npm run evidence` runs the 200-build matrix, 100 real choice-policy trials, idle/movement controls, deterministic replays, and starting-spell payoff checks.
 - `npm run preview` serves the exact generated `dist/` bundle.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts.
@@ -80,14 +92,11 @@ Laptop:
 Start every new development session with:
 
 1. `AGENTS.md`
-2. `docs/START_HERE.md`
-3. `docs/DEVELOPMENT_MODEL.md`
-4. `docs/RELEASE_SCOPE.md`
-5. `docs/DECISIONS.md`
-6. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
-7. `docs/DESIGN_RESEARCH.md`
-8. `docs/SCOPE_OPTIONS.md`
-9. `docs/ROADMAP.md`
-10. `docs/SESSION_HANDOFF.md`
+2. `docs/OWNER_MANDATE.md`
+3. `docs/START_HERE.md`
+4. `docs/DEVELOPMENT_MODEL.md`
+5. `docs/CHATGPT_WORKFLOW.md`
+6. `docs/ACTIVE_SESSION.md`
+7. the latest scope, decisions, evidence, roadmap, and handoff documents.
 
-Apply the locked Product Compass and `docs/DEVELOPMENT_MODEL.md` to every material decision. The Living Spell direction is current but revisable; do not scale remaining launch content before the fresh-player cell and second go/no-go.
+Apply the Product Compass and development model to every material decision. Do not scale remaining launch content before the fresh-player cell and second go/no-go.
