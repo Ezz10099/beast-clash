@@ -59,32 +59,26 @@ The active session is mutable operational state, not higher authority. If it con
 - The accepted five-wave APK lasts roughly one minute and remains the stable native foundation.
 - That build is a validated native vertical slice, not the approved commercial launch game.
 - The old tiny release contract has been superseded as a commercial target.
-- The final focused research round is complete and three capped directions are recorded in `docs/SCOPE_OPTIONS.md`.
-- Living Spell Trials remains the evidence-supported direction; its old exact cap is now a revisable production hypothesis rather than binding authority.
-- The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, with no reported layout or runtime blocker, but the gate failed because onboarding remained unclear, the late pre-boss stretch became boring, and Orbit felt much weaker than Bolt.
-- Correction build `0.2.0-representative.2` made the owner “really happy” and was reported as entertaining, with roughly 15 minutes of available representative experimentation. Choice outcomes may still be unclear to some players.
-- Evidence build `0.2.0-representative.3` added the required 200-run real-damage matrix, deterministic replays, balance/pacing/choice-schema reports, and a CI artifact.
-- Text-heavy choice build `0.2.0-representative.4` passed automation but failed the owner's immediate visual review.
-- Compact visual build `0.2.0-representative.5` replaced the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge; the owner approved it in SPCK.
-- Player-logic build `0.2.0-representative.6` closed the observable choice loop and passed the owner's SPCK check.
-- Incentive build `0.2.0-representative.7` removed the rewrite power tax and expanded automation to 100 real choice-policy runs.
-- The owner passed `.7` in SPCK. A subsequent independent audit found that the default Bolt won 25/25 untouched runs and that the post-run “different build” promise silently restarted the same spell.
-- Agency build `0.2.0-representative.8` adds clearly telegraphed red Trial runes that require movement and turns proven Spellbook combinations into selectable starting spells.
-- The owner passed `.8` in SPCK: the red rune was accepted and a proven spell successfully became the next Trial's selected starting build.
-- Gate-preparation build `0.2.0-representative.9` adds token-isolated clean saves for reproducible fresh-player sessions without changing normal gameplay or the owner's save.
-- The exact non-leading cell, predictions, result record, and stop conditions are in `docs/FRESH_PLAYER_CELL.md`.
-- Arabic readiness is implemented through `?lang=ar`, including essential DOM/canvas translation, RTL presentation, combined `?fresh=<token>&lang=ar`, default-English preservation, and deterministic checks. Owner phone acceptance remains pending.
-- `cell-runner.html` is an offline repository-only observer tool. It generates isolated English/Arabic URLs, blocks reused tokens, hides the interview during play, records the frozen protocol, enforces all six GO conditions, and exports Markdown. It is excluded from `dist/`, the APK, and the future AAB. Owner phone usability remains pending.
+- Living Spell Trials remains the evidence-supported direction; its old exact cap is a revisable production hypothesis rather than binding authority.
+- The first complete Living Spell Trials phone run cleared in 5:49. The owner wanted to experiment and enjoyed the boss, but onboarding, late pacing, Spellbook value, and Orbit feel failed.
+- Correction build `0.2.0-representative.2` was reported as entertaining, with roughly 15 minutes of representative experimentation.
+- Text-heavy `.4` failed immediate visual review. Compact `.5`, player-logic `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
+- Gate-preparation `.9` added token-isolated clean saves without changing normal gameplay or the owner's save.
+- Arabic readiness is implemented, including essential DOM/canvas translation, RTL presentation, isolated clean Arabic saves, default-English preservation, and deterministic checks. Owner phone acceptance remains pending.
+- `cell-runner.html` is an offline repository-only observer tool. It generates isolated English/Arabic URLs, blocks reused tokens, hides the interview during play, records the frozen protocol, enforces GO conditions, and exports Markdown.
+- `test-launcher.html` is the required owner-facing SPCK test entry point. It provides visible **Open Arabic Game**, **Open English Game**, and **Open Cell Runner** buttons and constructs all parameters/tokens automatically.
+- The July 14 Console error proved that hidden query instructions were not owner-ready. It did not test Arabic mode or gameplay.
+- Future owner phone checks must start from an exact SPCK file or screen and use a visible touch path. Manual Console input, query-string editing, token construction, terminal commands, or source edits are prohibited when a bounded interface can perform the action.
 - Full launch content and final assets remain blocked on the genuine fresh-player cell and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
-- The persistent ChatGPT workflow is repository-backed through a mutable active state, mandatory per-response gate, visible material-response state line, and deterministic workflow integrity check.
+- The persistent ChatGPT workflow is repository-backed through mutable active state, mandatory per-response and owner-execution gates, visible work-state lines, and deterministic workflow integrity checks.
 
 The exact latest state belongs in `docs/ACTIVE_SESSION.md` and `docs/SESSION_HANDOFF.md`. The active state controls continuity during the session; the handoff preserves the complete cross-session record.
 
 ## Current Commercial Gate
 
-Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Arabic access and the offline Cell Runner are implemented but require owner phone checks. The owner must first verify the Arabic game path and the complete Cell Runner flow. Then one genuinely fresh participant must play through the non-leading cell using a new generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
+Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Arabic access, the offline Cell Runner, and the tap-only SPCK Test Launcher are implemented but require owner phone checks. The owner must first open `test-launcher.html` and verify the Arabic game, English comparison, and complete Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
 
 ## Mandatory Session Protocol
 
@@ -109,10 +103,12 @@ During work:
 8. Run `npm run workflow:check` before stable work commits.
 9. Run `npm run localization:check` when changing localization.
 10. Run `npm run cell:check` when changing the Cell Runner.
-11. Run `npm run check` before publishing code.
-12. Run `npm run evidence` before gameplay gates or commercial recommendations.
-13. Ask for one consolidated human cell only at a major commercial gate.
-14. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
+11. Run `npm run launcher:check` when changing owner test navigation.
+12. Run `npm run check` before publishing code.
+13. Run `npm run evidence` before gameplay gates or commercial recommendations.
+14. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
+15. Ask for one consolidated human cell only at a major commercial gate.
+16. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
@@ -135,4 +131,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, `docs/CHATGPT_WORKFLOW.md`, and `docs/ACTIVE_SESSION.md`, then the latest roadmap, evidence, decisions, and handoff. Reconcile the active state against latest `main` before working. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Apply the repository's mandatory per-response gate throughout the session, update the active state whenever a decision-relevant fact changes, and use the visible `Work state` line for material responses. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, `docs/CHATGPT_WORKFLOW.md`, and `docs/ACTIVE_SESSION.md`, then the latest roadmap, evidence, decisions, and handoff. Reconcile the active state against latest `main` before working. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Apply the repository's mandatory per-response and owner-execution gates throughout the session, update the active state whenever a decision-relevant fact changes, and use the visible `Work state` line for material responses. Every owner phone check must begin from a named SPCK file or screen and a visible tap path; do not require Console input, manual URL/query editing, token construction, terminal commands, or source edits when a bounded interface can do it. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
