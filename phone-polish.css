@@ -2,16 +2,214 @@
   display: none;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  place-items: start center;
+  padding: max(8px, env(safe-area-inset-top)) 6px max(8px, env(safe-area-inset-bottom));
+}
+
+.game-card {
+  position: relative;
+  width: min(calc(100% - 2px), 430px);
+  gap: 8px;
+  padding: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(125, 145, 199, 0.56);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% -8%, rgba(107, 87, 178, 0.24), transparent 32%),
+    linear-gradient(180deg, rgba(31, 39, 61, 0.98), rgba(9, 13, 23, 0.99));
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.top-bar {
+  min-height: 48px;
+  padding: 0 2px;
+}
+
+.brand-lockup {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand-sigil {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 209, 102, 0.48);
+  border-radius: 9px;
+  background:
+    linear-gradient(135deg, transparent 36%, rgba(255, 209, 102, 0.88) 37% 43%, transparent 44%),
+    linear-gradient(45deg, transparent 36%, rgba(155, 246, 255, 0.78) 37% 43%, transparent 44%),
+    rgba(14, 20, 34, 0.92);
+  box-shadow: inset 0 0 12px rgba(155, 246, 255, 0.08);
+}
+
+.brand-sigil::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: #fff0be;
+  box-shadow: 0 0 7px rgba(255, 209, 102, 0.7);
+}
+
+.top-bar .eyebrow {
+  margin-bottom: 1px;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+}
+
+.top-bar h1 {
+  font-size: 1.12rem;
+  line-height: 1.05;
+}
+
+.small-button {
+  min-width: 76px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 11px;
+}
+
+.game-stage {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(128, 145, 195, 0.38);
+  border-radius: 16px;
+  background: #0a0f1b;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+#game {
+  width: 100%;
+  border: 0;
+  border-radius: 15px;
+}
+
 .start-panel,
 .upgrade-panel,
 .spellbook-panel,
 .menu-panel {
+  inset: 0;
   align-content: safe center;
+  gap: clamp(7px, 1.8vw, 11px);
+  padding: clamp(13px, 4vw, 22px);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  border-radius: 15px;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
+}
+
+.start-panel,
+.spellbook-panel,
+.menu-panel {
+  background:
+    radial-gradient(circle at 50% 4%, rgba(114, 91, 190, 0.28), transparent 34%),
+    linear-gradient(180deg, rgba(10, 14, 25, 0.965), rgba(7, 10, 18, 0.985));
+}
+
+.start-panel h2 {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  line-height: 1.08;
+}
+
+.opening-guide,
+.start-status,
+.spellbook-text {
+  font-size: clamp(0.75rem, 2.7vw, 0.88rem);
+  line-height: 1.4;
+}
+
+.opening-spell {
+  min-height: 64px;
+  grid-template-columns: 50px minmax(0, 1fr);
+  gap: 10px;
+  padding: 9px 12px;
+  border-color: rgba(124, 145, 204, 0.7);
+  border-radius: 12px;
+  background:
+    linear-gradient(90deg, rgba(255, 209, 102, 0.06), transparent 45%),
+    rgba(21, 28, 45, 0.9);
+}
+
+.opening-spell-copy strong {
+  font-size: 0.86rem;
+}
+
+.opening-spell-copy span {
+  font-size: 0.72rem;
+}
+
+.opening-spell-copy small {
+  font-size: 0.64rem;
+}
+
+.start-actions {
+  gap: 8px;
+}
+
+.option-button,
+.menu-primary,
+.menu-secondary {
+  min-height: 48px;
+  border-radius: 11px;
+}
+
+.upgrade-panel {
+  align-content: safe start;
+  text-align: left;
+  background:
+    radial-gradient(circle at 50% 0, rgba(155, 246, 255, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(9, 13, 24, 0.97), rgba(7, 10, 18, 0.99));
+}
+
+.upgrade-panel > .eyebrow,
+.upgrade-panel > h2,
+.upgrade-help {
+  text-align: center;
+}
+
+.upgrade-panel h2,
+.spellbook-panel h2,
+.menu-panel h2 {
+  font-size: clamp(1.08rem, 4.4vw, 1.32rem);
+  line-height: 1.1;
+}
+
+.upgrade-help,
+.spellbook-status,
+.menu-status {
+  min-height: 0;
+  font-size: clamp(0.7rem, 2.5vw, 0.82rem);
+  line-height: 1.35;
+}
+
+.next-wave-preview {
+  min-height: 48px;
+  padding: 7px 9px;
+  border-color: rgba(124, 145, 204, 0.62);
+  border-radius: 11px;
 }
 
 .next-wave-copy strong,
@@ -19,53 +217,145 @@
   overflow: visible;
   text-overflow: clip;
   white-space: normal;
+  line-height: 1.25;
 }
 
 .next-wave-copy strong {
-  line-height: 1.2;
+  font-size: clamp(0.66rem, 2.35vw, 0.76rem);
 }
 
 .next-wave-copy span {
-  line-height: 1.2;
+  font-size: clamp(0.59rem, 2.15vw, 0.69rem);
 }
 
-.spellbook-choice-name {
-  font-size: 0.68rem;
-  line-height: 1.25;
-  overflow-wrap: anywhere;
+.upgrade-choices {
+  gap: 8px;
 }
 
-.spellbook-choice-state {
-  font-size: 0.58rem;
+.upgrade-choice {
+  min-height: 58px;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 11px;
+}
+
+.choice-name {
+  font-size: clamp(0.73rem, 2.65vw, 0.84rem);
   line-height: 1.2;
 }
 
 .choice-detail {
-  font-size: 0.68rem;
-  line-height: 1.25;
+  margin-top: 2px;
+  font-size: clamp(0.65rem, 2.3vw, 0.74rem);
+  line-height: 1.3;
 }
 
 .choice-badge {
-  font-size: 0.6rem;
+  font-size: clamp(0.58rem, 2vw, 0.66rem);
   line-height: 1.2;
 }
 
-button:focus-visible {
-  outline: 3px solid #9bf6ff;
-  outline-offset: 2px;
+.spellbook-panel {
+  align-content: safe start;
 }
 
-button:disabled {
-  opacity: 0.62;
+.spellbook-choices {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
-.status-meters {
+.spellbook-choice {
+  min-height: 58px;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 7px;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.spellbook-choice-name {
+  font-size: clamp(0.63rem, 2.15vw, 0.72rem);
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+
+.spellbook-choice-state {
+  font-size: clamp(0.54rem, 1.9vw, 0.62rem);
+  line-height: 1.22;
+}
+
+.combat-deck {
   display: grid;
-  grid-template-columns: minmax(92px, 0.72fr) minmax(150px, 1.28fr);
-  align-items: center;
-  gap: 10px;
-  min-height: 12px;
-  padding: 0 4px;
+  gap: 6px;
+  padding: 7px;
+  border: 1px solid rgba(111, 130, 184, 0.45);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(28, 36, 57, 0.94), rgba(15, 21, 35, 0.97));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.game-card[data-screen="start"] .combat-deck,
+.game-card[data-screen="spellbook"] .combat-deck,
+.game-card[data-screen="upgrade"] .combat-deck,
+.game-card[data-screen="menu"] .combat-deck {
+  display: none;
+}
+
+.spell-readout {
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 6px 9px;
+  border-color: rgba(255, 209, 102, 0.36);
+  border-radius: 10px;
+  background: rgba(9, 14, 25, 0.72);
+  font-size: clamp(0.68rem, 2.45vw, 0.8rem);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr) minmax(0, 0.8fr);
+  align-items: stretch;
+  gap: 6px;
+  min-height: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+.hud-card {
+  min-width: 0;
+  min-height: 42px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  padding: 6px 7px;
+  overflow: hidden;
+  border: 1px solid rgba(104, 121, 171, 0.42);
+  border-radius: 10px;
+  background: rgba(8, 13, 23, 0.66);
+}
+
+.hud-value {
+  min-width: 0;
+  overflow: hidden;
+  font-size: clamp(0.67rem, 2.35vw, 0.78rem);
+  font-weight: 850;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-health #healthText,
+.hud-wave #waveText,
+.hud-score #scoreText {
+  text-align: center;
+}
+
+.hud-score {
+  place-items: center;
 }
 
 .health-meter,
@@ -76,11 +366,11 @@ button:disabled {
 }
 
 .health-meter {
-  grid-template-columns: repeat(var(--meter-count, 5), minmax(5px, 1fr));
+  grid-template-columns: repeat(var(--meter-count, 5), minmax(4px, 1fr));
 }
 
 .wave-meter {
-  grid-template-columns: repeat(12, minmax(3px, 1fr));
+  grid-template-columns: repeat(12, minmax(2px, 1fr));
 }
 
 .meter-segment {
@@ -103,13 +393,27 @@ button:disabled {
   box-shadow: 0 0 5px rgba(255, 209, 102, 0.7);
 }
 
-.game-card[data-health-state="low"] #game {
-  border-color: #a94f5c;
+.control-hint {
+  min-height: 0;
+  margin: 0;
+  padding: 2px 4px 0;
+  font-size: clamp(0.64rem, 2.2vw, 0.73rem);
+  line-height: 1.25;
 }
 
-.game-card[data-health-state="critical"] #game {
+.game-card[data-health-state="low"] .game-stage {
+  border-color: rgba(255, 107, 107, 0.65);
+}
+
+.game-card[data-health-state="critical"] .game-stage {
   border-color: #ff6b6b;
-  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.18), 0 0 18px rgba(255, 107, 107, 0.16);
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.16), 0 0 20px rgba(255, 107, 107, 0.18);
+}
+
+.game-card[data-health-state="low"] #game,
+.game-card[data-health-state="critical"] #game {
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .new-run-confirming {
@@ -118,43 +422,160 @@ button:disabled {
   color: #fff0be !important;
 }
 
+button:focus-visible {
+  outline: 3px solid #9bf6ff;
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.62;
+}
+
+html[lang="ar"] .brand-lockup,
+html[lang="ar"] .opening-spell,
+html[lang="ar"] .spellbook-choice,
+html[lang="ar"] .upgrade-choice {
+  direction: rtl;
+}
+
 html[lang="ar"] .spellbook-choice-name,
 html[lang="ar"] .spellbook-choice-state,
 html[lang="ar"] .choice-detail,
 html[lang="ar"] .choice-badge,
-html[lang="ar"] .next-wave-copy {
-  line-height: 1.35;
+html[lang="ar"] .next-wave-copy,
+html[lang="ar"] .hud-value {
+  line-height: 1.38;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 340px) {
+  .game-card {
+    padding: 6px;
+    gap: 6px;
+    border-radius: 16px;
+  }
+
+  .top-bar {
+    min-height: 44px;
+  }
+
+  .brand-sigil {
+    width: 26px;
+    height: 26px;
+  }
+
+  .small-button {
+    min-width: 68px;
+    min-height: 40px;
+    padding: 0 9px;
+  }
+
   .spellbook-choices {
-    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
   .spellbook-choice {
-    min-height: 48px;
+    grid-template-columns: 31px minmax(0, 1fr);
+    gap: 4px;
+    padding: 5px 4px;
   }
 
-  .status-meters {
-    grid-template-columns: minmax(80px, 0.65fr) minmax(130px, 1.35fr);
-    gap: 7px;
+  .spellbook-choice .choice-spell-icon {
+    transform: scale(0.78);
+    transform-origin: center;
+  }
+
+  .hud {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr) minmax(0, 0.75fr);
+    gap: 4px;
+  }
+
+  .hud-card {
+    padding: 5px;
   }
 }
 
-@media (max-height: 700px) {
-  .start-panel,
-  .upgrade-panel,
-  .spellbook-panel,
-  .menu-panel {
-    align-content: start;
+@media (max-height: 740px) {
+  .game-card {
+    width: min(calc(100% - 2px), 350px);
   }
 
-  .status-meters {
-    min-height: 9px;
+  .top-bar {
+    min-height: 42px;
+  }
+
+  .top-bar .eyebrow {
+    display: none;
+  }
+
+  .brand-sigil {
+    width: 26px;
+    height: 26px;
+  }
+
+  .small-button {
+    min-height: 40px;
+  }
+
+  .combat-deck {
+    gap: 4px;
+    padding: 5px;
+  }
+
+  .spell-readout {
+    min-height: 30px;
+    padding: 4px 7px;
+  }
+
+  .hud-card {
+    min-height: 36px;
+    padding: 4px 6px;
   }
 
   .meter-segment {
     height: 5px;
+  }
+
+  .start-panel,
+  .upgrade-panel,
+  .spellbook-panel,
+  .menu-panel {
+    align-content: safe start;
+    padding: 12px;
+  }
+}
+
+@media (max-height: 640px) {
+  .game-card {
+    width: min(calc(100% - 2px), 300px);
+  }
+
+  .brand-lockup {
+    gap: 6px;
+  }
+
+  .brand-sigil {
+    display: none;
+  }
+
+  .top-bar h1 {
+    font-size: 1rem;
+  }
+
+  .combat-deck {
+    padding: 4px;
+  }
+
+  .control-hint {
+    display: none;
+  }
+
+  .upgrade-choice {
+    min-height: 54px;
+    padding: 6px 7px;
+  }
+
+  .spellbook-choice {
+    min-height: 52px;
   }
 }
 
