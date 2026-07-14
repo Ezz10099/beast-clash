@@ -67,23 +67,24 @@ The active session is mutable operational state, not higher authority. If it con
 - Text-heavy choice build `0.2.0-representative.4` passed automation but failed the owner's immediate visual review.
 - Compact visual build `0.2.0-representative.5` replaced the text wall with miniature resulting-spell shapes, two short text lines, smaller cards, and a tiny discovery badge; the owner approved it in SPCK.
 - Player-logic build `0.2.0-representative.6` closed the observable choice loop and passed the owner's SPCK check.
-- Incentive build `0.2.0-representative.7` fixes the independently discovered power tax: Support no longer competes with rewriting, every rewrite or hold advances the same visible living-spell level, and automation now compares 100 real choice-policy runs in addition to the 200-build matrix.
+- Incentive build `0.2.0-representative.7` removed the rewrite power tax and expanded automation to 100 real choice-policy runs.
 - The owner passed `.7` in SPCK. A subsequent independent audit found that the default Bolt won 25/25 untouched runs and that the post-run “different build” promise silently restarted the same spell.
 - Agency build `0.2.0-representative.8` adds clearly telegraphed red Trial runes that require movement and turns proven Spellbook combinations into selectable starting spells.
 - The owner passed `.8` in SPCK: the red rune was accepted and a proven spell successfully became the next Trial's selected starting build.
 - Gate-preparation build `0.2.0-representative.9` adds token-isolated clean saves for reproducible fresh-player sessions without changing normal gameplay or the owner's save.
-- The exact non-leading cell, predictions, result record, and stop conditions are ready in `docs/FRESH_PLAYER_CELL.md`.
-- The owner has identified a real testing constraint: available friends are Arabic-speaking and may not understand English genre terminology. Solve this through visual-first clarity, simple language, Arabic localization or meaning-preserving translation—not by treating them as invalid testers or casually replacing the game.
-- Full launch content and final assets remain blocked on the next valid commercial evidence step and the second explicit go/no-go.
+- The exact non-leading cell, predictions, result record, and stop conditions are in `docs/FRESH_PLAYER_CELL.md`.
+- Arabic readiness is implemented through `?lang=ar`, including essential DOM/canvas translation, RTL presentation, combined `?fresh=<token>&lang=ar`, default-English preservation, and deterministic checks. Owner phone acceptance remains pending.
+- `cell-runner.html` is an offline repository-only observer tool. It generates isolated English/Arabic URLs, blocks reused tokens, hides the interview during play, records the frozen protocol, enforces all six GO conditions, and exports Markdown. It is excluded from `dist/`, the APK, and the future AAB. Owner phone usability remains pending.
+- Full launch content and final assets remain blocked on the genuine fresh-player cell and the second explicit go/no-go.
 - Pixel Mage remains the working title; a final display/store name decision is required before store-art production.
 - Signing, AAB production, store materials, policy declarations, monetization, Play testing, and publication remain pending.
-- The persistent ChatGPT workflow is now repository-backed through a mutable active state, mandatory per-response gate, visible material-response state line, and deterministic workflow integrity check.
+- The persistent ChatGPT workflow is repository-backed through a mutable active state, mandatory per-response gate, visible material-response state line, and deterministic workflow integrity check.
 
 The exact latest state belongs in `docs/ACTIVE_SESSION.md` and `docs/SESSION_HANDOFF.md`. The active state controls continuity during the session; the handoff preserves the complete cross-session record.
 
 ## Current Commercial Gate
 
-Preserve the `.8` accepted gameplay and `.9` clean-save foundation. First make the representative test understandable without requiring English genre vocabulary, using visual clarity and an Arabic-capable or meaning-preserving test path. Then run one genuinely fresh participant through the non-leading cell, record the result against its pre-registered predictions, and obtain the second explicit go/no-go. Do not scale launch content or replace the project before that decision.
+Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Arabic access and the offline Cell Runner are implemented but require owner phone checks. The owner must first verify the Arabic game path and the complete Cell Runner flow. Then one genuinely fresh participant must play through the non-leading cell using a new generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
 
 ## Mandatory Session Protocol
 
@@ -106,10 +107,12 @@ During work:
 6. Stay inside the current approval boundary.
 7. Update `docs/ACTIVE_SESSION.md` immediately when a changed fact could affect later responses in the same session.
 8. Run `npm run workflow:check` before stable work commits.
-9. Run `npm run check` before publishing code.
-10. Run `npm run evidence` before gameplay gates or commercial recommendations.
-11. Ask for one consolidated human cell only at a major commercial gate.
-12. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
+9. Run `npm run localization:check` when changing localization.
+10. Run `npm run cell:check` when changing the Cell Runner.
+11. Run `npm run check` before publishing code.
+12. Run `npm run evidence` before gameplay gates or commercial recommendations.
+13. Ask for one consolidated human cell only at a major commercial gate.
+14. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
