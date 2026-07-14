@@ -43,18 +43,24 @@ Reading the authority documents once is not enough. Every meaningful session and
 - The primary validation device is a POCO X2-class 20:9 portrait phone, but layouts must remain responsive across portrait screens.
 - Preserve safe areas and the accepted one-thumb control model: drag inside the arena while spells cast automatically.
 - Keep pause, restart, sound, and haptic settings inside the compact Pause/Options overlay.
+- English remains the default path. Arabic test mode is activated only with `?lang=ar`; combine it with an isolated cell using `?fresh=<token>&lang=ar`.
 
 ## Active Runtime Files
 
 - `index.html`
 - `style.css`
+- `localization.css`
+- `localization.js`
 - `game.js`
+
+`localization.js` and `localization.css` are a bounded test-readiness layer. They must not change gameplay state, balance, progression, persistence, normal English behavior, or the commercial approval boundary.
 
 The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast Clash prototype and are not loaded by Pixel Mage. Do not reactivate them.
 
 ## Release Bundle and Android
 
 - `npm run build` creates `dist/` from the whitelist in `scripts/release-config.mjs`.
+- `localization.js` is separately minified in the generated bundle; source remains readable in Git.
 - Never edit or commit `dist/`.
 - Keep the runtime fully local and below the enforced size ceiling.
 - Keep package ID `com.ezz10099.pixelmage` unchanged.
