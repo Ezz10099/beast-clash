@@ -38,8 +38,8 @@ vm.createContext(sandbox);
 vm.runInContext(js, sandbox, { filename: 'touch-controls.js' });
 
 const api = sandbox.window.PixelMageTouchControls;
-assert.equal(api.thumbClearanceCanvasY, 56);
-assert.equal(api.adjustedClientY({ clientY: 400 }), 288, '56 canvas pixels must scale to 112 CSS pixels at 2× display scale');
+assert.equal(api.thumbClearanceCanvasY, 84);
+assert.equal(api.adjustedClientY({ clientY: 400 }), 232, '84 canvas pixels must scale to 168 CSS pixels at 2× display scale');
 
 let touchY = null;
 let mouseY = null;
@@ -55,7 +55,7 @@ handlers.get('pointerdown')({
   pointerType: 'touch',
   preventDefault() { prevented = true; },
 });
-assert.equal(touchY, 288, 'touch target must stay above the fingertip');
+assert.equal(touchY, 232, 'touch target must stay well above the fingertip');
 assert.equal(prevented, true, 'wrapped touch events must preserve preventDefault');
 
 canvas.addEventListener('pointermove', (event) => { mouseY = event.clientY; });
