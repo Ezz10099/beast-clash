@@ -13,12 +13,13 @@ Pixel Mage is the only active game in this repository. Read these files before m
 7. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
 8. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
 9. `docs/FRESH_PLAYER_CELL.md` — exact clean setup, Cell Runner use, non-leading questions, predictions, and commercial stop conditions.
-10. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
-11. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
-12. `docs/ROADMAP.md` — measurable roadmap through Google Play.
-13. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-14. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
-15. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+10. `docs/ARABIC_GLOSSARY.md` — permanent Arabic terms and wording rules for the game and fresh-player protocol.
+11. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
+12. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
+13. `docs/ROADMAP.md` — measurable roadmap through Google Play.
+14. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
+15. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+16. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
 The final product goal and player promise in the Product Compass are authoritative. `docs/OWNER_MANDATE.md` is the binding interpretation of how to pursue them: keep Pixel Mage as the project, maximize fun and engagement potential proactively, and use finishability, scope, evidence, and testing as supporting constraints rather than substitutes for a worthwhile game. Everything else—scope details, mechanics, counts, process, and earlier decisions—is a revisable working hypothesis when evidence shows a better route to that same goal. Apply `docs/DEVELOPMENT_MODEL.md` to every material decision: the goal must actively shape the intended experience, alternatives, code, evidence, and learning. Do not wait for the owner to identify problems or invent patches.
 
@@ -44,6 +45,7 @@ Reading the authority documents once is not enough. Every meaningful session and
 - Preserve safe areas and the accepted one-thumb control model: drag inside the arena while spells cast automatically.
 - Keep pause, restart, sound, and haptic settings inside the compact Pause/Options overlay.
 - English remains the default path. Arabic test mode is activated only with `?lang=ar`; combine it with an isolated cell using `?fresh=<token>&lang=ar` internally.
+- All Arabic player-facing text, direct Arabic markup, Cell Runner questions, and protocol wording must follow `docs/ARABIC_GLOSSARY.md`. Do not use alternate terms casually or add extra explanation in Arabic.
 - Every owner phone check must have a visible tap path beginning from an exact SPCK file or screen. Do not ask the owner to type query strings, tokens, JavaScript Console commands, DevTools input, terminal commands, or source edits when a bounded launcher or button can perform the action.
 - Use `test-launcher.html` as the owner-facing entry point for current internal checks. It generates clean English/Arabic URLs automatically and opens `cell-runner.html`.
 - Use `cell-runner.html` on the observer's device to execute the frozen cell. The participant should see only the game.
