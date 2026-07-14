@@ -9,6 +9,14 @@ import { OUTPUT_DIRECTORY, RELEASE_FILES } from './release-config.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const output = resolve(root, OUTPUT_DIRECTORY);
 const packageJson = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
+const MINIFIED_SOURCE_FILES = new Set([
+  'style.css',
+  'localization.css',
+  'phone-polish.css',
+  'localization.js',
+  'touch-controls.js',
+  'phone-polish.js',
+]);
 
 async function listFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -38,9 +46,13 @@ for (const record of manifest.files) {
   const bundled = await readFile(resolve(output, record.path));
   const digest = createHash('sha256').update(bundled).digest('hex');
 
-  if (record.path !== 'game.js' && record.path !== 'localization.js') {
+  if (record.path !== 'game.js' && !MINIFIED_SOURCE_FILES.has(record.path)) {
     const source = await readFile(resolve(root, record.path));
     assert.deepEqual(bundled, source, `${record.path} changed while being bundled`);
+  }
+  if (MINIFIED_SOURCE_FILES.has(record.path)) {
+    const source = await readFile(resolve(root, record.path));
+    assert.ok(bundled.byteLength < source.byteLength, `${record.path} must be minified in the release bundle`);
   }
   assert.equal(record.bytes, bundled.byteLength, `${record.path} byte count is incorrect`);
   assert.equal(record.sha256, digest, `${record.path} checksum is incorrect`);
@@ -71,21 +83,22 @@ assert.ok(
 assert.match(html, /viewport-fit=cover/, 'safe-area viewport support is required');
 assert.match(css, /safe-area-inset-top/, 'top safe-area support is required');
 assert.match(css, /100svh/, 'small-viewport height support is required');
-assert.match(css, /@media \(max-height: 700px\)/, 'short portrait layout is required');
-assert.match(css, /@media \(max-height: 600px\)/, 'small portrait layout is required');
-assert.match(localizationCss, /html\[lang="ar"\]/, 'Arabic layout must remain query-scoped');
-assert.match(localizationCss, /direction:\s*rtl/, 'Arabic layout must retain RTL presentation');
-assert.match(polishCss, /overflow-y:\s*auto/, 'phone overlays must remain scroll safe');
-assert.match(polishCss, /@media \(orientation:\s*landscape\)/, 'landscape guidance must remain available');
-assert.match(localization, /URLSearchParams\(.+\)\.get\(["']lang["']\)/, 'Arabic mode must remain explicitly query-activated');
+assert.match(css, /@media\(max-height:700px\)|@media \(max-height: 700px\)/, 'short portrait layout is required');
+assert.match(css, /@media\(max-height:600px\)|@media \(max-height: 600px\)/, 'small portrait layout is required');
+assert.match(localizationCss, /html\[lang=.?ar.?\]/, 'Arabic layout must remain query-scoped');
+assert.match(localizationCss, /direction:rtl/, 'Arabic layout must retain RTL presentation');
+assert.match(polishCss, /overflow-y:auto/, 'phone overlays must remain scroll safe');
+assert.match(polishCss, /@media\(orientation:landscape\)/, 'landscape guidance must remain available');
+assert.match(localization, /URLSearchParams\(.+\)\.get\(.lang.\)/, 'Arabic mode must remain explicitly query-activated');
 assert.doesNotMatch(localization, /localStorage|SaveSystem|persistent\.|state\./, 'localization must not touch saves or gameplay state');
-assert.ok(
-  localization.length < (await readFile(resolve(root, 'localization.js'), 'utf8')).length,
-  'release localization must be minified',
-);
-assert.match(touchControls, /THUMB_CLEARANCE_CANVAS_Y\s*=\s*84/, 'release controls must preserve accepted thumb clearance');
+assert.match(localization, /الجوهر/, 'release localization must preserve the approved Essence term');
+assert.match(localization, /القانون/, 'release localization must preserve the approved Law term');
+assert.match(localization, /إعادة الصياغة/, 'release localization must preserve the approved Rewrite term');
+assert.doesNotMatch(localization, /طريقة الإطلاق|العنصر/, 'retired Arabic spell-axis terms must not return');
+assert.match(touchControls, /THUMB_CLEARANCE_CANVAS_Y=84|84/, 'release controls must preserve accepted thumb clearance');
 assert.doesNotMatch(touchControls, /localStorage|SaveSystem|persistent\.|state\./, 'touch controls must not alter saves or game state directly');
 assert.match(phonePolish, /Tap again to restart/, 'release polish must retain restart protection');
+assert.match(phonePolish, /إعادة التحدّي/, 'release polish must retain corrected Arabic restart wording');
 assert.doesNotMatch(phonePolish, /localStorage|SaveSystem|persistent\.|state\./, 'phone polish must not alter saves or game state directly');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
