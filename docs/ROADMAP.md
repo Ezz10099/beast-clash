@@ -27,8 +27,9 @@ The current debug APK and representative slice prove the technical route and sup
 7. Clean isolated fresh-player saves and frozen human protocol — **complete on `.9`**.
 8. Arabic-capable, non-coached access for available testers — **implemented on `main`; owner meaning/layout check pending**.
 9. Offline Cell Runner for accurate setup, silent observation, hidden interview, token protection, and complete export — **implemented on `main`; owner usability check pending**.
-10. One genuine fresh-player commercial cell and owner second go/no-go — **next after both owner checks pass**.
-11. Revise the remaining launch batch from the measured evidence — **blocked on step 10**.
+10. Tap-only SPCK Test Launcher and permanent owner-workflow rule — **implemented on `main`; owner usability check pending**.
+11. One genuine fresh-player commercial cell and owner second go/no-go — **next after the owner checks pass**.
+12. Revise the remaining launch batch from measured evidence — **blocked on step 11**.
 
 Do not scale full content, create final assets, add monetization, or begin store production before the second go/no-go.
 
@@ -50,7 +51,7 @@ The accepted native five-wave build lasts roughly one minute and remains a techn
 
 ## Milestone 8 — Representative Commercial Gate
 
-**Status: Active. Arabic readiness and the Cell Runner are implemented; both owner phone checks and the genuine fresh-player cell remain pending.**
+**Status: Active. Arabic readiness, the Cell Runner, and the tap-only Test Launcher are implemented; owner phone acceptance and the genuine fresh-player cell remain pending.**
 
 ### Accepted representative foundation
 
@@ -62,7 +63,7 @@ The accepted native five-wave build lasts roughly one minute and remains a techn
 - equal growth for Hold and rewrite choices;
 - readable red-rune movement pressure;
 - functional Spellbook discovery and selectable starting spells;
-- checkpoint/resume and isolated `?fresh=` test saves.
+- checkpoint/resume and isolated fresh-player saves.
 
 ### Human evidence already accepted
 
@@ -70,6 +71,7 @@ The accepted native five-wave build lasts roughly one minute and remains a techn
 - Corrected loop: reported entertaining with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4`: rejected.
 - Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8`: passed owner SPCK review.
+- July 14 test-workflow evidence: entering the supplied query string in SPCK Console produced `SyntaxError: Unexpected token '?'`. This proved the hidden test route was not owner-ready; it did not test Arabic mode or gameplay.
 
 ### Automated evidence already accepted
 
@@ -86,8 +88,8 @@ These results do not prove human comprehension, boredom/fairness, climax satisfa
 
 Implemented on `main`:
 
-- explicit `?lang=ar` activation;
-- combined clean path `?fresh=<token>&lang=ar`;
+- explicit Arabic activation internally;
+- isolated clean Arabic saves;
 - essential Arabic DOM and canvas language;
 - RTL presentation;
 - default English preservation;
@@ -95,35 +97,47 @@ Implemented on `main`:
 - deterministic localization and fresh-save compatibility checks;
 - localization assets in the offline release whitelist;
 - separately minified localization runtime while retaining the 100 KB bundle ceiling;
-- Arabic neutral instruction and exact meaning-preserving questions in `docs/FRESH_PLAYER_CELL.md`.
+- Arabic neutral instruction and exact meaning-preserving questions.
 
 ### Offline Cell Runner batch
 
 Implemented on `main` outside the player release bundle:
 
-- `cell-runner.html`, `cell-runner.css`, and `cell-runner.js` for phone-first execution;
+- phone-first execution of the frozen cell;
 - unique English/Arabic isolated game-link generation;
 - local rejection of reused participant tokens;
 - neutral instruction visible before play while the interview remains hidden;
-- attempt timing and the complete required observation fields;
+- attempt timing and complete required observation fields;
 - exact eight-question English/Arabic interview after observation closes;
 - local unnamed draft recovery;
 - frozen six-condition GO enforcement;
-- complete Markdown export for the development session;
+- complete Markdown export;
 - no network resources, analytics, telemetry, accounts, or participant-name field;
-- deterministic syntax, structure, release-exclusion, and headless behavior checks through `npm run cell:check` inside `npm run check`.
+- deterministic checks through `npm run cell:check`.
 
-The runner reduces execution mistakes. It does not create gameplay evidence, interpret free-text answers, or replace the owner's final decision.
+### Tap-only SPCK Test Launcher batch
+
+Implemented on `main` outside the player release bundle:
+
+- `test-launcher.html`, `test-launcher.css`, and `test-launcher.js`;
+- visible touch-sized Arabic, English, and Cell Runner buttons;
+- automatic unique owner-check tokens and language parameters;
+- no Console, URL editing, manual token construction, telemetry, or remote resources;
+- deterministic navigation and release-exclusion checks through `npm run launcher:check`;
+- permanent Owner Phone Workflow Gate in `docs/CHATGPT_WORKFLOW.md`, enforced by `npm run workflow:check`.
+
+A technically valid hidden test route is not considered owner-ready. Future phone checks must begin from an exact SPCK file/screen and visible tap path.
 
 ### Remaining Milestone 8 exit criteria
 
-1. Owner pulls latest `main` and passes one consolidated Arabic meaning/layout check in SPCK.
-2. Owner opens `cell-runner.html` and passes its mobile usability and staged-flow check.
-3. Normal English game path remains unchanged.
-4. Normal repository checks pass, including workflow, localization, cell-runner, release-size, gameplay, and Android gates.
-5. One genuinely fresh participant completes the frozen non-leading cell using a newly generated token.
-6. Predictions are compared against the result.
-7. Owner gives the second explicit GO / bounded REVISION / NO-GO-rethink decision.
+1. Owner pulls latest `main`, opens `test-launcher.html`, and confirms the launcher works naturally in SPCK.
+2. Owner uses **Open Arabic Game** and passes the Arabic meaning/layout check.
+3. Owner uses **Open English Game** and confirms the normal English path is unchanged.
+4. Owner uses **Open Cell Runner** and passes the mobile usability and staged-flow check.
+5. Normal repository checks pass, including workflow, localization, cell-runner, launcher, release-size, gameplay, and Android gates.
+6. One genuinely fresh participant completes the frozen non-leading cell using a newly generated token.
+7. Predictions are compared against the result.
+8. Owner gives the second explicit GO / bounded REVISION / NO-GO-rethink decision.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -150,9 +164,11 @@ Exit criteria:
 
 ## Exact Next Step
 
-Pull latest `main` and check **both** items in SPCK:
+Pull latest `main` in SPCK, open `test-launcher.html`, and tap **Preview**.
 
-1. Open the game with `?fresh=owner-ar-check&lang=ar` and judge Arabic meaning, RTL fit, clipping, and unchanged behavior across the opening, HUD, wave cues, Spellbook, rewrite choices, pause/options, victory, and defeat.
-2. Open `cell-runner.html`, choose Arabic, confirm it generates a unique game URL, walk through setup → observation → interview → gate → export using dummy answers, and confirm the layout is usable on the phone.
+1. Tap **Open Arabic Game** and check Arabic meaning, RTL fit, clipping, and unchanged behavior.
+2. Press Android Back, then tap **Open English Game** and confirm normal English remains unchanged.
+3. Press Android Back, then tap **Open Cell Runner** and complete Setup → Observation → Interview → Gate → Export with dummy information.
+4. Reset the runner after the owner check.
 
-These are owner tooling/layout checks, not the genuine commercial cell. If both pass, reset the runner, generate a different unused token, and execute `docs/FRESH_PLAYER_CELL.md` with one genuinely fresh participant without coaching.
+Do not type into SPCK Console, edit the preview URL, or construct tokens manually. These are owner tooling/layout checks, not the genuine commercial cell. If all pass, use the Cell Runner with one genuinely fresh participant and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
