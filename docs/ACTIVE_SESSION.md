@@ -17,9 +17,9 @@ This is the small mutable state that must stay active throughout a ChatGPT/Codex
 - **Strongest current fun/engagement limitation:** newcomer comprehension, experienced pacing/fairness, climax satisfaction, and specific replay desire remain human-uncertain. The language-access blocker has been implemented but is not phone-accepted yet.
 - **Current approval boundary:** preserve `.8` gameplay and `.9` saves; do not change balance, progression, content, final assets, monetization, package identity, or release actions before the commercial gate.
 - **Current commercial gate:** owner checks Arabic meaning/layout, then one genuinely fresh participant completes the frozen non-leading cell and the owner gives the second explicit go/no-go.
-- **Current workflow goal:** obtain trustworthy human evidence without English vocabulary or coaching contaminating the result.
-- **Workflow implementation status:** persistent workflow complete and applied; the Arabic readiness work packet is complete pending phone evidence.
-- **Exact next product action:** owner pulls latest `main` and checks `?fresh=owner-ar-check&lang=ar` across opening, HUD, wave cues, Spellbook, rewrites, pause/options, victory, and defeat. If it passes, use a different unique token for the genuine fresh-player cell.
+- **Current workflow goal:** make the pending human cell easy to execute accurately without coaching, lost observations, reused save tokens, or incomplete result records.
+- **Workflow implementation status:** persistent workflow complete and applied; Arabic readiness is implemented; an offline cell-runner work packet is active.
+- **Exact next product action:** implement and verify a repository-only Fresh-Player Cell Runner, then the owner checks both the Arabic game path and the runner before using a different unique token for the genuine participant.
 
 ## Response Watchlist
 
@@ -34,23 +34,33 @@ Every work-related response must preserve these points:
 - Full launch scaling remains blocked at the current gate.
 - The owner should not have to diagnose every problem or invent every solution.
 - The owner Arabic check is a localization/layout check, not the genuine commercial cell.
+- The cell runner is an observation and recording tool, not gameplay evidence and not part of the Android release bundle.
 
 ## Current Work Packet
 
-- **Status:** Implementation complete; owner phone evidence pending.
-- **Player-facing problem:** An Arabic-speaking fresh player could fail because of English vocabulary, making the commercial cell measure language proficiency instead of game comprehension, enjoyment, pacing, and replay desire.
-- **Intended player experience:** The player independently understands movement, hazards, automatic casting, the three spell axes, rewrite consequences, progress, and replay selection while experiencing the accepted `.8` gameplay.
-- **Strongest known cause:** Essential meanings were encoded in English DOM and canvas text.
-- **Alternatives considered:** verbal translation was rejected as coaching; full release localization was rejected as premature; English-only testing was rejected as uninterpretable; a bounded query-activated Arabic path was selected.
-- **Selected approach:** `?lang=ar` loads a standalone Arabic/RTL layer before `game.js`; `?fresh=<token>&lang=ar` combines it with isolated saves. English remains default. Gameplay and persistence code are untouched.
-- **Predicted visible benefit:** The fresh cell can judge the game rather than English terminology.
-- **Likely failure mode:** awkward Arabic, a missed dynamic string, RTL overflow, or clipping.
-- **Evidence obtained:** isolated syntax/behavior checks cover activation, English preservation, core spell/HUD/cue/threat/result text, canvas translation, whitespace stability, and combined query semantics.
-- **Evidence still required:** normal repository check and one consolidated SPCK meaning/layout pass before the genuine participant.
-- **Files/systems changed:** `index.html`, `localization.js`, `localization.css`, release whitelist/build/check scripts, package scripts, fresh-player protocol, active state, handoff, and roadmap. `game.js` is unchanged.
-- **Approval boundary:** test-readiness localization only; no gameplay, balance, progression, persistence, content scaling, final art, monetization, identity, or release action changes.
+- **Status:** In progress.
+- **Player-facing problem:** The fresh-player cell can be invalidated by reused tokens, accidental coaching, revealing interview questions during play, incomplete observations, or an inconsistent result record—even when the game itself is ready.
+- **Intended player experience served:** A genuinely fresh player encounters only the game and one neutral instruction, while the owner can silently capture the full journey and preserve exact post-play answers for an evidence-based decision.
+- **Strongest known cause:** The protocol currently exists as a document. On a phone, the owner must manually construct URLs, remember sequencing, time the attempt, hide later questions, and assemble the final record.
+- **Alternatives considered:**
+  1. Keep the document-only process — rejected because execution mistakes remain likely and burdensome.
+  2. Add analytics or telemetry to the game — rejected because it adds data/privacy scope, cannot capture subjective answers, and would alter the commercial gate.
+  3. Put observer controls inside the game — rejected because they could distract the participant or contaminate the tested build.
+  4. Add a separate offline repository-only cell runner that generates isolated links, gates the protocol stages, records observations, and exports Markdown — selected.
+- **Selected approach:** Add `cell-runner.html`, `cell-runner.css`, and `cell-runner.js`, excluded from `dist/`. It will generate valid fresh tokens, support English/Arabic paths, show only the neutral instruction before play, keep interview questions hidden until observation closes, autosave locally, and copy/export a complete result record.
+- **Predicted visible benefit:** The owner can conduct the cell from one phone with fewer protocol mistakes and return a complete, structured record suitable for prediction calibration and the second go/no-go.
+- **Likely failure mode:** The tool becomes too complicated, accidentally reveals coaching content early, loses a draft, generates an invalid URL, or is mistaken for part of the production game.
+- **Evidence required:** Syntax and deterministic contract checks for offline-only behavior, valid unique token generation, correct English/Arabic URLs, stage-gated questions, exact neutral wording/questions, local-only draft storage, complete export fields, and explicit exclusion from the release whitelist; one owner SPCK usability check.
+- **Files/systems expected to change:** new cell-runner files, a deterministic check script, package scripts, `docs/FRESH_PLAYER_CELL.md`, `docs/BUILD.md`, active state, handoff, and roadmap. Production runtime and `game.js` must remain unchanged.
+- **Approval boundary:** Test-execution tooling only. No gameplay, balance, progression, persistence, content scaling, production telemetry, final art, monetization, identity, or release action changes.
 
 ## Session Update Log
+
+### July 14, 2026 — Offline Cell Runner Started
+
+- Chose a substantial gate-support task instead of violating the pending human-evidence boundary with speculative gameplay or launch content.
+- Rejected telemetry and in-game observer controls to preserve privacy and prevent participant contamination.
+- Locked the runner as a separate offline repository tool excluded from the Android release bundle.
 
 ### July 14, 2026 — Arabic Fresh-Cell Readiness Completed
 
