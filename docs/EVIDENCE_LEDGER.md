@@ -109,3 +109,18 @@ This ledger stores stable conclusions. Raw generated reports remain CI artifacts
 - Local automation: `npm run check` passed, including independent fresh-token and normal-save tests; the offline release bundle is 88,240 bytes. `npm run evidence` remained **GREEN**: 200 active build runs with 99% wins and 9% build spread, 100 choice-policy runs with 5.8% spread, 0% idle wins, 100% simple-movement wins, 8/8 deterministic replays, 8/8 selectable starting spells, and no runtime violation.
 - Boundary: the new code proves clean evidence setup only. No newcomer, enjoyment, boredom, fairness, replay, or commercial claim is accepted until the cell is run.
 - Decision: freeze speculative gameplay and full content. The next step legitimately requires one genuinely fresh participant and then the owner's second explicit go/no-go.
+
+## July 14, 2026 — Current-Roster Enemy Variety
+
+- Build foundation: `0.2.0-representative.9` plus the bounded `enemy-variety.js` extension.
+- Owner direction: after confirming the arena-feedback batch, the owner selected enemy variety as the next substantial development field.
+- Implemented contract: Wave 1 remains simple; Act II introduces flanking Motes, group separation, telegraphed three-lane fan Casters, and visible Caster–Mote relay links; Act III adds telegraphed Mote surges that commit toward a captured lane. No new enemy family, asset, save field, currency, or progression system was added.
+- Deterministic checks: role assignment, Wave 1 simplicity, fan windup/fire/recovery, surger windup/commitment, formation separation, relay links, current-roster scope, release inclusion, and no persistence/network access all passed in CI.
+- Automated evidence: **GREEN**. The matrix completed 200/200 runs, 100 choice-policy runs, 25 idle controls, 25 simple-movement controls, and 8 deterministic replays with zero runtime violations.
+- Survivability and agency: 99% overall active-build wins; 96% weakest-build wins; 0% idle wins; 96% simple-movement wins; 99% danger-grid wins.
+- Balance proxies: 9.2% build median spread, 4.3% Form gap, 5.8% choice-policy spread, and level 12 minimum policy median.
+- Pacing proxies: 9.2-second longest empty stretch, 0 seconds post-schedule waiting, and 7-second boss wait.
+- Release result: UTF-8 minification preserved Arabic without ASCII expansion. The generated runtime is 127,449 bytes under the documented 150 KB total budget and all per-file limits.
+- Boundary: automation proves deterministic execution, survivability proxies, movement relevance, release integrity, and bounded scope. It does not prove that the new patterns are readable, fair, enjoyable, or meaningfully distinct on the target phone.
+- Prediction for owner review: Wave 1 should remain calm; purple fan lines and orange surge lines should communicate intent before damage; relay links should create a priority choice without visual overload. The likely failure is overlapping telegraphs during crowded late waves.
+- Decision: keep the batch provisional until one consolidated owner SPCK pass. Do not recruit the genuine fresh participant until readability and fairness pass on phone.
