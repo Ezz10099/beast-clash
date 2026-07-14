@@ -17,11 +17,14 @@
     </aside>
 
     <main class="shell">
-      <section class="game-card">
+      <section class="game-card" data-screen="start">
         <header class="top-bar">
-          <div>
-            <p class="eyebrow">Living Spell Trial</p>
-            <h1>Pixel Mage</h1>
+          <div class="brand-lockup">
+            <span class="brand-sigil" aria-hidden="true"></span>
+            <div>
+              <p class="eyebrow">Living Spell Trial</p>
+              <h1>Pixel Mage</h1>
+            </div>
           </div>
           <button
             id="menuButton"
@@ -129,20 +132,25 @@
           </section>
         </div>
 
-        <section id="spellText" class="spell-readout" aria-live="polite">FORM Bolt · ESSENCE Ember · LAW Split · LV 1</section>
+        <section class="combat-deck" aria-label="Live trial status">
+          <section id="spellText" class="spell-readout" aria-live="polite">FORM Bolt · ESSENCE Ember · LAW Split · LV 1</section>
 
-        <section class="hud" aria-live="polite">
-          <span id="healthText">HP 5/5</span>
-          <span id="waveText">12 Waves</span>
-          <span id="scoreText">Best 0</span>
+          <section class="hud" aria-live="polite">
+            <article class="hud-card hud-health">
+              <span id="healthText" class="hud-value">HP 5/5</span>
+              <span id="healthMeter" class="health-meter" aria-hidden="true"></span>
+            </article>
+            <article class="hud-card hud-wave">
+              <span id="waveText" class="hud-value">12 Waves</span>
+              <span id="waveMeter" class="wave-meter" aria-hidden="true"></span>
+            </article>
+            <article class="hud-card hud-score">
+              <span id="scoreText" class="hud-value">Best 0</span>
+            </article>
+          </section>
+
+          <p id="controlHint" class="control-hint">Drag in the arena to move · Spells cast automatically</p>
         </section>
-
-        <section class="status-meters" aria-hidden="true">
-          <span id="healthMeter" class="health-meter"></span>
-          <span id="waveMeter" class="wave-meter"></span>
-        </section>
-
-        <p id="controlHint" class="control-hint">Drag in the arena to move · Spells cast automatically</p>
       </section>
     </main>
 
