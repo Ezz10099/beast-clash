@@ -9,6 +9,7 @@
 - Persistent execution workflow: `docs/CHATGPT_WORKFLOW.md`
 - Product authority: `docs/OWNER_MANDATE.md` and `docs/DEVELOPMENT_MODEL.md`
 - Fresh-player gate: `docs/FRESH_PLAYER_CELL.md`
+- Observer tool: `cell-runner.html`
 - Evidence: `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
 - Roadmap: `docs/ROADMAP.md`
 
@@ -34,7 +35,7 @@ These results support the current direction but do not establish newcomer compre
 
 ## Latest Accepted Automated Evidence
 
-`0.2.0-representative.9` remained GREEN before this localization-only batch:
+`0.2.0-representative.9` remained GREEN before the test-readiness/tooling batches:
 
 - 200 active build runs with 99% wins and about 9% build spread;
 - 100 real choice-policy runs with 5.8% median spread;
@@ -49,53 +50,90 @@ Automation does not prove fun, comprehension, fairness, replay desire, or value.
 
 ## Completed in the Arabic Readiness Batch
 
-- Recorded the material work packet in `docs/ACTIVE_SESSION.md` before implementation.
 - Added query-activated Arabic mode: `?lang=ar`.
 - Made it compatible with isolated clean saves: `?fresh=<unique-token>&lang=ar`.
 - Kept English as the default and left `game.js` gameplay, balance, progression, persistence, and content unchanged.
 - Added Arabic/RTL presentation for essential opening, HUD, Spellbook, rewrite, pause, wave, cue, result, and spell-part language.
 - Added deterministic checks for English preservation, Arabic activation, essential translations, canvas text, whitespace stability, RTL state, and combined fresh-save isolation.
-- Added `localization.js` and `localization.css` to the release whitelist.
-- Added `npm run localization:check` to the normal `npm run check` path.
-- Preserved the 100 KB release ceiling by minifying the localization runtime separately instead of weakening the bundle standard.
-- Updated `docs/FRESH_PLAYER_CELL.md` with an exact Arabic URL, neutral Arabic instruction, meaning-preserving Arabic questions, and a localization/RTL result field.
+- Added the localization assets to the release whitelist and `npm run localization:check` to the normal verification path.
+- Preserved the 100 KB release ceiling by minifying the localization runtime separately.
+- Updated the frozen human protocol with exact Arabic setup, instruction, questions, and issue recording.
+
+## Completed in the Offline Cell Runner Batch
+
+- Added `cell-runner.html`, `cell-runner.css`, and `cell-runner.js` as repository-only observer tooling.
+- Kept the runner outside `RELEASE_FILES`, `dist/`, the APK, and the future AAB.
+- Added mobile-safe layout, English/Arabic selection, fresh-token generation, correct combined URLs, and local rejection of reused tokens.
+- Added the exact neutral instruction before play while keeping the interview section hidden until observation closes.
+- Added a timer, required behavior fields, issue notes, retry wording, and exact eight-question English/Arabic interview.
+- Added local unnamed draft recovery; no participant-name field, remote resource, analytics, telemetry, account, or network transmission exists.
+- Added a frozen gate checklist that refuses to export `GO candidate` unless all six GO conditions are checked.
+- Added complete Markdown copy/download export for the development session.
+- Added `scripts/headless-cell-runner.mjs` and `scripts/check-cell-runner.mjs`.
+- Added `npm run cell:check` to the normal `npm run check` path.
+- Updated the protocol, build contract, roadmap, active state, and handoff.
 
 ## Verification Status
 
-Verified directly in an isolated Node harness:
+Verified directly in isolated Node harnesses:
 
-- localization source syntax;
-- default English remains unchanged;
-- `?lang=ar` activates Arabic and RTL;
-- essential spell, HUD, cue, threat, result, and canvas translations;
-- canvas direction restoration;
-- whitespace-only DOM stability;
-- `?fresh=gate-ar&lang=ar` retains the intended fresh-token/save-key semantics.
+- localization source syntax and default-English preservation;
+- Arabic/RTL activation and essential DOM/canvas translations;
+- combined Arabic/fresh-save query semantics;
+- Cell Runner source syntax;
+- mobile/offline/release-exclusion contracts;
+- fresh-token URL generation and Arabic parameter handling;
+- used-token rejection;
+- setup → silent observation → interview → gate → export stage flow;
+- hidden interview during play;
+- eight exact questions;
+- refusal of a partial `GO candidate`;
+- complete Arabic Markdown result export.
 
-Repository checks now enforce localization and release-bundle contracts. A complete clean-checkout `npm run check` could not be executed inside this assistant environment because direct GitHub cloning failed DNS resolution, and no commit status was exposed for these direct `main` writes. Do not represent the batch as phone-accepted or fully green until the normal repository check and SPCK phone check complete.
+A complete clean-checkout `npm run check` could not be executed inside this assistant environment because direct GitHub cloning failed DNS resolution, and no commit status was exposed for these direct `main` writes. The repository now enforces both new contracts during its normal check. Do not represent either batch as phone-accepted or fully green until the normal repository check and owner SPCK checks complete.
 
-## Exact Next Action
+## Exact Next Action — Check Both
 
-The owner should pull latest `main` in SPCK and perform **one consolidated Arabic meaning/layout check**, not the genuine fresh-player commercial cell yet.
+The owner should pull latest `main` in SPCK and perform these two checks before involving the genuine participant.
 
-Use a disposable owner-check token:
+### 1. Arabic game check
+
+Open:
 
 `?fresh=owner-ar-check&lang=ar`
 
-Check only:
+Confirm:
 
-1. Arabic appears from the opening screen onward.
-2. Start, HUD, wave cues, Spellbook, rewrite cards, pause/options, victory, and defeat remain readable with no clipping or overlap.
-3. The Arabic meanings are understandable and do not accidentally explain more than the English game.
-4. Movement, casting, hazards, choices, saving, and replay behavior feel unchanged.
-5. Opening the normal URL without `lang=ar` still shows the unchanged English path.
+- Arabic appears from the opening onward;
+- opening, HUD, wave cues, Spellbook, rewrite cards, pause/options, victory, and defeat are readable without clipping or overlap;
+- meanings are understandable and do not add coaching beyond the English game;
+- movement, casting, hazards, choices, saving, and replay behavior remain unchanged;
+- the normal URL without `lang=ar` still shows the unchanged English path.
 
-If that check passes, use a **different unique token** with one genuinely fresh Arabic-speaking participant and follow `docs/FRESH_PLAYER_CELL.md` exactly without coaching.
+### 2. Cell Runner check
 
-## Decision After the Fresh Cell
+Open `cell-runner.html` through SPCK preview.
+
+- Choose Arabic and confirm a unique URL containing both `fresh` and `lang=ar` is generated.
+- Use dummy information to walk through setup → observation → interview → gate → export.
+- Confirm the interview is hidden during setup/observation and contains eight Arabic questions afterward.
+- Confirm controls fit the phone, local draft restoration works after refresh, a partial GO is rejected, and the final Markdown record can be copied.
+- Reset the runner after this owner check.
+
+These are tooling/layout checks, not the genuine commercial cell.
+
+## After Both Owner Checks Pass
+
+- Reset `cell-runner.html`.
+- Generate a different unused token.
+- Use one genuinely fresh participant.
+- Follow the runner and `docs/FRESH_PLAYER_CELL.md` exactly without coaching.
+- Return the exported Markdown record.
+
+Then compare the result with the pre-registered predictions and choose:
 
 - **GO candidate:** owner may approve the next bounded production batch.
-- **REVISION candidate:** diagnose one observed clarity, feedback, fairness, pacing, or localization cause and make one bounded correction.
+- **REVISION candidate:** diagnose one observed clarity, feedback, fairness, pacing, localization, or tooling cause and make one bounded correction.
 - **NO-GO/rethink candidate:** reconsider the current implementation within Pixel Mage if the central loop, climax, or replay desire fails despite valid uncoached access.
 
 Do not scale content before that decision.
