@@ -79,18 +79,6 @@ jobs:
       - name: Install pinned dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Run automated evidence gate
-        run: npm run evidence
-
-      - name: Upload automated evidence
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: pixel-mage-evidence
-          path: artifacts/evidence/evidence-report.*
-          if-no-files-found: warn
-          retention-days: 14
-
       - name: Verify workflow contract
         run: npm run workflow:check
 
@@ -122,7 +110,19 @@ jobs:
         run: npm run build
 
       - name: Verify release bundle
-        run: node scripts/check-build.mjs
+        run: |
+          mkdir -p artifacts/diagnostics
+          set -o pipefail
+          node scripts/check-build.mjs 2>&1 | tee artifacts/diagnostics/build-check.log
+
+      - name: Upload release diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pixel-mage-build-diagnostics
+          path: artifacts/diagnostics/build-check.log
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Verify runtime size
         run: npm run size:check
@@ -132,6 +132,18 @@ jobs:
 
       - name: Verify Android configuration
         run: node scripts/check-android.mjs
+
+      - name: Run automated evidence gate
+        run: npm run evidence
+
+      - name: Upload automated evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pixel-mage-evidence
+          path: artifacts/evidence/evidence-report.*
+          if-no-files-found: warn
+          retention-days: 14
 
       - name: Sync Capacitor Android project
         run: npx cap sync android
