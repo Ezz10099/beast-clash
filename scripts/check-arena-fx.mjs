@@ -36,11 +36,12 @@ for (const contract of [
   /drawTrail/,
   /drawWavePulse/,
   /drawDamageFeedback/,
-  /MutationObserver/,
+  /lastStatusSync/,
   /requestAnimationFrame/,
 ]) {
   assert.match(js, contract, `arena FX is missing ${contract}`);
 }
+assert.doesNotMatch(js, /MutationObserver/, 'arena FX must not add per-frame HUD mutation work');
 
 for (const forbidden of [
   /\bfetch\s*\(/,
