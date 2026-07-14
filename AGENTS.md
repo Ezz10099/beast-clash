@@ -7,20 +7,34 @@ Pixel Mage is the only active game in this repository. Read these files before m
 1. `docs/OWNER_MANDATE.md` — binding continuity and fun/engagement priority, plus the reusable session-opening prompt.
 2. `docs/START_HERE.md` — permanent project map and mandatory session protocol.
 3. `docs/DEVELOPMENT_MODEL.md` — locked goal-to-code reasoning, creative discovery, fun-potential assessment, evidence boundaries, and calibration.
-4. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
-5. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
-6. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
-7. `docs/FRESH_PLAYER_CELL.md` — exact clean setup, non-leading questions, predictions, and commercial stop conditions.
-8. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
-9. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
-10. `docs/ROADMAP.md` — measurable roadmap through Google Play.
-11. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
-12. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
-13. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
+4. `docs/CHATGPT_WORKFLOW.md` — mandatory session bootstrap, per-response gate, decision packet, interruption recovery, and closure process.
+5. `docs/ACTIVE_SESSION.md` — compact mutable state that must remain active throughout the current work session.
+6. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
+7. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
+8. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
+9. `docs/FRESH_PLAYER_CELL.md` — exact clean setup, non-leading questions, predictions, and commercial stop conditions.
+10. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
+11. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
+12. `docs/ROADMAP.md` — measurable roadmap through Google Play.
+13. `docs/SESSION_HANDOFF.md` — latest verified state and exact next step.
+14. `docs/GOOGLE_PLAY.md` — publishing terminology, requirements, and gates.
+15. `docs/BUILD.md` and `docs/ANDROID.md` — technical build contracts.
 
 The final product goal and player promise in the Product Compass are authoritative. `docs/OWNER_MANDATE.md` is the binding interpretation of how to pursue them: keep Pixel Mage as the project, maximize fun and engagement potential proactively, and use finishability, scope, evidence, and testing as supporting constraints rather than substitutes for a worthwhile game. Everything else—scope details, mechanics, counts, process, and earlier decisions—is a revisable working hypothesis when evidence shows a better route to that same goal. Apply `docs/DEVELOPMENT_MODEL.md` to every material decision: the goal must actively shape the intended experience, alternatives, code, evidence, and learning. Do not wait for the owner to identify problems or invent patches.
 
 Do not propose another project or a casual core replacement. Reconsider the core direction only when strong evidence shows Pixel Mage cannot satisfy the Product Compass, or when the owner explicitly asks for reconsideration. The first diagnosis in a meaningful session must identify the strongest current limitation on fun, engagement, build excitement, or replay desire.
+
+## Persistent Work Protocol
+
+Reading the authority documents once is not enough. Every meaningful session and work-related response must follow `docs/CHATGPT_WORKFLOW.md`.
+
+- At session start, read and reconcile `docs/ACTIVE_SESSION.md` against the durable authority files and latest `main` before implementation.
+- Before every work-related response, apply the mandatory per-response gate: final goal, player effect, strongest limitation, continuity/scope, evidence truth, decision quality, and persistence impact.
+- Every material recommendation, coding batch, test request, commercial judgment, or direction change must include one compact visible line: `Work state: milestone | strongest limitation | approval boundary | current response goal`.
+- Before a material gameplay, UX, progression, or commercial change, complete the `Current Work Packet` in `docs/ACTIVE_SESSION.md` with the player problem, intended experience, alternatives, prediction, failure mode, evidence plan, affected systems, and approval boundary.
+- Update `docs/ACTIVE_SESSION.md` immediately when any state that could affect later responses changes; do not postpone all state updates until session closure.
+- After interruption, context compression, contradiction, or uncertainty, reread the active state and directly relevant authority files instead of reconstructing missing facts from memory.
+- The active state cannot override durable authority or accepted evidence. Reconcile conflicts before proceeding.
 
 ## User Workflow
 
@@ -82,14 +96,15 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 Before ending any meaningful session:
 
 1. Publish intended stable changes to `main`.
-2. Update `docs/SESSION_HANDOFF.md` with completed work, phone-test status, blockers, and one exact next step.
-3. Update `docs/ROADMAP.md`.
-4. Update `docs/DESIGN_RESEARCH.md` when new evidence changes design judgment.
-5. Never mark phone behavior or provisional scope as accepted without owner confirmation.
-6. Confirm that the next step serves the strongest current fun/engagement limitation rather than merely the easiest measurable task.
+2. Update `docs/ACTIVE_SESSION.md` as soon as the live state changes and confirm it is current at closure.
+3. Update `docs/SESSION_HANDOFF.md` with completed work, phone-test status, blockers, and one exact next step.
+4. Update `docs/ROADMAP.md`.
+5. Update `docs/DESIGN_RESEARCH.md` when new evidence changes design judgment.
+6. Never mark phone behavior or provisional scope as accepted without owner confirmation.
+7. Confirm that the next step serves the strongest current fun/engagement limitation rather than merely the easiest measurable task.
 
 ## Verification
 
-Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must still preserve all expected check results.
+Run `npm run workflow:check` before any stable work commit. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
 
 For browser preview, run `npm run preview` and test the complete accepted phone checklist.
