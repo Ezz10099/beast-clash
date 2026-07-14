@@ -89,28 +89,33 @@ assert.equal(arabic.window.PixelMageLocale.language, 'ar');
 assert.equal(arabic.documentElement.lang, 'ar');
 assert.equal(arabic.documentElement.dir, 'rtl');
 assert.equal(arabic.body.dataset.language, 'ar');
-assert.match(arabic.body.textNode.nodeValue, /العلامات الحمراء/);
+assert.match(arabic.body.textNode.nodeValue, /الرموز الحمراء/);
 assert.equal(translate('   '), '   ', 'whitespace-only DOM nodes must remain stable');
-assert.equal(translate('Bolt · Ember · Split'), 'صاعقة · نار · انقسام');
+assert.equal(translate('Bolt · Ember · Split'), 'صاعقة · جمرة · انقسام');
 assert.equal(
   translate('FORM Bolt · ESSENCE Frost · LAW Echo · LV 4'),
-  'الشكل صاعقة · العنصر جليد · طريقة الإطلاق تكرار · المستوى 4',
+  'الشكل صاعقة · الجوهر صقيع · القانون صدى · المستوى 4',
 );
 assert.match(
   translate('BOLT hunts the mark · EMBER burns + splashes · SPLIT casts 3 now'),
-  /صاعقة.*تلاحق الهدف.*نار.*تحرق.*انقسام.*تطلق 3/,
+  /صاعقة.*تلاحق الهدف المحدد.*جمرة.*تحرق الهدف.*انقسام.*تطلق ثلاث نسخ/,
 );
-assert.equal(translate('Motes ×6 · Casters ×2'), 'كائنات ×6 · رماة ×2');
+assert.equal(translate('Motes ×6 · Casters ×2'), 'شظايا ×6 · سحرة رموز ×2');
 assert.equal(translate('ACT III · BOSS'), 'الفصل 3 · الزعيم');
 assert.equal(translate('NEXT · WAVE 2 · Crossfire'), 'التالي · الموجة 2 · نيران متقاطعة');
-assert.equal(translate('HP 4/5'), 'الحياة 4/5');
+assert.equal(translate('HP 4/5'), 'الصحة 4/5');
 assert.equal(translate('A2 W7 · 5 foes'), 'الفصل 2 · الموجة 7 · 5 أعداء');
-assert.equal(translate('TRIAL COMPLETE'), 'اكتمل الاختبار');
-assert.equal(translate('DODGE THE RING · BAIT THE CHARGE'), 'تجنب الحلقة · استدرج الاندفاع');
+assert.equal(translate('TRIAL COMPLETE'), 'اكتمل التحدّي');
+assert.equal(translate('DODGE THE RING · BAIT THE CHARGE'), 'تجنّب الحلقة · استدرج الاندفاع');
+assert.equal(translate('Rewrite Waiting'), 'إعادة الصياغة بانتظارك');
+assert.equal(translate('ESSENCE CHANGES WHAT EVERY HIT DOES'), 'الجوهر يحدّد تأثير كل إصابة');
+assert.equal(translate('LAW CHANGES HOW EACH CAST MULTIPLIES'), 'القانون يحدّد كيف تتضاعف كل إطلاقة');
+assert.equal(translate('THE REDACTOR'), 'المُنقِّح');
+assert.doesNotMatch(translate('FORM Bolt · ESSENCE Frost · LAW Echo'), /طريقة الإطلاق|العنصر|تكرار|جليد/);
 
 const context = new arabic.FakeContext();
 context.fillText('TRIAL COMPLETE', 10, 20);
-assert.equal(context.calls[0][0], 'اكتمل الاختبار');
+assert.equal(context.calls[0][0], 'اكتمل التحدّي');
 assert.equal(context.calls[0][3], 'rtl');
 assert.equal(context.direction, 'inherit', 'canvas direction must be restored after translated drawing');
 
