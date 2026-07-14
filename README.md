@@ -21,10 +21,11 @@ The goal is not merely to upload a technically valid APK. The launch version mus
 - The corrected loop was later reported as entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` failed review. Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - `.9` added token-isolated clean saves and the frozen protocol in `docs/FRESH_PLAYER_CELL.md`; gameplay remained unchanged.
-- `main` now includes bounded Arabic/RTL test-readiness without changing gameplay or the default English path.
+- `main` includes bounded Arabic/RTL test-readiness, 84-pixel thumb clearance, and a consolidated phone-quality layer without changing combat, balance, progression, or saves.
+- The phone-quality layer consolidates onboarding, prevents panel clipping, wraps threat text, increases critical type sizes, adds HP/wave meters and low-health emphasis, shows portrait guidance, and requires two taps to restart an active Trial.
 - `cell-runner.html` is an offline repository-only observer tool for the frozen fresh-player cell.
 - `test-launcher.html` is the tap-only SPCK entry point. It opens clean Arabic, clean English, and the Cell Runner without Console input, URL editing, or manual token construction.
-- The next step is one owner launcher/Arabic/English/Cell Runner usability check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
+- The next step is one consolidated owner phone-quality/Arabic/English/Cell Runner check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
 
 The installed build is a **validated native vertical slice**, not the approved commercial launch game.
 
@@ -52,11 +53,10 @@ Full launch content, final assets, monetization, and store production remain blo
 1. Pull the latest `main`.
 2. In the SPCK file list, tap `test-launcher.html`.
 3. Tap **Preview**.
-4. Use only the three visible buttons:
-   - **Open Arabic Game** — check Arabic meaning, RTL fit, clipping, and unchanged gameplay.
-   - Press Android **Back** to return, then tap **Open English Game** — confirm the normal English path is unchanged.
-   - Press Android **Back** to return, then tap **Open Cell Runner** — walk through Setup → Observation → Interview → Gate → Export with dummy data.
-5. Reset the Cell Runner after the owner check.
+4. Tap **Open Arabic Game** and check the consolidated phone-quality batch during one attempt.
+5. Press Android **Back**, tap **Open English Game**, and confirm English remains unchanged.
+6. Press Android **Back**, tap **Open Cell Runner**, and walk through Setup → Observation → Interview → Gate → Export with dummy data.
+7. Reset the Cell Runner after the owner check.
 
 Do not use SPCK Console, edit the preview URL, or construct a `fresh` token manually. The launcher handles those details.
 
@@ -66,6 +66,8 @@ For a genuine fresh-player cell, open the Cell Runner from the launcher, generat
 
 - `npm run workflow:check` protects the persistent development process and the tap-only owner workflow rule.
 - `npm run localization:check` verifies default English, Arabic/RTL activation, essential translations, canvas text, whitespace stability, and fresh-save compatibility.
+- `npm run controls:check` verifies the scaled touch clearance and unchanged mouse input.
+- `npm run polish:check` verifies onboarding consolidation, scroll-safe overlays, readable wrapping/type, HP/wave meters, low-health emphasis, portrait guidance, restart confirmation, release inclusion, and no direct save/game-state access.
 - `npm run cell:check` verifies offline-only runner behavior, unique URL generation, reused-token rejection, hidden interview flow, exact questions, GO enforcement, export, mobile layout, and production-bundle exclusion.
 - `npm run launcher:check` verifies visible tap navigation, automatic clean English/Arabic tokens, direct Cell Runner opening, mobile layout, offline behavior, and production-bundle exclusion.
 - `npm run check` runs those checks plus gameplay, release-bundle, artwork, and Android configuration gates.
@@ -81,9 +83,9 @@ See `docs/ANDROID.md`, `docs/BUILD.md`, and `docs/GOOGLE_PLAY.md`.
 
 Mobile:
 
-- Drag inside the arena to move toward the finger.
+- Drag anywhere in the arena; the mage follows a target above the thumb.
 - Spells cast automatically.
-- Pause opens the compact options, resume, and restart panel.
+- Pause opens the compact options, resume, and protected restart panel.
 
 Laptop:
 
