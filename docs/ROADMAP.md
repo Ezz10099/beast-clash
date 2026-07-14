@@ -123,12 +123,10 @@ Exit criteria:
 **Status: Pending.**
 
 - Complete any applicable Google Play closed-testing requirement.
+- Recruit and retain any testers required by the account and current Play rules.
 - Collect structured real-user evidence.
-- Fix verified release blockers without reopening uncontrolled Production Access
-
-**Status: Pending.**
-
-- Recruit and retain any testers required by future versions.
+- Fix verified release blockers without reopening uncontrolled scope.
+- Apply for production access and publish only after the release candidate passes its gate.
 
 ## Exact Next Step
 
@@ -136,4 +134,6 @@ Use SPCK with a disposable owner-check URL:
 
 `?fresh=owner-ar-check&lang=ar`
 
-Judge Arabic meaning, RTL fit, clipping, and unchanged behavior across the opening, HUD, wave cues, Spellbook, rewrite choices, pause/options, victory, and defeat. This is a localization token with one fresh participant and execute `docs/FRESH_PLAYER_CELL.md` without coaching.
+Judge Arabic meaning, RTL fit, clipping, and unchanged behavior across the opening, HUD, wave cues, Spellbook, rewrite choices, pause/options, victory, and defeat. This is a localization/layout check, not the genuine commercial cell.
+
+If it passes, use a different unique token with one fresh participant and execute `docs/FRESH_PLAYER_CELL.md` without coaching.
