@@ -7,7 +7,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 1. `docs/OWNER_MANDATE.md` — binding continuity and fun/engagement priority, plus the reusable session-opening prompt.
 2. `docs/START_HERE.md` — permanent project map and mandatory session protocol.
 3. `docs/DEVELOPMENT_MODEL.md` — locked goal-to-code reasoning, creative discovery, fun-potential assessment, evidence boundaries, and calibration.
-4. `docs/CHATGPT_WORKFLOW.md` — mandatory session bootstrap, per-response gate, decision packet, interruption recovery, and closure process.
+4. `docs/CHATGPT_WORKFLOW.md` — mandatory session bootstrap, per-response gate, decision packet, owner phone workflow gate, interruption recovery, and closure process.
 5. `docs/ACTIVE_SESSION.md` — compact mutable state that must remain active throughout the current work session.
 6. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
 7. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
@@ -29,7 +29,7 @@ Do not propose another project or a casual core replacement. Reconsider the core
 Reading the authority documents once is not enough. Every meaningful session and work-related response must follow `docs/CHATGPT_WORKFLOW.md`.
 
 - At session start, read and reconcile `docs/ACTIVE_SESSION.md` against the durable authority files and latest `main` before implementation.
-- Before every work-related response, apply the mandatory per-response gate: final goal, player effect, strongest limitation, continuity/scope, evidence truth, decision quality, and persistence impact.
+- Before every work-related response, apply the mandatory per-response gate: final goal, player effect, strongest limitation, continuity/scope, evidence truth, decision quality, persistence impact, and owner execution.
 - Every material recommendation, coding batch, test request, commercial judgment, or direction change must include one compact visible line: `Work state: milestone | strongest limitation | approval boundary | current response goal`.
 - Before a material gameplay, UX, progression, or commercial change, complete the `Current Work Packet` in `docs/ACTIVE_SESSION.md` with the player problem, intended experience, alternatives, prediction, failure mode, evidence plan, affected systems, and approval boundary.
 - Update `docs/ACTIVE_SESSION.md` immediately when any state that could affect later responses changes; do not postpone all state updates until session closure.
@@ -43,7 +43,9 @@ Reading the authority documents once is not enough. Every meaningful session and
 - The primary validation device is a POCO X2-class 20:9 portrait phone, but layouts must remain responsive across portrait screens.
 - Preserve safe areas and the accepted one-thumb control model: drag inside the arena while spells cast automatically.
 - Keep pause, restart, sound, and haptic settings inside the compact Pause/Options overlay.
-- English remains the default path. Arabic test mode is activated only with `?lang=ar`; combine it with an isolated cell using `?fresh=<token>&lang=ar`.
+- English remains the default path. Arabic test mode is activated only with `?lang=ar`; combine it with an isolated cell using `?fresh=<token>&lang=ar` internally.
+- Every owner phone check must have a visible tap path beginning from an exact SPCK file or screen. Do not ask the owner to type query strings, tokens, JavaScript Console commands, DevTools input, terminal commands, or source edits when a bounded launcher or button can perform the action.
+- Use `test-launcher.html` as the owner-facing entry point for current internal checks. It generates clean English/Arabic URLs automatically and opens `cell-runner.html`.
 - Use `cell-runner.html` on the observer's device to execute the frozen cell. The participant should see only the game.
 
 ## Active Production Runtime Files
@@ -60,13 +62,17 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 
 ## Repository-Only Test Tools
 
+- `test-launcher.html`
+- `test-launcher.css`
+- `test-launcher.js`
 - `cell-runner.html`
 - `cell-runner.css`
 - `cell-runner.js`
+- `scripts/check-test-launcher.mjs`
 - `scripts/headless-cell-runner.mjs`
 - `scripts/check-cell-runner.mjs`
 
-The Cell Runner is offline observer tooling. It generates isolated links, keeps interview questions hidden during play, records the protocol, and exports Markdown. It must remain outside `scripts/release-config.mjs`, `dist/`, the APK, and the future AAB. It must not add analytics, telemetry, accounts, participant identity, or network transmission.
+The Test Launcher is the tap-only SPCK entry point for owner checks. The Cell Runner is offline observer tooling. Together they generate isolated links, prevent manual URL construction, keep interview questions hidden during play, record the protocol, and export Markdown. They must remain outside `scripts/release-config.mjs`, `dist/`, the APK, and the future AAB. They must not add analytics, telemetry, accounts, participant identity, or network transmission.
 
 ## Release Bundle and Android
 
@@ -123,6 +129,6 @@ Before ending any meaningful session:
 
 ## Verification
 
-Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check` and `npm run cell:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
+Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check`, `npm run cell:check`, and `npm run launcher:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
 
-For browser preview, run `npm run preview` for the production bundle. Open `cell-runner.html` directly through SPCK preview for observer-tool testing; it is intentionally not served from `dist/`.
+For browser preview, run `npm run preview` for the production bundle. Open `test-launcher.html` directly through SPCK preview for owner testing; it is intentionally not served from `dist/`. Before asking the owner to validate anything in SPCK, verify a visible tap path and state the exact file and buttons to use.
