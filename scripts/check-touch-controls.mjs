@@ -13,7 +13,7 @@ const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'ut
 assert.ok(RELEASE_FILES.includes('touch-controls.js'), 'touch controls must ship in the production bundle');
 assert.match(html, /touch-controls\.js[\s\S]*game\.js/, 'touch controls must load before game.js registers pointer handlers');
 assert.match(html, /Drag anywhere to steer above your thumb\. Avoid red runes; spells cast automatically\./);
-assert.match(html, /اسحب في أي مكان للتحكم فوق إصبعك/);
+assert.match(html, /يتحرك الساحر فوق إصبعك/);
 assert.match(css, /\.touch-guide-ar\s*\{[\s\S]*display:\s*none/);
 assert.match(css, /html\[lang="ar"\] \.touch-guide-ar\s*\{[\s\S]*display:\s*inline/);
 
