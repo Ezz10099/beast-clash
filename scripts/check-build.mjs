@@ -76,7 +76,7 @@ assert.ok(
   localization.length < (await readFile(resolve(root, 'localization.js'), 'utf8')).length,
   'release localization must be minified',
 );
-assert.match(touchControls, /THUMB_CLEARANCE_CANVAS_Y\s*=\s*56/, 'release controls must preserve thumb clearance');
+assert.match(touchControls, /THUMB_CLEARANCE_CANVAS_Y\s*=\s*84/, 'release controls must preserve calibrated thumb clearance');
 assert.doesNotMatch(touchControls, /localStorage|SaveSystem|persistent\.|state\./, 'touch controls must not alter saves or game state directly');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
