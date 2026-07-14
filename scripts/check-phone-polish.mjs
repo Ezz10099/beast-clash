@@ -18,18 +18,28 @@ assert.match(html, /src="game\.js"[\s\S]*src="phone-polish\.js"/, 'phone polish 
 assert.equal((html.match(/class="opening-guide/g) || []).length, 1, 'opening instructions must not be duplicated');
 assert.match(html, /Drag anywhere to steer above your thumb\. Avoid red runes; spells cast automatically\./);
 assert.match(html, /يتحرك الساحر فوق إصبعك/);
-assert.match(html, /id="healthMeter"/);
-assert.match(html, /id="waveMeter"/);
+assert.match(html, /class="game-card" data-screen="start"/);
+assert.match(html, /class="combat-deck"/);
+assert.match(html, /class="hud-card hud-health"[\s\S]*id="healthText"[\s\S]*id="healthMeter"/);
+assert.match(html, /class="hud-card hud-wave"[\s\S]*id="waveText"[\s\S]*id="waveMeter"/);
+assert.match(html, /class="hud-card hud-score"[\s\S]*id="scoreText"/);
+assert.doesNotMatch(html, /class="status-meters"/, 'detached unlabeled meter row must not return');
 assert.match(html, /class="orientation-notice"/);
 assert.match(js, /اضغط مرة أخرى لإعادة التحدّي/);
 assert.match(js, /لن تبدأ محاولة جديدة إلا إذا ضغطت الزر مرة أخرى/);
 assert.doesNotMatch(js, /إعادة الاختبار|لن تُحذف المحاولة/, 'retired awkward Arabic restart wording must not return');
 
 for (const contract of [
+  /\.game-card\s*\{[\s\S]*?width:\s*min\(/,
+  /\.game-stage\s*\{[\s\S]*?overflow:\s*hidden/,
+  /\.combat-deck\s*\{/,
+  /\.hud-card\s*\{/,
+  /data-screen="start"[\s\S]*?\.combat-deck/,
   /overflow-y:\s*auto/,
   /white-space:\s*normal/,
   /button:focus-visible/,
   /data-health-state="critical"/,
+  /@media \(max-height:\s*740px\)/,
   /@media \(orientation:\s*landscape\)/,
 ]) {
   assert.match(css, contract, `phone polish CSS is missing ${contract}`);
@@ -47,10 +57,11 @@ function makeClassList() {
   };
 }
 
-function makeElement(id = '') {
+function makeElement(id = '', hidden = false) {
   const handlers = [];
   return {
     id,
+    hidden,
     textContent: '',
     children: [],
     dataset: {},
@@ -73,6 +84,10 @@ const waveMeter = makeElement('waveMeter');
 const newRunButton = makeElement('newRunButton');
 const menuStatus = makeElement('menuStatus');
 const canvas = makeElement('game');
+const startPanel = makeElement('startPanel', false);
+const spellbookPanel = makeElement('spellbookPanel', true);
+const upgradePanel = makeElement('upgradePanel', true);
+const menuPanel = makeElement('menuPanel', true);
 healthText.textContent = 'HP 2/5';
 waveText.textContent = 'A1 W3 · 4 foes';
 newRunButton.textContent = 'Restart Trial';
@@ -87,6 +102,10 @@ const elements = new Map([
   ['#newRunButton', newRunButton],
   ['#menuStatus', menuStatus],
   ['#game', canvas],
+  ['#startPanel', startPanel],
+  ['#spellbookPanel', spellbookPanel],
+  ['#upgradePanel', upgradePanel],
+  ['#menuPanel', menuPanel],
 ]);
 
 class FakeMutationObserver {
@@ -101,6 +120,7 @@ const sandbox = {
   Array,
   Number,
   String,
+  Boolean,
   Date: { now: () => 1000 },
   MutationObserver: FakeMutationObserver,
   setTimeout: () => 1,
@@ -116,12 +136,23 @@ const sandbox = {
 vm.createContext(sandbox);
 vm.runInContext(js, sandbox, { filename: 'phone-polish.js' });
 
+const api = sandbox.window.PixelMagePhonePolish;
 assert.equal(healthMeter.children.length, 5);
 assert.equal(healthMeter.children.filter((segment) => segment.dataset.filled === 'true').length, 2);
 assert.equal(gameCard.dataset.healthState, 'low');
 assert.equal(waveMeter.children.length, 12);
 assert.equal(waveMeter.children.filter((segment) => segment.dataset.filled === 'true').length, 3);
 assert.equal(waveMeter.children[2].dataset.current, 'true');
+assert.equal(gameCard.dataset.screen, 'start', 'initial layout must hide the combat deck behind the start panel');
+startPanel.hidden = true;
+assert.equal(api.updateScreenState(), 'playing');
+assert.equal(gameCard.dataset.screen, 'playing', 'combat deck must appear during active play');
+menuPanel.hidden = false;
+assert.equal(api.updateScreenState(), 'menu');
+assert.equal(gameCard.dataset.screen, 'menu', 'menu must take layout priority over active play');
+menuPanel.hidden = true;
+spellbookPanel.hidden = false;
+assert.equal(api.updateScreenState(), 'spellbook');
 
 const restartHandler = newRunButton.handlers.find((entry) => entry.type === 'click');
 assert.ok(restartHandler, 'restart confirmation handler must be registered');
@@ -139,4 +170,4 @@ assert.equal(newRunButton.classList.contains('new-run-confirming'), true);
 assert.equal(packageJson.scripts['polish:check'], 'node --check phone-polish.js && node scripts/check-phone-polish.mjs');
 assert.match(packageJson.scripts.check, /npm run polish:check/, 'normal checks must include phone polish verification');
 
-process.stdout.write('Phone readability and interaction-safety checks passed.\n');
+process.stdout.write('Portrait gameplay layout and interaction-safety checks passed.\n');
