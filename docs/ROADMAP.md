@@ -21,12 +21,13 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 3. Representative 12-wave 2×2×2 slice — **complete**.
 4. Owner corrections through `.8` — **complete**.
 5. Continuous evidence lane and clean fresh saves on `.9` — **complete and green**.
-6. Arabic-capable access — **implemented; owner check pending**.
+6. Arabic-capable access — **implemented; consolidated owner check pending**.
 7. Offline Cell Runner — **implemented; owner check pending**.
-8. Tap-only SPCK Test Launcher — **implemented; owner check pending**.
-9. Thumb-clearance touch correction — **implemented; owner feel check pending**.
-10. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
-11. Define remaining production scope from measured evidence — **blocked on step 10**.
+8. Tap-only SPCK Test Launcher — **implemented and visible on phone**.
+9. 84-pixel thumb-clearance correction — **owner accepted enough to continue**.
+10. Consolidated phone-readability and interaction-safety batch — **implemented; owner check pending**.
+11. Genuine fresh-player commercial cell and owner second go/no-go — **next after owner checks pass**.
+12. Define remaining production scope from measured evidence — **blocked on step 11**.
 
 Do not scale content, create final assets, add monetization, or begin store production before the second go/no-go.
 
@@ -52,24 +53,16 @@ The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait control
 - selectable proven starting spells;
 - checkpoint/resume and isolated fresh saves.
 
-### Accepted human evidence
+### Accepted evidence
 
 - First run: 5:49; experimentation and boss positive, onboarding/pacing/Spellbook/Orbit failed.
 - Corrected loop: entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` rejected.
 - Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
-- Latest phone observation: direct fingertip targeting covered the mage and nearby threats.
+- `.9` automated evidence: 200 active runs, 100 choice-policy runs, 0% idle wins, 100% simple-movement wins, 8/8 replays, 8/8 starting-spell checks, and no runtime violation.
+- Owner phone control evidence: direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
 
-### Accepted automated evidence
-
-- 200 active runs with 99% wins and about 9% build spread.
-- 100 choice-policy runs with 5.8% median spread.
-- 0% idle wins and 100% simple-movement wins.
-- 8/8 deterministic replays.
-- 8/8 selectable starting-spell payoff checks.
-- No runtime violation.
-
-These do not prove human comprehension, touch feel, boredom/fairness, climax satisfaction, replay desire, or commercial longevity.
+These results do not prove newcomer comprehension, touch quality across players, boredom/fairness, climax satisfaction, replay desire, or commercial longevity.
 
 ### Test-readiness infrastructure
 
@@ -80,27 +73,30 @@ Implemented on `main`:
 - tap-only Test Launcher for Arabic, English, and Cell Runner access;
 - permanent Owner Phone Workflow Gate prohibiting hidden Console/query/token steps when a UI is feasible.
 
-### Touch-visibility correction
+### Consolidated phone-quality batch
 
-Implemented on `main`:
+Implemented on `main` without changing combat or progression:
 
-- `touch-controls.js` loads before `game.js`;
-- touch pointer targets move 56 scaled canvas pixels above the fingertip;
-- mouse coordinates remain unchanged;
-- bilingual opening guidance explains that the mage stays above the thumb;
-- `npm run controls:check` verifies the offset, load order, offline behavior, and release inclusion;
-- combat, speed, balance, progression, and saves remain unchanged.
+- one concise English/Arabic opening instruction;
+- 84-pixel scaled thumb clearance;
+- scroll-safe overlays for short screens and Arabic;
+- wrapped next-threat copy instead of ellipsis;
+- larger critical Spellbook/rewrite text;
+- HP and 12-wave progress meters;
+- low/critical-health emphasis;
+- two-tap active-Trial restart protection;
+- portrait guidance and visible focus/disabled states;
+- deterministic `npm run polish:check` and release-bundle contracts.
 
 ### Remaining Milestone 8 exit criteria
 
-1. Owner confirms the Test Launcher works naturally in SPCK.
-2. Owner confirms the 56-pixel touch clearance feels right and preserves comfortable arena reach.
-3. Owner passes Arabic meaning/layout and English comparison checks.
-4. Owner passes Cell Runner usability and staged-flow checks.
-5. Normal repository checks pass.
-6. One genuine fresh participant completes the frozen non-leading cell.
-7. Predictions are compared with the result.
-8. Owner gives GO / bounded REVISION / NO-GO-rethink.
+1. Owner passes one consolidated SPCK phone-quality check.
+2. Owner confirms Arabic meaning/layout and normal English presentation.
+3. Owner passes Cell Runner usability and staged-flow checks.
+4. Normal repository checks pass.
+5. One genuine fresh participant completes the frozen non-leading cell.
+6. Predictions are compared with the result.
+7. Owner gives GO / bounded REVISION / NO-GO-rethink.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -116,12 +112,4 @@ Complete any applicable Play testing requirement, collect structured evidence, f
 
 ## Exact Next Step
 
-Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**.
-
-During Wave 1, drag from the lower half of the arena and judge the new clearance as:
-
-- **right**;
-- **too small**; or
-- **too large**.
-
-Also confirm the mage, red runes, and nearby enemies remain visible and that reaching all directions still feels comfortable. Then finish the Arabic, English, and Cell Runner checks before involving a fresh participant.
+Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Complete one attempt while checking the new meters, text/panel fit, touch visibility, and restart confirmation. Then briefly confirm **Open English Game** and **Open Cell Runner** still work.
