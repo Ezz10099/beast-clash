@@ -41,8 +41,7 @@
     return 1;
   }
 
-  const api = { parseHealth, parseWave, parseEssence, actForWave };
-  window.PixelMageArenaFx = Object.freeze(api);
+  window.PixelMageArenaFx = Object.freeze({ parseHealth, parseWave, parseEssence, actForWave });
 
   const fxCanvas = document.querySelector("#arenaFx");
   const gameCanvas = document.querySelector("#game");
@@ -268,8 +267,5 @@
   }
 
   syncDisplayedStatus();
-  api.syncDisplayedStatus = syncDisplayedStatus;
-  api.pointFromEvent = pointFromEvent;
-  api.drawFrame = drawFrame;
   if (typeof window.requestAnimationFrame === "function") window.requestAnimationFrame(drawFrame);
 })();
