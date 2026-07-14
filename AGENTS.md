@@ -12,7 +12,7 @@ Pixel Mage is the only active game in this repository. Read these files before m
 6. `docs/RELEASE_SCOPE.md` — current scope status and approval gate.
 7. `docs/DECISIONS.md` — durable decisions that must not be repeatedly reopened.
 8. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md` — permanent automated/research/human evidence roles and latest stable conclusions.
-9. `docs/FRESH_PLAYER_CELL.md` — exact clean setup, non-leading questions, predictions, and commercial stop conditions.
+9. `docs/FRESH_PLAYER_CELL.md` — exact clean setup, Cell Runner use, non-leading questions, predictions, and commercial stop conditions.
 10. `docs/DESIGN_RESEARCH.md` — completed evidence review and design reasoning.
 11. `docs/SCOPE_OPTIONS.md` — capped commercial directions, recommendation, and representative-run gate.
 12. `docs/ROADMAP.md` — measurable roadmap through Google Play.
@@ -44,8 +44,9 @@ Reading the authority documents once is not enough. Every meaningful session and
 - Preserve safe areas and the accepted one-thumb control model: drag inside the arena while spells cast automatically.
 - Keep pause, restart, sound, and haptic settings inside the compact Pause/Options overlay.
 - English remains the default path. Arabic test mode is activated only with `?lang=ar`; combine it with an isolated cell using `?fresh=<token>&lang=ar`.
+- Use `cell-runner.html` on the observer's device to execute the frozen cell. The participant should see only the game.
 
-## Active Runtime Files
+## Active Production Runtime Files
 
 - `index.html`
 - `style.css`
@@ -56,6 +57,16 @@ Reading the authority documents once is not enough. Every meaningful session and
 `localization.js` and `localization.css` are a bounded test-readiness layer. They must not change gameplay state, balance, progression, persistence, normal English behavior, or the commercial approval boundary.
 
 The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast Clash prototype and are not loaded by Pixel Mage. Do not reactivate them.
+
+## Repository-Only Test Tools
+
+- `cell-runner.html`
+- `cell-runner.css`
+- `cell-runner.js`
+- `scripts/headless-cell-runner.mjs`
+- `scripts/check-cell-runner.mjs`
+
+The Cell Runner is offline observer tooling. It generates isolated links, keeps interview questions hidden during play, records the protocol, and exports Markdown. It must remain outside `scripts/release-config.mjs`, `dist/`, the APK, and the future AAB. It must not add analytics, telemetry, accounts, participant identity, or network transmission.
 
 ## Release Bundle and Android
 
@@ -82,6 +93,7 @@ The old `src/`, animal assets, and `phaser.min.js` belong to the previous Beast 
 - Do not invent fixed content counts or playtime promises before a representative full run is built and phone-timed.
 - Prefer code-driven variety and reusable data over asset-heavy animation or large rosters.
 - Do not let a lack of English-speaking testers become a reason to abandon or replace the game. Use visual-first design, simple language, localization, behavioral observation, and translated questions where needed.
+- Do not treat Cell Runner completion as evidence that the game is fun or understood. Only the valid fresh-player result can resolve the current human claims.
 
 ## Delivery Pace
 
@@ -111,6 +123,6 @@ Before ending any meaningful session:
 
 ## Verification
 
-Run `npm run workflow:check` before any stable work commit. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
+Run `npm run workflow:check` before any stable work commit. Run `npm run localization:check` and `npm run cell:check` when changing their respective systems. Run `npm run check` before every stable code commit. Run `npm run evidence` before a stable gameplay gate or commercial recommendation. Documentation-only commits must preserve the workflow integrity check and all expected check results.
 
-For browser preview, run `npm run preview` and test the complete accepted phone checklist.
+For browser preview, run `npm run preview` for the production bundle. Open `cell-runner.html` directly through SPCK preview for observer-tool testing; it is intentionally not served from `dist/`.
