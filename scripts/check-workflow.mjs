@@ -1,0 +1,81 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+
+const root = new URL('../', import.meta.url);
+
+const [agents, workflow, activeSession, startHere] = await Promise.all([
+  readFile(new URL('AGENTS.md', root), 'utf8'),
+  readFile(new URL('docs/CHATGPT_WORKFLOW.md', root), 'utf8'),
+  readFile(new URL('docs/ACTIVE_SESSION.md', root), 'utf8'),
+  readFile(new URL('docs/START_HERE.md', root), 'utf8'),
+]);
+
+for (const requiredReference of [
+  'docs/CHATGPT_WORKFLOW.md',
+  'docs/ACTIVE_SESSION.md',
+  'mandatory per-response gate',
+  'Work state:',
+  'Current Work Packet',
+]) {
+  assert.match(
+    agents,
+    new RegExp(requiredReference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'),
+    `AGENTS.md must preserve the persistent workflow reference: ${requiredReference}`,
+  );
+}
+
+for (const requiredSection of [
+  '## Session Bootstrap',
+  '## Mandatory Per-Response Gate',
+  '## Visible Drift Signal',
+  '## Material Decision Packet',
+  '## Implementation Loop',
+  '## Active-State Update Triggers',
+  '## Interruption and Context-Recovery Rule',
+  '## Session Closure',
+]) {
+  assert.match(
+    workflow,
+    new RegExp(requiredSection.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+    `docs/CHATGPT_WORKFLOW.md is missing ${requiredSection}`,
+  );
+}
+
+for (const requiredField of [
+  '**Current milestone:**',
+  '**Current implementation:**',
+  '**Latest accepted phone behavior:**',
+  '**Latest automated evidence:**',
+  '**Strongest current fun/engagement limitation:**',
+  '**Current approval boundary:**',
+  '**Current workflow goal:**',
+  '**Exact next product action:**',
+  '## Response Watchlist',
+  '## Current Work Packet',
+  '## Session Update Log',
+]) {
+  assert.match(
+    activeSession,
+    new RegExp(requiredField.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+    `docs/ACTIVE_SESSION.md is missing ${requiredField}`,
+  );
+}
+
+assert.doesNotMatch(
+  activeSession,
+  /\b(?:TBD|TODO|UNKNOWN)\b/i,
+  'Mandatory active-session state must not contain unresolved placeholder values',
+);
+
+for (const requiredReference of [
+  'docs/CHATGPT_WORKFLOW.md',
+  'docs/ACTIVE_SESSION.md',
+]) {
+  assert.match(
+    startHere,
+    new RegExp(requiredReference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+    `docs/START_HERE.md must reference ${requiredReference}`,
+  );
+}
+
+console.log('Pixel Mage workflow persistence checks passed.');
