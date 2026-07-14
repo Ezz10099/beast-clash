@@ -35,20 +35,13 @@ The manifest records the release version, byte count, and SHA-256 checksum of ea
 
 The build contains no remote URLs, animal assets, or legacy Phaser code, so it loads entirely offline inside Capacitor.
 
-## Runtime Size Budget
+## Runtime Size Policy
 
-The representative runtime is currently 127,449 bytes. The former 100 KB cap belonged to the smaller vertical slice and became structurally incompatible with the accepted Arabic, responsive layout, atmosphere, and enemy-variety systems.
+Runtime size is measured and reported, but it is not governed by an arbitrary total or per-file hard cap.
 
-The enforced budget is now:
+`npm run size:report` writes a per-file diagnostic report. Size data is used to detect accidental inclusion of legacy files, duplicated systems, avoidable dependencies, or genuine performance and download risks. It must not block features merely because the code crossed a number inherited from an earlier vertical slice.
 
-- total runtime below 150 KB;
-- `game.js` below 70 KB;
-- `style.css` and `localization.js` below 18 KB each;
-- `phone-polish.css` below 12 KB;
-- `index.html` and `enemy-variety.js` below 10 KB each;
-- `arena-fx.js` below 8 KB.
-
-`npm run size:check` writes a per-file diagnostic report and fails on either total growth or a major-layer regression. This is a documented replacement of the obsolete cap, not removal of size discipline.
+A blocking limit may be introduced only when grounded in a real platform, performance, memory, download, build, or commercial requirement. The Product Compass, player value, maintainability, phone performance, and finishability remain authoritative.
 
 ## Repository-Only Test Tools
 
@@ -83,7 +76,7 @@ This now runs:
 - `npm run enemy:check` for deterministic role assignment, Wave 1 simplicity, formation separation, fan-fire windup/recovery, surger windup/commitment, Caster–Mote links, current-roster preservation, no persistence access, and release inclusion;
 - `npm run cell:check` and `npm run launcher:check` for the visible frozen human-test workflow;
 - the normal gameplay, choice, movement, balance, persistence, and stress checks with `enemy-variety.js` loaded in the headless runtime;
-- deterministic release construction, checksums, UTF-8 minification, and the layered 150 KB/per-file runtime budget;
+- deterministic release construction, checksums, UTF-8 minification, and non-blocking per-file runtime reporting;
 - Android artwork and native configuration checks.
 
 Before a gameplay gate or commercial recommendation, also run:
