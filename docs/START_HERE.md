@@ -41,12 +41,13 @@ Read these files in order:
 8. `docs/DECISIONS.md`
 9. `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
 10. `docs/FRESH_PLAYER_CELL.md`
-11. `docs/DESIGN_RESEARCH.md`
-12. `docs/SCOPE_OPTIONS.md`
-13. `docs/ROADMAP.md`
-14. `docs/SESSION_HANDOFF.md`
-15. `docs/GOOGLE_PLAY.md`
-16. `docs/BUILD.md` and `docs/ANDROID.md`
+11. `docs/ARABIC_GLOSSARY.md`
+12. `docs/DESIGN_RESEARCH.md`
+13. `docs/SCOPE_OPTIONS.md`
+14. `docs/ROADMAP.md`
+15. `docs/SESSION_HANDOFF.md`
+16. `docs/GOOGLE_PLAY.md`
+17. `docs/BUILD.md` and `docs/ANDROID.md`
 
 The active session is mutable operational state, not higher authority. If it conflicts with durable authority or newer accepted evidence, reconcile and update it before coding. A new explicit owner decision may override an older document, but every affected document must be updated immediately.
 
@@ -64,7 +65,7 @@ The active session is mutable operational state, not higher authority. If it con
 - Correction build `0.2.0-representative.2` was reported as entertaining, with roughly 15 minutes of representative experimentation.
 - Text-heavy `.4` failed immediate visual review. Compact `.5`, player-logic `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - Gate-preparation `.9` added token-isolated clean saves without changing normal gameplay or the owner's save.
-- Arabic readiness is implemented, including essential DOM/canvas translation, RTL presentation, isolated clean Arabic saves, default-English preservation, and deterministic checks. Owner phone acceptance remains pending.
+- Arabic readiness is implemented, including essential DOM/canvas translation, RTL presentation, isolated clean Arabic saves, default-English preservation, and deterministic checks. The owner later reported awkward or incorrect wording, so `docs/ARABIC_GLOSSARY.md` now fixes one permanent terminology set and the corrected Arabic path awaits phone acceptance.
 - `cell-runner.html` is an offline repository-only observer tool. It generates isolated English/Arabic URLs, blocks reused tokens, hides the interview during play, records the frozen protocol, enforces GO conditions, and exports Markdown.
 - `test-launcher.html` is the required owner-facing SPCK test entry point. It provides visible **Open Arabic Game**, **Open English Game**, and **Open Cell Runner** buttons and constructs all parameters/tokens automatically.
 - The July 14 Console error proved that hidden query instructions were not owner-ready. It did not test Arabic mode or gameplay.
@@ -78,7 +79,7 @@ The exact latest state belongs in `docs/ACTIVE_SESSION.md` and `docs/SESSION_HAN
 
 ## Current Commercial Gate
 
-Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Arabic access, the offline Cell Runner, and the tap-only SPCK Test Launcher are implemented but require owner phone checks. The owner must first open `test-launcher.html` and verify the Arabic game, English comparison, and complete Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
+Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Arabic access, the offline Cell Runner, the tap-only SPCK Test Launcher, thumb clearance, and phone-quality corrections are implemented but require owner phone checks. The owner must first open `test-launcher.html` and verify the corrected Arabic game, English comparison, and complete Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
 
 ## Mandatory Session Protocol
 
@@ -102,13 +103,15 @@ During work:
 7. Update `docs/ACTIVE_SESSION.md` immediately when a changed fact could affect later responses in the same session.
 8. Run `npm run workflow:check` before stable work commits.
 9. Run `npm run localization:check` when changing localization.
-10. Run `npm run cell:check` when changing the Cell Runner.
-11. Run `npm run launcher:check` when changing owner test navigation.
-12. Run `npm run check` before publishing code.
-13. Run `npm run evidence` before gameplay gates or commercial recommendations.
-14. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
-15. Ask for one consolidated human cell only at a major commercial gate.
-16. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
+10. Run `npm run controls:check` when changing touch controls.
+11. Run `npm run polish:check` when changing phone presentation or interaction safety.
+12. Run `npm run cell:check` when changing the Cell Runner.
+13. Run `npm run launcher:check` when changing owner test navigation.
+14. Run `npm run check` before publishing code.
+15. Run `npm run evidence` before gameplay gates or commercial recommendations.
+16. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
+17. Ask for one consolidated human cell only at a major commercial gate.
+18. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
@@ -131,4 +134,4 @@ For every external or generated release asset, preserve its source, prompt or li
 
 ## New-Session Prompt
 
-> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, `docs/CHATGPT_WORKFLOW.md`, and `docs/ACTIVE_SESSION.md`, then the latest roadmap, evidence, decisions, and handoff. Reconcile the active state against latest `main` before working. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Apply the repository's mandatory per-response and owner-execution gates throughout the session, update the active state whenever a decision-relevant fact changes, and use the visible `Work state` line for material responses. Every owner phone check must begin from a named SPCK file or screen and a visible tap path; do not require Console input, manual URL/query editing, token construction, terminal commands, or source edits when a bounded interface can do it. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
+> Continue Pixel Mage in `Ezz10099/beast-clash` on `main`. Read `AGENTS.md`, `docs/OWNER_MANDATE.md`, `docs/START_HERE.md`, `docs/DEVELOPMENT_MODEL.md`, `docs/CHATGPT_WORKFLOW.md`, and `docs/ACTIVE_SESSION.md`, then the latest roadmap, evidence, decisions, handoff, and Arabic glossary. Reconcile the active state against latest `main` before working. I do not want to keep changing projects or casually replacing the core game. I relied on you to lead the development of one complete, worthwhile game. Maximizing fun and engagement potential is a primary goal, not something to undervalue behind scope, process, or easy validation. Apply the repository's mandatory per-response and owner-execution gates throughout the session, update the active state whenever a decision-relevant fact changes, and use the visible `Work state` line for material responses. Every owner phone check must begin from a named SPCK file or screen and a visible tap path; do not require Console input, manual URL/query editing, token construction, terminal commands, or source edits when a bounded interface can do it. Use the full goal-driven methods saved in the repository to independently identify, compare, implement, and test the strongest improvements while still keeping the game realistic to finish and publish. Do not propose a different project or core replacement unless strong evidence shows Pixel Mage cannot satisfy the Product Compass, or I explicitly ask for reconsideration. Keep responses brief. Start by reporting the current state, the strongest fun/engagement problem, and one meaningful session goal.
