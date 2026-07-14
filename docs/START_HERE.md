@@ -66,7 +66,8 @@ The active session is mutable operational state, not higher authority. If it con
 - Text-heavy `.4` failed immediate visual review. Compact `.5`, player-logic `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
 - Gate-preparation `.9` added token-isolated clean saves without changing normal gameplay or the owner's save.
 - Arabic readiness is implemented, including essential DOM/canvas translation, RTL presentation, isolated clean Arabic saves, default-English preservation, and deterministic checks. The owner later reported awkward or incorrect wording, so `docs/ARABIC_GLOSSARY.md` now fixes one permanent terminology set and the corrected Arabic path awaits phone acceptance.
-- The previous gameplay page accumulated separate header, canvas, spell, HUD, meter, and hint patches. It has now been rebuilt into one portrait composition: compact header, dominant unchanged arena, unified combat dashboard, meters attached to their labels, screen-aware dashboard visibility, and one responsive overlay hierarchy. Owner visual acceptance remains pending.
+- The gameplay page was rebuilt into one portrait composition: compact header, dominant unchanged arena, unified combat dashboard, meters attached to their labels, screen-aware dashboard visibility, and one responsive overlay hierarchy. Owner visual acceptance remains pending.
+- A separate pointer-transparent arena-FX layer now adds act-specific atmosphere, Ember/Frost edge identity, a short touch trail, wave pulses, and damage/critical-health edge feedback while reading only displayed HUD text and public pointer events. It does not change `game.js` or mechanics and awaits owner phone acceptance.
 - `cell-runner.html` is an offline repository-only observer tool. It generates isolated English/Arabic URLs, blocks reused tokens, hides the interview during play, records the frozen protocol, enforces GO conditions, and exports Markdown.
 - `test-launcher.html` is the required owner-facing SPCK test entry point. It provides visible **Open Arabic Game**, **Open English Game**, and **Open Cell Runner** buttons and constructs all parameters/tokens automatically.
 - The July 14 Console error proved that hidden query instructions were not owner-ready. It did not test Arabic mode or gameplay.
@@ -80,7 +81,7 @@ The exact latest state belongs in `docs/ACTIVE_SESSION.md` and `docs/SESSION_HAN
 
 ## Current Commercial Gate
 
-Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Corrected Arabic access, the rebuilt portrait gameplay layout, the offline Cell Runner, the tap-only SPCK Test Launcher, thumb clearance, and interaction-safety corrections are implemented but require one owner phone check. The owner must first open `test-launcher.html` and verify the Arabic layout, active dashboard, rewrite/Spellbook/Options overlays, English comparison, and complete Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
+Preserve the `.8` accepted gameplay and `.9` clean-save foundation. Corrected Arabic access, the rebuilt portrait layout, arena feedback, the offline Cell Runner, the tap-only SPCK Test Launcher, thumb clearance, and interaction-safety corrections are implemented but require one owner phone check. The owner must first open `test-launcher.html` and verify Arabic active-play readability/effects, rewrite/Spellbook/Options overlays, English comparison, and the complete Cell Runner flow using only visible buttons. Then one genuinely fresh participant must play through the non-leading cell using a newly generated token. Compare the exported result with the pre-registered predictions and obtain the owner's second explicit go/no-go. Do not scale launch content or replace the project before that decision.
 
 ## Mandatory Session Protocol
 
@@ -106,13 +107,14 @@ During work:
 9. Run `npm run localization:check` when changing localization.
 10. Run `npm run controls:check` when changing touch controls.
 11. Run `npm run polish:check` when changing phone presentation or interaction safety.
-12. Run `npm run cell:check` when changing the Cell Runner.
-13. Run `npm run launcher:check` when changing owner test navigation.
-14. Run `npm run check` before publishing code.
-15. Run `npm run evidence` before gameplay gates or commercial recommendations.
-16. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
-17. Ask for one consolidated human cell only at a major commercial gate.
-18. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
+12. Run `npm run fx:check` when changing arena atmosphere or read-only combat feedback.
+13. Run `npm run cell:check` when changing the Cell Runner.
+14. Run `npm run launcher:check` when changing owner test navigation.
+15. Run `npm run check` before publishing code.
+16. Run `npm run evidence` before gameplay gates or commercial recommendations.
+17. Before every owner phone request, verify a visible tap path and name the exact file/screen and buttons in order.
+18. Ask for one consolidated human cell only at a major commercial gate.
+19. Keep fun, engagement, build excitement, progression payoff, and replay desire active in every material decision; do not reduce the session to the easiest measurable task.
 
 Before ending:
 
