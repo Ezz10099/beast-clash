@@ -25,7 +25,7 @@ The repository still contains the retired Beast Clash prototype for reference. I
 The manifest records the release version, byte count, and SHA-256 checksum of each runtime file.
 
 - `game.js` is bundled with the small Capacitor App bridge for native pause and Android Back handling.
-- All release CSS and extension JavaScript are minified, including the phone, arena, and enemy-variety layers.
+- All release CSS and extension JavaScript are minified with UTF-8 preserved, so Arabic remains compact and readable instead of being expanded into ASCII escape sequences.
 - `touch-controls.js` shifts touch targets upward by 84 canvas pixels so the mage stays visible above the thumb; mouse input remains exact.
 - `phone-polish.js`/`.css` provide the cohesive portrait shell, unified dashboard, responsive overlays, low-health emphasis, and protected restart.
 - `arena-fx.js`/`.css` provide pointer-transparent act, essence, touch, wave, and damage atmosphere without reading private gameplay state.
@@ -34,6 +34,21 @@ The manifest records the release version, byte count, and SHA-256 checksum of ea
 - Arabic runtime and protocol wording must follow `docs/ARABIC_GLOSSARY.md`.
 
 The build contains no remote URLs, animal assets, or legacy Phaser code, so it loads entirely offline inside Capacitor.
+
+## Runtime Size Budget
+
+The representative runtime is currently 127,449 bytes. The former 100 KB cap belonged to the smaller vertical slice and became structurally incompatible with the accepted Arabic, responsive layout, atmosphere, and enemy-variety systems.
+
+The enforced budget is now:
+
+- total runtime below 150 KB;
+- `game.js` below 70 KB;
+- `style.css` and `localization.js` below 18 KB each;
+- `phone-polish.css` below 12 KB;
+- `index.html` and `enemy-variety.js` below 10 KB each;
+- `arena-fx.js` below 8 KB.
+
+`npm run size:check` writes a per-file diagnostic report and fails on either total growth or a major-layer regression. This is a documented replacement of the obsolete cap, not removal of size discipline.
 
 ## Repository-Only Test Tools
 
@@ -68,7 +83,7 @@ This now runs:
 - `npm run enemy:check` for deterministic role assignment, Wave 1 simplicity, formation separation, fan-fire windup/recovery, surger windup/commitment, Caster–Mote links, current-roster preservation, no persistence access, and release inclusion;
 - `npm run cell:check` and `npm run launcher:check` for the visible frozen human-test workflow;
 - the normal gameplay, choice, movement, balance, persistence, and stress checks with `enemy-variety.js` loaded in the headless runtime;
-- deterministic release construction, checksums, minification of every extension asset, and the unchanged 100 KB runtime ceiling;
+- deterministic release construction, checksums, UTF-8 minification, and the layered 150 KB/per-file runtime budget;
 - Android artwork and native configuration checks.
 
 Before a gameplay gate or commercial recommendation, also run:
