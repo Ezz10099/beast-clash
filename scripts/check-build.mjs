@@ -49,14 +49,26 @@ for (const record of manifest.files) {
 
 const html = await readFile(resolve(output, 'index.html'), 'utf8');
 const css = await readFile(resolve(output, 'style.css'), 'utf8');
+const localizationCss = await readFile(resolve(output, 'localization.css'), 'utf8');
+const localization = await readFile(resolve(output, 'localization.js'), 'utf8');
 assert.doesNotMatch(html, /(?:src|href)=["']https?:\/\//i, 'release HTML must not depend on the network');
 assert.match(html, /href=["']style\.css["']/);
+assert.match(html, /href=["']localization\.css["']/);
+assert.match(html, /src=["']localization\.js["']/);
 assert.match(html, /src=["']game\.js["']/);
+assert.ok(
+  html.indexOf('src="localization.js"') < html.indexOf('src="game.js"'),
+  'localization must initialize before the game runtime',
+);
 assert.match(html, /viewport-fit=cover/, 'safe-area viewport support is required');
 assert.match(css, /safe-area-inset-top/, 'top safe-area support is required');
 assert.match(css, /100svh/, 'small-viewport height support is required');
 assert.match(css, /@media \(max-height: 700px\)/, 'short portrait layout is required');
 assert.match(css, /@media \(max-height: 600px\)/, 'small portrait layout is required');
+assert.match(localizationCss, /html\[lang="ar"\]/, 'Arabic layout must remain query-scoped');
+assert.match(localizationCss, /direction:\s*rtl/, 'Arabic layout must retain RTL presentation');
+assert.match(localization, /new URLSearchParams\(search\)\.get\("lang"\) === "ar"/, 'Arabic mode must remain explicitly query-activated');
+assert.doesNotMatch(localization, /localStorage|SaveSystem|persistent\.|state\./, 'localization must not touch saves or gameplay state');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
 assert.match(nativeGame, /appStateChange/, 'native bundle must handle native app pausing');
