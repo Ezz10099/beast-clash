@@ -76,7 +76,7 @@ For a genuine fresh-player cell, open the Cell Runner from the launcher, generat
 - `npm run enemy:check` verifies deterministic role assignment, Wave 1 simplicity, formation separation, fan-fire windup/recovery, surger windup/commitment, relay links, current-roster preservation, offline behavior, and release inclusion.
 - `npm run cell:check` verifies the offline Cell Runner, staged interview flow, GO enforcement, export, mobile layout, and production-bundle exclusion.
 - `npm run launcher:check` verifies visible tap navigation, automatic clean English/Arabic tokens, and direct Cell Runner opening.
-- `npm run check` runs those checks plus gameplay, minified release construction, the 100 KB ceiling, artwork, and Android configuration gates.
+- `npm run check` runs those checks plus gameplay, UTF-8 release construction, the layered 150 KB/per-file size budget, artwork, and Android configuration gates.
 - `npm run evidence` runs the automated build/policy, idle/movement, replay, and starting-spell evidence with the enemy-variety runtime loaded.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
 - Debug APKs are direct-install testing artifacts; the future Google Play upload is a securely signed release AAB.
