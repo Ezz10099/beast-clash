@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101420" />
+    <title>Pixel Mage — Test Launcher</title>
+    <link rel="stylesheet" href="test-launcher.css" />
+  </head>
+  <body>
+    <main class="launcher-shell">
+      <header>
+        <p class="eyebrow">SPCK test tools</p>
+        <h1>Pixel Mage Test Launcher</h1>
+        <p class="lede">Open every current phone check by tapping a button. No Console, URL editing, or manual token entry is required.</p>
+      </header>
+
+      <section class="launcher-card primary-card">
+        <span class="step-number">1</span>
+        <div>
+          <h2>Arabic game check</h2>
+          <p>Starts a clean Arabic/RTL owner-check save automatically.</p>
+          <button id="arabicGameButton" type="button">Open Arabic Game</button>
+        </div>
+      </section>
+
+      <section class="launcher-card">
+        <span class="step-number">2</span>
+        <div>
+          <h2>English comparison</h2>
+          <p>Starts a separate clean English save so you can confirm the normal path is unchanged.</p>
+          <button id="englishGameButton" type="button">Open English Game</button>
+        </div>
+      </section>
+
+      <section class="launcher-card">
+        <span class="step-number">3</span>
+        <div>
+          <h2>Fresh-Player Cell Runner</h2>
+          <p>Opens the offline observation, interview, gate, and export tool.</p>
+          <button id="cellRunnerButton" type="button">Open Cell Runner</button>
+        </div>
+      </section>
+
+      <aside class="help-card">
+        <strong>How to return</strong>
+        <p>Use Android Back after checking the game. The launcher will still be available in SPCK Preview.</p>
+      </aside>
+
+      <p id="launcherStatus" class="status" role="status" aria-live="polite"></p>
+    </main>
+    <script src="test-launcher.js"></script>
+  </body>
+</html>
