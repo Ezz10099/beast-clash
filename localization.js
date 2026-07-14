@@ -1,25 +1,13 @@
 (function () {
   "use strict";
 
-  const search = window.location && typeof window.location.search === "string"
-    ? window.location.search
-    : "";
+  const search = window.location && typeof window.location.search === "string" ? window.location.search : "";
   const language = new URLSearchParams(search).get("lang") === "ar" ? "ar" : "en";
   const active = language === "ar";
 
-  const TERMS = Object.freeze({
-    Bolt: "صاعقة",
-    Orbit: "مدار",
-    Ember: "نار",
-    Frost: "جليد",
-    Split: "انقسام",
-    Echo: "تكرار",
-    BOLT: "صاعقة",
-    ORBIT: "مدار",
-    EMBER: "نار",
-    FROST: "جليد",
-    SPLIT: "انقسام",
-    ECHO: "تكرار",
+  const PART = Object.freeze({
+    Bolt: "صاعقة", Orbit: "مدار", Ember: "نار", Frost: "جليد", Split: "انقسام", Echo: "تكرار",
+    BOLT: "صاعقة", ORBIT: "مدار", EMBER: "نار", FROST: "جليد", SPLIT: "انقسام", ECHO: "تكرار",
   });
 
   const EXACT = Object.freeze({
@@ -34,7 +22,7 @@
     "Start New Trial": "بدء اختبار جديد",
     "Living Spellbook": "كتاب التعاويذ الحية",
     "Choose your first spell": "اختر تعويذة البداية",
-    "The starter and proven spells can begin a Trial.": "يمكن بدء الاختبار بالتعويذة الأساسية أو أي تعويذة مكتشفة.",
+    "The starter and proven spells can begin a Trial.": "ابدأ بالتعويذة الأساسية أو أي تعويذة مكتشفة.",
     "Back": "رجوع",
     "Wave Cleared": "اكتملت الموجة",
     "Choose one": "اختر واحدًا",
@@ -49,50 +37,27 @@
     "Start New Run": "بدء محاولة جديدة",
     "Drag in the arena to move · Spells cast automatically": "اسحب داخل الساحة للتحرك · التعويذة تُطلَق تلقائيًا",
     "Prove rewrites to unlock starting spells": "اكتشف تعاويذ جديدة لتستخدمها في البداية",
-    "Choose the starter or a proven spell. Locked spells are found by rewriting.": "اختر التعويذة الأساسية أو تعويذة مكتشفة. اكتشف المقفلة بتغيير أجزاء التعويذة.",
+    "Choose the starter or a proven spell. Locked spells are found by rewriting.": "اختر التعويذة الأساسية أو المكتشفة. اكتشف المقفلة بتغيير أجزاء التعويذة.",
     "Unproven Spell": "تعويذة غير مكتشفة",
-    "SELECTED": "محددة",
-    "READY": "جاهزة",
-    "FIND IN A TRIAL": "اكتشفها في الاختبار",
+    "SELECTED": "محددة", "READY": "جاهزة", "FIND IN A TRIAL": "اكتشفها في الاختبار",
     "Act I cleared · Choose one": "اكتمل الفصل الأول · اختر واحدًا",
     "Act II cleared · Choose one": "اكتمل الفصل الثاني · اختر واحدًا",
     "HOLD · Current Spell": "احتفظ · التعويذة الحالية",
     "same shape · still grows": "نفس الشكل · تستمر في القوة",
-    "Keeps every spell word while the living spell gains its next level.": "يحافظ على كل أجزاء التعويذة ويمنحها المستوى التالي.",
-    "HOLD": "احتفاظ",
-    "NEW": "جديدة",
-    "KNOWN": "مكتشفة",
-    "Auto-Paused": "توقف تلقائي",
-    "Trial Paused": "الاختبار متوقف",
-    "Your Checkpoint Is Safe": "نقطة الحفظ آمنة",
-    "Take a Breath": "خذ استراحة",
+    "Keeps every spell word while the living spell gains its next level.": "يحافظ على أجزاء التعويذة ويمنحها المستوى التالي.",
+    "HOLD": "احتفاظ", "NEW": "جديدة", "KNOWN": "مكتشفة",
+    "Auto-Paused": "توقف تلقائي", "Trial Paused": "الاختبار متوقف",
+    "Your Checkpoint Is Safe": "نقطة الحفظ آمنة", "Take a Breath": "خذ استراحة",
     "Action stopped when the game lost focus. This wave restarts from its boundary if the app closes.": "توقفت الحركة عندما خرجت من اللعبة. إذا أُغلقت، ستبدأ هذه الموجة من بدايتها.",
     "Enemies, projectiles, and the wave clock are frozen.": "توقّف الأعداء والمقذوفات ووقت الموجة.",
-    "Restart Trial": "إعادة الاختبار",
-    "Trial Options": "خيارات الاختبار",
-    "Rewrite Waiting": "اختيار التغيير ينتظر",
+    "Restart Trial": "إعادة الاختبار", "Trial Options": "خيارات الاختبار",
+    "Rewrite Waiting": "اختيار التغيير ينتظر", "Back to Rewrite": "العودة للاختيار",
     "This wave boundary is saved. Return to choose one change.": "تم حفظ نهاية الموجة. ارجع واختر تغييرًا واحدًا.",
-    "Back to Rewrite": "العودة للاختيار",
-    "Sound and haptic choices save automatically.": "تُحفَظ إعدادات الصوت والاهتزاز تلقائيًا.",
-    "Play Again": "العب مجددًا",
     "The Trial is paused. Resume here, or press Back again to exit.": "الاختبار متوقف. تابعه من هنا أو اضغط رجوع مرة أخرى للخروج.",
-    "Resume": "متابعة",
-    "Pause": "إيقاف مؤقت",
-    "TRIAL COMPLETE": "اكتمل الاختبار",
-    "Tap to choose your next spell": "اضغط لاختيار تعويذة المحاولة التالية",
+    "Sound and haptic choices save automatically.": "تُحفَظ إعدادات الصوت والاهتزاز تلقائيًا.",
+    "Play Again": "العب مجددًا", "Resume": "متابعة", "Pause": "إيقاف مؤقت",
+    "TRIAL COMPLETE": "اكتمل الاختبار", "Tap to choose your next spell": "اضغط لاختيار تعويذة المحاولة التالية",
     "THE SPELL UNRAVELS": "انهارت التعويذة",
-    "First Script": "البداية",
-    "Crossfire": "نيران متقاطعة",
-    "Broken Lines": "خطوط مكسورة",
-    "First Guardian": "الحارس الأول",
-    "Second Act": "الفصل الثاني",
-    "Twin Pressure": "ضغط مزدوج",
-    "Crowded Page": "ساحة مزدحمة",
-    "Second Guardian": "الحارس الثاني",
-    "Mote Stampede": "هجوم الكائنات",
-    "Glyph Crossfire": "رماة متقاطعون",
-    "Twin Wards": "حارسان",
-    "The Redactor": "المحرّر الأحمر",
     "RED RUNE = MOVE BEFORE IT CLOSES": "علامة حمراء = ابتعد قبل أن تنغلق",
     "BLUE AIM LINE = MOVE BEFORE THE SHOT": "خط أزرق = تحرّك قبل انطلاق المقذوف",
     "THE MARK SHOWS BOLT'S CURRENT TARGET": "العلامة تُظهر هدف الصاعقة الحالي",
@@ -105,220 +70,149 @@
     "CASTERS ENTER FROM BOTH SIDES": "الرماة يدخلون من الجانبين",
     "TWO CHARGERS · BREAK EACH TELEGRAPH": "حارسان مندفعان · راقب تحذير كل واحد",
     "DODGE THE RING · BAIT THE CHARGE": "تجنب الحلقة · استدرج الاندفاع",
-    "hunts the mark": "تلاحق الهدف",
-    "guards nearby": "تحمي المنطقة القريبة",
-    "burns + splashes": "تحرق وتؤذي القريبين",
-    "slows": "تُبطئ",
-    "casts 3 now": "تطلق 3 فورًا",
-    "repeats later": "تتكرر لاحقًا",
+    "hunts the mark": "تلاحق الهدف", "guards nearby": "تحمي المنطقة القريبة",
+    "burns + splashes": "تحرق وتؤذي القريبين", "slows": "تُبطئ",
+    "casts 3 now": "تطلق 3 فورًا", "repeats later": "تتكرر لاحقًا",
     "same shape · spell grows": "نفس الشكل · التعويذة تقوى",
   });
 
-  function translateSpellName(value) {
-    const match = /^(Bolt|Orbit) · (Ember|Frost) · (Split|Echo)$/.exec(value);
-    if (!match) return null;
-    return TERMS[match[1]] + " · " + TERMS[match[2]] + " · " + TERMS[match[3]];
-  }
+  const TITLES = Object.freeze({
+    "FIRST SCRIPT": "البداية", CROSSFIRE: "نيران متقاطعة", "BROKEN LINES": "خطوط مكسورة",
+    "FIRST GUARDIAN": "الحارس الأول", "SECOND ACT": "الفصل الثاني", "TWIN PRESSURE": "ضغط مزدوج",
+    "CROWDED PAGE": "ساحة مزدحمة", "SECOND GUARDIAN": "الحارس الثاني", "MOTE STAMPEDE": "هجوم الكائنات",
+    "GLYPH CROSSFIRE": "رماة متقاطعون", "TWIN WARDS": "حارسان", "THE REDACTOR": "المحرّر الأحمر",
+  });
 
-  function translateThreatDetail(value) {
-    const labels = Object.freeze({ Motes: "كائنات", Casters: "رماة", Guardians: "حراس", Boss: "زعيم" });
-    const pieces = value.split(" · ");
-    if (!pieces.every(function (piece) { return /^(Motes|Casters|Guardians|Boss) ×\d+$/.test(piece); })) return null;
-    return pieces.map(function (piece) {
-      const match = /^(Motes|Casters|Guardians|Boss) ×(\d+)$/.exec(piece);
-      return labels[match[1]] + " ×" + match[2];
-    }).join(" · ");
-  }
-
-  function translateCore(value) {
-    if (!active || typeof value !== "string" || value.length === 0) return value;
+  function core(value) {
+    if (!active || !value) return value;
     if (EXACT[value]) return EXACT[value];
+    const title = TITLES[value.toUpperCase()];
+    if (title) return title;
 
-    const spellName = translateSpellName(value);
-    if (spellName) return spellName;
+    let m = /^(Bolt|Orbit) · (Ember|Frost) · (Split|Echo)$/.exec(value);
+    if (m) return PART[m[1]] + " · " + PART[m[2]] + " · " + PART[m[3]];
 
-    const threatDetail = translateThreatDetail(value);
-    if (threatDetail) return threatDetail;
+    m = /^FORM (Bolt|Orbit) · ESSENCE (Ember|Frost) · LAW (Split|Echo)(?: · LV (\d+))?$/.exec(value);
+    if (m) return "الشكل " + PART[m[1]] + " · العنصر " + PART[m[2]] + " · طريقة الإطلاق " + PART[m[3]] + (m[4] ? " · المستوى " + m[4] : "");
 
-    let match = /^FORM (Bolt|Orbit) · ESSENCE (Ember|Frost) · LAW (Split|Echo)(?: · LV (\d+))?$/.exec(value);
-    if (match) {
-      return "الشكل " + TERMS[match[1]] + " · العنصر " + TERMS[match[2]] + " · طريقة الإطلاق " + TERMS[match[3]] +
-        (match[4] ? " · المستوى " + match[4] : "");
+    m = /^CURRENT · (.+) · LV (\d+) → (\d+)$/.exec(value);
+    if (m) return "الحالي · " + core(m[1]) + " · المستوى " + m[2] + " إلى " + m[3];
+
+    m = /^(FORM|ESSENCE|LAW) [·→] (Bolt|Orbit|Ember|Frost|Split|Echo)$/.exec(value);
+    if (m) return (m[1] === "FORM" ? "الشكل" : m[1] === "ESSENCE" ? "العنصر" : "طريقة الإطلاق") + " · " + PART[m[2]];
+
+    m = /^SPELL HELD · LV (\d+)$/.exec(value);
+    if (m) return "تم الاحتفاظ بالتعويذة · المستوى " + m[1];
+
+    m = /^(.+) · LV (\d+)$/.exec(value);
+    if (m) return core(m[1]) + " · المستوى " + m[2];
+
+    m = /^Spellbook (\d+)\/8 · Proven spells can start future Trials$/.exec(value);
+    if (m) return "كتاب التعاويذ " + m[1] + "/8 · ابدأ لاحقًا بالتعاويذ المكتشفة";
+
+    m = /^Spellbook (\d+)\/8 proven$/.exec(value);
+    if (m) return "كتاب التعاويذ: " + m[1] + "/8 مكتشفة";
+
+    m = /^Tap to choose from (\d+) starting spells$/.exec(value);
+    if (m) return "اضغط للاختيار من " + m[1] + " تعاويذ بداية";
+
+    m = /^(.+) will begin the next Trial\.$/.exec(value);
+    if (m) return "سيبدأ الاختبار التالي بتعويذة " + core(m[1]) + ".";
+
+    m = /^Resume Rewrite after Wave (\d+)$/.exec(value);
+    if (m) return "متابعة الاختيار بعد الموجة " + m[1];
+    m = /^Resume Wave (\d+)$/.exec(value);
+    if (m) return "متابعة الموجة " + m[1];
+    m = /^Checkpoint: (.+) · (.+)$/.exec(value);
+    if (m) return "نقطة الحفظ: " + core(m[1]) + " · " + m[2];
+    m = /^12 waves · Rewrite or hold · Every choice grows the spell$/.exec(value);
+    if (m) return "12 موجة · غيّر جزءًا أو احتفظ بها · كل اختيار يقوّي التعويذة";
+    m = /^New Spell Proven · (\d+)\/8$/.exec(value);
+    if (m) return "تعويذة جديدة مكتشفة · " + m[1] + "/8";
+    m = /^Spell LV (\d+) → (\d+)$/.exec(value);
+    if (m) return "مستوى التعويذة " + m[1] + " إلى " + m[2];
+
+    m = /^NEXT · (BOSS|GUARDIAN|WAVE (\d+)) · (.+)$/.exec(value);
+    if (m) return "التالي · " + (m[1] === "BOSS" ? "الزعيم" : m[1] === "GUARDIAN" ? "الحارس" : "الموجة " + m[2]) + " · " + core(m[3]);
+    m = /^ACT (I|II|III) · (BOSS|GUARDIAN|WAVE (\d+))$/.exec(value);
+    if (m) return "الفصل " + (m[1] === "I" ? 1 : m[1] === "II" ? 2 : 3) + " · " + (m[2] === "BOSS" ? "الزعيم" : m[2] === "GUARDIAN" ? "الحارس" : "الموجة " + m[3]);
+
+    m = /^(Motes|Casters|Guardians|Boss) ×(\d+)(?: · (.*))?$/.exec(value);
+    if (m) {
+      const name = m[1] === "Motes" ? "كائنات" : m[1] === "Casters" ? "رماة" : m[1] === "Guardians" ? "حراس" : "زعيم";
+      return name + " ×" + m[2] + (m[3] ? " · " + core(m[3]) : "");
     }
 
-    match = /^CURRENT · (.+) · LV (\d+) → (\d+)$/.exec(value);
-    if (match) return "الحالي · " + translateCore(match[1]) + " · المستوى " + match[2] + " إلى " + match[3];
+    m = /^HP (\d+)\/(\d+)$/.exec(value);
+    if (m) return "الحياة " + m[1] + "/" + m[2];
+    m = /^(\d+) Waves$/.exec(value);
+    if (m) return m[1] + " موجة";
+    m = /^Best (\d+)$/.exec(value);
+    if (m) return "الأفضل " + m[1];
+    m = /^Score (\d+)$/.exec(value);
+    if (m) return "النقاط " + m[1];
+    m = /^Complete (.+)$/.exec(value);
+    if (m) return "اكتمل " + m[1];
+    m = /^Wave (\d+)\/(\d+)$/.exec(value);
+    if (m) return "الموجة " + m[1] + "/" + m[2];
+    m = /^Wave (\d+) Clear$/.exec(value);
+    if (m) return "اكتملت الموجة " + m[1];
+    m = /^A(\d+) W(\d+) · (\d+) foes$/.exec(value);
+    if (m) return "الفصل " + m[1] + " · الموجة " + m[2] + " · " + m[3] + " أعداء";
+    m = /^A(\d+) W(\d+) · incoming$/.exec(value);
+    if (m) return "الفصل " + m[1] + " · الموجة " + m[2] + " · قادمون";
+    m = /^Time (.+) · Score (\d+)$/.exec(value);
+    if (m) return "الوقت " + m[1] + " · النقاط " + m[2];
+    m = /^Reached Wave (\d+) of (\d+)$/.exec(value);
+    if (m) return "وصلت إلى الموجة " + m[1] + " من " + m[2];
 
-    match = /^(FORM|ESSENCE|LAW) · (Bolt|Orbit|Ember|Frost|Split|Echo)$/.exec(value);
-    if (match) {
-      const axis = match[1] === "FORM" ? "الشكل" : match[1] === "ESSENCE" ? "العنصر" : "طريقة الإطلاق";
-      return axis + " · " + TERMS[match[2]];
-    }
-
-    match = /^(FORM|ESSENCE|LAW) → (Bolt|Orbit|Ember|Frost|Split|Echo)$/.exec(value);
-    if (match) {
-      const axis = match[1] === "FORM" ? "الشكل" : match[1] === "ESSENCE" ? "العنصر" : "طريقة الإطلاق";
-      return axis + " · " + TERMS[match[2]];
-    }
-
-    match = /^SPELL HELD · LV (\d+)$/.exec(value);
-    if (match) return "تم الاحتفاظ بالتعويذة · المستوى " + match[1];
-
-    match = /^(.+) · LV (\d+)$/.exec(value);
-    if (match && match[1] !== value) return translateCore(match[1]) + " · المستوى " + match[2];
-
-    match = /^Spellbook (\d+)\/8 · Proven spells can start future Trials$/.exec(value);
-    if (match) return "كتاب التعاويذ " + match[1] + "/8 · يمكن بدء اختبار جديد بالتعاويذ المكتشفة";
-
-    match = /^Spellbook (\d+)\/8 proven$/.exec(value);
-    if (match) return "كتاب التعاويذ: " + match[1] + "/8 مكتشفة";
-
-    match = /^Tap to choose from (\d+) starting spells$/.exec(value);
-    if (match) return "اضغط للاختيار من " + match[1] + " تعاويذ بداية";
-
-    match = /^(.+) will begin the next Trial\.$/.exec(value);
-    if (match) return "سيبدأ الاختبار التالي بتعويذة " + translateCore(match[1]) + ".";
-
-    match = /^Resume Rewrite after Wave (\d+)$/.exec(value);
-    if (match) return "متابعة الاختيار بعد الموجة " + match[1];
-
-    match = /^Resume Wave (\d+)$/.exec(value);
-    if (match) return "متابعة الموجة " + match[1];
-
-    match = /^Checkpoint: (.+) · (.+)$/.exec(value);
-    if (match) return "نقطة الحفظ: " + translateCore(match[1]) + " · " + match[2];
-
-    match = /^12 waves · Rewrite or hold · Every choice grows the spell$/.exec(value);
-    if (match) return "12 موجة · غيّر جزءًا أو احتفظ بها · كل اختيار يقوّي التعويذة";
-
-    match = /^New Spell Proven · (\d+)\/8$/.exec(value);
-    if (match) return "تعويذة جديدة مكتشفة · " + match[1] + "/8";
-
-    match = /^Spell LV (\d+) → (\d+)$/.exec(value);
-    if (match) return "مستوى التعويذة " + match[1] + " إلى " + match[2];
-
-    match = /^NEXT · (BOSS|GUARDIAN|WAVE (\d+)) · (.+)$/.exec(value);
-    if (match) {
-      const stage = match[1] === "BOSS" ? "الزعيم" : match[1] === "GUARDIAN" ? "الحارس" : "الموجة " + match[2];
-      return "التالي · " + stage + " · " + translateCore(match[3]);
-    }
-
-    match = /^ACT (I|II|III) · (BOSS|GUARDIAN|WAVE (\d+))$/.exec(value);
-    if (match) {
-      const act = match[1] === "I" ? "1" : match[1] === "II" ? "2" : "3";
-      const stage = match[2] === "BOSS" ? "الزعيم" : match[2] === "GUARDIAN" ? "الحارس" : "الموجة " + match[3];
-      return "الفصل " + act + " · " + stage;
-    }
-
-    match = /^HP (\d+)\/(\d+)$/.exec(value);
-    if (match) return "الحياة " + match[1] + "/" + match[2];
-
-    match = /^(\d+) Waves$/.exec(value);
-    if (match) return match[1] + " موجة";
-
-    match = /^Best (\d+)$/.exec(value);
-    if (match) return "الأفضل " + match[1];
-
-    match = /^Score (\d+)$/.exec(value);
-    if (match) return "النقاط " + match[1];
-
-    match = /^Complete (.+)$/.exec(value);
-    if (match) return "اكتمل " + match[1];
-
-    match = /^Wave (\d+)\/(\d+)$/.exec(value);
-    if (match) return "الموجة " + match[1] + "/" + match[2];
-
-    match = /^Wave (\d+) Clear$/.exec(value);
-    if (match) return "اكتملت الموجة " + match[1];
-
-    match = /^A(\d+) W(\d+) · (\d+) foes$/.exec(value);
-    if (match) return "الفصل " + match[1] + " · الموجة " + match[2] + " · " + match[3] + " أعداء";
-
-    match = /^A(\d+) W(\d+) · incoming$/.exec(value);
-    if (match) return "الفصل " + match[1] + " · الموجة " + match[2] + " · قادمون";
-
-    match = /^Time (.+) · Score (\d+)$/.exec(value);
-    if (match) return "الوقت " + match[1] + " · النقاط " + match[2];
-
-    match = /^Reached Wave (\d+) of (\d+)$/.exec(value);
-    if (match) return "وصلت إلى الموجة " + match[1] + " من " + match[2];
-
-    let translated = value;
-    const phrases = [
-      ["single-target", "هدف واحد"],
-      ["crowd shield", "حماية من الحشود"],
-      ["burn splash", "حرق جماعي"],
-      ["repeat later", "تتكرر لاحقًا"],
-      ["hunts the mark", "تلاحق الهدف"],
-      ["guards nearby", "تحمي المنطقة القريبة"],
-      ["burns + splashes", "تحرق وتؤذي القريبين"],
-      ["casts 3 now", "تطلق 3 فورًا"],
-      ["same shape", "نفس الشكل"],
-      ["spell grows", "التعويذة تقوى"],
-      ["still grows", "تستمر في القوة"],
-      ["Starting spell:", "تعويذة البداية:"],
-      ["Open options", "فتح الخيارات"],
-      ["Pause game", "إيقاف اللعبة مؤقتًا"],
-      ["Resume game", "متابعة اللعبة"],
-      ["Starting spell", "تعويذة البداية"],
-      ["Spellbook", "كتاب التعاويذ"],
-      ["Trial", "الاختبار"],
-      ["Wave", "الموجة"],
-      ["FORM", "الشكل"],
-      ["ESSENCE", "العنصر"],
-      ["LAW", "طريقة الإطلاق"],
-      ["LV", "المستوى"],
-      ["slows", "تُبطئ"],
+    const replace = [
+      ["hunts the mark", "تلاحق الهدف"], ["guards nearby", "تحمي المنطقة القريبة"],
+      ["burns + splashes", "تحرق وتؤذي القريبين"], ["casts 3 now", "تطلق 3 فورًا"],
+      ["repeats later", "تتكرر لاحقًا"], ["slows", "تُبطئ"],
+      ["FORM", "الشكل"], ["ESSENCE", "العنصر"], ["LAW", "طريقة الإطلاق"], ["LV", "المستوى"],
     ];
-    for (const phrase of phrases) translated = translated.split(phrase[0]).join(phrase[1]);
-    for (const term of Object.keys(TERMS)) {
-      translated = translated.replace(new RegExp("\\b" + term + "\\b", "g"), TERMS[term]);
-    }
-    return translated;
+    let result = value;
+    for (const pair of replace) result = result.split(pair[0]).join(pair[1]);
+    for (const key of Object.keys(PART)) result = result.replace(new RegExp("\\b" + key + "\\b", "g"), PART[key]);
+    return result;
   }
 
   function translateText(value) {
     if (!active || typeof value !== "string") return value;
-    const leading = (value.match(/^\s*/) || [""])[0];
-    const trailing = (value.match(/\s*$/) || [""])[0];
-    const start = leading.length;
-    const end = value.length - trailing.length;
-    if (start >= end) return value;
-    const core = value.slice(start, end);
-    return leading + translateCore(core) + trailing;
+    const lead = (value.match(/^\s*/) || [""])[0];
+    const trail = (value.match(/\s*$/) || [""])[0];
+    const end = value.length - trail.length;
+    if (lead.length >= end) return value;
+    return lead + core(value.slice(lead.length, end)) + trail;
   }
 
-  window.PixelMageLocale = Object.freeze({
-    active,
-    language,
-    translateText,
-  });
-
+  window.PixelMageLocale = Object.freeze({ active, language, translateText });
   if (!active) return;
 
-  function translateAttribute(element, name) {
-    if (!element || typeof element.getAttribute !== "function" || typeof element.setAttribute !== "function") return;
-    const current = element.getAttribute(name);
-    if (!current) return;
-    const translated = translateText(current);
-    if (translated !== current) element.setAttribute(name, translated);
+  function attribute(element, name) {
+    if (!element || typeof element.getAttribute !== "function") return;
+    const value = element.getAttribute(name);
+    if (value) {
+      const translated = translateText(value);
+      if (translated !== value) element.setAttribute(name, translated);
+    }
   }
 
-  function translateNode(node) {
-    if (!node) return;
-    if (node.nodeType === 3) {
-      const current = node.nodeValue || "";
-      const translated = translateText(current);
-      if (translated !== current) node.nodeValue = translated;
+  function node(item) {
+    if (!item) return;
+    if (item.nodeType === 3) {
+      const value = item.nodeValue || "";
+      const translated = translateText(value);
+      if (translated !== value) item.nodeValue = translated;
       return;
     }
-    if (node.nodeType !== 1 && node.nodeType !== 9) return;
-    if (node.nodeType === 1) {
-      translateAttribute(node, "aria-label");
-      translateAttribute(node, "title");
+    if (item.nodeType !== 1 && item.nodeType !== 9) return;
+    if (item.nodeType === 1) {
+      attribute(item, "aria-label");
+      attribute(item, "title");
     }
-    const children = node.childNodes ? Array.from(node.childNodes) : [];
-    for (const child of children) translateNode(child);
+    for (const child of item.childNodes ? Array.from(item.childNodes) : []) node(child);
   }
 
   if (document.documentElement) {
@@ -329,40 +223,31 @@
     document.body.classList.add("language-ar");
     document.body.dataset.language = "ar";
   }
-
-  translateNode(document.documentElement || document.body);
+  node(document.documentElement || document.body);
 
   if (typeof MutationObserver === "function" && document.body) {
-    const observer = new MutationObserver(function (mutations) {
+    new MutationObserver(function (mutations) {
       for (const mutation of mutations) {
-        if (mutation.type === "characterData") translateNode(mutation.target);
-        else if (mutation.type === "attributes") translateAttribute(mutation.target, mutation.attributeName);
-        else for (const node of mutation.addedNodes || []) translateNode(node);
+        if (mutation.type === "characterData") node(mutation.target);
+        else if (mutation.type === "attributes") attribute(mutation.target, mutation.attributeName);
+        else for (const added of mutation.addedNodes || []) node(added);
       }
-    });
-    observer.observe(document.body, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ["aria-label", "title"],
+    }).observe(document.body, {
+      subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["aria-label", "title"],
     });
   }
 
-  const contextPrototype = window.CanvasRenderingContext2D && window.CanvasRenderingContext2D.prototype;
-  if (contextPrototype && !contextPrototype.__pixelMageArabicText) {
-    const originalFillText = contextPrototype.fillText;
-    Object.defineProperty(contextPrototype, "__pixelMageArabicText", { value: true });
-    contextPrototype.fillText = function (text) {
+  const prototype = window.CanvasRenderingContext2D && window.CanvasRenderingContext2D.prototype;
+  if (prototype && !prototype.__pixelMageArabicText) {
+    const fillText = prototype.fillText;
+    Object.defineProperty(prototype, "__pixelMageArabicText", { value: true });
+    prototype.fillText = function (text) {
       const args = Array.from(arguments);
       args[0] = translateText(String(text));
-      const previousDirection = this.direction;
+      const direction = this.direction;
       this.direction = "rtl";
-      try {
-        return originalFillText.apply(this, args);
-      } finally {
-        this.direction = previousDirection;
-      }
+      try { return fillText.apply(this, args); }
+      finally { this.direction = direction; }
     };
   }
 })();
