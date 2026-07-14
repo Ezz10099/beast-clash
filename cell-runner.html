@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101420" />
+    <title>Pixel Mage — Fresh-Player Cell Runner</title>
+    <link rel="stylesheet" href="cell-runner.css" />
+  </head>
+  <body>
+    <main class="runner-shell">
+      <header class="runner-header">
+        <p class="eyebrow">Internal evidence tool</p>
+        <h1>Fresh-Player Cell Runner</h1>
+        <p class="lede">Prepare an isolated game link, observe without coaching, reveal the interview only after play, and export one complete result record.</p>
+        <p class="privacy-note">Offline only · local draft storage · no participant name · excluded from the Android release bundle</p>
+      </header>
+
+      <nav class="step-strip" aria-label="Cell stages">
+        <span data-step-indicator="setup" aria-current="step">1 Setup</span>
+        <span data-step-indicator="observation">2 Observe</span>
+        <span data-step-indicator="interview">3 Interview</span>
+        <span data-step-indicator="gate">4 Gate</span>
+        <span data-step-indicator="result">5 Export</span>
+      </nav>
+
+      <p id="statusMessage" class="status-message" role="status" aria-live="polite"></p>
+
+      <section id="setupSection" class="runner-card" data-stage="setup">
+        <div class="section-heading">
+          <span>1</span>
+          <div>
+            <h2>Clean setup</h2>
+            <p>Use a person who has never played, watched, or been taught Pixel Mage.</p>
+          </div>
+        </div>
+
+        <div class="field-grid two-column">
+          <label>
+            Language path
+            <select id="languagePath">
+              <option value="en">English</option>
+              <option value="ar">Arabic</option>
+            </select>
+          </label>
+          <label>
+            Mobile-game familiarity
+            <select id="familiarity">
+              <option value="">Select one</option>
+              <option value="none">None</option>
+              <option value="occasional">Occasional</option>
+              <option value="frequent">Frequent</option>
+            </select>
+          </label>
+          <label>
+            Build or commit
+            <input id="buildCommit" type="text" placeholder="main / commit SHA" autocomplete="off" />
+          </label>
+          <label>
+            Device and orientation
+            <input id="device" type="text" placeholder="POCO X2 · portrait" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="token-panel">
+          <label>
+            Fresh token
+            <input id="freshToken" type="text" maxlength="32" pattern="[A-Za-z0-9_-]{1,32}" autocomplete="off" />
+          </label>
+          <button id="generateTokenButton" class="secondary-button" type="button">Generate new token</button>
+        </div>
+
+        <label>
+          Game file or preview base
+          <input id="gameBase" type="text" value="index.html" autocomplete="off" />
+        </label>
+        <label>
+          Isolated test URL
+          <input id="testUrl" class="mono" type="text" readonly />
+        </label>
+        <div class="action-row">
+          <button id="copyUrlButton" class="secondary-button" type="button">Copy test URL</button>
+          <a id="openGameLink" class="link-button" href="index.html" target="_blank" rel="noopener">Open game</a>
+        </div>
+
+        <aside class="instruction-box">
+          <strong>Say only this before play:</strong>
+          <p id="neutralInstruction"></p>
+        </aside>
+        <p class="warning-box">Do not explain movement, automatic casting, red runes, spell parts, rewriting, proving, the Spellbook, or any choice. Do not suggest a choice.</p>
+
+        <label class="check-row">
+          <input id="participantFreshConfirmed" type="checkbox" />
+          <span>I confirm this participant has not played, watched, or been taught Pixel Mage.</span>
+        </label>
+
+        <button id="beginObservationButton" class="primary-button" type="button">Lock setup and begin observation</button>
+      </section>
+
+      <section id="observationSection" class="runner-card" data-stage="observation" hidden>
+        <div class="section-heading">
+          <span>2</span>
+          <div>
+            <h2>Silent observation</h2>
+            <p>Keep the interview hidden. Record behavior and the player’s own comments without explaining the game.</p>
+          </div>
+        </div>
+
+        <div class="timer-panel">
+          <div>
+            <span class="field-label">Attempt timer</span>
+            <strong id="timerDisplay">0:00</strong>
+          </div>
+          <div class="action-row compact">
+            <button id="timerToggleButton" class="secondary-button" type="button">Start timer</button>
+            <button id="timerResetButton" class="ghost-button" type="button">Reset</button>
+          </div>
+        </div>
+
+        <div class="check-grid">
+          <label class="check-row"><input id="startedWithoutHelp" type="checkbox" /><span>Started without help</span></label>
+          <label class="check-row"><input id="movedWithoutHelp" type="checkbox" /><span>Moved without help</span></label>
+          <label class="check-row"><input id="firstRuneReacted" type="checkbox" /><span>Reacted to first red rune</span></label>
+          <label class="check-row"><input id="secondRuneReacted" type="checkbox" /><span>Reacted to second red rune</span></label>
+          <label class="check-row"><input id="rewriteWithoutHelp" type="checkbox" /><span>Chose a rewrite without help</span></label>
+          <label class="check-row"><input id="noticedCombatChange" type="checkbox" /><span>Commented on or clearly noticed a combat change</span></label>
+          <label class="check-row"><input id="openedSpellbookVoluntarily" type="checkbox" /><span>Opened Spellbook voluntarily after result</span></label>
+          <label class="check-row"><input id="startedAgainVoluntarily" type="checkbox" /><span>Selected a spell or started again voluntarily</span></label>
+        </div>
+
+        <div class="field-grid two-column">
+          <label>
+            First-attempt result
+            <select id="attemptResult">
+              <option value="">Select one</option>
+              <option value="victory">Victory</option>
+              <option value="defeat">Defeat</option>
+              <option value="stopped">Stopped voluntarily</option>
+            </select>
+          </label>
+          <label>
+            Wave reached
+            <input id="waveReached" type="number" min="0" max="12" inputmode="numeric" />
+          </label>
+          <label>
+            Retry result, if offered
+            <input id="retryResult" type="text" placeholder="Not offered / result and wave" />
+          </label>
+          <label>
+            Voluntary post-result action
+            <input id="postResultAction" type="text" placeholder="What they did after 10 seconds" />
+          </label>
+        </div>
+
+        <label>Choices by wave<textarea id="choicesByWave" rows="3" placeholder="Wave 1: …"></textarea></label>
+        <label>Noticed spell changes<textarea id="spellChanges" rows="3"></textarea></label>
+        <label>First visible confusion or unexplained/unfair damage<textarea id="firstConfusion" rows="3" placeholder="Include wave and exact words or behavior"></textarea></label>
+        <label>First boredom or disengagement moment<textarea id="firstBoredom" rows="3" placeholder="Include wave and duration if possible"></textarea></label>
+        <label>Boss or climax reaction<textarea id="bossReaction" rows="3"></textarea></label>
+        <label>Translation or RTL issues<textarea id="translationIssues" rows="3" placeholder="Write None if there were none"></textarea></label>
+        <label>Other technical issues<textarea id="technicalIssues" rows="3" placeholder="Write None if there were none"></textarea></label>
+
+        <aside class="instruction-box compact-box">
+          <strong>Only when an attempt ends before Wave 3:</strong>
+          <p id="retryInstruction"></p>
+        </aside>
+
+        <button id="finishObservationButton" class="primary-button" type="button">End observation and reveal interview</button>
+      </section>
+
+      <section id="interviewSection" class="runner-card" data-stage="interview" hidden>
+        <div class="section-heading">
+          <span>3</span>
+          <div>
+            <h2>Post-play interview</h2>
+            <p>Ask exactly as written. Preserve the player’s own words and do not correct answers until all eight are recorded.</p>
+          </div>
+        </div>
+        <div id="questionList" class="question-list"></div>
+        <button id="finishInterviewButton" class="primary-button" type="button">Complete interview and review gate</button>
+      </section>
+
+      <section id="gateSection" class="runner-card" data-stage="gate" hidden>
+        <div class="section-heading">
+          <span>4</span>
+          <div>
+            <h2>Gate review</h2>
+            <p>These checks organize the evidence. They do not prove general market demand.</p>
+          </div>
+        </div>
+
+        <div class="gate-list">
+          <label class="check-row"><input id="gateControls" type="checkbox" /><span>Started, moved, and handled the rune without coaching</span></label>
+          <label class="check-row"><input id="gateAxes" type="checkbox" /><span>Explained all three spell axes and predicted at least one rewrite result</span></label>
+          <label class="check-row"><input id="gateChange" type="checkbox" /><span>Noticed at least one rewrite changing combat</span></label>
+          <label class="check-row"><input id="gateEnjoyment" type="checkbox" /><span>Named an enjoyable moment, no sustained boring stretch, and climax felt readable/fair</span></label>
+          <label class="check-row"><input id="gateReplay" type="checkbox" /><span>Expressed specific curiosity about another build and acted or named what to try</span></label>
+          <label class="check-row"><input id="gateTechnical" type="checkbox" /><span>No control, layout, save, crash, or performance blocker</span></label>
+        </div>
+
+        <label>Prediction matches<textarea id="predictionMatches" rows="4"></textarea></label>
+        <label>Prediction misses and likely causes<textarea id="predictionMisses" rows="4"></textarea></label>
+
+        <div class="field-grid two-column">
+          <label>
+            Gate result
+            <select id="gateResult">
+              <option value="">Select after reviewing evidence</option>
+              <option value="GO candidate">GO candidate</option>
+              <option value="REVISION candidate">REVISION candidate</option>
+              <option value="NO-GO/rethink candidate">NO-GO/rethink candidate</option>
+            </select>
+          </label>
+          <label>
+            Owner second decision
+            <select id="ownerDecision">
+              <option value="Pending">Pending</option>
+              <option value="GO">GO</option>
+              <option value="Bounded revision">Bounded revision</option>
+              <option value="NO-GO/rethink">NO-GO/rethink</option>
+            </select>
+          </label>
+        </div>
+
+        <button id="generateRecordButton" class="primary-button" type="button">Generate result record</button>
+      </section>
+
+      <section id="resultSection" class="runner-card" data-stage="result" hidden>
+        <div class="section-heading">
+          <span>5</span>
+          <div>
+            <h2>Export result</h2>
+            <p>Copy the record back into the development session. It contains no participant name and remains local until you share it.</p>
+          </div>
+        </div>
+        <label>
+          Markdown result record
+          <textarea id="resultRecord" class="result-record mono" rows="24" readonly></textarea>
+        </label>
+        <div class="action-row">
+          <button id="copyRecordButton" class="primary-button" type="button">Copy record</button>
+          <button id="downloadRecordButton" class="secondary-button" type="button">Download .md</button>
+          <button id="resetRunnerButton" class="danger-button" type="button">Reset and create new cell</button>
+        </div>
+      </section>
+
+      <footer>
+        <p>This runner is test tooling only. It is not shipped in <code>dist/</code>, the APK, or the future AAB.</p>
+      </footer>
+    </main>
+    <script src="cell-runner.js"></script>
+  </body>
+</html>
