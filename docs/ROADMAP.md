@@ -23,12 +23,12 @@ Finish and publish Pixel Mage as a stable, commercially credible Android game th
 4. Owner corrections through `.8` — **complete**.
 5. Continuous evidence lane and clean fresh saves on `.9` — **complete**.
 6. Arabic-capable access — **implemented**.
-7. Offline Cell Runner — **implemented; owner check pending**.
+7. Offline Cell Runner — **implemented and structurally verified**.
 8. Tap-only SPCK Test Launcher — **implemented and visible on phone**.
 9. 84-pixel thumb-clearance correction — **owner accepted enough to continue**.
 10. Phone readability, Arabic correction, portrait layout, and arena-feedback batches — **implemented; latest presentation batch owner-confirmed**.
 11. Current-roster enemy-variety batch — **implemented and automated-green; owner phone check pending**.
-12. Genuine fresh-player commercial cell and owner second go/no-go — **next after step 11 phone acceptance**.
+12. Genuine fresh-player commercial cell and owner second go/no-go — **authorized; begins immediately after step 11 phone acceptance**.
 13. Define remaining production scope from measured evidence — **blocked on step 12**.
 
 Do not scale content, create final assets, add monetization, or begin store production before the second go/no-go.
@@ -41,7 +41,7 @@ The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait control
 
 ## Milestone 8 — Representative Commercial Gate
 
-**Status: Active.**
+**Status: Human gate execution active.**
 
 ### Accepted representative foundation
 
@@ -80,7 +80,7 @@ Implemented on `main`:
 - 84-pixel scaled thumb clearance and protected restart;
 - compact header, dominant arena, unified dashboard, attached meters, and responsive overlays;
 - act/essence atmosphere, touch trail, wave pulse, and damage-edge feedback;
-- UTF-8-minified offline release assets under a documented 150 KB total and per-file budget.
+- UTF-8-minified offline release assets with non-blocking size reporting and no arbitrary byte cap.
 
 ### Current-roster enemy-variety batch
 
@@ -102,17 +102,18 @@ Implemented on `main` without adding a new enemy family, asset dependency, save 
 - Full GitHub Actions pipeline: **PASS**.
 - Evidence: 200 build runs, 100 choice-policy runs, 25 idle controls, 25 movement controls, and 8 deterministic replays.
 - Outcomes: 99% overall active survivability, 96% weakest-build survivability, 0% idle wins, 96% simple-movement wins, 9.2% build spread, 4.3% Form gap, 5.8% policy spread, and zero runtime violations.
-- Release: 127,449-byte runtime under all size limits; Android configuration, Capacitor sync, debug APK build, APK verification, and artifact upload passed.
-- Boundary: readability, fairness, tactical distinctness, and enjoyment remain owner/human claims.
+- Release and Android: deterministic bundle, Android configuration, Capacitor sync, debug APK build, APK verification, and artifact upload passed.
+- Boundary: readability, fairness, tactical distinctness, comprehension, enjoyment, and replay desire remain human claims.
 
 ### Remaining Milestone 8 exit criteria
 
 1. Owner passes one consolidated SPCK enemy-readability and fairness check in Arabic.
 2. Owner confirms normal English presentation remains correct.
-3. Owner passes Cell Runner usability and staged-flow checks.
+3. Owner confirms Cell Runner opens and the staged flow remains usable.
 4. One genuine fresh participant completes the frozen non-leading cell.
-5. Predictions are compared with the result.
-6. Owner gives GO / bounded REVISION / NO-GO-rethink.
+5. The exported result is compared with the pre-registered predictions.
+6. The result is classified as GO candidate, REVISION candidate, or NO-GO/rethink candidate.
+7. Owner gives GO / bounded revision / NO-GO-rethink.
 
 ## Milestone 9 — Play-Ready Release
 
@@ -128,4 +129,4 @@ Complete any applicable Play testing requirement, collect structured evidence, f
 
 ## Exact Next Step
 
-Pull latest `main`, open `test-launcher.html` in SPCK Preview, tap **Open Arabic Game**, and check Wave 1 simplicity, Act II flanking/three-line warnings/links, and Act III orange movement warnings. Confirm the patterns are readable and fair rather than chaotic, then briefly check **Open English Game** and **Open Cell Runner**. Do not involve a fresh participant until this pass succeeds.
+Pull latest `main`, open `test-launcher.html` in SPCK Preview, and tap **Open Arabic Game**. Play through Act III and judge Wave 1 simplicity, Act II flanking/three-line warnings/links, Act III orange movement warnings, readability, fairness, and visual crowding. Then briefly open **Open English Game** and **Open Cell Runner**. Report **PASS** or the exact issue. After PASS, run the genuine participant through **Open Cell Runner** and paste the exported Markdown record into the development session unchanged.
