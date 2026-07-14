@@ -4,7 +4,7 @@
   const canvas = document.querySelector("#game");
   if (!canvas || typeof canvas.addEventListener !== "function") return;
 
-  const THUMB_CLEARANCE_CANVAS_Y = 56;
+  const THUMB_CLEARANCE_CANVAS_Y = 84;
   const originalAddEventListener = canvas.addEventListener.bind(canvas);
 
   function adjustedClientY(event) {
