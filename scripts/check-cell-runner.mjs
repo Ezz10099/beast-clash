@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
+import { createHeadlessCellRunner } from './headless-cell-runner.mjs';
 import { RELEASE_FILES } from './release-config.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -79,5 +80,59 @@ for (const field of [
 
 assert.equal(packageJson.scripts['cell:check'], 'node --check cell-runner.js && node scripts/check-cell-runner.mjs');
 assert.match(packageJson.scripts.check, /npm run cell:check/, 'normal checks must include the cell runner contract');
+
+const runner = await createHeadlessCellRunner({ code: js });
+const elements = runner.elements;
+assert.equal(elements.get('setupSection').hidden, false);
+assert.equal(elements.get('observationSection').hidden, true);
+assert.equal(elements.get('interviewSection').hidden, true, 'questions must not be visible during setup');
+assert.match(elements.get('testUrl').value, /fresh=cell-/, 'startup must generate a fresh token URL');
+assert.equal(elements.get('questionList').querySelectorAll('textarea').length, 8, 'the frozen interview must contain eight questions');
+
+const originalToken = elements.get('freshToken').value;
+elements.get('languagePath').value = 'ar';
+elements.get('languagePath').handlers.change();
+assert.match(elements.get('testUrl').value, /fresh=/);
+assert.match(elements.get('testUrl').value, /lang=ar/);
+assert.match(elements.get('neutralInstruction').textContent, /لن أشرحها/);
+
+elements.get('familiarity').value = 'occasional';
+elements.get('device').value = 'POCO X2 · portrait';
+elements.get('participantFreshConfirmed').checked = true;
+elements.get('beginObservationButton').handlers.click();
+assert.equal(elements.get('observationSection').hidden, false);
+assert.equal(elements.get('interviewSection').hidden, true, 'interview must remain hidden during silent observation');
+assert.match(runner.storage.get('pixel_mage_cell_runner_used_tokens_v1'), new RegExp(originalToken));
+
+elements.get('finishObservationButton').handlers.click();
+assert.equal(elements.get('interviewSection').hidden, false);
+const answers = elements.get('questionList').querySelectorAll('textarea');
+answers.forEach((answer, index) => { answer.value = `answer ${index + 1}`; });
+elements.get('finishInterviewButton').handlers.click();
+assert.equal(elements.get('gateSection').hidden, false);
+
+elements.get('gateResult').value = 'GO candidate';
+elements.get('generateRecordButton').handlers.click();
+assert.equal(elements.get('resultSection').hidden, true, 'partial GO evidence must not export as a GO candidate');
+assert.match(elements.get('statusMessage').textContent, /requires all six/);
+for (const id of ['gateControls', 'gateAxes', 'gateChange', 'gateEnjoyment', 'gateReplay', 'gateTechnical']) {
+  elements.get(id).checked = true;
+}
+elements.get('generateRecordButton').handlers.click();
+assert.equal(elements.get('resultSection').hidden, false);
+assert.match(elements.get('resultRecord').value, /Language path: Arabic/);
+assert.match(elements.get('resultRecord').value, /Answers 1–8/);
+assert.match(elements.get('resultRecord').value, /Gate result: GO candidate/);
+
+const reusedStorage = [...runner.storage.entries()].filter(([key]) => key !== 'pixel_mage_cell_runner_draft_v1');
+const secondRunner = await createHeadlessCellRunner({ code: js, storageEntries: reusedStorage });
+secondRunner.elements.get('freshToken').value = originalToken;
+secondRunner.elements.get('freshToken').handlers.input();
+secondRunner.elements.get('familiarity').value = 'none';
+secondRunner.elements.get('device').value = 'portrait phone';
+secondRunner.elements.get('participantFreshConfirmed').checked = true;
+secondRunner.elements.get('beginObservationButton').handlers.click();
+assert.equal(secondRunner.elements.get('setupSection').hidden, false, 'a reused token must not begin a new cell');
+assert.match(secondRunner.elements.get('statusMessage').textContent, /already used/);
 
 process.stdout.write('Fresh-player cell runner checks passed.\n');
