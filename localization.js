@@ -147,7 +147,7 @@
     }
 
     match = /^CURRENT · (.+) · LV (\d+) → (\d+)$/.exec(value);
-    if (match) return "الحالي · " + translateCore(match[1]) + " · المستوى " + match[2] + " ← " + match[3];
+    if (match) return "الحالي · " + translateCore(match[1]) + " · المستوى " + match[2] + " إلى " + match[3];
 
     match = /^(FORM|ESSENCE|LAW) · (Bolt|Orbit|Ember|Frost|Split|Echo)$/.exec(value);
     if (match) {
@@ -158,7 +158,7 @@
     match = /^(FORM|ESSENCE|LAW) → (Bolt|Orbit|Ember|Frost|Split|Echo)$/.exec(value);
     if (match) {
       const axis = match[1] === "FORM" ? "الشكل" : match[1] === "ESSENCE" ? "العنصر" : "طريقة الإطلاق";
-      return axis + " ← " + TERMS[match[2]];
+      return axis + " · " + TERMS[match[2]];
     }
 
     match = /^SPELL HELD · LV (\d+)$/.exec(value);
@@ -195,7 +195,7 @@
     if (match) return "تعويذة جديدة مكتشفة · " + match[1] + "/8";
 
     match = /^Spell LV (\d+) → (\d+)$/.exec(value);
-    if (match) return "مستوى التعويذة " + match[1] + " ← " + match[2];
+    if (match) return "مستوى التعويذة " + match[1] + " إلى " + match[2];
 
     match = /^NEXT · (BOSS|GUARDIAN|WAVE (\d+)) · (.+)$/.exec(value);
     if (match) {
@@ -281,7 +281,10 @@
     if (!active || typeof value !== "string") return value;
     const leading = (value.match(/^\s*/) || [""])[0];
     const trailing = (value.match(/\s*$/) || [""])[0];
-    const core = value.slice(leading.length, value.length - trailing.length || value.length);
+    const start = leading.length;
+    const end = value.length - trailing.length;
+    if (start >= end) return value;
+    const core = value.slice(start, end);
     return leading + translateCore(core) + trailing;
   }
 
