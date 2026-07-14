@@ -20,10 +20,12 @@ html[lang="ar"] .spell-readout {
   text-transform: none;
 }
 
+html[lang="ar"] .brand-lockup,
 html[lang="ar"] .opening-spell,
 html[lang="ar"] .spellbook-choice,
 html[lang="ar"] .upgrade-choice,
 html[lang="ar"] .next-wave-copy {
+  direction: rtl;
   text-align: right;
 }
 
@@ -38,13 +40,14 @@ html[lang="ar"] .hud {
   unicode-bidi: plaintext;
 }
 
-html[lang="ar"] .choice-badge,
-html[lang="ar"] #scoreText {
+html[lang="ar"] .choice-badge {
   text-align: left;
 }
 
-html[lang="ar"] #healthText {
-  text-align: right;
+html[lang="ar"] .hud-health #healthText,
+html[lang="ar"] .hud-wave #waveText,
+html[lang="ar"] .hud-score #scoreText {
+  text-align: center;
 }
 
 html[lang="ar"] .upgrade-choice {
