@@ -3,6 +3,7 @@ export const RELEASE_FILES = Object.freeze([
   'style.css',
   'localization.css',
   'localization.js',
+  'touch-controls.js',
   'game.js',
 ]);
 
