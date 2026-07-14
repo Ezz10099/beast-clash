@@ -9,6 +9,7 @@
 - Persistent execution workflow: `docs/CHATGPT_WORKFLOW.md`
 - Product authority: `docs/OWNER_MANDATE.md` and `docs/DEVELOPMENT_MODEL.md`
 - Fresh-player gate: `docs/FRESH_PLAYER_CELL.md`
+- Owner test entry point: `test-launcher.html`
 - Observer tool: `cell-runner.html`
 - Evidence: `docs/EVIDENCE_PROTOCOL.md` and `docs/EVIDENCE_LEDGER.md`
 - Roadmap: `docs/ROADMAP.md`
@@ -30,6 +31,7 @@ Full launch content, final assets, monetization, signing, and Google Play submis
 - Text-heavy `.4` failed immediate visual review.
 - Compact visual `.5`, player-logic `.6`, equal-growth `.7`, and agency/progression `.8` passed the owner's SPCK review.
 - In `.8`, the owner dodged a red Trial rune, proved and selected a spell, and confirmed that the next Trial began with it equipped.
+- On July 14, the owner entered the provided Arabic query string into SPCK Console. SPCK interpreted it as JavaScript and returned `SyntaxError: Unexpected token '?'`. This is evidence that the hidden test workflow was not usable; it is not evidence that Arabic mode or gameplay failed.
 
 These results support the current direction but do not establish newcomer comprehension, experienced pacing/fairness, climax satisfaction, replay desire, or launch-scale longevity.
 
@@ -43,91 +45,85 @@ These results support the current direction but do not establish newcomer compre
 - 25/25 simple-movement controls won;
 - 8/8 deterministic replays matched;
 - all 8 proven starting spells equipped correctly;
-- isolated `?fresh=` saves preserved normal owner progress;
+- isolated fresh saves preserved normal owner progress;
 - no runtime violation.
 
 Automation does not prove fun, comprehension, fairness, replay desire, or value.
 
-## Completed in the Arabic Readiness Batch
+## Completed Test-Readiness Infrastructure
 
-- Added query-activated Arabic mode: `?lang=ar`.
-- Made it compatible with isolated clean saves: `?fresh=<unique-token>&lang=ar`.
-- Kept English as the default and left `game.js` gameplay, balance, progression, persistence, and content unchanged.
+### Arabic readiness
+
 - Added Arabic/RTL presentation for essential opening, HUD, Spellbook, rewrite, pause, wave, cue, result, and spell-part language.
-- Added deterministic checks for English preservation, Arabic activation, essential translations, canvas text, whitespace stability, RTL state, and combined fresh-save isolation.
-- Added the localization assets to the release whitelist and `npm run localization:check` to the normal verification path.
-- Preserved the 100 KB release ceiling by minifying the localization runtime separately.
-- Updated the frozen human protocol with exact Arabic setup, instruction, questions, and issue recording.
+- Preserved English as default and left gameplay, balance, progression, persistence, and content unchanged.
+- Added localization and fresh-save compatibility checks.
+- Preserved the 100 KB release ceiling by minifying localization separately.
 
-## Completed in the Offline Cell Runner Batch
+### Offline Cell Runner
 
-- Added `cell-runner.html`, `cell-runner.css`, and `cell-runner.js` as repository-only observer tooling.
-- Kept the runner outside `RELEASE_FILES`, `dist/`, the APK, and the future AAB.
-- Added mobile-safe layout, English/Arabic selection, fresh-token generation, correct combined URLs, and local rejection of reused tokens.
-- Added the exact neutral instruction before play while keeping the interview section hidden until observation closes.
-- Added a timer, required behavior fields, issue notes, retry wording, and exact eight-question English/Arabic interview.
-- Added local unnamed draft recovery; no participant-name field, remote resource, analytics, telemetry, account, or network transmission exists.
-- Added a frozen gate checklist that refuses to export `GO candidate` unless all six GO conditions are checked.
-- Added complete Markdown copy/download export for the development session.
-- Added `scripts/headless-cell-runner.mjs` and `scripts/check-cell-runner.mjs`.
-- Added `npm run cell:check` to the normal `npm run check` path.
-- Updated the protocol, build contract, roadmap, active state, and handoff.
+- Added repository-only `cell-runner.html`, `cell-runner.css`, and `cell-runner.js`.
+- Added English/Arabic selection, isolated token generation, reused-token rejection, hidden interview stages, timing, observations, exact questions, GO enforcement, local draft recovery, and Markdown export.
+- Kept the runner offline, telemetry-free, unnamed, and outside `dist/`, APKs, and AABs.
+- Added `npm run cell:check` to normal verification.
+
+### Tap-only SPCK Test Launcher
+
+- Added repository-only `test-launcher.html`, `test-launcher.css`, and `test-launcher.js`.
+- Added three visible touch-sized buttons: **Open Arabic Game**, **Open English Game**, and **Open Cell Runner**.
+- Arabic and English buttons generate unique clean owner-check tokens automatically.
+- No Console, DevTools, URL editing, source editing, or manual token construction is required.
+- Added `scripts/check-test-launcher.mjs` and `npm run launcher:check` inside `npm run check`.
+- Kept launcher files outside the production release whitelist.
+
+### Permanent workflow correction
+
+- Added **Owner execution** to the mandatory per-response gate.
+- Added `## Owner Phone Workflow Gate` to `docs/CHATGPT_WORKFLOW.md`.
+- Future phone requests must name an exact SPCK file or screen and provide a visible tap path.
+- Hidden query strings, Console input, terminal commands, manual tokens, and source edits are prohibited when a bounded interface can perform the action.
+- `npm run workflow:check` now protects this rule.
 
 ## Verification Status
 
-Verified directly in isolated Node harnesses:
+Verified through isolated source/static/headless contracts:
 
-- localization source syntax and default-English preservation;
-- Arabic/RTL activation and essential DOM/canvas translations;
-- combined Arabic/fresh-save query semantics;
-- Cell Runner source syntax;
-- mobile/offline/release-exclusion contracts;
-- fresh-token URL generation and Arabic parameter handling;
-- used-token rejection;
-- setup → silent observation → interview → gate → export stage flow;
-- hidden interview during play;
-- eight exact questions;
-- refusal of a partial `GO candidate`;
-- complete Arabic Markdown result export.
+- localization source syntax and Arabic/English behavior;
+- fresh-save semantics;
+- Cell Runner staged flow, token reuse blocking, hidden interview, GO enforcement, and export;
+- Test Launcher automatic Arabic/English URL construction and direct Cell Runner navigation;
+- touch-sized/safe-area layout contracts;
+- offline/no-telemetry behavior;
+- exclusion of launcher and runner files from the production release whitelist.
 
-A complete clean-checkout `npm run check` could not be executed inside this assistant environment because direct GitHub cloning failed DNS resolution, and no commit status was exposed for these direct `main` writes. The repository now enforces both new contracts during its normal check. Do not represent either batch as phone-accepted or fully green until the normal repository check and owner SPCK checks complete.
+A complete clean-checkout `npm run check` could not be executed inside the assistant environment because direct GitHub cloning failed DNS resolution, and no commit status was exposed for these direct `main` writes. Do not represent the new batches as phone-accepted until the owner completes the SPCK checks.
 
-## Exact Next Action — Check Both
+## Exact Next Action — Tap Only
 
-The owner should pull latest `main` in SPCK and perform these two checks before involving the genuine participant.
+The owner should pull latest `main` in SPCK and perform these checks before involving the genuine participant:
 
-### 1. Arabic game check
+1. In the SPCK file list, tap `test-launcher.html`.
+2. Tap **Preview**.
+3. Tap **Open Arabic Game**.
+   - Check Arabic appears immediately.
+   - Check opening, HUD, wave cues, Spellbook, rewrites, options, victory, and defeat for incorrect meaning, clipping, overlap, or changed behavior.
+4. Press Android **Back** to return to the launcher.
+5. Tap **Open English Game**.
+   - Confirm the normal English path remains unchanged.
+6. Press Android **Back** to return to the launcher.
+7. Tap **Open Cell Runner**.
+   - Use dummy information.
+   - Complete Setup → Observation → Interview → Gate → Export.
+   - Confirm questions stay hidden during observation, partial GO is rejected, draft recovery works, and the Markdown record copies.
+8. Reset the Cell Runner after the owner check.
 
-Open:
+Do not type into SPCK Console, edit the preview URL, or construct a token manually.
 
-`?fresh=owner-ar-check&lang=ar`
+## After the Owner Checks Pass
 
-Confirm:
-
-- Arabic appears from the opening onward;
-- opening, HUD, wave cues, Spellbook, rewrite cards, pause/options, victory, and defeat are readable without clipping or overlap;
-- meanings are understandable and do not add coaching beyond the English game;
-- movement, casting, hazards, choices, saving, and replay behavior remain unchanged;
-- the normal URL without `lang=ar` still shows the unchanged English path.
-
-### 2. Cell Runner check
-
-Open `cell-runner.html` through SPCK preview.
-
-- Choose Arabic and confirm a unique URL containing both `fresh` and `lang=ar` is generated.
-- Use dummy information to walk through setup → observation → interview → gate → export.
-- Confirm the interview is hidden during setup/observation and contains eight Arabic questions afterward.
-- Confirm controls fit the phone, local draft restoration works after refresh, a partial GO is rejected, and the final Markdown record can be copied.
-- Reset the runner after this owner check.
-
-These are tooling/layout checks, not the genuine commercial cell.
-
-## After Both Owner Checks Pass
-
-- Reset `cell-runner.html`.
+- Open the Cell Runner from `test-launcher.html`.
 - Generate a different unused token.
 - Use one genuinely fresh participant.
-- Follow the runner and `docs/FRESH_PLAYER_CELL.md` exactly without coaching.
+- Follow `docs/FRESH_PLAYER_CELL.md` exactly without coaching.
 - Return the exported Markdown record.
 
 Then compare the result with the pre-registered predictions and choose:
