@@ -30,11 +30,12 @@ for (const path of RELEASE_FILES) {
 }
 
 for (const path of MINIFIED_SOURCE_FILES) {
+  const isJavaScript = extname(path) === '.js';
   await build({
     entryPoints: [resolve(root, path)],
     outfile: resolve(output, path),
     bundle: true,
-    format: extname(path) === '.js' ? 'iife' : undefined,
+    ...(isJavaScript ? { format: 'iife' } : {}),
     platform: 'browser',
     target: ['chrome60'],
     minify: true,
