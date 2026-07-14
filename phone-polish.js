@@ -9,6 +9,10 @@
   const newRunButton = document.querySelector("#newRunButton");
   const menuStatus = document.querySelector("#menuStatus");
   const canvas = document.querySelector("#game");
+  const startPanel = document.querySelector("#startPanel");
+  const spellbookPanel = document.querySelector("#spellbookPanel");
+  const upgradePanel = document.querySelector("#upgradePanel");
+  const menuPanel = document.querySelector("#menuPanel");
 
   if (!gameCard || !healthText || !waveText || !healthMeter || !waveMeter) return;
 
@@ -64,11 +68,31 @@
     });
   }
 
+  function panelVisible(panel) {
+    return Boolean(panel && panel.hidden !== true);
+  }
+
+  function updateScreenState() {
+    let screen = "playing";
+    if (panelVisible(menuPanel)) screen = "menu";
+    else if (panelVisible(spellbookPanel)) screen = "spellbook";
+    else if (panelVisible(upgradePanel)) screen = "upgrade";
+    else if (panelVisible(startPanel)) screen = "start";
+    gameCard.dataset.screen = screen;
+    return screen;
+  }
+
   updateMeters();
+  updateScreenState();
   if (typeof MutationObserver === "function") {
-    const observer = new MutationObserver(updateMeters);
-    observer.observe(healthText, { childList: true, characterData: true, subtree: true });
-    observer.observe(waveText, { childList: true, characterData: true, subtree: true });
+    const meterObserver = new MutationObserver(updateMeters);
+    meterObserver.observe(healthText, { childList: true, characterData: true, subtree: true });
+    meterObserver.observe(waveText, { childList: true, characterData: true, subtree: true });
+
+    const screenObserver = new MutationObserver(updateScreenState);
+    [startPanel, spellbookPanel, upgradePanel, menuPanel].forEach(function (panel) {
+      if (panel) screenObserver.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+    });
   }
 
   let restartArmedUntil = 0;
@@ -136,6 +160,7 @@
     parseHealth,
     parseWave,
     updateMeters,
+    updateScreenState,
     disarmRestart,
   });
 })();
