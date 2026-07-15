@@ -15,11 +15,13 @@ const MINIFIED_SOURCE_FILES = new Set([
   'phone-polish.css',
   'arena-fx.css',
   'enemy-variety.css',
+  'spell-depth.css',
   'localization.js',
   'touch-controls.js',
   'phone-polish.js',
   'arena-fx.js',
   'enemy-variety.js',
+  'spell-depth.js',
 ]);
 
 async function listFiles(directory) {
@@ -69,35 +71,43 @@ const localizationCss = await readFile(resolve(output, 'localization.css'), 'utf
 const polishCss = await readFile(resolve(output, 'phone-polish.css'), 'utf8');
 const arenaFxCss = await readFile(resolve(output, 'arena-fx.css'), 'utf8');
 const enemyVarietyCss = await readFile(resolve(output, 'enemy-variety.css'), 'utf8');
+const spellDepthCss = await readFile(resolve(output, 'spell-depth.css'), 'utf8');
 const localization = await readFile(resolve(output, 'localization.js'), 'utf8');
 const touchControls = await readFile(resolve(output, 'touch-controls.js'), 'utf8');
 const phonePolish = await readFile(resolve(output, 'phone-polish.js'), 'utf8');
 const arenaFx = await readFile(resolve(output, 'arena-fx.js'), 'utf8');
 const enemyVariety = await readFile(resolve(output, 'enemy-variety.js'), 'utf8');
+const spellDepth = await readFile(resolve(output, 'spell-depth.js'), 'utf8');
 assert.doesNotMatch(html, /(?:src|href)=["']https?:\/\//i, 'release HTML must not depend on the network');
 assert.match(html, /href=["']style\.css["']/);
 assert.match(html, /href=["']localization\.css["']/);
 assert.match(html, /href=["']phone-polish\.css["']/);
 assert.match(html, /href=["']arena-fx\.css["']/);
 assert.match(html, /href=["']enemy-variety\.css["']/);
+assert.match(html, /href=["']spell-depth\.css["']/);
 assert.match(html, /src=["']localization\.js["']/);
 assert.match(html, /src=["']touch-controls\.js["']/);
 assert.match(html, /src=["']game\.js["']/);
 assert.match(html, /src=["']phone-polish\.js["']/);
 assert.match(html, /src=["']arena-fx\.js["']/);
 assert.match(html, /src=["']enemy-variety\.js["']/);
+assert.match(html, /src=["']spell-depth\.js["']/);
 assert.match(html, /id=["']arenaFx["'][^>]*width=["']320["'][^>]*height=["']480["']/);
 assert.match(html, /id=["']enemyFx["'][^>]*width=["']320["'][^>]*height=["']480["']/);
+assert.match(html, /id=["']spellFx["'][^>]*width=["']320["'][^>]*height=["']480["']/);
 assert.ok(
   html.indexOf('src="localization.js"') < html.indexOf('src="touch-controls.js"') &&
     html.indexOf('src="touch-controls.js"') < html.indexOf('src="game.js"') &&
     html.indexOf('src="game.js"') < html.indexOf('src="phone-polish.js"') &&
     html.indexOf('src="phone-polish.js"') < html.indexOf('src="arena-fx.js"') &&
-    html.indexOf('src="arena-fx.js"') < html.indexOf('src="enemy-variety.js"'),
-  'core dependencies must initialize before presentation and enemy-variety extensions',
+    html.indexOf('src="arena-fx.js"') < html.indexOf('src="enemy-variety.js"') &&
+    html.indexOf('src="enemy-variety.js"') < html.indexOf('src="spell-depth.js"'),
+  'core dependencies must initialize before presentation, enemy-variety, and spell-depth extensions',
 );
 assert.match(html, /viewport-fit=cover/, 'safe-area viewport support is required');
 assert.match(html, /class="combat-deck"/, 'release HTML must include the unified combat dashboard');
+assert.match(html, /class="spell-depth-card"/, 'release HTML must include visible spell identity');
+assert.match(html, /id="spellDepthMeter"/, 'release HTML must include the spell payoff meter');
 assert.match(html, /class="hud-card hud-health"[\s\S]*id="healthMeter"/, 'health meter must remain attached to health');
 assert.match(html, /class="hud-card hud-wave"[\s\S]*id="waveMeter"/, 'wave meter must remain attached to wave progress');
 assert.doesNotMatch(html, /class="status-meters"/, 'detached meter row must not return');
@@ -115,6 +125,9 @@ assert.match(arenaFxCss, /pointer-events:none/, 'arena FX must never intercept g
 assert.match(arenaFxCss, /data-screen=(?:["']?playing["']?)/, 'arena FX must remain scoped to active play');
 assert.match(enemyVarietyCss, /pointer-events:none/, 'enemy telegraphs must never intercept gameplay input');
 assert.match(enemyVarietyCss, /data-screen=(?:["']?playing["']?)/, 'enemy telegraphs must remain scoped to active play');
+assert.match(spellDepthCss, /pointer-events:none/, 'spell feedback must never intercept gameplay input');
+assert.match(spellDepthCss, /html\[lang=(?:["']?ar["']?)\]/, 'spell identity must support Arabic layout');
+assert.match(spellDepthCss, /prefers-reduced-motion/, 'spell identity feedback must respect reduced motion');
 assert.match(localization, /URLSearchParams\(.+\)\.get\(.lang.\)/, 'Arabic mode must remain explicitly query-activated');
 assert.doesNotMatch(localization, /localStorage|SaveSystem|persistent\.|state\./, 'localization must not touch saves or gameplay state');
 assert.match(localization, /الجوهر/, 'release localization must preserve the approved Essence term');
@@ -135,6 +148,12 @@ assert.match(enemyVariety, /fanTell/, 'release enemy variety must retain fan-fir
 assert.match(enemyVariety, /surgeTell/, 'release enemy variety must retain surge telegraphs');
 assert.match(enemyVariety, /varietyRelayTarget/, 'release enemy variety must retain current-roster relay links');
 assert.doesNotMatch(enemyVariety, /localStorage|SaveSystem|persistent\.|fetch\(/, 'enemy variety must remain offline and outside persistence');
+assert.match(spellDepth, /PixelMageSpellDepth/, 'release spell depth must expose its deterministic runtime marker');
+assert.match(spellDepth, /PRECISION BURST/, 'release spell depth must retain Bolt precision payoff');
+assert.match(spellDepth, /WARD PULSE/, 'release spell depth must retain Orbit ward payoff');
+assert.match(spellDepth, /EMBER CHAIN/, 'release spell depth must retain Ember chain payoff');
+assert.match(spellDepth, /SHATTER/, 'release spell depth must retain Frost shatter payoff');
+assert.doesNotMatch(spellDepth, /localStorage|SaveSystem|persistent\.|fetch\(/, 'spell depth must remain offline and outside persistence');
 const nativeGame = await readFile(resolve(output, 'game.js'), 'utf8');
 assert.match(nativeGame, /backButton/, 'native bundle must handle the Android Back button');
 assert.match(nativeGame, /appStateChange/, 'native bundle must handle native app pausing');
