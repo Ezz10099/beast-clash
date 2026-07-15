@@ -39,7 +39,16 @@ assert.deepEqual(Object.fromEntries(Object.entries(api.meterState({ form: 'bolt'
 for (const forbidden of ['localStorage', 'fetch(', 'XMLHttpRequest', 'WebSocket']) {
   assert.ok(!source.includes(forbidden), `spell-depth must remain offline and non-persistent: ${forbidden}`);
 }
-for (const required of ['PRECISION BURST', 'WARD PULSE', 'EMBER CHAIN', 'SHATTER', 'splitTargetIds', 'spell-depth-preview']) {
+for (const required of [
+  'PRECISION BURST',
+  'WARD PULSE',
+  'EMBER CHAIN',
+  'SHATTER',
+  'splitTargetIds',
+  'spell-depth-preview',
+  'resetTransientDepth',
+  'detectRunBoundary',
+]) {
   assert.ok(source.includes(required), `spell-depth source is missing ${required}`);
 }
 for (const required of ['وابل اللهب', 'مطاردة بلورية', 'حصن جليدي', 'تناغم الصدى']) {
