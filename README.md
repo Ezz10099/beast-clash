@@ -2,114 +2,74 @@
 
 Pixel Mage is a mobile-first, one-thumb action roguelite being developed as the owner's first commercially credible Google Play release.
 
-The repository remains simple enough for the normal workflow: ChatGPT/Codex edits GitHub, the owner pulls in SPCK Editor, and testing happens on an Android phone.
-
 ## Goal
 
-Finish, test, package, and publish one polished, time-bounded game on Google Play before returning to another game project.
-
-The goal is not merely to upload a technically valid APK. The launch version must provide a complete, engaging reason to play and replay while remaining realistic for the available coding, art, animation, and mobile-first workflow.
+Finish, test, package, and publish one polished game with a clear reason to play and replay. Technical validity, scope control, evidence, and release safety must support that goal rather than replace player value.
 
 ## Current State
 
-- The custom HTML/CSS/JavaScript runtime is stable.
-- Drag movement, automatic casting, rewrites, boss behavior, pause, settings, sound, haptics, persistence, win, loss, and replay are implemented.
-- Capacitor 8 and the Android project are configured.
-- The first cloud debug APK was installed and accepted on July 13, 2026 with no reported bugs.
-- The accepted five-wave APK remains the stable native foundation and takes roughly one minute.
-- The first Living Spell Trials phone run cleared in 5:49 and exposed onboarding, late-run repetition, and Orbit-balance problems.
-- The corrected loop was later reported as entertaining, with roughly 15 minutes of representative experimentation.
-- Text-heavy `.4` failed review. Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
-- `.9` added token-isolated clean saves and the frozen protocol in `docs/FRESH_PLAYER_CELL.md`.
-- `main` includes corrected Arabic/RTL wording, 84-pixel thumb clearance, a rebuilt portrait composition, accepted arena feedback, and a bounded current-roster enemy-variety batch.
-- Wave 1 remains the simple onboarding lane. Act II introduces flanking Motes, caster fan-fire, formation spacing, and visible Caster–Mote relay links. Act III adds telegraphed surging Motes.
-- No new enemy family, asset dependency, save field, currency, or progression system was added.
-- The portrait layout uses one compact header, a dominant 320×480 arena, and one unified combat dashboard with health and wave meters attached to their labels.
-- `docs/ARABIC_GLOSSARY.md` permanently standardizes the Arabic game and interview terminology.
-- `cell-runner.html` is an offline repository-only observer tool for the frozen fresh-player cell.
-- `test-launcher.html` is the tap-only SPCK entry point. It opens clean Arabic, clean English, and the Cell Runner without Console input, URL editing, or manual token construction.
-- Runtime size is reported diagnostically and is not governed by an arbitrary hard cap.
-- The next step is one consolidated owner enemy-variety/layout/Arabic/English/Cell Runner check, then one genuine fresh-player commercial cell and the owner's second explicit go/no-go.
+- Custom HTML/CSS/JavaScript runtime, Capacitor 8, and Android project are stable.
+- Drag movement, automatic casting, rewrites, bosses, pause/settings, sound, haptics, persistence, win/loss, and replay are implemented.
+- The accepted native vertical slice remains the stable Android foundation.
+- The representative Living Spell Trial contains 12 waves, three acts, eight spell combinations, progressive enemy roles, guardians, and The Redactor.
+- Arabic/RTL, 84-pixel thumb clearance, responsive portrait layout, arena feedback, and enemy variety are implemented.
+- The spell-identity batch now gives all six spell parts a build-defining payoff:
+  - Bolt precision bursts;
+  - Orbit ward pulses from blocked shots;
+  - Ember defeat chains;
+  - Frost freeze and shatter;
+  - Split multi-target broadcasting;
+  - Echo status resonance.
+- All eight combinations have named English/Arabic identities, visible combat summaries, payoff meters, and previews in rewrites and the Spellbook.
+- `test-launcher.html` remains the tap-only SPCK entry point.
+- Runtime size is diagnostic only; no arbitrary byte cap limits useful development.
+- Outside-player reviews are intentionally deferred until the owner judges the game broad and coherent enough to represent the intended commercial experience.
 
-The installed build is a **validated native vertical slice**, not the approved commercial launch game.
+The installed build is a **validated native foundation**, not yet the finished commercial game.
 
-## Commercial Scope Status
+## Development Direction
 
-**Option B — Living Spell Trials — is the current evidence-supported direction.** The Product Compass is binding; its exact old cap remains revisable when a better evidence-backed route appears.
+**Living Spell Trials remains the active direction.** The binding promise is:
 
-The representative slice provides:
+> One thumb. One living spell. Rewrite its Form, Essence, and Law into genuinely different play styles while escalating Trials test the result.
 
-- one mage and one evolving three-part spell;
-- Bolt/Orbit Forms, Ember/Frost Essences, and Split/Echo Laws;
-- one 12-wave/three-act run;
-- two normal enemy families with progressive roles, guardian charges, and The Redactor boss;
-- compact visual rewrites, next-threat previews, and shared spell growth;
-- readable red-rune movement pressure;
-- a functional Spellbook with selectable proven starting spells;
-- local records, checkpoint/resume, and isolated fresh-player saves.
+Development continues through substantial research-guided batches using source inspection, public game evidence, automated play, owner SPCK feedback, and bounded prototypes. The Fresh-Player Cell Runner remains available for the later external-review phase but must not interrupt every feature batch.
 
-Full launch content, final assets, monetization, and store production remain blocked pending the fresh-player result and second go/no-go.
+## Current Spell Identities
 
-`Pixel Mage` remains a working title until a later owner-approved store-name decision.
+- **Wildfire Volley** — Bolt · Ember · Split
+- **Afterburn Script** — Bolt · Ember · Echo
+- **Crystal Hunt** — Bolt · Frost · Split
+- **Shatter Script** — Bolt · Frost · Echo
+- **Solar Rings** — Orbit · Ember · Split
+- **Cinder Aegis** — Orbit · Ember · Echo
+- **Glacial Bastion** — Orbit · Frost · Split
+- **Winter Ward** — Orbit · Frost · Echo
 
 ## Check the Current Work in SPCK
 
-1. Pull the latest `main`.
-2. Open `test-launcher.html` and tap **Preview**.
-3. Tap **Open Arabic Game**.
-4. Confirm Wave 1 remains simple and readable.
-5. Reach Act II and check flanking Motes, purple three-lane caster telegraphs, formation spacing, and visible Caster–Mote links.
-6. Reach Act III and check orange surger rings/lines before their committed rush.
-7. Confirm telegraphs remain readable and do not hide red runes, enemies, projectiles, or the mage.
-8. Briefly open **Open English Game** and **Open Cell Runner**.
+1. Pull latest `main`.
+2. Open `test-launcher.html` → **Preview** → **Open Arabic Game**.
+3. Test several rewrites and check:
+   - named build identity and Arabic wording;
+   - precision/ward meter readability;
+   - Split Bolts covering different enemies;
+   - Ember chain eruptions;
+   - Frost freeze/shatter;
+   - Echo resonance;
+   - no effect obscures the mage, enemies, projectiles, telegraphs, or red runes.
+4. Briefly open **Open English Game** to confirm the English path remains correct.
 
-Do not use SPCK Console, edit the preview URL, or construct a `fresh` token manually. The launcher handles those details.
-
-For a genuine fresh-player cell, open the Cell Runner from the launcher, generate a new unused token, and follow `docs/FRESH_PLAYER_CELL.md` without coaching.
+Do not use SPCK Console, manually edit URLs, or construct tokens.
 
 ## Verification and Android
 
-- `npm run workflow:check` protects the persistent development process, visible owner workflow, and Arabic glossary references.
-- `npm run localization:check` verifies default English, approved Arabic terms, RTL activation, essential translations, canvas text, retired-term rejection, whitespace stability, and fresh-save compatibility.
-- `npm run controls:check` verifies the scaled thumb clearance and unchanged mouse input.
-- `npm run polish:check` verifies the portrait shell, dominant arena, unified dashboard, attached meters, panel-state transitions, responsive overlays, and restart confirmation.
-- `npm run fx:check` verifies the pointer-transparent atmosphere layer, HUD parsing, act/essence mapping, touch/wave/damage feedback, reduced motion, and release inclusion.
-- `npm run enemy:check` verifies deterministic role assignment, Wave 1 simplicity, formation separation, fan-fire windup/recovery, surger windup/commitment, relay links, current-roster preservation, offline behavior, and release inclusion.
-- `npm run cell:check` verifies the offline Cell Runner, staged interview flow, GO enforcement, export, mobile layout, and production-bundle exclusion.
-- `npm run launcher:check` verifies visible tap navigation, automatic clean English/Arabic tokens, and direct Cell Runner opening.
-- `npm run check` runs those checks plus gameplay, UTF-8 release construction, non-blocking runtime-size reporting, artwork, and Android configuration gates.
-- `npm run evidence` runs the automated build/policy, idle/movement, replay, and starting-spell evidence with the enemy-variety runtime loaded.
+- `npm run workflow:check` protects the persistent development process.
+- `npm run localization:check`, `controls:check`, `polish:check`, `fx:check`, and `enemy:check` protect existing accepted systems.
+- `npm run spell:check` protects spell identities, targeting, payoff logic, per-Trial reset, Arabic/phone presentation, offline behavior, and release inclusion.
+- `npm run check` runs the complete technical and release contract.
+- `npm run evidence` runs build, policy, movement, pacing, replay, and starting-spell evidence with enemy variety and spell depth loaded.
 - Capacitor uses package ID `com.ezz10099.pixelmage`.
-- Debug APKs are direct-install testing artifacts; the future Google Play upload is a securely signed release AAB.
+- Debug APKs are direct-install test artifacts; Google Play will use a securely signed release AAB.
 
-See `docs/ANDROID.md`, `docs/BUILD.md`, and `docs/GOOGLE_PLAY.md`.
-
-## Controls
-
-Mobile:
-
-- Drag anywhere in the arena; the mage follows a target above the thumb.
-- Spells cast automatically.
-- Pause opens the compact options, resume, and protected restart panel.
-
-Laptop:
-
-- WASD or Arrow keys move.
-- Spells cast automatically.
-- Space or Enter starts.
-- P or Escape pauses or resumes.
-
-## Project Authority
-
-Start every new development session with:
-
-1. `AGENTS.md`
-2. `docs/OWNER_MANDATE.md`
-3. `docs/START_HERE.md`
-4. `docs/DEVELOPMENT_MODEL.md`
-5. `docs/CHATGPT_WORKFLOW.md`
-6. `docs/ACTIVE_SESSION.md`
-7. `docs/ARABIC_GLOSSARY.md`
-8. the latest scope, decisions, evidence, roadmap, and handoff documents.
-
-Apply the Product Compass and development model to every material decision. Do not scale remaining launch content before the fresh-player cell and second go/no-go.
+See `docs/START_HERE.md`, `docs/SPELL_IDENTITY_RESEARCH.md`, `docs/BUILD.md`, `docs/ANDROID.md`, and `docs/GOOGLE_PLAY.md`.
