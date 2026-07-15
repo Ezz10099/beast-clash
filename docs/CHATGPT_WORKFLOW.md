@@ -44,6 +44,7 @@ Before every work-related response, silently answer:
 6. **Decision quality:** For a material decision, were real alternatives and tradeoffs considered rather than implementing the first idea?
 7. **Persistence:** Did this response create a durable change that must update the active state, handoff, roadmap, decisions, research, or evidence ledger?
 8. **Owner execution:** Can the owner perform every requested phone action through an explicit visible tap path in SPCK, without guessing where a URL fragment, console command, token, or hidden control belongs?
+9. **Review timing:** Does this avoid prematurely stopping development for outside-player testing before the broader pre-release review trigger in D-020?
 
 If any answer exposes a contradiction, correct the response or update the active state before proceeding.
 
@@ -80,12 +81,23 @@ For each coherent batch:
 2. Diagnose the goal-level problem rather than treating the latest request as an automatic implementation specification.
 3. Generate and compare alternatives.
 4. Record predictions before coding.
-5. Implement one bounded related batch.
+5. Implement one substantial related batch.
 6. Run `npm run workflow:check` and `npm run check` before a stable code commit.
-7. Run `npm run evidence` before a gameplay gate or commercial recommendation.
+7. Run `npm run evidence` before gameplay or commercial recommendations when the evidence contract is relevant.
 8. Compare results with predictions and update the project understanding.
 9. Prepare and verify the exact visible tap path before asking the owner to perform a phone check.
-10. Ask for a phone or human cell only when subjective evidence can change a real decision and the documented gate is ready.
+10. Continue independent development instead of repeatedly stopping for outside-player reviews while Pixel Mage remains a small representative slice.
+
+## Development-First External Review Timing
+
+External player reviews are intentionally deferred while the game is still small.
+
+1. Continue major research-guided development batches using public game reviews, design research, comparable best practices, automated evidence, synthetic play styles, source inspection, owner SPCK feedback, and bounded prototypes.
+2. Use owner phone checks for bugs, controls, layout, wording, readability, and creative judgment without presenting them as outside-player market evidence.
+3. Do not ask the owner to run the Fresh-Player Cell Runner merely because one feature batch completed.
+4. External player reviews begin only when Pixel Mage has become a broader, coherent pre-release build that reasonably represents the intended commercial game, or when the owner explicitly requests an earlier review.
+5. The owner decides when the game is substantial enough for this review phase.
+6. Until then, keep enjoyment, newcomer comprehension, retention, replay desire, and willingness-to-pay claims provisional.
 
 ## Owner Phone Workflow Gate
 
@@ -116,6 +128,7 @@ Update `docs/ACTIVE_SESSION.md` immediately when any of these changes:
 - latest accepted phone or human evidence;
 - automated evidence status;
 - blocker;
+- external-review timing;
 - exact next step.
 
 Do not wait until session closure when a changed fact could affect later responses in the same session.
@@ -145,4 +158,4 @@ Before ending a meaningful session:
 
 ## Honest Limit
 
-This process strengthens continuity and makes drift visible. It cannot make an AI experience human fun or guarantee that every response is perfect. Human evidence remains required for experienced enjoyment, boredom, fairness, comprehension, replay desire, and value at the appropriate gates.
+This process strengthens continuity and makes drift visible. It cannot make an AI experience human fun or guarantee that every response is perfect. Human evidence remains required for experienced enjoyment, boredom, fairness, comprehension, replay desire, and value when the later external-review phase begins.
