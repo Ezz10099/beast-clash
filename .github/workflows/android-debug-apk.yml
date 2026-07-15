@@ -22,6 +22,8 @@ on:
       - 'arena-fx.js'
       - 'enemy-variety.css'
       - 'enemy-variety.js'
+      - 'spell-depth.css'
+      - 'spell-depth.js'
       - 'package.json'
       - 'package-lock.json'
       - 'scripts/**'
@@ -96,6 +98,9 @@ jobs:
 
       - name: Verify enemy variety
         run: npm run enemy:check
+
+      - name: Verify spell identity and depth
+        run: npm run spell:check
 
       - name: Verify Cell Runner
         run: npm run cell:check
