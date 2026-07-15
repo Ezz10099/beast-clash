@@ -15,11 +15,13 @@ const MINIFIED_SOURCE_FILES = new Set([
   'phone-polish.css',
   'arena-fx.css',
   'enemy-variety.css',
+  'spell-depth.css',
   'localization.js',
   'touch-controls.js',
   'phone-polish.js',
   'arena-fx.js',
   'enemy-variety.js',
+  'spell-depth.js',
 ]);
 
 await rm(output, { recursive: true, force: true });
