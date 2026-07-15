@@ -151,9 +151,24 @@
     ward: 0,
     lastSpellKey: "",
     lastUiAt: -Infinity,
+    lastSeenTime: 0,
     eventText: "",
     eventUntil: 0,
   };
+
+  function resetTransientDepth() {
+    depthState.ward = 0;
+    depthState.lastSpellKey = "";
+    depthState.lastUiAt = -Infinity;
+    depthState.eventText = "";
+    depthState.eventUntil = 0;
+    effects.length = 0;
+  }
+
+  function detectRunBoundary() {
+    if (state.time < depthState.lastSeenTime) resetTransientDepth();
+    depthState.lastSeenTime = state.time;
+  }
 
   function effect(type, x, y, color, radius) {
     effects.push({ type, x, y, color, radius: radius || 18, life: 28, maxLife: 28 });
@@ -484,6 +499,7 @@
   const previousUpdate = update;
   const previousDraw = draw;
   update = function () {
+    detectRunBoundary();
     const beforeEnemies = enemySnapshot();
     const frozen = frozenSnapshots();
     const beforeProjectiles = state.projectiles.slice();
@@ -500,6 +516,7 @@
     processBlockedShots(beforeShots, projectileCandidates);
     updateEffects();
     updateUi(false);
+    depthState.lastSeenTime = state.time;
   };
 
   draw = function () {
