@@ -2,161 +2,156 @@
 
 ## Status
 
-**Current direction: Option B — Living Spell Trials. Owner-approved July 13, 2026; exact scope made revisable July 13, 2026.**
+**Current direction: Living Spell Trials.** The Product Compass in `docs/START_HERE.md` is binding. This file is a working production route, not a fence against a stronger evidence-backed solution.
 
-The Product Compass in `docs/START_HERE.md` is the only binding product authority. This file is the current smallest credible route, not a fence against a stronger evidence-backed solution.
-
-The earlier five-wave Android build remains a stable, accepted vertical slice. It is the technical foundation, not the intended commercial launch game.
+The earlier five-wave Android build remains the accepted technical foundation, not the intended commercial launch game.
 
 ## Current Foundation
 
 - Pixel Mage is the only active project.
-- Repository `Ezz10099/beast-clash` and branch `main` remain authoritative.
-- Keep the custom HTML/CSS/JavaScript runtime and Capacitor route.
-- Keep package ID `com.ezz10099.pixelmage`.
-- Keep responsive portrait layout, safe areas, offline play, local persistence, and the accepted drag-plus-auto-cast controls.
-- Preserve the verified web and Android build pipeline.
+- Repository `Ezz10099/beast-clash`, branch `main`.
+- Custom HTML/CSS/JavaScript runtime and Capacitor route.
+- Package ID `com.ezz10099.pixelmage`.
+- Responsive portrait layout, safe areas, offline play, local persistence, and one-thumb drag plus automatic casting.
+- Deterministic web/release/Android build pipeline.
+- Natural English and Arabic/RTL support.
 
 ## Commercial Identity
 
-**Working pitch:** “One thumb. One spell. Rewrite it.”
+**Working pitch:** “One thumb. One living spell. Rewrite it.”
 
-The player controls one mage and exactly one living spell. The spell has three readable words—Form, Essence, and Law. Between combat waves, the player rewrites one word or holds the current shape; either choice advances the same living-spell level. The spell's mechanics, generated name, color, sound, strength, and code-driven effect change coherently.
+The player controls one mage and one living spell. Its Form, Essence, and Law can be rewritten between combat waves. Each choice grows the spell equally while changing its behavior, complete-build identity, tactical strengths, and visible payoff.
 
-The distinct identity is the complete combination of:
+The identity combines:
 
-1. one evolving spell rather than an unrelated weapon arsenal;
-2. three readable spell words;
-3. a rewrite-one-word decision structure;
+1. one evolving spell rather than an unrelated weapon inventory;
+2. three readable spell axes;
+3. rewrite-one-word decisions;
 4. coherent named and visible combinations;
-5. permanent Spellbook discovery;
-6. one-thumb movement and automatic threat targeting designed for mobile.
+5. functional Spellbook discovery;
+6. one-thumb movement and automatic targeting;
+7. authored Trials that test the chosen build.
 
 ## Current Repeatable Core Loop
 
-1. Select an unlocked Trial.
-2. Enter with one simple three-part spell.
-3. Drag to dodge and position while the spell automatically targets a suitable threat.
-4. Survive a short timed wave with scheduled enemy arrivals.
-5. Rewrite one spell word or hold the current spell; either path grows the living spell.
-6. Face guardians at the ends of Acts 1 and 2 and a distinct boss at the end of Act 3.
-7. Record newly proven spell combinations, Trial Mastery, and local best results.
-8. Unlock the next Trial or replay for another discovery; after victory, optionally continue into Endless.
+1. Select a starting spell and Trial.
+2. Drag to dodge and position while the spell casts automatically.
+3. Survive scheduled enemy formations and arena hazards.
+4. Rewrite one word or hold; either path advances the living-spell level.
+5. Read the complete resulting identity and test its setup/payoff loop.
+6. Face guardians and a distinct boss.
+7. Prove combinations, record results, and choose a different start.
+8. Replay through meaningfully different Trials and builds.
 
-## Current Working Launch Cap
+## Implemented Representative Foundation
 
-| Content | Version-1 cap |
+- one mage;
+- one 12-wave/three-act Trial;
+- Bolt/Orbit Forms;
+- Ember/Frost Essences;
+- Split/Echo Laws;
+- eight selectable/provable combinations;
+- Motes, Glyph Casters, progressive roles, guardians, and The Redactor;
+- rewrite previews, equal growth, red-rune movement pressure, checkpoints, and isolated saves;
+- Arabic, portrait layout, touch clearance, atmosphere, enemy telegraphs, and spell-depth feedback.
+
+## Implemented Spell Interaction Grammar
+
+- Bolt: focused precision burst.
+- Orbit: defensive ward pulse from blocked shots.
+- Ember: burning defeat chains.
+- Frost: freeze and shatter.
+- Split: multi-target broadcast.
+- Echo: status resonance.
+
+This grammar must guide later spell parts: new content should create a different player plan, not merely a larger number.
+
+## Working Launch Hypothesis
+
+The earlier 3×3×3 / 27-combination / 9-Trial cap remains a useful production hypothesis, not binding authority:
+
+| Content | Working hypothesis |
 |---|---:|
 | Playable mages | 1 |
-| Arena themes | 3 |
-| Authored Trials | 9 total; 3 per arena |
+| Arena themes | about 3 |
+| Authored Trials | about 9 |
 | Spell axes | Form, Essence, Law |
-| Spell parts | 9 total; 3 per axis |
-| Discoverable combinations | 27 |
-| Automatic living-spell growth | 1 level per cleared-wave choice |
-| Normal enemy behavior families | 6, with data-driven variants/elites |
-| Distinct bosses | 3; one per arena |
-| Trial Mastery objectives | 9; one additional objective per Trial |
-| Modes | Trials plus post-victory Endless |
-| Narrative | One short premise, arena introductions, and one ending |
+| Spell parts | about 3 per axis |
+| Discoverable combinations | about 27 |
+| Normal enemy behavior families | about 6 plus variants/elites |
+| Distinct bosses | about 3 |
+| Mastery objectives | about 1 per Trial |
+| Modes | Trials; Endless only if it adds real value |
+| Narrative | light premise, arena/boss framing, brief ending |
 
-The working component set is Bolt, Orbit, Sigil; Ember, Frost, Storm; and Split, Echo, Seek. Names, behaviors, and even this 3×3×3 cap may change if measured development value, clarity, replay depth, or production cost supports a better route.
+Counts may change when gameplay depth, production cost, phone clarity, or commercial value supports a better route.
 
-## Current Progression Direction
+## Progression Direction
 
-- Unlock Trials and spell words horizontally.
-- Record all 27 proven combinations in the Spellbook.
-- Record Trial wins, Mastery, best score, and best survival.
-- Introduce words gradually through clear achievements.
-- Do not use permanent purchasable or grind-based damage, health, or speed. Run 1 must remain winnable through skill and choices.
-
-## Current Story Level
-
-Use light framing only: a short reason the mage enters the Trials, one line introducing each arena, boss identity, and a brief ending.
-
-Do not build dialogue trees, cutscenes, chapters of text, quests, or an animated cast for version 1.
+- Horizontal unlocks for Trials and spell words.
+- Spellbook records proven combinations and makes them playable.
+- Trial wins, Mastery, best score, and survival records.
+- Gradual word introduction through clear achievements.
+- No grind-based permanent damage, health, or speed requirement.
+- No system should make avoiding the central rewrite mechanic the rational power strategy.
 
 ## Current Version-1 Exclusions
 
-- No additional playable heroes.
-- No equipment inventory, crafting, shop, currencies, permanent stat tree, gacha, energy, daily rewards, or battle pass.
-- No conventional campaign map, quests, dialogue system, cutscenes, or branching story.
-- No multiplayer, online accounts, cloud save, or online leaderboard.
-- No external advertising, analytics, login, or purchase SDK until the representative slice and external playtest gates pass and the owner separately approves monetization and data collection.
-- No engine change, 3D content, full character animation set, or large bespoke asset pack.
-- Do not multiply content before the representative commercial gate; after it, content should be justified by value and production evidence rather than the old cap alone.
+Unless later evidence and owner approval justify a change:
 
-## First Approved Implementation Batch — Representative Slice
+- no additional playable heroes;
+- no equipment inventory, crafting, gacha, energy, daily rewards, or battle pass;
+- no conventional campaign map, dialogue trees, cutscenes, or large narrative system;
+- no multiplayer, online accounts, cloud saves, or online leaderboards;
+- no external ads, analytics, login, or purchase SDK before a separate commercial/privacy decision;
+- no engine rewrite, 3D conversion, or huge animated asset burden.
 
-**Implementation status:** Complete on `main` on July 13, 2026. The first 5:49 SPCK clear produced a correction batch. The owner later reported that `0.2.0-representative.2` was highly entertaining, but raised remaining choice-comprehension and roughly 15-minute total-content concerns. `0.2.0-representative.3` added the permanent evidence gate. Text-heavy `.4` failed immediate visual review; the owner approved compact visual `.5` in SPCK. Player-logic build `.6` connected incoming threat, rewrite, visible transformation, and combat feedback and passed SPCK. Incentive build `.7` removed the rewrite power penalty and passed SPCK. Agency build `.8` closed two further contradictions—untouched Bolt could clear the Trial, and proven spells could not alter the next run—and passed the owner's consolidated SPCK test. Gate-preparation build `.9` isolates clean fresh-player saves and freezes the non-leading cell packet. Full launch scaling now awaits that cell and the second owner go/no-go.
+These exclusions protect finishability but may not be used to justify a thin or uncompetitive release.
 
-Build this as one substantial related batch before producing the full launch content:
+## Development-First Sequence
 
-1. Separate data-driven run, spawn, enemy, spell, save, and UI responsibilities while preserving the accepted runtime and controls.
-2. Implement one three-act, 12-wave timed run with scheduled enemy spawning.
-3. Add deterministic automatic threat targeting with clear target feedback.
-4. Implement 2 Forms × 2 Essences × 2 Laws: 8 prototype combinations.
-5. Use one arena, two normal enemy behavior families, one elite behavior, and one boss.
-6. Add a versioned save schema, migrations, and checkpoint/resume at wave boundaries.
-7. Expand automation with seeded builds, full-run checks, save-migration checks, and maximum projectile/particle stress checks.
-8. Preserve pause, settings, safe areas, offline play, Android identity, and the current release pipeline.
-9. Request one consolidated SPCK phone test after all automated checks pass.
+D-020 supersedes the earlier immediate fresh-player gate:
 
-### First Phone Evidence and Bounded Correction
+1. Deepen spell identity/build payoff — **implemented; phone review pending**.
+2. Improve Trial pacing and encounter authorship — **next**.
+3. Strengthen replay/progression motivation.
+4. Build scalable content systems and broader release content.
+5. Improve art direction, animation, audio, identity, and commercial presentation.
+6. Begin outside-player reviews when the owner judges the game broad and coherent enough to represent the intended commercial experience.
+7. Use those reviews to revise scope, balance, onboarding, content, and release decisions.
 
-- The owner completed the run in 5:49, wanted to try different builds, and found The Redactor entertaining.
-- No control, layout, save, crash, or performance blocker was reported in that result.
-- Acceptance did not pass: the opening and some systems were not understood, Waves 9–11 became boring, Spellbook completion sounded like a rote recipe, and Orbit felt much weaker than Bolt.
-- The correction stays inside the representative cap: clearer axis onboarding and live role text; complete-result rewrite previews with `NEW`/`KNOWN` status; Bolt as marked single-target damage; Orbit as a competitive nearby crowd shield that blocks shots; immediate completion after the final scheduled pack is defeated; and distinct Mote-rush, Glyph-crossfire, and twin-guardian encounters before the earlier-arriving boss.
-- Correction feedback was strongly positive on entertainment, while estimating only about 15 minutes of representative experimentation and warning that some players may still not immediately understand each choice.
-- The bounded comprehension correction shows the resulting spell visually—Form shape, Essence color, and Law pattern—with only two short text lines and a discovery badge.
-- The owner approved that compact visual direction in SPCK, but the fresh-player cell was deliberately paused while deeper player logic was audited.
-- The follow-up closes the observable loop: it previews the actual next enemy mix before the rewrite, confirms the chosen transformation in the arena, keeps all three live effects visible, differentiates Ember/Frost and Split/Echo feedback, and states how a `NEW` spell becomes proven.
-- The `.6` phone result passed, but an independent incentive audit found that generic Support accumulated power while rewrites only sidegraded the spell. This made ignoring the central hook the rational route.
-- `.7` replaces Support with Hold and gives every choice the same visible spell-level growth. The choice remains about play style, not whether to accept an invisible power tax.
-- The owner passed `.7` in SPCK.
-- `.8` adds a slow, clearly telegraphed red Trial rune that punishes remaining stationary while ordinary movement escapes it; it also makes every proven Spellbook combination a selectable starting spell and returns the result screen to that selection instead of silently repeating the default build.
-- The owner passed `.8` in SPCK by dodging a rune, proving a new spell, selecting it, and confirming that the next Trial began equipped with it.
-- Full launch-content production remains blocked pending one consolidated fresh-player comprehension cell and the second explicit go/no-go.
+The Cell Runner and clean-save tooling remain preserved for step 6. They must not halt each development batch.
 
-### Automated Evidence Contract
+## Current Automated Evidence
 
-- `npm run check` remains the fast development suite.
-- `npm run evidence` runs all 8 builds across 25 seeds with real damage, 100 additional runs across Hold/mixed/discovery-first/rewrite-only policies, and one deterministic replay per build. It grades runtime integrity, survivability, build dominance, rewrite incentives, pacing, and the compact feedback loop, then writes CI-uploaded reports.
-- The `.7` local result is green: 200/200 build runs recorded with 99% wins, 100 policy runs with 99% wins, 8/8 deterministic replays, 0 runtime violations, 9.3% build spread, 4.5% Form gap, 5.8% choice-policy spread, no post-schedule waiting, and a 7-second boss arrival.
-- The `.8` gate adds 25 untouched idle controls, 25 simple-movement controls, and 8/8 starting-spell payoff checks. Idle Bolt must not clear, ordinary movement must remain viable, and every proven combination must begin equipped when selected.
-- The `.8` local result is green: 0/25 idle wins, 25/25 simple-movement wins, 99% active-build wins, 8/8 selectable starting spells, 0 runtime violations, 9% build spread, 4.4% Form gap, and 5.8% choice-policy spread.
-- `.9` adds automated save-isolation checks for unique `?fresh=` tokens. A fresh cell cannot inherit owner records, settings, discoveries, selected spells, or checkpoints, and it cannot overwrite the normal save.
-- This contract supports technical and balance judgments only. Human fun and understanding remain human gates under `docs/EVIDENCE_PROTOCOL.md`.
+After spell-depth integration:
 
-## Representative-Slice Acceptance Gate
+- 200/200 build runs and 100/100 policy runs completed;
+- 8/8 deterministic replays;
+- 99.5% active-policy wins and 96% weakest-build wins;
+- 0% idle wins;
+- 68% simple continuous-patrol wins and 99.5% danger-aware active wins;
+- 9.2% build spread, 6.2% Form gap, and 5.7% policy spread;
+- zero runtime violations;
+- release, Capacitor sync, debug APK, verification, and artifact upload passed.
 
-Full launch-content production begins only when:
+All hard gates passed. Overall evidence is YELLOW because low-skill continuous movement has reduced margin. This is a development warning, not proof of bad phone feel and not a reason to weaken evidence.
 
-- no control, save, layout, or performance blocker appears on the target phone;
-- a complete winning run is measured and feels active rather than padded;
-- the player can explain the three spell words and predict their result without outside instruction;
-- all eight prototype combinations complete the 25-seed automated evidence matrix without a red gate;
-- all eight prototype combinations remain readable under stress;
-- human evidence shows that another build feels worth trying after a completed run;
-- the owner gives the second explicit go/no-go.
+## External Review Trigger
 
-The earlier 7–9-minute hypothesis is rejected: the 5:49 clear already felt padded before the boss. The correction intentionally removes forced post-clear waiting; the next phone measurement decides the active run duration and remaining batch estimate.
+Outside-player reviews begin when the owner decides the build is substantial enough to represent the intended game, or explicitly requests earlier review. A review-ready build should have:
 
-## Naming Gate
+- several coherent Trials or equivalent breadth;
+- meaningful spell/build variety;
+- authored pacing and distinct climaxes;
+- functional replay progression;
+- presentation close enough that feedback is not dominated by obvious incompleteness;
+- no known control, layout, crash, save, or performance blocker.
 
-Pixel Mage remains the working title. The final display/store name must follow the proven hook and receive owner approval before store graphics and listing text are produced.
+Until then, owner SPCK feedback and automated/research evidence guide development, while newcomer enjoyment, retention, and willingness to pay remain provisional.
 
-The package ID remains `com.ezz10099.pixelmage` unless the owner explicitly approves a separate identity change.
+## Naming and Commercial Completion
 
-## Commercial Completion Gate
+Pixel Mage remains the working title. Final naming, monetization, store graphics, policy materials, signing, and release AAB require later owner-approved commercial gates.
 
-The game is finished only after:
-
-- the final evidence-backed release scope is implemented;
-- representative-run and total-progression measurements are recorded;
-- automated, save-migration, stress, web, and native reliability gates pass;
-- external target-player testing shows that the loop is understandable and worth replaying;
-- store, policy, signing, monetization, Play testing, and business gates are complete.
-
-Google Play acceptance alone is not commercial readiness.
+The game is finished only after the evidence-backed scope is implemented, native reliability passes, outside-player testing supports understanding and replay value, and Google Play business/release requirements are complete. Google Play acceptance alone is not commercial readiness.
