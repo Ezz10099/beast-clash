@@ -1,136 +1,124 @@
-# Pixel Mage — Roadmap to Google Play Testing
+# Pixel Mage — Roadmap to Google Play
 
 ## Ultimate Goal
 
-Finish and publish Pixel Mage as a stable, commercially credible Android game that newcomers quickly understand, genuinely enjoy, and specifically want to replay—without exceeding what can realistically be finished through the GitHub–SPCK–Capacitor workflow.
+Finish and publish Pixel Mage as a stable, commercially credible Android game that is understandable, enjoyable, replayable, polished, and realistically finishable through the GitHub–SPCK–Capacitor workflow.
 
 ## Binding Product Objectives
 
-- Preserve Pixel Mage continuity and one-thumb automatic-casting play.
+- Preserve one-thumb automatic-casting play.
 - Keep the mage and immediate threats visible during touch control.
-- Make Form, Essence, and Law create meaningful, visible play-style changes.
-- Make the enemy roster produce distinct, readable tactical situations.
-- Build runs toward satisfying guardians and bosses.
-- Create replay desire through functional discovery rather than permanent-power grinding.
-- Preserve natural Arabic and English presentation, coherent portrait hierarchy, offline play, persistence, performance, and Android delivery.
-- Keep automation and human evidence within their honest boundaries.
+- Make Form, Essence, and Law produce meaningful play-style changes.
+- Make a compact enemy roster create distinct tactical situations.
+- Build Trials toward satisfying guardians and bosses.
+- Create replay value through functional discovery rather than permanent-power grinding.
+- Preserve natural Arabic and English, responsive portrait layout, offline play, persistence, performance, and Android delivery.
+- Keep automated and human evidence within honest boundaries.
 
 ## Development Sequence
 
-1. Technical and native foundation — **complete**.
-2. Living Spell representative slice and corrections through `.9` — **complete**.
-3. Arabic, touch clearance, portrait layout, arena feedback, and test tooling — **implemented**.
-4. Current-roster enemy-variety batch — **implemented and automated-green**.
-5. Spell identity and build depth — **next major batch**.
-6. Trial pacing, authored encounter rhythm, guardians, and boss buildup — **pending**.
-7. Replay and progression loop — **pending**.
-8. Scalable content systems and broader Trial/content production — **pending**.
-9. Commercial presentation: stronger art direction, animation, audio, identity, and release polish — **pending**.
-10. External player review phase using a broader coherent pre-release build — **deferred until the owner judges the game substantial enough**.
-11. Evidence-based revision and production scope lock — **pending**.
-12. Signed AAB, Play testing, store materials, and publication — **pending**.
+1. Technical/browser/native foundation — **complete**.
+2. Living Spell Trials direction and representative 12-wave slice — **complete**.
+3. Rewrite clarity, equal growth, active movement, and Spellbook payoff — **complete and owner-accepted**.
+4. Arabic, thumb clearance, portrait layout, and arena feedback — **complete; latest presentation accepted**.
+5. Current-roster enemy variety — **implemented and automated-verified; subjective phone judgment remains provisional**.
+6. Spell identity and build depth — **implemented and automated-verified; owner phone review pending**.
+7. Trial pacing and encounter authorship — **next major development batch after direct spell corrections**.
+8. Replay/progression loop and scalable content production — **pending**.
+9. Broader coherent pre-release build — **pending**.
+10. Outside-player review phase — **deferred until the owner judges step 9 substantial enough**.
+11. Final identity/assets, monetization decision, policy materials, signing, AAB, and Play test-track submission — **pending later gates**.
 
-The Fresh-Player Cell Runner remains ready, but it must not interrupt development after every feature batch. External reviews should evaluate a build that reasonably represents the intended commercial game rather than a thin prototype.
+External reviews must not interrupt every feature batch. The Cell Runner remains preserved for the later review phase.
 
-## Milestones 0–7 — Technical and Native Foundation
+## Milestones 0–7 — Foundation
 
 **Status: Complete and owner-accepted.**
 
-The project has a stable HTML/CSS/JavaScript runtime, one-thumb portrait controls, pause/settings/sound/haptics, local persistence, deterministic offline bundling, Capacitor 8, package ID `com.ezz10099.pixelmage`, and an installed debug APK accepted without reported bugs.
+The project has a stable web runtime, one-thumb portrait controls, sound/haptics, local persistence, deterministic offline bundling, Capacitor 8, package ID `com.ezz10099.pixelmage`, and a verified debug APK pipeline.
 
 ## Milestone 8 — Extended Product Development
 
 **Status: Active.**
 
-### Accepted foundation
+### Representative foundation
 
-- one mage and one evolving three-part spell;
+- one mage and one three-part living spell;
 - Bolt/Orbit, Ember/Frost, Split/Echo;
-- eight combinations;
-- one 12-wave/three-act representative Trial;
+- one 12-wave/three-act Trial;
 - Motes, Glyph Casters, guardians, and The Redactor;
-- compact rewrite choices and next-threat previews;
-- equal Hold/rewrite growth;
+- rewrite previews and equal spell growth;
 - red-rune movement pressure;
 - selectable proven starting spells;
-- checkpoint/resume and isolated fresh saves;
-- Arabic/RTL support, portrait layout, visible phone test tooling, and Android delivery.
+- checkpoint/resume and isolated fresh saves.
 
-### Accepted evidence and corrections
+### Enemy-variety layer
 
-- First run: 5:49; experimentation and boss positive, onboarding/pacing/Spellbook/Orbit failed.
-- Corrected loop: entertaining, with roughly 15 minutes of representative experimentation.
-- Text-heavy `.4` rejected.
-- Compact `.5`, closed-loop `.6`, equal-growth `.7`, and agency/progression `.8` passed owner SPCK review.
-- Direct touch occluded play; 56-pixel clearance was too small; 84 pixels was acceptable enough to proceed.
-- Arabic terminology was standardized.
-- The stacked layout was rebuilt.
-- Arena feedback was owner-confirmed.
-- Enemy variety added flanking, spacing, fan-fire, relay links, and surges; the full automated pipeline passed.
+- Wave 1 remains simple;
+- Act II adds flanking, separation, Caster fan-fire, and Caster–Mote relay links;
+- Act III adds telegraphed committed surges;
+- Frost, Orbit, and Ember interact with those pressures;
+- no new roster, currency, save field, or asset dependency was required.
 
-These results do not prove newcomer enjoyment, retention, replay desire, willingness to pay, or commercial longevity. Those claims remain provisional until the later external-review phase.
+### Spell-identity/build-depth layer
 
-### Current major batch order
+- **Bolt — Precision:** repeated focused hits trigger a burst.
+- **Orbit — Ward:** three blocked shots release a nearby pulse.
+- **Ember — Chain:** burning defeats erupt into nearby enemies.
+- **Frost — Freeze/Shatter:** repeated hits freeze movement; the next Frost hit shatters.
+- **Split — Broadcast:** Split Bolts seek different threats when possible.
+- **Echo — Resonance:** echoed hits gain payoff from established burn or slow.
+- all eight combinations have named English/Arabic identities and complete-build promises;
+- the dashboard shows precision/ward progress;
+- rewrite and Spellbook cards preview the resulting identity;
+- spell feedback uses a pointer-transparent arena overlay;
+- transient spell state resets between Trials.
 
-#### 1. Spell identity and build depth
+### Automated result
 
-Strengthen the central hook before multiplying content:
+- 200/200 build runs and 100/100 policy runs completed;
+- 8/8 deterministic replays matched after fixing per-Trial ward leakage;
+- 99.5% active-policy survivability; 96% weakest build;
+- 0% idle wins; 68% simple continuous-patrol wins; 99.5% danger-aware active wins;
+- 9.2% build median spread; 6.2% Form gap; 5.7% policy spread;
+- zero timeouts, invalid states, or collection-cap violations;
+- release construction, Capacitor sync, debug APK, APK verification, and artifact upload passed.
 
-- clearer mechanical identity for every Form, Essence, and Law;
-- stronger synergies and tradeoffs;
-- build-specific positioning and target priorities;
-- visible/audio payoff for combinations;
-- anti-dominance evidence and phone readability.
+The overall automated status is **YELLOW**, not RED: all hard gates passed, while the reduced simple-patrol margin remains a warning for later tuning and owner observation. Automation does not prove fun or phone readability.
 
-#### 2. Trial pacing and encounter design
+### Immediate owner-development check
 
-- authored escalation rather than denser repetition;
-- distinct wave purposes and recovery beats;
-- stronger guardian and boss buildup;
-- encounter patterns that reward different spells.
+Use `test-launcher.html` → **Preview** → **Open Arabic Game**. Test several combinations and report concrete issues with:
 
-#### 3. Replay and progression loop
+- Arabic identity wording;
+- dashboard height or clipping;
+- precision/ward meter visibility;
+- Split multi-target behavior;
+- Ember chain, Frost freeze/shatter, and Echo resonance visibility;
+- effect clutter or obviously weak/dominant builds.
 
-- meaningful Spellbook discovery;
-- mastery objectives and records;
-- reasons to choose another build or Trial;
-- no permanent-stat grind as the main motivation.
+Do not run the Cell Runner for this batch.
 
-#### 4. Scalable content production
+### Next major batch
 
-- reusable definitions for Trials, waves, arenas, enemies, bosses, spell parts, and objectives;
-- broader content only after the central systems are strong enough to scale;
-- maintainable bilingual and Android-ready production.
+After bounded spell corrections, improve **Trial pacing and encounter authorship**:
 
-#### 5. Commercial presentation
+- stronger wave rhythm and composition arcs;
+- distinct act questions rather than density-only escalation;
+- better guardian and boss buildup;
+- quieter recovery beats without padding;
+- data-driven encounter construction for later content.
 
-- coherent final art direction;
-- stronger animation, audio, haptics, identity, and polish;
-- final title and store-facing presentation later, with owner approval for irreversible commercial choices.
+## Later Milestones
 
-### External review trigger
+### Broader pre-release build
 
-External player reviews begin only when:
+Complete enough Trials, spell breadth, encounters, replay progression, presentation, and content systems that the build reasonably represents the intended commercial game.
 
-- the build contains enough gameplay depth and breadth to represent the intended game;
-- the replay/progression loop exists beyond a representative slice;
-- presentation is coherent enough that feedback is not dominated by obvious incompleteness;
-- the owner explicitly confirms that the game is substantial enough for outside-player review.
+### External review phase
 
-The Cell Runner and frozen questions remain preserved for that later phase. Until then, owner SPCK reviews may cover bugs, touch feel, layout, wording, readability, and direct creative judgment.
+Begins only when the owner decides the broader build is substantial enough or explicitly requests earlier review. Use the preserved Cell Runner or an improved protocol then. Until that phase, newcomer enjoyment, comprehension, retention, and willingness to pay remain provisional.
 
-## Milestone 9 — Pre-Release External Review
+### Play-ready release and Google Play
 
-**Status: Deferred until the Milestone 8 development trigger is met.**
-
-Use the broader build for structured outside-player reviews, compare results against pre-registered predictions, then make bounded revisions without pretending one participant proves market demand.
-
-## Milestone 10 — Play-Ready Release
-
-**Status: Pending.**
-
-Complete the approved final content and polish, secure signing, signed AAB, Play test-track upload, applicable testing requirements, policy materials, store assets, and production readiness.
-
-## Exact Next Step
-
-Research and implement one substantial spell-identity and build-depth batch using public game reviews, design research, comparable best practices, source inspection, automated evidence, and owner SPCK feedback. Do not stop for the Fresh-Player Cell Runner after this batch unless the owner explicitly changes the development-first sequence.
+Finalize identity, commercial assets, audio, policy materials, monetization, secure signing, release AAB, and test-track submission only after the broader product and review gates support it.
