@@ -14,11 +14,13 @@ function makeElement(id = '') {
     handlers: {},
     attributes: {},
     dataset: {},
+    style: {},
     classList: { toggle() {} },
     append(...children) { this.children.push(...children); },
     replaceChildren(...children) { this.children = [...children]; },
     addEventListener(type, handler) { this.handlers[type] = handler; },
     setAttribute(name, value) { this.attributes[name] = String(value); },
+    querySelector() { return null; },
     querySelectorAll() { return []; },
   };
 }
@@ -56,6 +58,9 @@ export async function createHeadlessGame(options = {}) {
   const enemyVarietyCode = options.enemyVarietyCode === false
     ? ''
     : options.enemyVarietyCode || await readFile(new URL('../enemy-variety.js', import.meta.url), 'utf8');
+  const spellDepthCode = options.spellDepthCode === false
+    ? ''
+    : options.spellDepthCode || await readFile(new URL('../spell-depth.js', import.meta.url), 'utf8');
   const storage = new Map(options.storageEntries || []);
   const windowHandlers = new Map();
   const documentHandlers = new Map();
@@ -92,6 +97,12 @@ export async function createHeadlessGame(options = {}) {
   enemyFx.getContext = () => drawingContext;
   enemyFx.getBoundingClientRect = canvas.getBoundingClientRect;
 
+  const spellFx = makeElement('spellFx');
+  spellFx.width = canvas.width;
+  spellFx.height = canvas.height;
+  spellFx.getContext = () => drawingContext;
+  spellFx.getBoundingClientRect = canvas.getBoundingClientRect;
+
   const gameCard = makeElement('gameCard');
   gameCard.dataset.screen = 'playing';
 
@@ -107,11 +118,17 @@ export async function createHeadlessGame(options = {}) {
   const elements = new Map([
     ['#game', canvas],
     ['#enemyFx', enemyFx],
+    ['#spellFx', spellFx],
     ['.game-card', gameCard],
     ['#healthText', makeElement('healthText')],
     ['#waveText', makeElement('waveText')],
     ['#scoreText', makeElement('scoreText')],
     ['#spellText', makeElement('spellText')],
+    ['#spellIdentityText', makeElement('spellIdentityText')],
+    ['#spellComboText', makeElement('spellComboText')],
+    ['#spellDepthMeter', makeElement('spellDepthMeter')],
+    ['#spellDepthMeterFill', makeElement('spellDepthMeterFill')],
+    ['#spellDepthMeterLabel', makeElement('spellDepthMeterLabel')],
     ['#menuButton', makeElement('menuButton')],
     ['#startPanel', startPanel],
     ['#startStatus', makeElement('startStatus')],
@@ -173,12 +190,14 @@ export async function createHeadlessGame(options = {}) {
   vm.createContext(sandbox);
   vm.runInContext(gameCode, sandbox, { filename: 'game.js' });
   if (enemyVarietyCode) vm.runInContext(enemyVarietyCode, sandbox, { filename: 'enemy-variety.js' });
+  if (spellDepthCode) vm.runInContext(spellDepthCode, sandbox, { filename: 'spell-depth.js' });
 
   return {
     canvas,
     documentHandlers,
     elements,
     enemyFx,
+    spellFx,
     evaluate: (source) => vm.runInContext(source, sandbox),
     gameCard,
     menuPanel,
