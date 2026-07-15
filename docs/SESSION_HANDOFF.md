@@ -8,57 +8,56 @@
 - Live state: `docs/ACTIVE_SESSION.md`
 - Workflow: `docs/CHATGPT_WORKFLOW.md`
 - Arabic terminology: `docs/ARABIC_GLOSSARY.md`
-- Fresh-player gate: `docs/FRESH_PLAYER_CELL.md`
+- Durable review timing: D-020 in `docs/DECISIONS.md`
 - Owner test entry: `test-launcher.html`
-- Observer tool: `cell-runner.html`
+- Deferred observer tool: `cell-runner.html`
 
 ## Current Milestone
 
-**Milestone 8 — Representative Commercial Gate.**
+**Milestone 8 — Extended Product Development.**
 
-Full content, final assets, monetization, signing, and Play submission remain blocked until the valid fresh-player result and owner second go/no-go.
+The representative gate is no longer the immediate stop point. The owner explicitly directed continued major development until Pixel Mage becomes a broader coherent game, then outside-player reviews.
 
-## Latest Owner Evidence
+## Latest Owner Direction
+
+- Continue Pixel Mage in substantial development batches.
+- Use public game reviews, design research, comparable best practices, automated evidence, synthetic play styles, source inspection, and owner SPCK feedback.
+- Do not repeatedly stop for the Fresh-Player Cell Runner while the game remains a small representative slice.
+- The owner decides when the game is substantial enough for external reviews.
+- Keep newcomer enjoyment, retention, replay desire, and commercial-value claims provisional until that later review phase.
+
+## Current Implemented Foundation
 
 - `.8` passed for active movement, rewrite choices, Spellbook selection, and starting-spell payoff.
+- Arabic/RTL support, 84-pixel thumb clearance, rebuilt portrait layout, and arena-feedback presentation are implemented.
 - The owner accepted the arena-feedback batch.
-- The owner selected enemy variety as the next substantial field.
-- The new variety batch is automated-green but not yet phone-accepted.
-
-## Enemy Variety Batch
-
-Implemented using only the existing Mote and Glyph Caster roster:
-
-- Wave 1 remains simple;
-- Act II adds flanking Motes and group spacing;
-- selected Casters use a visible purple three-lane pattern with warning and recovery time;
-- nearby Casters visibly connect to one Mote, creating a priority choice;
-- Act III adds orange warning rings and lines before a Mote commits to a fast movement lane;
-- Frost still slows this movement, Orbit can block the new projectiles, and Ember remains useful against nearby groups;
-- all new indicators use a pointer-transparent overlay;
-- no new enemy family, art dependency, save field, currency, progression system, or package change was added.
+- Enemy variety is implemented using the existing roster:
+  - Wave 1 remains simple;
+  - Act II adds flanking Motes, group spacing, purple three-line Caster warnings, and visible Caster–Mote links;
+  - Act III adds orange warnings before committed fast movement;
+  - Frost, Orbit, and Ember retain useful interactions.
+- No arbitrary runtime byte cap remains; size is diagnostic only.
 
 ## Verification
 
-The complete GitHub Actions pipeline passed:
+The latest complete GitHub Actions pipeline passed:
 
-- all workflow, language, control, layout, visual-effects, enemy, test-tool, and core-game checks;
-- UTF-8 release construction and all release contracts;
-- 127,449-byte runtime under the documented 150 KB total and per-file budgets;
-- 200 build runs, 100 choice-policy runs, 25 idle controls, 25 movement controls, and 8 deterministic replays;
-- 99% overall active survivability, 0% idle wins, 96% simple-movement wins, and zero runtime violations;
+- workflow, language, control, layout, visual-effects, enemy, test-tool, and core-game checks;
+- UTF-8 release construction and release contracts;
+- full build/policy, idle/movement, and deterministic replay evidence;
 - Capacitor sync, debug APK build, APK verification, and artifact upload.
 
-Automation does not prove phone readability, fairness, fun, or tactical distinctness.
+Automation does not prove phone feel, outside-player enjoyment, comprehension, retention, replay desire, or willingness to pay.
+
+## Current Development Order
+
+1. Spell identity and build depth.
+2. Trial pacing and encounter design.
+3. Replay and progression loop.
+4. Scalable content systems and broader content production.
+5. Commercial presentation, art direction, animation, audio, and identity.
+6. External player reviews when the owner judges the broader pre-release build substantial enough.
 
 ## Exact Next Action
 
-1. Pull latest `main` in SPCK.
-2. Open `test-launcher.html` → **Preview** → **Open Arabic Game**.
-3. Confirm Wave 1 remains calm.
-4. Reach Act II and check flanking, purple three-line warnings, spacing, and visible links.
-5. Reach Act III and check orange warnings before fast movement.
-6. Confirm nothing hides the mage, red runes, enemies, or projectiles.
-7. Briefly check **Open English Game** and **Open Cell Runner**.
-
-Do not involve the genuine fresh participant until this owner pass succeeds. Do not scale launch content before the commercial decision.
+Independently research and implement one major spell-identity and build-depth batch. Use owner SPCK checks for bugs, touch, layout, wording, readability, and creative judgment. Do not ask for a fresh participant or Cell Runner review after the batch unless the owner explicitly changes the development-first sequence.
