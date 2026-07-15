@@ -7,57 +7,67 @@
 - Entry point: `docs/START_HERE.md`
 - Live state: `docs/ACTIVE_SESSION.md`
 - Workflow: `docs/CHATGPT_WORKFLOW.md`
-- Arabic terminology: `docs/ARABIC_GLOSSARY.md`
 - Durable review timing: D-020 in `docs/DECISIONS.md`
+- Spell research: `docs/SPELL_IDENTITY_RESEARCH.md`
 - Owner test entry: `test-launcher.html`
-- Deferred observer tool: `cell-runner.html`
 
 ## Current Milestone
 
 **Milestone 8 — Extended Product Development.**
 
-The representative gate is no longer the immediate stop point. The owner explicitly directed continued major development until Pixel Mage becomes a broader coherent game, then outside-player reviews.
+Outside-player reviews are intentionally deferred until the owner judges the game broad and coherent enough. Continue major research-guided batches; do not default to the Cell Runner after each batch.
 
-## Latest Owner Direction
+## Latest Owner Evidence
 
-- Continue Pixel Mage in substantial development batches.
-- Use public game reviews, design research, comparable best practices, automated evidence, synthetic play styles, source inspection, and owner SPCK feedback.
-- Do not repeatedly stop for the Fresh-Player Cell Runner while the game remains a small representative slice.
-- The owner decides when the game is substantial enough for external reviews.
-- Keep newcomer enjoyment, retention, replay desire, and commercial-value claims provisional until that later review phase.
-
-## Current Implemented Foundation
-
-- `.8` passed for active movement, rewrite choices, Spellbook selection, and starting-spell payoff.
-- Arabic/RTL support, 84-pixel thumb clearance, rebuilt portrait layout, and arena-feedback presentation are implemented.
+- `.8` passed active movement, rewrite choices, Spellbook selection, and starting-spell payoff.
 - The owner accepted the arena-feedback batch.
-- Enemy variety is implemented using the existing roster:
-  - Wave 1 remains simple;
-  - Act II adds flanking Motes, group spacing, purple three-line Caster warnings, and visible Caster–Mote links;
-  - Act III adds orange warnings before committed fast movement;
-  - Frost, Orbit, and Ember retain useful interactions.
-- No arbitrary runtime byte cap remains; size is diagnostic only.
+- The owner confirmed cumulative SPCK changes appear and requested continued major development.
+- The spell-depth batch is not yet phone-reviewed.
+
+## Completed Spell Identity and Build Depth Batch
+
+Implemented:
+
+- Bolt precision burst after repeated hits on one target;
+- Orbit ward charge from blocked shots and a pulse after three blocks;
+- Ember chain eruptions when a burning enemy is defeated;
+- Frost freeze after repeated hits and shatter on the next Frost hit;
+- Split Bolt copies seek different living threats when possible;
+- Echo gains resonance from an existing burn or slow;
+- eight named English/Arabic build identities;
+- live identity summary and precision/ward meter;
+- named complete-build previews on rewrite and Spellbook cards;
+- pointer-transparent spell FX and short-screen/reduced-motion handling;
+- per-Trial transient reset so ward/effect state never carries into a new run.
+
+No persistent currency, save field, account, network resource, external SDK, new enemy family, or irreversible commercial action was added.
 
 ## Verification
 
-The latest complete GitHub Actions pipeline passed:
+The first evidence run correctly failed deterministic replay for two Orbit builds because ward charge persisted between simulated Trials. The implementation was fixed rather than weakening evidence.
 
-- workflow, language, control, layout, visual-effects, enemy, test-tool, and core-game checks;
-- UTF-8 release construction and release contracts;
-- full build/policy, idle/movement, and deterministic replay evidence;
-- Capacitor sync, debug APK build, APK verification, and artifact upload.
+Final GitHub Actions result:
 
-Automation does not prove phone feel, outside-player enjoyment, comprehension, retention, replay desire, or willingness to pay.
+- all workflow, language, controls, layout, arena-FX, enemy, spell, test-tool, core-game, release, and Android checks passed;
+- 200/200 build runs and 100/100 policy runs completed;
+- 8/8 deterministic replays matched;
+- 99.5% active-policy survivability and 96% weakest-build survivability;
+- 0% idle wins;
+- 68% simple continuous-patrol wins, which leaves the evidence status YELLOW;
+- 99.5% danger-aware active-policy wins;
+- 9.2% build spread, 6.2% Form gap, and 5.7% policy spread;
+- zero runtime violations;
+- Capacitor sync, debug APK build, APK verification, and artifact upload passed.
 
-## Current Development Order
-
-1. Spell identity and build depth.
-2. Trial pacing and encounter design.
-3. Replay and progression loop.
-4. Scalable content systems and broader content production.
-5. Commercial presentation, art direction, animation, audio, and identity.
-6. External player reviews when the owner judges the broader pre-release build substantial enough.
+The YELLOW warning is not a technical failure. It indicates that low-skill continuous movement has less survival margin than before and should remain visible during future pacing/balance work. Automation does not establish fun or phone readability.
 
 ## Exact Next Action
 
-Independently research and implement one major spell-identity and build-depth batch. Use owner SPCK checks for bugs, touch, layout, wording, readability, and creative judgment. Do not ask for a fresh participant or Cell Runner review after the batch unless the owner explicitly changes the development-first sequence.
+1. Pull latest `main` in SPCK.
+2. Open `test-launcher.html` → **Preview** → **Open Arabic Game**.
+3. Try several builds, including one Bolt/Split, one Frost, one Orbit, and one Echo combination.
+4. Check identity wording, meter visibility, complete-build previews, payoff visibility, visual clutter, and obvious balance problems.
+5. Briefly confirm **Open English Game** remains correct.
+6. Report only concrete issues or confirmation.
+
+Do not run the Cell Runner. After bounded phone corrections, the next major batch is **Trial pacing and encounter authorship**.
