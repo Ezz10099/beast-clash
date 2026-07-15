@@ -122,7 +122,7 @@ This is an append-only record of decisions future sessions must not repeatedly r
 
 - Date: July 13, 2026
 - Status: Active representative design decision
-- Decision: Remove universal Support from the representative rewrite screen. Every rewrite or Hold advances one shared living-spell level; the level visibly enlarges the spell and increases damage and cast rate. Hold preserves the current three words but receives no more growth than experimentation.
+- Decision: Remove universal Support from the representative choice screen. Every rewrite or Hold advances one shared living-spell level; the level visibly enlarges the spell and increases damage and cast rate. Hold preserves the current three words but receives no more growth than experimentation.
 - Evidence: The original fixed-build bots always took Support and therefore never tested the central choice. A new policy audit found median clears of 247 seconds for always-Support, 265 seconds discovery-first and 274 seconds for rewrite-only, with Support also ending ahead in damage, haste, health, and speed. After `.7`, 100 real policy runs passed with 99% wins, every policy reaching level 12, and only 5.8% median clear spread.
 - Reason: The game promised an evolving spell while generic Support supplied the actual vertical growth. That made ignoring the hook the rational strategy and turned Spellbook experimentation into a power tax.
 - Change rule: Future growth systems may replace spell levels, but engaging with the game's central expressive mechanic must not be systematically weaker than avoiding it.
@@ -179,3 +179,15 @@ This is an append-only record of decisions future sessions must not repeatedly r
 - Reason: A fixed byte number can silently reward deleting worthwhile localization, presentation, behavior, or content even when the game remains tiny and performs well. That conflicts with the Product Compass and the goal of a finished, commercially credible Google Play game.
 - Ongoing discipline: Keep deterministic release whitelisting, minification, checksums, legacy-file exclusion, offline behavior, performance testing, and per-file diagnostic reporting. Investigate suspicious growth, duplication, unnecessary dependencies, or measured phone regressions without treating size alone as a failure.
 - Change rule: A blocking size threshold requires a documented real-world constraint and must be reviewed against player value and commercial scope before adoption.
+
+## D-020 — Develop Broadly Before External Player Reviews
+
+- Date: July 15, 2026
+- Status: Locked owner workflow decision
+- Decision: Continue Pixel Mage through substantial, coherent development batches before asking outside players to review it. Do not repeatedly stop development for the Fresh-Player Cell Runner while the game is still a small representative slice.
+- Development method: Independently choose major batches using the Product Compass, source inspection, public game reviews and design research, comparable best practices, automated evidence, synthetic play styles, owner SPCK feedback, and bounded prototypes. Work should materially increase gameplay depth, content breadth, replay value, presentation, and commercial credibility.
+- Review trigger: External player reviews begin when Pixel Mage has grown into a broader, coherent pre-release build that reasonably represents the intended game rather than a thin prototype, or when the owner explicitly requests an earlier review. The owner decides when that threshold has been reached.
+- Evidence boundary: Until external reviews begin, do not claim that newcomers will enjoy the game, understand it, retain it, or pay for it. Those claims remain provisional even while development continues confidently from research and technical evidence.
+- Allowed human checks: The owner may continue SPCK checks for bugs, controls, layout, wording, readability, and direct creative judgment. These are development checks, not substitutes for later outside-player evidence.
+- Reason: Premature external testing of a visibly incomplete slice can consume scarce participants and produce feedback about missing scale rather than the intended commercial experience. The project should first become substantial enough that player reviews are worth the effort and meaningfully guide release decisions.
+- Change rule: Only an explicit owner instruction may move external player reviews earlier or replace this development-first sequence.
