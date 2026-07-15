@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="phone-polish.css" />
     <link rel="stylesheet" href="arena-fx.css" />
     <link rel="stylesheet" href="enemy-variety.css" />
+    <link rel="stylesheet" href="spell-depth.css" />
   </head>
   <body>
     <aside class="orientation-notice" role="status" aria-live="polite">
@@ -47,6 +48,7 @@
           ></canvas>
           <canvas id="arenaFx" width="320" height="480" aria-hidden="true"></canvas>
           <canvas id="enemyFx" width="320" height="480" aria-hidden="true"></canvas>
+          <canvas id="spellFx" width="320" height="480" aria-hidden="true"></canvas>
           <section id="startPanel" class="start-panel" aria-labelledby="startTitle">
             <p class="eyebrow">Representative Trial</p>
             <h2 id="startTitle">Move. Watch. Rewrite.</h2>
@@ -138,6 +140,14 @@
 
         <section class="combat-deck" aria-label="Live trial status">
           <section id="spellText" class="spell-readout" aria-live="polite">FORM Bolt · ESSENCE Ember · LAW Split · LV 1</section>
+          <section class="spell-depth-card" aria-live="polite">
+            <strong id="spellIdentityText" class="spell-identity-text">PRECISION · CHAIN BURN · BROADCAST</strong>
+            <span id="spellComboText" class="spell-combo-text">Wildfire Volley · Split bolts hunt different threats; burning defeats erupt.</span>
+            <span id="spellDepthMeter" class="spell-depth-meter" data-kind="focus">
+              <span id="spellDepthMeterFill" class="spell-depth-meter-fill" aria-hidden="true"></span>
+              <span id="spellDepthMeterLabel" class="spell-depth-meter-label">PRECISION 0/3</span>
+            </span>
+          </section>
 
           <section class="hud" aria-live="polite">
             <article class="hud-card hud-health">
@@ -164,5 +174,6 @@
     <script src="phone-polish.js"></script>
     <script src="arena-fx.js"></script>
     <script src="enemy-variety.js"></script>
+    <script src="spell-depth.js"></script>
   </body>
 </html>
