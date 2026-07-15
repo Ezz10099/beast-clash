@@ -3,12 +3,13 @@ import { readFile } from 'node:fs/promises';
 
 const root = new URL('../', import.meta.url);
 
-const [agents, workflow, activeSession, startHere, arabicGlossary] = await Promise.all([
+const [agents, workflow, activeSession, startHere, arabicGlossary, decisions] = await Promise.all([
   readFile(new URL('AGENTS.md', root), 'utf8'),
   readFile(new URL('docs/CHATGPT_WORKFLOW.md', root), 'utf8'),
   readFile(new URL('docs/ACTIVE_SESSION.md', root), 'utf8'),
   readFile(new URL('docs/START_HERE.md', root), 'utf8'),
   readFile(new URL('docs/ARABIC_GLOSSARY.md', root), 'utf8'),
+  readFile(new URL('docs/DECISIONS.md', root), 'utf8'),
 ]);
 
 for (const requiredReference of [
@@ -33,6 +34,7 @@ for (const requiredSection of [
   '## Visible Drift Signal',
   '## Material Decision Packet',
   '## Implementation Loop',
+  '## Development-First External Review Timing',
   '## Owner Phone Workflow Gate',
   '## Active-State Update Triggers',
   '## Interruption and Context-Recovery Rule',
@@ -57,6 +59,22 @@ for (const requiredOwnerWorkflowRule of [
     `docs/CHATGPT_WORKFLOW.md is missing owner workflow rule: ${requiredOwnerWorkflowRule}`,
   );
 }
+
+for (const requiredReviewTimingRule of [
+  'Continue major research-guided development batches',
+  'Do not ask the owner to run the Fresh-Player Cell Runner merely because one feature batch completed',
+  'broader, coherent pre-release build',
+  'The owner decides when the game is substantial enough',
+]) {
+  assert.match(
+    workflow,
+    new RegExp(requiredReviewTimingRule.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'),
+    `docs/CHATGPT_WORKFLOW.md is missing development-first review rule: ${requiredReviewTimingRule}`,
+  );
+}
+
+assert.match(decisions, /## D-020 — Develop Broadly Before External Player Reviews/);
+assert.match(decisions, /Do not repeatedly stop development for the Fresh-Player Cell Runner/i);
 
 for (const requiredField of [
   '**Current milestone:**',
