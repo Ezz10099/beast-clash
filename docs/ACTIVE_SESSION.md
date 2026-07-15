@@ -10,76 +10,64 @@ This mutable state must remain active throughout a ChatGPT/Codex work session. I
 - **Active repository/branch:** `Ezz10099/beast-clash` / `main`
 - **Active product:** Pixel Mage
 - **Current milestone:** Milestone 8 — Extended Product Development
-- **Current implementation:** `0.2.0-representative.9` foundation plus corrected Arabic/RTL, visible test tooling, 84-pixel thumb clearance, rebuilt portrait layout, accepted arena feedback, and the bounded current-roster enemy-variety batch
-- **Latest accepted phone behavior:** the owner accepted the arena-feedback batch and confirmed the latest cumulative changes appear in SPCK; enemy-variety subjective review remains provisional but does not block continued development.
-- **Latest automated evidence:** GREEN with 200/200 build runs, 100 choice-policy runs, 0% idle wins, 96% simple-movement wins, 8/8 deterministic replays, 99% overall active survivability, 9.2% build spread, 4.3% Form gap, and zero runtime violations.
-- **Current verification status:** workflow, localization, controls, layout, arena-FX, enemy, Cell Runner, launcher, core gameplay, release, Android configuration, Capacitor sync, debug APK build, APK output, and artifact-upload gates passed. Runtime size is diagnostic only.
-- **Strongest current fun/engagement limitation:** the living-spell combinations still need stronger identity, synergy, tradeoffs, and build-defining payoff before the game is substantial enough for outside-player review.
-- **Current approval boundary:** continue substantial research-guided development batches inside Pixel Mage. Preserve the one-thumb core, commercial goal, Android route, and evidence honesty. External player reviews are deferred until the owner judges the broader pre-release build substantial enough.
-- **Current commercial gate:** deferred. The Fresh-Player Cell Runner remains ready but must not be requested merely because a feature batch completed.
-- **Current workflow goal:** grow Pixel Mage into a broader, coherent, commercially credible game through major batches before using scarce outside-player reviews.
-- **Workflow implementation status:** development-first review timing is locked in D-020 and enforced by `workflow:check`.
-- **Exact next product action:** independently research, design, implement, and verify one major spell-identity and build-depth batch, then continue to the next strongest product limitation instead of stopping for the Cell Runner.
+- **Current implementation:** `0.2.0-representative.9` foundation plus Arabic/RTL, visible test tooling, 84-pixel thumb clearance, rebuilt portrait layout, arena feedback, current-roster enemy variety, and the spell-identity/build-depth layer.
+- **Latest accepted phone behavior:** the owner accepted the arena-feedback batch and confirmed the cumulative build appears in SPCK. The new spell-depth batch is not yet owner-reviewed on the phone.
+- **Latest automated evidence:** YELLOW with 200/200 build runs, 100/100 choice-policy runs, 8/8 deterministic replays, 99.5% overall active survivability, 96% weakest-build survivability, 0% idle wins, 68% simple-patrol wins, 9.2% build spread, 6.2% Form gap, 5.7% policy spread, and zero runtime violations.
+- **Current verification status:** all workflow, localization, controls, layout, arena-FX, enemy, spell-depth, Cell Runner, launcher, core gameplay, release, Android configuration, evidence, Capacitor sync, debug APK build, APK output, and artifact-upload steps passed in GitHub Actions. Runtime size remains diagnostic only.
+- **Strongest current fun/engagement limitation:** whether the new spell payoffs feel clear, satisfying, and genuinely build-defining on the phone without crowding combat; the 68% simple-patrol warning also indicates reduced safety margin for low-skill movement despite 99.5% active-policy survivability.
+- **Current approval boundary:** owner SPCK review of spell readability, impact, layout, Arabic, and obvious balance problems. Continue major development after bounded corrections. External player reviews remain deferred until the owner judges the broader build substantial enough.
+- **Current commercial gate:** deferred under D-020. The Fresh-Player Cell Runner remains ready but must not be requested merely because this batch completed.
+- **Current workflow goal:** confirm the spell-depth batch is phone-readable, correct any concrete owner-visible problem, then continue to the next major product limitation—Trial pacing and encounter authorship.
+- **Workflow implementation status:** spell-depth implementation, research, deterministic reset correction, automated evidence, release, and Android verification are complete; owner phone review pending.
+- **Exact next product action:** pull latest `main`, open `test-launcher.html` → **Preview** → **Open Arabic Game**, test several different spell combinations, and report any unclear wording, clipped dashboard, invisible payoff, excessive effect, or obviously dominant/weak build. Do not use the Cell Runner.
 
 ## Response Watchlist
 
 - Pixel Mage continuity and a worthwhile finished commercial game remain primary.
 - Work in substantial coherent batches, not micro-patches.
-- Use public game reviews, design research, comparable best practices, automated evidence, synthetic play styles, source inspection, and owner SPCK feedback to guide development.
-- Do not repeatedly ask for the Fresh-Player Cell Runner while the game remains a small representative slice.
+- Use public game evidence, design research, automated play, source inspection, and owner SPCK feedback.
+- Do not repeatedly ask for the Fresh-Player Cell Runner while the game remains a small representative build.
 - The owner decides when the game is substantial enough for external reviews.
-- Until that later review phase, do not claim newcomer enjoyment, comprehension, retention, replay desire, or willingness to pay as proven.
-- Owner SPCK checks remain valid for bugs, controls, layout, wording, readability, and creative judgment.
-- Runtime size is evidence, not product authority; no arbitrary byte cap may block worthwhile development.
+- Do not claim newcomer enjoyment, comprehension, retention, replay desire, or willingness to pay as proven.
+- Owner SPCK checks remain valid for bugs, controls, layout, wording, readability, balance impressions, and creative judgment.
+- Runtime size is evidence, not product authority.
 - Phone requests must use `test-launcher.html` and visible buttons.
 - Arabic must follow `docs/ARABIC_GLOSSARY.md`.
 
 ## Current Work Packet
 
-- **Status:** next major batch selected; research and implementation pending.
-- **Player-facing problem:** the eight current spell combinations are functional, but their identities and interactions are not yet deep enough to carry a larger commercial game or create strong build ownership across repeated Trials.
-- **Intended player experience:** each Form, Essence, and Law should visibly change how the player positions, prioritizes threats, exploits openings, and anticipates the next rewrite; combinations should produce memorable strengths and weaknesses rather than mostly numerical variation.
-- **Strongest known cause:** the current representative slice optimized clarity and balance first; it has limited layered synergies, conditional payoffs, counterplay, and build-specific feedback.
-- **Alternatives considered:** expand raw content immediately; add permanent-stat progression; or deepen the central spell system first. Raw content would multiply a shallow hook, while permanent power would weaken the horizontal discovery identity. Deepening spell identity is selected.
-- **Selected approach:** use targeted research and source inspection to design one bounded spell-identity/build-depth batch that strengthens distinct mechanics, synergies, tradeoffs, visual/audio feedback, enemy interactions, and automated build evidence without abandoning one-thumb play.
-- **Predicted visible benefit:** stronger build ownership, more meaningful rewrites, clearer reasons to replay, and a better foundation for later Trials and content expansion.
-- **Likely failure mode:** excessive effects or interactions could reduce phone readability, create dominant combinations, or overcomplicate the rewrite screen.
-- **Evidence required:** deterministic mechanic checks, refreshed build/policy evidence, balance and survivability checks, release/Android checks, and a brief owner SPCK review for readability and feel; no external-player cell yet.
-- **Files/systems expected to change:** gameplay spell definitions and effects, presentation/localization as needed, headless evidence, checks, build contracts, and project memory.
-- **Approval boundary:** central spell identity and build depth only; no project switch, arbitrary size cap, forced external review, or irreversible commercial action.
+- **Status:** spell-identity/build-depth batch implemented and automated-verified; owner phone review pending.
+- **Player-facing problem:** the eight spell combinations functioned, but most interactions ended at first-order effects and did not create enough build ownership or memorable payoff.
+- **Intended player experience:** each axis changes combat rhythm and every complete combination has a recognizable plan, visible setup, and satisfying payoff.
+- **Strongest known cause:** Bolt/Orbit, Ember/Frost, and Split/Echo supplied readable baseline behavior but limited layered interaction, conditional payoff, and complete-build identity.
+- **Alternatives considered:** add more spell parts now; add passive statistical bonuses; or deepen the current 2×2×2 system first. Deepening the current system was selected to strengthen the core promise before multiplying content.
+- **Implemented approach:** Bolt precision bursts; Orbit ward pulses after three blocked shots; Ember defeat chains; Frost freeze/shatter; Split Bolt multi-target broadcasting; Echo resonance on established burn/slow; eight named English/Arabic identities; live payoff meter; rewrite and Spellbook previews.
+- **Predicted visible benefit:** stronger build ownership, clearer rewrite anticipation, more satisfying combat events, and a reusable interaction grammar for later spell parts.
+- **Likely failure mode:** effect clutter, dashboard height, subtle payoff, or one combination becoming dominant.
+- **Automated evidence:** first run exposed 6/8 deterministic replays because Orbit ward charge persisted between simulated Trials. The transient state now resets at every new Trial. The rerun passed 8/8 replays and the complete Android pipeline. All hard gates passed; simple continuous patrol remained a 68% warning while danger-aware active movement won 99.5%.
+- **Evidence still required:** brief owner SPCK judgment of visibility, impact, layout, Arabic wording, and obvious balance problems. No outside-player review yet.
+- **Files/systems changed:** `spell-depth.js`, `spell-depth.css`, `index.html`, release/build checks, Android CI, headless evidence, research, and project memory.
+- **Approval boundary:** spell identity/build depth and direct integration corrections only; no project switch, arbitrary size cap, forced external review, or irreversible commercial action.
 
 ## Session Update Log
 
+### July 15, 2026 — Spell Identity and Build Depth Completed
+
+- Added six axis-level payoffs and eight named build identities in English and Arabic.
+- Added live precision/ward meters, pointer-transparent combat feedback, and complete-build previews in rewrites and the Spellbook.
+- Integrated the mechanics into normal headless evidence and the release/Android pipeline.
+- Corrected per-Trial transient leakage found by deterministic replay evidence instead of weakening the gate.
+- Final pipeline passed; automated status is YELLOW only because simple continuous patrol wins 68%, while active danger-aware movement wins 99.5% and idle wins remain 0%.
+
 ### July 15, 2026 — Development-First External Review Timing Locked
 
-- Owner explicitly directed continued major development until the game becomes substantially broader, then outside-player reviews.
-- Added durable decision D-020 and a mandatory workflow section.
-- Fresh-Player Cell Runner remains available but is deferred; it must not interrupt every major batch.
-- External enjoyment and commercial claims remain provisional until the later review phase.
+- Owner directed continued major development until the game becomes substantially broader, then outside-player reviews.
+- D-020 and the workflow integrity checks preserve this sequence.
 
-### July 14, 2026 — Representative Gate Closure Request Superseded
+### July 14, 2026 — Runtime Cap Removed
 
-- The earlier instruction to close the representative gate immediately was replaced by the owner's development-first sequence.
-- Technical and test tooling remain preserved for later use.
+- Removed arbitrary blocking byte thresholds while preserving size reporting and release discipline.
 
-### July 14, 2026 — Arbitrary Runtime Cap Removed
+### July 14, 2026 — Enemy Variety and Presentation Foundation
 
-- Removed total and per-file blocking size thresholds.
-- Kept release whitelisting, minification, checksums, legacy exclusion, and non-blocking per-file size reporting.
-
-### July 14, 2026 — Enemy Variety Batch Completed
-
-- Added progressive Mote and Caster roles, formations, telegraphs, and cooperation using only the existing roster.
-- GitHub Actions passed the complete evidence, release, Capacitor, debug APK, and artifact pipeline.
-
-### July 14, 2026 — Arena Feedback and Atmosphere Accepted
-
-- Owner confirmed the presentation batch before selecting enemy variety.
-
-### July 14, 2026 — Portrait Gameplay Layout Rebuild Completed
-
-- Replaced the fragmented screen stack with a compact header, dominant arena, and unified dashboard.
-
-### July 14, 2026 — Thumb Clearance Recalibrated
-
-- Recorded 56 pixels as too small and increased clearance to 84 canvas pixels.
+- Added progressive enemy roles, formations, telegraphs, cooperation, portrait layout, atmosphere, and accepted thumb clearance.
